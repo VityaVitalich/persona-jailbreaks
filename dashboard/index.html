@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Persona-JB results</title>
+<link rel="stylesheet" href="style.css" />
+<script>window.__errs = []; addEventListener("error", e => __errs.push(String(e.message) + " @" + e.lineno)); addEventListener("unhandledrejection", e => __errs.push("rejection: " + e.reason));</script>
+</head>
+<body>
+<header>
+  <h1>Persona jailbreaks: results</h1>
+  <span class="gen" id="gen">loading…</span>
+  <span class="spacer"></span>
+  <button class="theme" id="theme" title="Toggle light / dark">◐ theme</button>
+</header>
+<nav id="nav">
+  <button data-tab="detection" class="active">Detection</button>
+  <button data-tab="steering">Steering</button>
+  <button data-tab="share">Persona share of space</button>
+  <button data-tab="sources">Sources</button>
+</nav>
+<section id="detection" class="active"></section>
+<section id="steering"></section>
+<section id="share"></section>
+<section id="sources"></section>
+<div id="tip"></div>
+<script>
+"use strict";
+let D = null;
+const $ = (s, el = document) => el.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+const isNum = x => typeof x === "number" && isFinite(x);
+const f3 = x => isNum(x) ? x.toFixed(3) : "—";
+const pct = x => isNum(x) ? (100 * x).toFixed(1) : "—";
+const sgn = (x, f = f3) => isNum(x) ? (x > 0 ? "+" : "") + f(x) : "—";
+const MODEL_ORDER = ["llama", "gemma", "olmo", "qwen"];
+const mlab = m => (D.models[m] || m);
+const dlab = d => (D.dets[d] ? D.dets[d].label : d);
+const clab = c => (D.conds[c] || c);
+const setLab = s => (D.sets[s] || s);
+const uniq = a => [...new Set(a)];
+const byModel = (a, b) => MODEL_ORDER.indexOf(a) - MODEL_ORDER.indexOf(b);
+const dOrd = d => (D.dets[d] ? D.dets[d].o : 1e9);
+
+/* ---------- tooltip ---------- */
+const tip = $("#tip");
+document.addEventListener("mousemove", e => {
+  const t = e.target.closest("[data-tip]");
+  if (!t) { tip.style.display = "none"; return; }
+  tip.textContent = t.getAttribute("data-tip"); tip.style.display = "block";
+  const x = Math.min(e.clientX + 14, innerWidth - tip.offsetWidth - 8), y = Math.min(e.clientY + 14, innerHeight - tip.offsetHeight - 8);
+  tip.style.left = x + "px"; tip.style.top = y + "px";
+});
+
+/* ---------- theme ---------- */
+$("#theme").onclick = () => {
+  const r = document.documentElement, cur = r.getAttribute("data-theme");
+  const dark = cur ? cur === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  r.setAttribute("data-theme", dark ? "light" : "dark");
+  try { localStorage.setItem("pjb-theme", dark ? "light" : "dark"); } catch (e) {}
+};
+try { const t = localStorage.getItem("pjb-theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+
+/* ---------- chip rows ---------- */
+// opts: [{v, l, n?, cls?, tip?}], sel: value (single) or Set (multi)
+function chipRow(label, opts, sel, multi, onChange, extra = "") {
+  const row = document.createElement("div"); row.className = "filter-row";
+  let html = `<span class="label">${esc(label)}</span><div class="facet-chips">`;
+  let lastG = null;
+  for (const o of opts) {
+    if (o.g !== undefined && o.g !== lastG) { html += `<span class="grp-lbl">${esc(o.g)}</span>`; lastG = o.g; }
+    const on = multi ? sel.has(o.v) : sel === o.v;
+    html += `<button class="facet-chip ${on ? "on" : "off"} ${o.cls || ""}" data-v="${esc(o.v)}" ${o.tip ? `data-tip="${esc(o.tip)}"` : ""}>${esc(o.l)}${o.n !== undefined ? ` <span class="count">${o.n}</span>` : ""}</button>`;
+  }
+  if (multi) html += `<button class="facet-mini" data-act="all">all</button><button class="facet-mini" data-act="none">none</button>`;
+  html += extra + `</div>`;
+  row.innerHTML = html;
+  row.addEventListener("click", e => {
+    const b = e.target.closest("button"); if (!b) return;
+    if (b.dataset.act === "all") { opts.forEach(o => sel.add(o.v)); onChange(sel); return; }
+    if (b.dataset.act === "none") { sel.clear(); onChange(sel); return; }
+    if (b.dataset.v === undefined) return;
+    const v = opts.find(o => String(o.v) === b.dataset.v).v;
+    if (multi) { (e.metaKey || e.altKey) ? (sel.clear(), sel.add(v)) : (sel.has(v) ? sel.delete(v) : sel.add(v)); onChange(sel); }
+    else onChange(v);
+  });
+  return row;
+}
+
+/* ---------- small SVG charts ---------- */
+const PAL = ["var(--s1)", "var(--s2)", "var(--s3)", "var(--s4)", "var(--s5)", "var(--s6)", "var(--s7)", "var(--s8)"];
+// rows: [{label, v, lo, hi, color}]; ref: vertical reference value
+function dotChart(rows, {title = "", ref = null, xlab = "", fmt = f3, domain = null} = {}) {
+  rows = rows.filter(r => isNum(r.v));
+  if (!rows.length) return "";
+  const W = 640, LW = 300, rh = 18, H = rows.length * rh + 36;
+  let lo = Math.min(...rows.map(r => isNum(r.lo) ? r.lo : r.v)), hi = Math.max(...rows.map(r => isNum(r.hi) ? r.hi : r.v));
+  if (ref !== null) { lo = Math.min(lo, ref); hi = Math.max(hi, ref); }
+  if (domain) { lo = Math.min(lo, domain[0]); hi = Math.max(hi, domain[1]); }
+  const pad = (hi - lo) * 0.06 || 0.01; lo -= pad; hi += pad;
+  const X = v => LW + (v - lo) / (hi - lo) * (W - LW - 14);
+  let s = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img">`;
+  const ticks = 5;
+  for (let i = 0; i <= ticks; i++) {
+    const v = lo + (hi - lo) * i / ticks, x = X(v);
+    s += `<line class="gr" x1="${x}" x2="${x}" y1="14" y2="${H - 20}"/><text x="${x}" y="${H - 6}" text-anchor="middle">${fmt(v)}</text>`;
+  }
+  if (ref !== null) s += `<line class="ref" x1="${X(ref)}" x2="${X(ref)}" y1="14" y2="${H - 20}"/>`;
+  rows.forEach((r, i) => {
+    const y = 22 + i * rh, c = r.color || PAL[0];
+    s += `<text class="lab" x="${LW - 8}" y="${y + 4}" text-anchor="end">${esc(r.label.length > 52 ? r.label.slice(0, 50) + "…" : r.label)}</text>`;
+    if (isNum(r.lo) && isNum(r.hi)) s += `<line x1="${X(r.lo)}" x2="${X(r.hi)}" y1="${y}" y2="${y}" stroke="${c}" stroke-width="2" opacity=".55"/>`;
+    s += `<circle cx="${X(r.v)}" cy="${y}" r="4.2" fill="${c}" data-tip="${esc(r.label + "\n" + fmt(r.v) + (isNum(r.lo) ? `  [${fmt(r.lo)}, ${fmt(r.hi)}]` : "") + (r.tip ? "\n" + r.tip : ""))}"/>`;
+  });
+  s += `<text x="${LW}" y="10">${esc(title)}${xlab ? " · " + esc(xlab) : ""}</text></svg>`;
+  return `<div class="chart-card">${s}</div>`;
+}
+// series: [{label, color, pts:[[x,y,lo,hi]]}], logx
+function lineChart(series, {title = "", logx = false, xlab = "", ylab = "", refs = [], fmt = f3, W = 620, H = 300} = {}) {
+  series = series.filter(s => s.pts.some(p => isNum(p[1])));
+  if (!series.length) return "";
+  const L = 50, R = 12, T = 18, B = 36;
+  const xs = series.flatMap(s => s.pts.map(p => p[0])), ys = series.flatMap(s => s.pts.flatMap(p => [p[1], p[2], p[3]])).filter(isNum).concat(refs.map(r => r.v));
+  const tx = v => logx ? Math.log(Math.max(v, 0.5)) : v;
+  const x0 = Math.min(...xs.map(tx)), x1 = Math.max(...xs.map(tx));
+  let y0 = Math.min(...ys), y1 = Math.max(...ys); const pd = (y1 - y0) * 0.08 || 0.01; const nn = y0 >= 0; y0 -= pd; y1 += pd; if (nn) y0 = Math.max(0, y0);
+  const X = v => L + (tx(v) - x0) / ((x1 - x0) || 1) * (W - L - R), Y = v => T + (1 - (v - y0) / (y1 - y0)) * (H - T - B);
+  let s = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">`;
+  for (let i = 0; i <= 4; i++) { const v = y0 + (y1 - y0) * i / 4; s += `<line class="gr" x1="${L}" x2="${W - R}" y1="${Y(v)}" y2="${Y(v)}"/><text x="${L - 4}" y="${Y(v) + 3}" text-anchor="end">${fmt(v)}</text>`; }
+  uniq(xs).sort((a, b) => a - b).forEach(v => { s += `<text x="${X(v)}" y="${H - B + 14}" text-anchor="middle">${v}</text>`; });
+  refs.forEach(r => { s += `<line class="ref" x1="${L}" x2="${W - R}" y1="${Y(r.v)}" y2="${Y(r.v)}"/><text x="${W - R}" y="${Y(r.v) - 3}" text-anchor="end">${esc(r.l)}</text>`; });
+  series.forEach((se, i) => {
+    const c = se.color || PAL[i % PAL.length], pts = se.pts.filter(p => isNum(p[1])).sort((a, b) => a[0] - b[0]);
+    const band = pts.filter(p => isNum(p[2]));
+    if (band.length > 1) s += `<path d="M${band.map(p => `${X(p[0])},${Y(p[2])}`).join("L")}L${band.slice().reverse().map(p => `${X(p[0])},${Y(p[3])}`).join("L")}Z" fill="${c}" opacity=".12"/>`;
+    s += `<path d="M${pts.map(p => `${X(p[0])},${Y(p[1])}`).join("L")}" fill="none" stroke="${c}" stroke-width="1.8"/>`;
+    pts.forEach(p => { s += `<circle cx="${X(p[0])}" cy="${Y(p[1])}" r="3" fill="${c}" data-tip="${esc(`${se.label}\n${xlab || "x"} = ${p[0]}: ${fmt(p[1])}${isNum(p[2]) ? ` [${fmt(p[2])}, ${fmt(p[3])}]` : ""}`)}"/>`; });
+  });
+  s += `<text x="${L}" y="11">${esc(title)}</text><text x="${(L + W) / 2}" y="${H - 4}" text-anchor="middle">${esc(xlab)}${logx ? " (log)" : ""}</text></svg>`;
+  const leg = `<div class="legend">${series.map((se, i) => `<span><i style="background:${se.color || PAL[i % PAL.length]}"></i>${esc(se.label)}</span>`).join("")}</div>`;
+  return `<div class="chart-card">${s}${leg}</div>`;
+}
+// rows: [{label, vals:[{v, lo, hi}|null per series]}], series: [labels]
+function multiDot(rows, series, {title = "", fmt = f3, ref = null} = {}) {
+  const all = rows.flatMap(r => r.vals.flatMap(x => x ? [x.v, x.lo, x.hi] : [])).filter(isNum);
+  if (!all.length) return "";
+  const W = 760, LW = 330, rh = 20, H = rows.length * rh + 36;
+  let lo = Math.min(0, ...all), hi = Math.max(...all); if (ref !== null) { lo = Math.min(lo, ref); hi = Math.max(hi, ref); }
+  const pad = (hi - lo) * 0.04 || 0.01; hi += pad;
+  const X = v => LW + (v - lo) / (hi - lo) * (W - LW - 14);
+  let s = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">`;
+  for (let i = 0; i <= 5; i++) { const v = lo + (hi - lo) * i / 5, x = X(v); s += `<line class="gr" x1="${x}" x2="${x}" y1="14" y2="${H - 20}"/><text x="${x}" y="${H - 6}" text-anchor="middle">${fmt(v)}</text>`; }
+  if (ref !== null) s += `<line class="ref" x1="${X(ref)}" x2="${X(ref)}" y1="14" y2="${H - 20}"/>`;
+  rows.forEach((r, i) => {
+    const y = 22 + i * rh;
+    s += `<line class="gr" x1="${LW}" x2="${W - 14}" y1="${y}" y2="${y}" opacity=".5"/><text class="lab" x="${LW - 8}" y="${y + 4}" text-anchor="end">${esc(r.label.length > 56 ? r.label.slice(0, 54) + "…" : r.label)}</text>`;
+    r.vals.forEach((x, j) => { if (!x || !isNum(x.v)) return; const c = PAL[j % PAL.length];
+      if (isNum(x.lo) && isNum(x.hi) && x.lo !== x.hi) s += `<line x1="${X(x.lo)}" x2="${X(x.hi)}" y1="${y}" y2="${y}" stroke="${c}" stroke-width="2.4" opacity=".5"/>`;
+      s += `<circle cx="${X(x.v)}" cy="${y}" r="4.4" fill="${c}" data-tip="${esc(`${r.label}\n${series[j]}: ${fmt(x.v)}${isNum(x.lo) && x.lo !== x.hi ? ` [${fmt(x.lo)}, ${fmt(x.hi)}]` : ""}`)}"/>`; });
+  });
+  s += `<text x="${LW}" y="10">${esc(title)}</text></svg>`;
+  return `<div class="chart-card">${s}<div class="legend">${series.map((l, j) => `<span><i style="background:${PAL[j % PAL.length]}"></i>${esc(l)}</span>`).join("")}</div></div>`;
+}
+function heatColor(v, lo, hi) {
+  if (!isNum(v)) return "";
+  const t = Math.max(0, Math.min(1, (v - lo) / ((hi - lo) || 1)));
+  const dark = document.documentElement.getAttribute("data-theme") === "dark" || (!document.documentElement.getAttribute("data-theme") && matchMedia("(prefers-color-scheme: dark)").matches);
+  const a = 0.08 + 0.82 * t;
+  return `background: rgba(37, 99, 235, ${a.toFixed(3)}); color: ${t > 0.55 ? "#fff" : (dark ? "#e6e8ec" : "#1a1d23")};`;
+}
+
+/* =================================================================== DETECTION */
+const DS = {setup: null, models: new Set(), dets: new Set(), train: null, cond: "full", readout: null, C: null, show: "auc", heat: {}};
+function setupById(id) { return D.detection.setups.find(s => s.id === id); }
+const SETUP_GROUPS = [
+  ["Main (q1)", ["q1"]],
+  ["Readout selection (layer × position)", ["hbsel_cv", "hbsel", "qwen_pos", "qwen_sweep"]],
+  ["Single-set / per-training-set transfer", ["single", "probe_methods", "dom", "olmo_layers"]],
+  ["Paper protocol, 50 HB splits", ["paper50", "removal50", "dir50", "few", "release", "pcak_llama", "pcak_gemma"]],
+  ["Other controls", ["removal10", "single_vec", "normality", "refdmu"]],
+];
+function pickSetup(id) {
+  const S = setupById(id); DS.setup = id;
+  const R = D.detection.records.filter(r => r.s === id);
+  DS.models = new Set(uniq(R.map(r => r.m).concat(D.detection.heat.filter(h => h.s === id).map(h => h.m))));
+  const trains = uniq(R.map(r => r.t).filter(x => x !== undefined));
+  DS.train = trains.includes("hb") ? "hb" : trains.includes("hbwjb") && trains.length === 1 ? "hbwjb" : (trains[0] ?? null);
+  if (id === "hbsel" || id === "hbsel_cv") DS.train = null;   // train set is model-determined there
+  DS.cond = "full";
+  const rds = uniq(R.map(r => r.r).filter(x => x !== undefined));
+  DS.readout = S.readout_axis ? null : (rds.includes("reselect") ? "reselect" : rds[0] ?? null);
+  const Cs = uniq(R.map(r => r.C).filter(x => x !== undefined));
+  DS.C = S.default_C && Cs.includes(S.default_C) ? S.default_C : (Cs[0] ?? null);
+  const dets = uniq(R.map(r => r.d));
+  DS.dets = new Set(S.default_dets ? dets.filter(d => S.default_dets.includes(d)) : dets);
+  if (!DS.dets.size) DS.dets = new Set(dets.slice(0, 15));
+  DS.heat = {};
+}
+function recKey(r) { return [r.s, r.m, r.d, r.t ?? "", r.r ?? "", r.C ?? ""].join("|"); }
+function detRecords(extra = {}) {
+  const f = Object.assign({cond: DS.cond, train: DS.train, readout: DS.readout, C: DS.C}, extra);
+  return D.detection.records.filter(r => r.s === DS.setup && DS.models.has(r.m) && DS.dets.has(r.d) &&
+    (f.cond === "*" || r.c === f.cond) && (f.train === null || r.t === undefined || r.t === f.train) &&
+    (f.readout === null || r.r === undefined || r.r === f.readout) && (f.C === null || r.C === undefined || r.C === f.C));
+}
+function findRec(r, over) {
+  const q = Object.assign({}, r, over);
+  return D.detection.records.find(x => x.s === q.s && x.m === q.m && x.d === q.d && x.c === q.c && (x.t ?? "") === (q.t ?? "") && (x.r ?? "") === (q.r ?? "") && (x.C ?? "") === (q.C ?? ""));
+}
+function selText(sel) {
+  if (!sel) return "";
+  const p = [];
+  if (sel.L !== undefined && sel.L !== null) p.push(`L${sel.L} p${sel.p}${sel.tok !== undefined ? " " + JSON.stringify(sel.tok) : ""}`);
+  if (sel.C !== undefined && sel.C !== null) p.push(`C=${sel.C}`);
+  if (sel.cw !== undefined) p.push(`cw=${sel.cw}`);
+  if (sel.k !== undefined) p.push(`k=${sel.k}`);
+  if (sel.expl_var !== undefined && sel.expl_var !== null) p.push(`expl.var ${f3(sel.expl_var)}`);
+  if (sel.share_removed !== undefined) p.push(`share removed ${f3(sel.share_removed)}`);
+  if (sel.hb_ci95) p.push(`HB CI [${f3(sel.hb_ci95[0])}, ${f3(sel.hb_ci95[1])}]`);
+  if (sel.per_draw) p.push("draws: " + sel.per_draw.join("; "));
+  return p.join(" · ");
+}
+function recTip(r) {
+  const t = [`${mlab(r.m)} · ${dlab(r.d)} · ${clab(r.c)}`];
+  if (r.t) t.push("train: " + r.t); if (r.r) t.push("readout: " + r.r); if (r.C) t.push(r.C);
+  if (r.note) t.push(r.note);
+  if (r.draws) t.push("per-draw avg: " + r.draws.map(f3).join(", "));
+  const s = selText(r.sel); if (s) t.push(s);
+  return t.join("\n");
+}
+function renderDetection() {
+  const el = $("#detection"); el.innerHTML = "";
+  const q1 = setupById("q1");
+  if (q1 && q1.pending) el.insertAdjacentHTML("beforeend", `<div class="banner warn"><b>Q1 sweep: pending.</b> <code>${esc(q1.expected)}</code> is not on disk yet. Rebuild with <code>python3 build_data.py</code> once it lands; the Q1 setup, its layer × position heatmaps and the Q1 persona-share fields then fill in automatically.</div>`);
+  if (q1 && q1.smoke) el.insertAdjacentHTML("beforeend", `<div class="banner bad"><b>SMOKE BUILD (development only)</b>: Q1 numbers come from a one-cell smoke run and are not results.</div>`);
+  const S = setupById(DS.setup), R = D.detection.records.filter(r => r.s === DS.setup);
+  const fp = document.createElement("div"); fp.className = "filter-panel"; el.appendChild(fp);
+  // setup select
+  const row0 = document.createElement("div"); row0.className = "filter-row";
+  let opt = "";
+  for (const [g, ids] of SETUP_GROUPS) {
+    const ss = ids.map(setupById).filter(Boolean); if (!ss.length) continue;
+    opt += `<optgroup label="${esc(g)}">` + ss.map(s => `<option value="${s.id}" ${s.id === DS.setup ? "selected" : ""}>${esc(s.label)}${s.pending ? " — PENDING" : ""}</option>`).join("") + `</optgroup>`;
+  }
+  row0.innerHTML = `<span class="label">Setup</span><select class="sel" id="setupSel">${opt}</select>`;
+  fp.appendChild(row0);
+  $("#setupSel", row0).onchange = e => { pickSetup(e.target.value); renderDetection(); saveHash(); };
+  const rerender = () => { renderDetection(); saveHash(); };
+  const models = uniq(R.map(r => r.m).concat(D.detection.heat.filter(h => h.s === DS.setup).map(h => h.m))).sort(byModel);
+  if (models.length) fp.appendChild(chipRow("Model", models.map(m => ({v: m, l: mlab(m)})), DS.models, true, rerender));
+  const trains = uniq(R.map(r => r.t).filter(x => x !== undefined));
+  if (trains.length > 1 && S.trains && !DS.setup.startsWith("hbsel")) fp.appendChild(chipRow("Training set", trains.map(t => ({v: t, l: S.trains[t] || setLab(t)})), DS.train, false, v => { DS.train = v; rerender(); }));
+  const conds = uniq(R.map(r => r.c)); const cOrder = S.conds || Object.keys(D.conds);
+  conds.sort((a, b) => cOrder.indexOf(a) - cOrder.indexOf(b));
+  if (conds.length > 1) fp.appendChild(chipRow("Component", conds.map(c => ({v: c, l: clab(c), cls: c === "no_nr" ? "invalid" : ""})), DS.cond, false, v => { DS.cond = v; rerender(); }));
+  const rds = uniq(R.map(r => r.r).filter(x => x !== undefined));
+  if (rds.length > 1 && !S.readout_axis) fp.appendChild(chipRow("Readout", rds.map(x => ({v: x, l: (S.readouts && S.readouts[x]) || x})), DS.readout, false, v => { DS.readout = v; rerender(); }));
+  const Cs = uniq(R.map(r => r.C).filter(x => x !== undefined));
+  if (Cs.length > 1) fp.appendChild(chipRow("C", Cs.map(x => ({v: x, l: x, tip: S.Cs && S.Cs[x]})), DS.C, false, v => { DS.C = v; rerender(); }));
+  const hasDfull = conds.length > 1, hasDraw = R.some(r => r.d === "raw" || r.d === "pm_LR_raw");
+  const shows = [{v: "auc", l: "Folded AUC"}].concat(hasDfull ? [{v: "dfull", l: "Δ vs full"}] : []).concat(hasDraw ? [{v: "draw", l: "Δ vs raw probe"}] : []);
+  if (!shows.find(s => s.v === DS.show)) DS.show = "auc";
+  if (shows.length > 1) fp.appendChild(chipRow("Show", shows, DS.show, false, v => { DS.show = v; rerender(); }));
+  const dets = uniq(R.map(r => r.d)).sort((a, b) => dOrd(a) - dOrd(b));
+  if (dets.length) fp.appendChild(chipRow("Detector", dets.map(d => ({v: d, l: dlab(d), g: D.dets[d] ? D.dets[d].group : ""})), DS.dets, true, rerender));
+  // protocol + sources
+  const srcs = D.sources.filter(s => s.setup === DS.setup);
+  el.insertAdjacentHTML("beforeend", `<div class="panel"><div class="protocol"><b>Protocol.</b> ${esc(S.protocol)}</div>
+    <div class="protocol"><b>Sources.</b> ${srcs.map(s => `<code>${esc(s.path)}</code>${s.note ? ` <span>(${esc(s.note)})</span>` : ""}`).join("; ") || "—"}</div>
+    ${S.models_n ? `<div class="protocol"><b>n.</b> ${Object.entries(S.models_n).map(([m, n]) => `${mlab(m)}: train ${n.n_train} (${n.n_pos_train} jailbroken); test ${Object.entries(n.n_test || {}).map(([s, v]) => `${setLab(s)} ${v[0]}/${v[1]}`).join(", ")}; C grid ${JSON.stringify(n.grid)}`).join(" · ")}</div>` : ""}
+    <div class="protocol">All AUCs are folded, max(a, 1−a). "—" = not saved for this cell (never filled from another protocol).</div></div>`);
+  if (S.pending) { el.insertAdjacentHTML("beforeend", `<div class="panel no-data">Pending: no Q1 output on disk yet.</div>`); return; }
+  if (!S.heat_only) {
+    if (S.readout_axis) renderReadoutPivot(el, S); else renderDetTable(el, S);
+    if (conds.length > 1) renderCondOverview(el, S, conds);
+    renderSweepChart(el, S);
+  }
+  if (S.heat) renderHeat(el, S);
+  if (DS.setup === "single") renderComplement(el);
+}
+function cellVal(r, set) { return set === "avg" ? r.avg : (r.auc ? r.auc[set] : undefined); }
+function renderDetTable(el, S) {
+  const recs = detRecords().sort((a, b) => byModel(a.m, b.m) || dOrd(a.d) - dOrd(b.d));
+  if (!recs.length) { el.insertAdjacentHTML("beforeend", `<div class="panel no-data">No saved results for this selection.</div>`); return; }
+  const cols = S.cols.filter(c => recs.some(r => r.auc && isNum(r.auc[c])));
+  const showVal = recs.some(r => isNum(r.val)), showSel = recs.some(r => r.sel);
+  const mode = DS.show;
+  const ref = r => mode === "dfull" ? findRec(r, {c: "full"}) : mode === "draw" ? findRec(r, {d: r.d.startsWith("pm_") ? "pm_LR_raw" : "raw"}) : null;
+  const refKey = mode === "dfull" ? "full" : "raw";
+  let h = `<div class="panel"><h3>${mode === "auc" ? "Folded AUC per transfer set" : mode === "dfull" ? `Δ = ${esc(clab(DS.cond))} − full (same detector, setup, readout)` : "Δ = detector − raw linear probe"}</h3><table><thead><tr><th class="l">Model</th><th class="l">Detector</th>`;
+  cols.forEach(c => h += `<th>${esc(setLab(c))}</th>`);
+  h += `<th>Avg transfer</th>${showVal ? "<th>Val</th>" : ""}${showSel ? `<th class="l">Selected / notes</th>` : ""}</tr></thead><tbody>`;
+  let lastM = null; const chartRows = [];
+  for (const r of recs) {
+    const rr = ref(r);
+    h += `<tr class="${r.m !== lastM ? "grp-start" : ""}"><td class="model">${r.m !== lastM ? esc(mlab(r.m)) : ""}</td><td class="l" data-tip="${esc(recTip(r))}">${esc(dlab(r.d))}${r.d === "nr_acts" && DS.cond !== "full" ? "" : ""}</td>`;
+    lastM = r.m;
+    for (const c of cols) {
+      let v = cellVal(r, c);
+      if (mode !== "auc") v = rr && isNum(v) && isNum(cellVal(rr, c)) ? v - cellVal(rr, c) : undefined;
+      h += isNum(v) ? `<td class="num ${mode !== "auc" ? (v > 0 ? "pos" : v < 0 ? "neg" : "") : ""}">${mode === "auc" ? f3(v) : sgn(v)}</td>` : `<td class="missing">—</td>`;
+    }
+    // avg
+    if (mode === "auc") {
+      h += isNum(r.avg) ? `<td class="num"><b>${f3(r.avg)}</b>${r.ci ? `<span class="ci">[${f3(r.ci[0])}, ${f3(r.ci[1])}]</span>` : ""}</td>` : `<td class="missing">—</td>`;
+      chartRows.push({label: `${mlab(r.m)} · ${dlab(r.d)}`, v: r.avg, lo: r.ci && r.ci[0], hi: r.ci && r.ci[1], color: PAL[MODEL_ORDER.indexOf(r.m) % PAL.length]});
+    } else {
+      const saved = r.dl && r.dl[refKey];
+      const dv = saved && isNum(saved.v) ? saved.v : (rr && isNum(r.avg) && isNum(rr.avg) ? r.avg - rr.avg : undefined);
+      const ci = saved && saved.ci;
+      const sig = ci && isNum(ci[0]) && (ci[0] > 0 || ci[1] < 0);
+      h += isNum(dv) ? `<td class="num ${dv > 0 ? "pos" : dv < 0 ? "neg" : ""} ${sig ? "sig" : ""}" data-tip="${esc(saved ? `saved paired Δ${saved.kind ? " (" + saved.kind + ")" : ""}` : "difference of saved point estimates; no paired CI saved")}">${sgn(dv)}${ci ? `<span class="ci">[${sgn(ci[0])}, ${sgn(ci[1])}]${saved.kind ? " " + esc(saved.kind[0]) : ""}</span>` : ""}</td>` : `<td class="missing">—</td>`;
+      if (isNum(dv)) chartRows.push({label: `${mlab(r.m)} · ${dlab(r.d)}`, v: dv, lo: ci && ci[0], hi: ci && ci[1], color: PAL[MODEL_ORDER.indexOf(r.m) % PAL.length]});
+    }
+    if (showVal) h += isNum(r.val) ? `<td class="num">${f3(r.val)}</td>` : `<td class="missing">—</td>`;
+    if (showSel) h += `<td class="l small">${esc(selText(r.sel))}${r.note ? ` <span class="tag">${esc(r.note)}</span>` : ""}${r.draws ? ` <span class="tag" data-tip="per-draw avg transfer: ${esc(r.draws.map(f3).join(", "))}">${r.draws.length} draws</span>` : ""}</td>`;
+    h += `</tr>`;
+  }
+  h += `</tbody></table><div class="note">Bold CI-excluding-zero Δ cells: the saved paired CI excludes 0. Δ cells without a CI are differences of saved point estimates. Hover a detector for its record (draws, notes).</div></div>`;
+  el.insertAdjacentHTML("beforeend", h);
+  if (chartRows.length > 1 && cols.length) el.insertAdjacentHTML("beforeend", dotChart(chartRows, {title: mode === "auc" ? "Average transfer AUC (folded)" : "Δ average transfer", ref: mode === "auc" ? null : 0}));
+  else if (chartRows.length > 1) el.insertAdjacentHTML("beforeend", dotChart(chartRows, {title: mode === "auc" ? "Average transfer AUC (folded)" : "Δ average transfer", ref: mode === "auc" ? null : 0}));
+}
+function renderReadoutPivot(el, S) {
+  const recs = detRecords({readout: null}); if (!recs.length) { el.insertAdjacentHTML("beforeend", `<div class="panel no-data">No saved results for this selection.</div>`); return; }
+  const rds = Object.keys(S.readouts || {}).filter(x => recs.some(r => r.r === x));
+  const rows = uniq(recs.map(r => r.m + "|" + r.d)).sort((a, b) => byModel(a.split("|")[0], b.split("|")[0]) || dOrd(a.split("|")[1]) - dOrd(b.split("|")[1]));
+  let h = `<div class="panel"><h3>Average transfer AUC (folded) by ${esc(DS.setup === "few" ? "number of directions k" : "layer")}</h3><table><thead><tr><th class="l">Model</th><th class="l">Detector</th>${rds.map(x => `<th>${esc(x)}</th>`).join("")}</tr></thead><tbody>`;
+  const series = [];
+  rows.forEach(k => {
+    const [m, d] = k.split("|"); const pts = [];
+    h += `<tr><td class="model">${esc(mlab(m))}</td><td class="l">${esc(dlab(d))}</td>`;
+    rds.forEach(x => { const r = recs.find(r => r.m === m && r.d === d && r.r === x); h += r && isNum(r.avg) ? `<td class="num" data-tip="${esc(recTip(r))}">${f3(r.avg)}</td>` : `<td class="missing">—</td>`; if (r) pts.push([+x.replace(/[^0-9.]/g, ""), r.avg]); });
+    h += `</tr>`; series.push({label: `${mlab(m)} · ${dlab(d)}`, pts});
+  });
+  el.insertAdjacentHTML("beforeend", h + `</tbody></table></div>`);
+  el.insertAdjacentHTML("beforeend", lineChart(series, {title: "Average transfer AUC", logx: DS.setup === "few", xlab: DS.setup === "few" ? "k" : "layer"}));
+}
+function renderCondOverview(el, S, conds) {
+  const recs = detRecords({cond: "*"}); if (!recs.length) return;
+  const rows = uniq(recs.map(r => r.m + "|" + r.d)).sort((a, b) => byModel(a.split("|")[0], b.split("|")[0]) || dOrd(a.split("|")[1]) - dOrd(b.split("|")[1]));
+  const delta = DS.show === "dfull";
+  let h = `<div class="panel"><h3>All components: ${delta ? "Δ average transfer vs full" : "average transfer AUC"} (columns = component condition)</h3><table><thead><tr><th class="l">Model</th><th class="l">Detector</th>${conds.map(c => `<th class="${c === "no_nr" ? "" : ""}" data-tip="${esc(clab(c))}">${esc(clab(c))}</th>`).join("")}</tr></thead><tbody>`;
+  rows.forEach(k => {
+    const [m, d] = k.split("|"); const full = recs.find(r => r.m === m && r.d === d && r.c === "full");
+    h += `<tr><td class="model">${esc(mlab(m))}</td><td class="l">${esc(dlab(d))}</td>`;
+    conds.forEach(c => {
+      const r = recs.find(r => r.m === m && r.d === d && r.c === c);
+      if (!r || !isNum(r.avg)) { h += `<td class="missing">—</td>`; return; }
+      if (!delta) { h += `<td class="num" data-tip="${esc(recTip(r))}">${f3(r.avg)}${r.ci ? `<span class="ci">[${f3(r.ci[0])}, ${f3(r.ci[1])}]</span>` : ""}</td>`; return; }
+      if (c === "full") { h += `<td class="num">${f3(r.avg)}</td>`; return; }
+      const sv = r.dl && r.dl.full; const dv = sv && isNum(sv.v) ? sv.v : (full && isNum(full.avg) ? r.avg - full.avg : undefined);
+      const sig = sv && sv.ci && (sv.ci[0] > 0 || sv.ci[1] < 0);
+      h += isNum(dv) ? `<td class="num ${dv > 0 ? "pos" : "neg"} ${sig ? "sig" : ""}" data-tip="${esc(sv ? "saved paired Δ, bootstrap CI" : "difference of saved point estimates; no paired CI saved")}">${sgn(dv)}${sv && sv.ci ? `<span class="ci">[${sgn(sv.ci[0])}, ${sgn(sv.ci[1])}]</span>` : ""}</td>` : `<td class="missing">—</td>`;
+    });
+    h += `</tr>`;
+  });
+  const nr = conds.includes("no_nr") ? `<div class="note">"No Robots span removed" is <b>not a valid non-persona control</b>: No Robots activations are persona-rich, so removing their span removes persona content too. Use the random or Wikipedia span removals as controls.</div>` : "";
+  el.insertAdjacentHTML("beforeend", h + `</tbody></table>${nr}</div>`);
+}
+function renderSweepChart(el, S) {
+  const recs = D.detection.records.filter(r => r.s === DS.setup && DS.models.has(r.m) && r.c === DS.cond && (DS.train === null || r.t === undefined || r.t === DS.train) && (DS.readout === null || r.r === undefined || r.r === DS.readout) && (DS.C === null || r.C === undefined || r.C === DS.C));
+  const fam = {};
+  recs.forEach(r => { const m = r.d.match(/^(.*?)_?(\d+)$/); if (!m || r.d.startsWith("gauss") || !isNum(r.avg)) return; const k = r.m + "|" + m[1]; (fam[k] = fam[k] || []).push([+m[2], r.avg, r.ci && r.ci[0], r.ci && r.ci[1], r.d]); });
+  const sel = [...DS.dets];
+  const series = Object.entries(fam).filter(([k, p]) => p.length >= 4 && p.some(x => sel.includes(x[4]))).map(([k, p]) => { const [m, f] = k.split("|"); return {label: `${mlab(m)} · ${f.replace(/_$/, "")}`, pts: p}; });
+  if (!series.length) return;
+  const refs = recs.filter(r => r.d === "PersonaJB" && isNum(r.avg)).map(r => ({v: r.avg, l: `PersonaJB ${mlab(r.m)}`}));
+  el.insertAdjacentHTML("beforeend", `<h3>k-sweep: average transfer vs k (families with ≥ 4 k values that contain a selected detector)</h3>` + lineChart(series, {title: "Average transfer AUC (folded)", logx: true, xlab: "k", refs}));
+}
+function renderHeat(el, S) {
+  const H = D.detection.heat.filter(h => h.s === DS.setup && DS.models.has(h.m)); if (!H.length) return;
+  const hs = DS.heat;
+  const ms = uniq(H.map(h => h.m)).sort(byModel); if (!ms.includes(hs.m)) hs.m = ms[0];
+  const H1 = H.filter(h => h.m === hs.m);
+  const ds = uniq(H1.map(h => h.d)).sort((a, b) => dOrd(a) - dOrd(b)); if (!ds.includes(hs.d)) hs.d = ds.includes("PersonaJB") ? "PersonaJB" : ds[0];
+  const cs = uniq(H1.filter(h => h.d === hs.d).map(h => h.c)); if (!cs.includes(hs.c)) hs.c = cs.includes("full") ? "full" : cs[0];
+  const h = H1.find(x => x.d === hs.d && x.c === hs.c);
+  const mets = Object.keys(h.metrics); if (!mets.includes(hs.met)) hs.met = mets[0];
+  const ML = {val: "validation AUC", avg: "avg transfer AUC", hb_disjoint: "HB disjoint test AUC", hb_randomCV: "HB random-CV AUC"};
+  const wrap = document.createElement("div"); wrap.className = "panel"; el.appendChild(wrap);
+  wrap.insertAdjacentHTML("beforeend", `<h3>Layer × position heatmap</h3>`);
+  const fp = document.createElement("div"); fp.className = "filter-panel"; wrap.appendChild(fp);
+  const rr = () => { renderDetection(); };
+  fp.appendChild(chipRow("Model", ms.map(m => ({v: m, l: mlab(m)})), hs.m, false, v => { hs.m = v; rr(); }));
+  fp.appendChild(chipRow("Detector", ds.map(d => ({v: d, l: dlab(d)})), hs.d, false, v => { hs.d = v; rr(); }));
+  if (cs.length > 1) fp.appendChild(chipRow(DS.setup === "qwen_sweep" ? "Training pool" : "Component", cs.map(c => ({v: c, l: DS.setup === "qwen_sweep" ? (c === "hb" ? "HB only" : "HB + WJB") : clab(c)})), hs.c, false, v => { hs.c = v; rr(); }));
+  fp.appendChild(chipRow("Metric", mets.map(m => ({v: m, l: ML[m] || m})), hs.met, false, v => { hs.met = v; rr(); }));
+  const M = h.metrics[hs.met]; const all = M.flat().filter(isNum); const lo = Math.min(...all), hi = Math.max(...all);
+  // the selected readout (records with sel.L / p)
+  const sr = D.detection.records.find(r => r.s === DS.setup && r.m === hs.m && r.d === hs.d && r.c === hs.c && (r.r === undefined || r.r === "reselect") && r.sel && r.sel.L !== undefined);
+  let t = `<table class="heat"><thead><tr><th class="l">Layer</th>${h.toks.map((tk, i) => `<th>p${i}<br><span style="text-transform:none">${esc(JSON.stringify(tk))}</span></th>`).join("")}</tr></thead><tbody>`;
+  h.layers.forEach((L, li) => {
+    t += `<tr><td class="l"><b>L${L}</b></td>`;
+    h.toks.forEach((tk, pi) => { const v = M[li][pi]; const isSel = sr && sr.sel.L === L && sr.sel.p === pi;
+      t += `<td class="hc ${isSel ? "selcell" : ""}" style="${heatColor(v, lo, hi)}" data-tip="${esc(`L${L} p${pi} ${JSON.stringify(tk)}\n${ML[hs.met] || hs.met}: ${f3(v)}${isSel ? "\n← selected readout" : ""}`)}">${isNum(v) ? f3(v) : "—"}</td>`; });
+    t += `</tr>`;
+  });
+  t += `</tbody></table><div class="note">${esc(mlab(hs.m))} · ${esc(dlab(hs.d))} · ${esc(ML[hs.met] || hs.met)}; colour range ${f3(lo)}–${f3(hi)}. ${sr ? `Outlined = selected readout (L${sr.sel.L}, p${sr.sel.p}).` : ""} ${hs.d === "gauss" ? "Gaussian = mean of the 3 draws per cell." : ""} Per-cell avg transfer is the mean of the saved per-family folded AUCs at that cell's chosen C.</div>`;
+  wrap.insertAdjacentHTML("beforeend", t);
+}
+function renderComplement(el) {
+  const C = D.detection.complement; if (!C || !Object.keys(C).length) return;
+  const ms = Object.keys(C).filter(m => DS.models.has(m)).sort(byModel);
+  let h = `<div class="panel"><h3>Complementarity: does PersonaJB catch jailbreaks the raw probe misses? (single-set training scores)</h3>
+  <div class="protocol">complement.py on saved persona_four scores, no refits. Each detector flags a test prompt above the 90th percentile of the non-jailbroken prompts of that family (10% FPR; uses test labels, diagnostic only), pooled over all (train, test) pairs. Rescue recall = recall among jailbroken prompts the raw probe misses; Gaussian = mean of 3 draws. Score-average AUC: mean within-family percentile rank of two detectors (folded).</div>
+  <table><thead><tr><th class="l">Model</th><th>PersonaJB rescue recall</th><th>Gaussian rescue recall</th><th>PersonaJB extra-flag precision</th><th>Gaussian extra-flag precision</th><th>stable rescues PersonaJB</th><th>stable rescues Gaussian</th><th>jailbroken test n</th><th>raw AUC</th><th>raw+PersonaJB</th><th>raw+Gaussian</th></tr></thead><tbody>`;
+  ms.forEach(m => { const c = C[m], a = c.score_average_auc || {};
+    h += `<tr><td class="model">${esc(mlab(m))}</td><td class="num">${f3(c.PersonaJB_vs_raw.rescue_recall)}</td><td class="num">${f3(c.Gaussian_vs_raw.rescue_recall)}</td><td class="num">${f3(c.PersonaJB_vs_raw.extra_flag_precision)}</td><td class="num">${f3(c.Gaussian_vs_raw.extra_flag_precision)}</td><td class="num">${c.stable_rescues.PersonaJB}</td><td class="num">${(+c.stable_rescues.Gaussian_mean).toFixed(1)}</td><td class="num">${c.stable_rescues.n_jailbroken_test}</td><td class="num">${f3(a.raw)}</td><td class="num">${f3(a["raw+PersonaJB"])}</td><td class="num">${f3(a["raw+Gaussian"])}</td></tr>`; });
+  el.insertAdjacentHTML("beforeend", h + `</tbody></table></div>`);
+}
+
+/* =================================================================== STEERING */
+const SS = {models: new Set(["llama", "gemma"]), bench: new Set(["harmbench", "jbb", "wildjb"]), groups: null, vars: null, dose: "cum", alpha: 0.5, sc: null, snaps: null, srcs: null, metric: "asr"};
+const BENCH = {harmbench: "HarmBench refused", jbb: "JBB", wildjb: "WildJB", wildjb_refused: "WildJB refused"};
+const SCL = {harness: "harness (judge + word-5-gram degeneracy filter)", corrected: "corrected (also char-repeat filter)", "looks_like_text corrected": "looks_like_text corrected (Gemma, valid)"};
+const SNAPTAG = {off: ["off", "official"], mir: ["mir", "mirror"], unk: ["unk", "snapshot?"], gem: ["", "gemma"], na: ["", "attack"]};
+function stFiltered() {
+  return D.steering.records.filter(r => SS.models.has(r.m) && SS.groups.has(r.g) && SS.vars.has(r.var) && SS.snaps.has(r.snap) && SS.srcs.has(r.src) &&
+    (r.dose === SS.dose || (SS.dose === "cum" && r.dose === "attack")) && SS.scs.has(r.sc));
+}
+function stValue(r) {
+  // returns {v, lo, hi} for the chosen metric / alpha, or null
+  if (SS.dose === "single") { if (r.dose === "single" && Math.abs(r.a - SS.alpha) > 1e-9) return null; }
+  if (SS.metric === "asr") {
+    if (SS.dose === "cum" && r.dose === "cum" && SS.alpha < 0.5 - 1e-9) { const p = r.curve && r.curve.find(c => Math.abs(c[0] - SS.alpha) < 1e-9); return p ? {v: p[1]} : null; }
+    return isNum(r.asr) ? {v: r.asr, lo: r.lo, hi: r.hi} : null;
+  }
+  if (SS.dose === "cum" && SS.alpha < 0.5 - 1e-9 && r.dose === "cum") return null;
+  if (SS.metric === "deg") return isNum(r.deg) ? {v: r.deg} : null;
+  if (SS.metric === "coh") return isNum(r.coh) ? {v: r.coh, lo: r.clo, hi: r.chi} : null;
+  if (SS.metric === "diff") return r.diff && isNum(r.diff.v) ? {v: r.diff.v, lo: r.diff.lo, hi: r.diff.hi, vs: r.diff.vs} : null;
+}
+function renderSteering() {
+  const el = $("#steering"); el.innerHTML = "";
+  const A = D.steering.records;
+  if (!SS.groups) { SS.groups = new Set(["main", "random / null", "classic attack"]); SS.vars = new Set(uniq(A.map(r => r.var))); SS.snaps = new Set(uniq(A.map(r => r.snap))); SS.srcs = new Set(uniq(A.map(r => r.src)));
+    SS.scs = new Set(uniq(A.map(r => r.sc))); }
+  el.insertAdjacentHTML("beforeend", `<div class="banner warn"><b>Llama snapshots are not comparable.</b> Llama arms come from two model snapshots: the official meta-llama revision <code>0e9e39f2</code> and a mirror <code>247cb7c3</code> whose chat template lacks the system header ("Cutting Knowledge Date"); the template flips low-α behaviour (0.3–2% mirror vs 14–33% official at α ≤ 0.2). Each row carries its snapshot tag; compare rows only within one snapshot. Gemma: only the gibberish-corrected cells (looks_like_text guard) are shown; raw Gemma summary ASRs are superseded and excluded.</div>`);
+  const fp = document.createElement("div"); fp.className = "filter-panel"; el.appendChild(fp);
+  const rr = () => { renderSteering(); saveHash(); };
+  fp.appendChild(chipRow("Model", uniq(A.map(r => r.m)).sort(byModel).map(m => ({v: m, l: mlab(m)})), SS.models, true, rr));
+  fp.appendChild(chipRow("Benchmark", Object.keys(BENCH).filter(b => A.some(r => r.b === b)).map(b => ({v: b, l: BENCH[b]})), SS.bench, true, rr));
+  fp.appendChild(chipRow("Dose", [{v: "cum", l: "cumulative (stop at first jailbreak, α ≤ value)"}, {v: "single", l: "single dose at α"}], SS.dose, false, v => { SS.dose = v; SS.alpha = 0.5; rr(); }));
+  const alphas = SS.dose === "cum" ? [0.1, 0.2, 0.3, 0.4, 0.5] : uniq(A.filter(r => r.dose === "single").map(r => r.a)).sort((a, b) => a - b);
+  if (!alphas.includes(SS.alpha)) SS.alpha = alphas[alphas.length - 1];
+  fp.appendChild(chipRow("α", alphas.map(a => ({v: a, l: (SS.dose === "cum" ? "≤ " : "") + a, tip: SS.dose === "cum" && a < 0.5 ? "cumulative ASR at α ≤ value is available only where per-prompt min-α was saved (re-aggregated); other cells show —" : ""})), SS.alpha, false, v => { SS.alpha = v; rr(); }));
+  fp.appendChild(chipRow("Scoring", uniq(A.map(r => r.sc)).map(s => ({v: s, l: SCL[s] || s})), SS.scs, true, rr));
+  fp.appendChild(chipRow("Metric", [{v: "asr", l: "ASR"}, {v: "deg", l: "degenerate rate"}, {v: "coh", l: "coherent ASR"}, {v: "diff", l: "Δ vs reference (saved paired)"}], SS.metric, false, v => { SS.metric = v; rr(); }));
+  fp.appendChild(chipRow("Direction", uniq(A.map(r => r.g)).map(g => ({v: g, l: g})), SS.groups, true, rr));
+  fp.appendChild(chipRow("Component", uniq(A.map(r => r.var)).map(v => ({v, l: v, cls: v.includes("No Robots") ? "invalid" : ""})), SS.vars, true, rr));
+  fp.appendChild(chipRow("Snapshot", uniq(A.map(r => r.snap)).map(s => ({v: s, l: D.steering.snaps[s]})), SS.snaps, true, rr));
+  fp.appendChild(chipRow("Run", Object.keys(D.steering.sources).filter(s => A.some(r => r.src === s)).map(s => ({v: s, l: s, tip: D.steering.sources[s].label + "\n" + D.steering.sources[s].protocol})), SS.srcs, true, rr));
+  const R = stFiltered().filter(r => SS.bench.has(r.b));
+  const benches = Object.keys(BENCH).filter(b => SS.bench.has(b) && R.some(r => r.b === b));
+  const rowKey = r => [r.m, r.src, r.dir, r.var, r.snap, r.sc].join("|");
+  const keys = uniq(R.map(rowKey)).sort((a, b) => { const A1 = a.split("|"), B1 = b.split("|"); return byModel(A1[0], B1[0]) || A1[1].localeCompare(B1[1]) || A1[2].localeCompare(B1[2]); });
+  const fmtM = SS.metric === "diff" ? (x => sgn(x, pct)) : pct;
+  let h = `<div class="panel"><h3>${{asr: "ASR (%)", deg: "Degenerate rate (%)", coh: "Coherent ASR (%) = jailbroken / non-degenerate", diff: "Δ ASR (pp) vs the reference named in the tooltip (saved paired CI)"}[SS.metric]} · ${SS.dose === "cum" ? "cumulative α ≤ " : "single dose α = "}${SS.alpha}</h3>
+    <table><thead><tr><th class="l">Model</th><th class="l">Run</th><th class="l">Direction</th><th class="l">Component</th><th class="l">Snapshot</th><th class="l">Scoring</th>${benches.map(b => `<th>${esc(BENCH[b])}</th>`).join("")}</tr></thead><tbody>`;
+  let lastM = null; const chart = [];
+  keys.forEach(k => {
+    const [m, src, dir, v, snap, sc] = k.split("|");
+    const rs = R.filter(r => rowKey(r) === k);
+    const tag = SNAPTAG[snap] || ["", snap];
+    h += `<tr class="${m !== lastM ? "grp-start" : ""}"><td class="model">${m !== lastM ? esc(mlab(m)) : ""}</td><td class="l" data-tip="${esc(D.steering.sources[src].label + "\n" + D.steering.sources[src].protocol)}"><code>${esc(src)}</code></td><td class="l">${esc(dir)}</td><td class="l">${esc(v)}${v.includes("No Robots") ? ` <span class="tag bad">not a valid control</span>` : ""}</td><td class="l"><span class="tag ${tag[0]}" data-tip="${esc(D.steering.snaps[snap])}">${esc(tag[1])}</span></td><td class="l">${esc(sc)}</td>`;
+    lastM = m;
+    benches.forEach(b => {
+      const r = rs.find(x => x.b === b); const val = r && stValue(r);
+      if (!val) { h += `<td class="missing">—</td>`; return; }
+      const t = `${dir} · ${v}\n${BENCH[b]} · pool ${r.pool} · n=${r.n ?? "?"}\nASR ${pct(r.asr)}${isNum(r.lo) ? ` [${pct(r.lo)}, ${pct(r.hi)}]` : ""}${isNum(r.deg) ? ` · degenerate ${pct(r.deg)}` : ""}${isNum(r.coh) ? ` · coherent ${pct(r.coh)}` : ""}${r.ck ? "\nCI: " + r.ck : ""}${r.diff ? `\nΔ vs ${r.diff.vs}: ${sgn(r.diff.v, pct)} [${sgn(r.diff.lo, pct)}, ${sgn(r.diff.hi, pct)}]` : ""}${r.curve ? "\ncumulative curve: " + r.curve.map(c => `≤${c[0]}: ${pct(c[1])}`).join(", ") : ""}\nscoring: ${r.sc}`;
+      h += `<td class="num" data-tip="${esc(t)}">${fmtM(val.v)}${isNum(val.lo) ? `<span class="ci">[${fmtM(val.lo)}, ${fmtM(val.hi)}]</span>` : ""}</td>`;
+      if (b === benches[0]) chart.push({label: `${mlab(m)} · ${dir}${v !== "full" ? " · " + v : ""} (${tag[1]})`, v: val.v, lo: val.lo, hi: val.hi, color: snap === "mir" ? "var(--s2)" : snap === "gem" ? "var(--s3)" : snap === "unk" ? "var(--s8)" : "var(--s1)"});
+    });
+    h += `</tr>`;
+  });
+  h += `</tbody></table>${keys.length ? "" : `<div class="no-data">No saved steering results for this selection.</div>`}<div class="note">"—" = not saved for that cell (e.g. no per-prompt curve for cumulative α &lt; 0.5, no degenerate count, or the scoring variant was not run). Rates from per-generation files are re-aggregated from the saved per-prompt judge labels; no CIs are added where none were saved. Pools differ between runs (hover a cell).</div></div>`;
+  el.insertAdjacentHTML("beforeend", h);
+  if (chart.length > 45) el.insertAdjacentHTML("beforeend", `<div class="note">Chart hidden: ${chart.length} rows; narrow the facets to ≤ 45 rows to plot.</div>`);
+  else if (chart.length > 1) el.insertAdjacentHTML("beforeend", `<h3>${esc(BENCH[benches[0]])}: ${SS.metric === "diff" ? "Δ" : "rate"} with saved CI (blue official · orange mirror · grey snapshot not stated · green Gemma)</h3>` + dotChart(chart, {fmt: x => pct(x), ref: SS.metric === "diff" ? 0 : null}));
+  // cumulative curves
+  const cur = R.filter(r => r.curve && r.b === "harmbench");
+  if (cur.length && SS.dose === "cum") el.insertAdjacentHTML("beforeend", `<h3>Cumulative ASR vs α (HarmBench, harness scoring, re-aggregated from per-prompt min-α)</h3>` +
+    lineChart(cur.slice(0, 16).map((r, i) => ({label: `${r.dir}${r.var !== "full" ? " · " + r.var : ""} (${(SNAPTAG[r.snap] || ["", r.snap])[1]})`, pts: r.curve.map(c => [c[0], c[1]])})), {xlab: "α", fmt: x => pct(x), title: "ASR (%)"}));
+  const sing = D.steering.records.filter(r => r.dose === "single" && SS.models.has(r.m) && SS.groups.has(r.g) && SS.srcs.has(r.src));
+  if (sing.length && SS.dose === "single") {
+    const by = {}; sing.forEach(r => { const k = `${r.dir} · ${D.steering.sources[r.src].label}`; (by[k] = by[k] || []).push([r.a, r.asr]); });
+    el.insertAdjacentHTML("beforeend", `<h3>Single-dose ASR vs α (Llama mirror snapshot, harness)</h3>` + lineChart(Object.entries(by).filter(([k, p]) => p.length > 1).map(([k, p]) => ({label: k, pts: p})), {xlab: "α", fmt: x => pct(x), title: "ASR (%)"}));
+  }
+  // ablation
+  const AB = D.steering.ablation.filter(a => SS.models.has(a.m));
+  if (AB.length) {
+    let t = `<details class="panel"><summary><b>Directional ablation (click to expand)</b></summary><h3>Directional ablation (Llama, official snapshot; results/ablation_cells.json)</h3><div class="protocol">Project the direction out of the residual stream (all layers, or layer 16 only) on prompts that originally jailbroke the model (HarmBench n=1245, WildJB n=1025). Success = coherent refusal; gain = paired difference vs the no-hook regeneration. CIs as saved.</div>
+      <table><thead><tr><th class="l">Direction</th><th>Bench</th><th>n</th><th>Refused %</th><th>Still jailbroken %</th><th>Degenerate %</th><th>Refused gain vs none (pp)</th></tr></thead><tbody>`;
+    AB.sort((a, b) => a.b.localeCompare(b.b) || a.dir.localeCompare(b.dir)).forEach(a => {
+      const c3 = x => x && isNum(x[0]) ? `${pct(x[0])}<span class="ci">[${pct(x[1])}, ${pct(x[2])}]</span>` : `<span class="missing">—</span>`;
+      t += `<tr><td class="l">${esc(a.dir)}</td><td>${esc(a.b)}</td><td class="num">${a.n}</td><td class="num">${c3(a.refused)}</td><td class="num">${c3(a.still)}</td><td class="num">${c3(a.deg)}</td><td class="num">${a.gain && isNum(a.gain[0]) ? `${sgn(a.gain[0], pct)}<span class="ci">[${sgn(a.gain[1], pct)}, ${sgn(a.gain[2], pct)}]</span>` : `<span class="missing">—</span>`}</td></tr>`;
+    });
+    el.insertAdjacentHTML("beforeend", t + `</tbody></table></details>`);
+  }
+  el.insertAdjacentHTML("beforeend", `<div class="panel"><h3>Steering runs and protocols (the Run column shows the id)</h3><table><thead><tr><th class="l">Run</th><th class="l">Snapshot</th><th class="l">Protocol</th><th class="l">File</th></tr></thead><tbody>${Object.entries(D.steering.sources).map(([k, s]) => `<tr><td class="l"><code>${esc(k)}</code><br>${esc(s.label)}</td><td class="l">${esc(D.steering.snaps[s.snap])}</td><td class="l" style="white-space:normal;min-width:50ch;max-width:90ch">${esc(s.protocol)}</td><td class="l"><code>${esc(s.path)}</code></td></tr>`).join("")}</tbody></table></div>`);
+}
+
+/* =================================================================== SHARE */
+const SH = {models: new Set(["llama", "gemma"])};
+function renderShare() {
+  const el = $("#share"); el.innerHTML = "";
+  const fp = document.createElement("div"); fp.className = "filter-panel"; el.appendChild(fp);
+  fp.appendChild(chipRow("Model", ["llama", "gemma"].map(m => ({v: m, l: mlab(m)})), SH.models, true, () => { renderShare(); saveHash(); }));
+  el.insertAdjacentHTML("beforeend", `<div class="protocol">Share = ||Q<sub>S</sub><sup>T</sup>v||² / ||v||² for an orthonormal basis Q<sub>S</sub> of span S (K = 229 Llama L16, K = 240 Gemma L30, last prompt token). A random K-dim span holds K/d of a random vector: 0.056 (Llama), ≈0.045 (Gemma).</div>`);
+  // q1 info
+  const Q = D.share.q1.filter(q => SH.models.has(q.model));
+  if (!D.share.q1.length) el.insertAdjacentHTML("beforeend", `<div class="panel"><h3>Q1 sweep: persona share of each detector's direction / basis</h3><div class="no-data">Pending: q1_detection/out/q1_gemma.json is not on disk yet.</div></div>`);
+  Q.forEach(q => renderQ1Info(el, q));
+  for (const p of D.share.panels) {
+    const rows = p.rows.filter(r => SH.models.has(r.m)); if (!rows.length) continue;
+    const fmt = p.fmt === "raw" || p.fmt === "mixed" ? (x => isNum(x) ? (Number.isInteger(x) ? String(x) : x.toFixed(3)) : "—") : f3;
+    const cols = p.cols.filter(c => rows.some(r => r.v[c.k] !== undefined && r.v[c.k] !== null));
+    let h = `<div class="panel"><h3>${esc(p.title)}</h3><div class="protocol"><b>Protocol.</b> ${esc(p.protocol)}</div>${p.warn && rows.some(r => r.m === "gemma") ? `<div class="banner warn">${esc(p.warn)}</div>` : ""}
+      <table><thead><tr><th class="l">Model</th><th class="l">Vector / set</th>${cols.map(c => `<th>${esc(c.l)}</th>`).join("")}</tr></thead><tbody>`;
+    let lastM = null;
+    rows.forEach(r => {
+      h += `<tr class="${r.m !== lastM ? "grp-start" : ""}"><td class="model">${r.m !== lastM ? esc(mlab(r.m)) : ""}</td><td class="l">${esc(r.label)}</td>`; lastM = r.m;
+      cols.forEach(c => { const v = r.v[c.k];
+        if (Array.isArray(v)) h += `<td class="num">${fmt(v[0])}${v[1] !== v[2] && isNum(v[1]) ? `<span class="ci">[${fmt(v[1])}, ${fmt(v[2])}]</span>` : ""}</td>`;
+        else h += isNum(v) ? `<td class="num">${fmt(v)}</td>` : `<td class="missing">—</td>`; });
+      h += `</tr>`;
+    });
+    h += `</tbody></table></div>`;
+    el.insertAdjacentHTML("beforeend", h);
+    if (p.chart) {
+      const cc = cols.slice(0, 8);
+      const ch = rows.map(r => ({label: `${mlab(r.m)} · ${r.label}`, vals: cc.map(c => { const v = r.v[c.k]; const a = Array.isArray(v) ? v : [v]; return isNum(a[0]) ? {v: a[0], lo: a[1], hi: a[2]} : null; })}));
+      el.insertAdjacentHTML("beforeend", multiDot(ch, cc.map(c => c.l), {title: "share of squared norm (whiskers: min–max over draws where saved)"}));
+    }
+    if (p.id === "pcs_in_persona" && SH.models.has("llama")) el.insertAdjacentHTML("beforeend", lineChart(D.share.pccurves.map(c => ({label: `${c.pcs} in ${c.span}`, pts: c.y.map((y, i) => [i + 1, y])})), {title: "Share per PC (PC index on x)", xlab: "PC index", logx: true, W: 760}));
+    if (p.id === "persona_part") renderPervec(el);
+  }
+}
+function renderQ1Info(el, q) {
+  const keys = Object.keys(q.info).filter(k => k.endsWith("__full"));
+  const dets = uniq(keys.flatMap(k => Object.keys(q.info[k].persona_share || {})));
+  let h = `<div class="panel"><h3>Q1 sweep (${esc(mlab(q.model))}): persona share of each detector's direction / basis, per layer × position${q.smoke ? ' <span class="tag bad">smoke</span>' : ""}</h3>
+    <div class="protocol">q1_sweep.py "info": share of the detector's direction (or mean share of its 240-dim basis rows) inside span(240 trait vectors) of that layer; persona_share_train_acts = mean share of the training activations; random = same for a random 240-dim span. Source <code>${esc(q.file)}</code>.</div>
+    <table><thead><tr><th class="l">Cell</th><th>train acts in persona span</th><th>train acts in random span</th>${dets.map(d => `<th>${esc(d)}</th>`).join("")}</tr></thead><tbody>`;
+  keys.forEach(k => { const e = q.info[k]; h += `<tr><td class="l">${esc(k.replace("__full", ""))}</td><td class="num">${f3(e.persona_share_train_acts)}</td><td class="num">${f3(e.random_share_train_acts)}</td>${dets.map(d => `<td class="num">${f3((e.persona_share || {})[d])}</td>`).join("")}</tr>`; });
+  el.insertAdjacentHTML("beforeend", h + `</tbody></table></div>`);
+}
+function renderPervec(el) {
+  const P = D.share.pervec.filter(p => SH.models.has(p.m)); if (!P.length) return;
+  let s = `<div class="charts">`;
+  P.filter(p => p.span.startsWith("Persona")).forEach(p => {
+    const W = 250, H = 230, L = 36, B = 30, lo = Math.min(...p.x, ...p.yin, ...p.yout, p.floor) - 0.01, hi = Math.max(...p.x, ...p.yin, ...p.yout) + 0.01;
+    const X = v => L + (v - lo) / (hi - lo) * (W - L - 8), Y = v => 8 + (1 - (v - lo) / (hi - lo)) * (H - 8 - B);
+    let g = `<svg width="${W}" height="${H}"><line class="ax" x1="${X(lo)}" y1="${Y(lo)}" x2="${X(hi)}" y2="${Y(hi)}"/><line class="ref" x1="${L}" x2="${W - 8}" y1="${Y(p.p95)}" y2="${Y(p.p95)}"/>`;
+    p.x.forEach((x, i) => { g += `<circle cx="${X(x)}" cy="${Y(p.yin[i])}" r="2.6" fill="var(--s1)" opacity=".8"/><circle cx="${X(x)}" cy="${Y(p.yout[i])}" r="2.6" fill="var(--s2)" opacity=".7"/>`; });
+    g += `<text x="${L}" y="${H - 6}">transfer AUC of v</text><text x="4" y="12">${esc(mlab(p.m))} · ${esc(p.src)}</text></svg>`;
+    s += `<div class="chart-card">${g}</div>`;
+  });
+  el.insertAdjacentHTML("beforeend", `<h3>Per-vector transfer AUC: whole vector (x) vs its persona-span part (blue) and remainder (orange), top-50 vectors by HB AUC; dashed = random-direction p95 (persona_part_pervector.json)</h3>` + s + `</div>`);
+}
+
+/* =================================================================== SOURCES */
+function renderSources() {
+  const el = $("#sources");
+  el.innerHTML = `<div class="panel"><h3>Every file read by build_data.py</h3><div class="protocol">Generated ${esc(D.generated_at)}. Paths with "~" are under the home directory. See README.md for the excluded / unclear sources.</div>
+    <table><thead><tr><th class="l">File</th><th class="l">Tab</th><th class="l">Section / setup</th><th class="l">Note</th></tr></thead><tbody>${D.sources.map(s => `<tr><td class="l"><code>${esc(s.path)}</code></td><td class="l">${esc(s.tab)}</td><td class="l">${esc(s.section)}</td><td class="l" style="white-space:normal;max-width:60ch">${esc(s.note)}</td></tr>`).join("")}</tbody></table></div>`;
+}
+
+/* =================================================================== shell */
+function saveHash() {
+  const tab = $("#nav button.active").dataset.tab;
+  const p = new URLSearchParams({tab}); if (tab === "detection") p.set("setup", DS.setup);
+  history.replaceState(null, "", "#" + p.toString());
+}
+function showTab(t) {
+  document.querySelectorAll("#nav button").forEach(b => b.classList.toggle("active", b.dataset.tab === t));
+  document.querySelectorAll("section").forEach(s => s.classList.toggle("active", s.id === t));
+  ({detection: renderDetection, steering: renderSteering, share: renderShare, sources: renderSources})[t]();
+}
+$("#nav").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; showTab(b.dataset.tab); saveHash(); });
+fetch("data.json").then(r => r.json()).then(d => {
+  D = d; $("#gen").textContent = "data generated " + d.generated_at;
+  const p = new URLSearchParams(location.hash.slice(1));
+  const q1 = setupById("q1");
+  pickSetup(p.get("setup") && setupById(p.get("setup")) ? p.get("setup") : (q1 && !q1.pending ? "q1" : "hbsel_cv"));
+  showTab(p.get("tab") || "detection");
+}).catch(e => { window.__errs.push("load: " + e); document.body.insertAdjacentHTML("beforeend", `<div class="banner bad">Could not load data.json: ${esc(e)}</div>`); console.error(e); });
+</script>
+</body>
+</html>
