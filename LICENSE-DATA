@@ -1,0 +1,32 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+Copyright (c) 2026 Viktor Moskvoretskii, Dominic Bazina and contributors
+
+This licence covers the DATA and RESULTS in this repository, not the code
+(the code is MIT, see LICENSE). It applies to:
+
+  results/                         result tables, CSVs and JSONs
+  full_trait_output/               analysis outputs: result JSONs, score files,
+                                   model generations and judge labels
+  data/release/                    the paper's data release (generations, judge
+                                   labels, trait answers and scores)
+  data/gemma_traits40_backup/      Gemma trait-elicitation generations and judge scores
+  dashboard/data.json              aggregated numbers rendered by the dashboard
+
+You are free to share and adapt this material for any purpose, including
+commercially, provided you give appropriate credit, link to the licence, and
+indicate if changes were made.
+
+Full text: https://creativecommons.org/licenses/by/4.0/legalcode
+
+Third-party material keeps its own terms. In particular the HarmBench behaviour
+sets, WildJailbreak, JailbreakBench, AdvBench, StrongREJECT, Alpaca and
+No Robots prompts, and the attack artifacts (GCG, PAIR, PAP, GPTFuzz, PEZ)
+reproduced under full_trait_output/*/inputs, */src and */prompts are
+redistributed under their original licences.
+
+CONTENT WARNING AND INTENDED USE. The generations include harmful model output
+produced under jailbreak attacks and activation steering. They are published for
+safety research: measuring and defending against jailbreaks. Responses for
+HarmBench behaviours in the chemical_biological category are withheld here and
+replaced by "[withheld: chem/bio, see HF dataset]".
