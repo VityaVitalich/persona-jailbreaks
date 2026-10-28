@@ -1,0 +1,26 @@
+trait matrices: olmo (240, 4096) olmo filtered (228, 4096) gemma (240, 5376)
+gemma PersonaJB fits done
+olmo PersonaJB fits done
+gemma PersonaJB          hb:0.631 wjb:0.715 pap:0.708 gcg:0.637 pair:0.555 gptfuzz:0.625 pez:0.615 avg:0.641
+gemma Gaussian           hb:0.673 wjb:0.706 pap:0.713 gcg:0.653 pair:0.615 gptfuzz:0.604 pez:0.664 avg:0.661
+gemma raw                hb:0.663 wjb:0.755 pap:0.727 gcg:0.633 pair:0.639 gptfuzz:0.660 pez:0.683 avg:0.680
+gemma PersonaJB-Gaussian hb:-0.042[-0.081,+0.014] wjb:+0.009[-0.015,+0.036] pap:-0.005[-0.045,+0.038] gcg:-0.016[-0.057,+0.020] pair:-0.061[-0.120,+0.001] gptfuzz:+0.022[-0.057,+0.106] pez:-0.049[-0.090,-0.005] avg:-0.020[-0.042,-0.000]
+gemma PersonaJB-raw      hb:-0.032[-0.079,+0.033] wjb:-0.040[-0.071,-0.008] pap:-0.019[-0.070,+0.047] gcg:+0.004[-0.055,+0.071] pair:-0.084[-0.162,+0.008] gptfuzz:-0.034[-0.117,+0.055] pez:-0.068[-0.108,-0.034] avg:-0.039[-0.059,-0.013]
+olmo  PersonaJB          hb:0.648 wjb:0.657 pap:0.717 gcg:0.730 pair:0.678 gptfuzz:0.556 pez:0.683 avg:0.667
+olmo  PersonaJB_filtered hb:0.641 wjb:0.648 pap:0.723 gcg:0.712 pair:0.724 gptfuzz:0.564 pez:0.685 avg:0.671
+olmo  Gaussian           hb:0.644 wjb:0.688 pap:0.732 gcg:0.729 pair:0.776 gptfuzz:0.649 pez:0.716 avg:0.705
+olmo  raw                hb:0.696 wjb:0.706 pap:0.769 gcg:0.755 pair:0.811 gptfuzz:0.683 pez:0.765 avg:0.741
+olmo  PersonaJB-Gaussian hb:+0.004[-0.038,+0.056] wjb:-0.031[-0.070,+0.009] pap:-0.014[-0.060,+0.033] gcg:+0.001[-0.046,+0.051] pair:-0.097[-0.148,-0.048] gptfuzz:-0.092[-0.168,-0.005] pez:-0.033[-0.068,-0.002] avg:-0.038[-0.065,-0.016]
+olmo  PersonaJB-raw      hb:-0.048[-0.102,+0.022] wjb:-0.049[-0.079,-0.015] pap:-0.052[-0.089,-0.015] gcg:-0.026[-0.066,+0.020] pair:-0.133[-0.177,-0.081] gptfuzz:-0.127[-0.210,-0.028] pez:-0.083[-0.120,-0.049] avg:-0.074[-0.100,-0.052]
+olmo  PersonaJB_filtered-Gaussian hb:-0.002[-0.043,+0.052] wjb:-0.040[-0.088,+0.001] pap:-0.009[-0.058,+0.038] gcg:-0.017[-0.070,+0.039] pair:-0.051[-0.099,-0.004] gptfuzz:-0.085[-0.163,+0.002] pez:-0.031[-0.067,+0.005] avg:-0.034[-0.063,-0.008]
+olmo  PersonaJB_filtered-raw hb:-0.054[-0.109,+0.016] wjb:-0.058[-0.097,-0.021] pap:-0.047[-0.085,-0.008] gcg:-0.044[-0.092,+0.009] pair:-0.087[-0.128,-0.043] gptfuzz:-0.119[-0.207,-0.021] pez:-0.081[-0.117,-0.043] avg:-0.070[-0.098,-0.049]
+llama PersonaJB          hb:0.789 wjb:0.744 pap:0.756 gcg:0.737 pair:0.739 gptfuzz:0.656 pez:0.707 avg:0.733
+llama Gaussian           hb:0.704 wjb:0.703 pap:0.735 gcg:0.728 pair:0.767 gptfuzz:0.650 pez:0.699 avg:0.712
+llama raw                hb:0.786 wjb:0.753 pap:0.754 gcg:0.739 pair:0.769 gptfuzz:0.608 pez:0.694 avg:0.729
+llama PersonaJB-Gaussian hb:+0.085[+0.051,+0.117] wjb:+0.041[+0.014,+0.072] pap:+0.021[-0.018,+0.059] gcg:+0.009[-0.011,+0.024] pair:-0.028[-0.066,+0.012] gptfuzz:+0.007[-0.040,+0.047] pez:+0.008[-0.022,+0.044] avg:+0.020[+0.005,+0.034]
+llama PersonaJB-raw      hb:+0.003[-0.021,+0.028] wjb:-0.009[-0.035,+0.021] pap:+0.002[-0.047,+0.047] gcg:-0.002[-0.025,+0.015] pair:-0.030[-0.064,-0.004] gptfuzz:+0.048[+0.001,+0.102] pez:+0.013[-0.028,+0.058] avg:+0.004[-0.012,+0.018]
+qwen  PersonaJB          hb:0.622 wjb:0.622 pap:0.630 gcg:0.644 pair:0.647 gptfuzz:0.548 pez:0.546 avg:0.608
+qwen  Gaussian           hb:0.571 wjb:0.631 pap:0.616 gcg:0.608 pair:0.645 gptfuzz:0.591 pez:0.558 avg:0.603
+qwen  raw                hb:0.606 wjb:0.663 pap:0.644 gcg:0.583 pair:0.643 gptfuzz:0.608 pez:0.568 avg:0.616
+qwen  PersonaJB-Gaussian hb:+0.050[-0.006,+0.099] wjb:-0.010[-0.048,+0.028] pap:+0.013[-0.038,+0.062] gcg:+0.036[-0.027,+0.097] pair:+0.002[-0.045,+0.049] gptfuzz:-0.043[-0.113,+0.025] pez:-0.012[-0.061,+0.037] avg:+0.005[-0.014,+0.026]
+qwen  PersonaJB-raw      hb:+0.016[-0.038,+0.073] wjb:-0.041[-0.084,-0.002] pap:-0.014[-0.077,+0.042] gcg:+0.061[-0.032,+0.161] pair:+0.004[-0.059,+0.083] gptfuzz:-0.060[-0.136,+0.015] pez:-0.023[-0.094,+0.064] avg:-0.008[-0.032,+0.021]

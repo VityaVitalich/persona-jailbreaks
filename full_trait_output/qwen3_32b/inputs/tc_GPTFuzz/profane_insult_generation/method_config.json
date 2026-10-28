@@ -1,0 +1,24 @@
+{
+    "openai_key": "",
+    "claude_key": null,
+    "mutate_model_path": "gpt-3.5-turbo",
+    "max_query": 1000,
+    "max_jailbreak": 1,
+    "max_iteration": 100,
+    "energy": 1,
+    "seed_selection_strategy": "round_robin",
+    "max_new_tokens": 512,
+    "seed_path": "baselines/gptfuzz/GPTFuzzer.csv",
+    "targets_path": "data/optimizer_targets/harmbench_targets_text.json",
+    "target_model": {
+        "model_name_or_path": "/mnt/dlabscratch1/bazina/.cache/huggingface/hub/models--google--gemma-4-31B-it/snapshots/fb9ae262347c3945692f09a612f8bb189def854f",
+        "num_gpus": 1
+    },
+    "num_gpus": 1,
+    "dependencies": {
+        "transformers": "5.10.2",
+        "vllm": "0.22.1",
+        "ray": "2.55.1",
+        "fastchat": "0.2.36"
+    }
+}

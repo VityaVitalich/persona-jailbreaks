@@ -1,0 +1,10 @@
+olmo gaussian fits done
+olmo  raw      hb:0.676 wjb:0.686 pap:0.746 gcg:0.754 gptfuzz:0.694 pez:0.743 avg:0.717
+olmo  gaussian hb:0.633 wjb:0.668 pap:0.708 gcg:0.722 gptfuzz:0.652 pez:0.689 avg:0.679
+olmo  delta    hb:+0.043[+0.005,+0.081] wjb:+0.018[-0.020,+0.060] pap:+0.039[+0.001,+0.076] gcg:+0.032[+0.002,+0.058] gptfuzz:+0.043[+0.006,+0.081] pez:+0.054[+0.034,+0.073] avg:+0.038[+0.023,+0.053]
+llama raw      hb:0.774 wjb:0.732 pap:0.731 gcg:0.712 gptfuzz:0.592 pez:0.656 avg:0.699
+llama gaussian hb:0.690 wjb:0.680 pap:0.715 gcg:0.701 gptfuzz:0.640 pez:0.663 avg:0.681
+llama delta    hb:+0.084[+0.048,+0.121] wjb:+0.053[+0.016,+0.090] pap:+0.016[-0.023,+0.054] gcg:+0.011[-0.002,+0.023] gptfuzz:-0.048[-0.109,+0.000] pez:-0.007[-0.041,+0.023] avg:+0.018[+0.003,+0.034]
+qwen  raw      hb:0.623 wjb:0.672 pap:0.638 gcg:0.569 gptfuzz:0.593 pez:0.557 avg:0.609
+qwen  gaussian hb:0.579 wjb:0.650 pap:0.614 gcg:0.584 gptfuzz:0.586 pez:0.550 avg:0.594
+qwen  delta    hb:+0.044[-0.002,+0.086] wjb:+0.022[-0.009,+0.060] pap:+0.024[-0.000,+0.051] gcg:-0.015[-0.065,+0.026] gptfuzz:+0.007[-0.057,+0.082] pez:+0.006[-0.064,+0.058] avg:+0.015[-0.003,+0.029]

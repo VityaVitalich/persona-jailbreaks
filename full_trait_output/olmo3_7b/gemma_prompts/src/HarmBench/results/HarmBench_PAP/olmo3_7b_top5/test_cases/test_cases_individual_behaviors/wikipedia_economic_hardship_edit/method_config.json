@@ -1,0 +1,32 @@
+{
+    "attack_gen_config": {
+        "max_new_tokens": 2048,
+        "temperature": 1.0,
+        "stop_tokens": [
+            "|"
+        ]
+    },
+    "attack_model": {
+        "model_name_or_path": "mistralai/Mixtral-8x7B-Instruct-v0.1",
+        "use_vllm": true,
+        "num_gpus": 2,
+        "dtype": "bfloat16",
+        "gpu_memory_utilization": 0.7,
+        "distributed_executor_backend": "ray"
+    },
+    "top_k_persuasion_taxonomy": 5,
+    "target_model": {
+        "model_name_or_path": "allenai/OLMo-3-7B-Instruct",
+        "trust_remote_code": true,
+        "use_vllm": true,
+        "dtype": "bfloat16",
+        "num_gpus": 1,
+        "fschat_template": "tulu"
+    },
+    "dependencies": {
+        "transformers": "5.9.0",
+        "vllm": "0.21.0",
+        "ray": "2.55.1",
+        "fastchat": "0.2.36"
+    }
+}

@@ -1,0 +1,425 @@
+{
+ "llama": {
+  "PersonaJB_vs_raw": {
+   "both": 1644.0,
+   "alt_only": 580.0,
+   "raw_only": 784.0,
+   "neither": 4462.0,
+   "rescue_recall": 0.11503371677905593,
+   "extra_flag_precision": 0.3972602739726027
+  },
+  "Gaussian_vs_raw": {
+   "both": 1339.9999999999995,
+   "alt_only": 693.3333333333333,
+   "raw_only": 1088.0000000000002,
+   "neither": 4348.666666666665,
+   "rescue_recall": 0.1375115694830094,
+   "extra_flag_precision": 0.40427599611273074
+  },
+  "per_family_rescue": {
+   "gcg": {
+    "PersonaJB": 0.24696356275303644,
+    "Gaussian": 0.18758434547908237,
+    "raw_missed": 247
+   },
+   "pair": {
+    "PersonaJB": 0.16299019607843138,
+    "Gaussian": 0.16053921568627452,
+    "raw_missed": 816
+   },
+   "pap": {
+    "PersonaJB": 0.06096491228070176,
+    "Gaussian": 0.07850877192982456,
+    "raw_missed": 2280
+   },
+   "gptfuzz": {
+    "PersonaJB": 0.15646853146853146,
+    "Gaussian": 0.20745920745920743,
+    "raw_missed": 1144
+   },
+   "pez": {
+    "PersonaJB": 0.12252252252252252,
+    "Gaussian": 0.17957957957957957,
+    "raw_missed": 555
+   }
+  },
+  "stable_rescues": {
+   "PersonaJB": 1,
+   "Gaussian_mean": 7.999999999999999,
+   "n_jailbroken_test": 1245,
+   "semantic_category": {
+    "illegal": 1
+   }
+  },
+  "rescue_trait_profile_top": [
+   {
+    "trait": "closure_seeking",
+    "z_rescued": 2.5739212462865924,
+    "z_raw_caught": 0.9790393041208125
+   },
+   {
+    "trait": "open_ended",
+    "z_rescued": -2.5070410373469727,
+    "z_raw_caught": -1.3321439036430334
+   },
+   {
+    "trait": "decisive",
+    "z_rescued": 2.4847138256120687,
+    "z_raw_caught": 1.322945370794136
+   },
+   {
+    "trait": "prescriptive",
+    "z_rescued": 2.261317754168624,
+    "z_raw_caught": 1.1741855059615627
+   },
+   {
+    "trait": "secular",
+    "z_rescued": 1.933525987098406,
+    "z_raw_caught": 0.5476807994970682
+   },
+   {
+    "trait": "exploratory",
+    "z_rescued": -1.8597720922460874,
+    "z_raw_caught": -0.051215586125850726
+   },
+   {
+    "trait": "circumspect",
+    "z_rescued": -1.7442472960184379,
+    "z_raw_caught": -0.23020310688338064
+   },
+   {
+    "trait": "confident",
+    "z_rescued": 1.7413793403639537,
+    "z_raw_caught": 0.6701746350041553
+   }
+  ],
+  "rescue_profile_vs_raw_caught_cos": 0.5782267784554336,
+  "score_average_auc": {
+   "raw": 0.7289292973502357,
+   "raw+PersonaJB": 0.748462303244957,
+   "raw+Gaussian": 0.7519303506356932
+  },
+  "score_average_delta": {
+   "raw+PersonaJB - raw": [
+    0.01953300589472129,
+    [
+     0.011800876405264903,
+     0.026861408827582953
+    ]
+   ],
+   "raw+PersonaJB - raw+Gaussian": [
+    -0.003468047390736251,
+    [
+     -0.01204880560256123,
+     0.00392665791640645
+    ]
+   ]
+  }
+ },
+ "gemma": {
+  "PersonaJB_vs_raw": {
+   "both": 248.0,
+   "alt_only": 272.0,
+   "raw_only": 393.0,
+   "neither": 1901.0,
+   "rescue_recall": 0.12517257248044178,
+   "extra_flag_precision": 0.17096165933375235
+  },
+  "Gaussian_vs_raw": {
+   "both": 318.3333333333333,
+   "alt_only": 229.33333333333331,
+   "raw_only": 322.66666666666663,
+   "neither": 1943.6666666666665,
+   "rescue_recall": 0.1055376591501764,
+   "extra_flag_precision": 0.1758241758241759
+  },
+  "per_family_rescue": {
+   "gcg": {
+    "PersonaJB": 0.1125,
+    "Gaussian": 0.10833333333333332,
+    "raw_missed": 160
+   },
+   "pair": {
+    "PersonaJB": 0.07484407484407485,
+    "Gaussian": 0.08385308385308385,
+    "raw_missed": 481
+   },
+   "pap": {
+    "PersonaJB": 0.10410557184750734,
+    "Gaussian": 0.0718475073313783,
+    "raw_missed": 682
+   },
+   "gptfuzz": {
+    "PersonaJB": 0.16176470588235295,
+    "Gaussian": 0.15931372549019607,
+    "raw_missed": 544
+   },
+   "pez": {
+    "PersonaJB": 0.19281045751633988,
+    "Gaussian": 0.11764705882352938,
+    "raw_missed": 306
+   }
+  },
+  "stable_rescues": {
+   "PersonaJB": 0,
+   "Gaussian_mean": 1.0,
+   "n_jailbroken_test": 469,
+   "semantic_category": {}
+  },
+  "score_average_auc": {
+   "raw": 0.6799088503454378,
+   "raw+PersonaJB": 0.684449807700199,
+   "raw+Gaussian": 0.6943736720706558
+  },
+  "score_average_delta": {
+   "raw+PersonaJB - raw": [
+    0.0045409573547612325,
+    [
+     -0.005305827183165116,
+     0.015919908340226243
+    ]
+   ],
+   "raw+PersonaJB - raw+Gaussian": [
+    -0.00992386437045678,
+    [
+     -0.019648338826033573,
+     0.0021309138859162222
+    ]
+   ]
+  }
+ },
+ "qwen": {
+  "PersonaJB_vs_raw": {
+   "both": 394.0,
+   "alt_only": 558.0,
+   "raw_only": 723.0,
+   "neither": 4103.0,
+   "rescue_recall": 0.11971679897017808,
+   "extra_flag_precision": 0.28615384615384615
+  },
+  "Gaussian_vs_raw": {
+   "both": 489.6666666666667,
+   "alt_only": 491.3333333333335,
+   "raw_only": 627.3333333333334,
+   "neither": 4169.666666666666,
+   "rescue_recall": 0.10541371665593939,
+   "extra_flag_precision": 0.2902146091750346
+  },
+  "per_family_rescue": {
+   "gcg": {
+    "PersonaJB": 0.10025062656641603,
+    "Gaussian": 0.1161236424394319,
+    "raw_missed": 399
+   },
+   "pair": {
+    "PersonaJB": 0.1130524152106886,
+    "Gaussian": 0.09249743062692702,
+    "raw_missed": 973
+   },
+   "pap": {
+    "PersonaJB": 0.11774461028192372,
+    "Gaussian": 0.0952644186475032,
+    "raw_missed": 1809
+   },
+   "gptfuzz": {
+    "PersonaJB": 0.12014134275618374,
+    "Gaussian": 0.10335689045936396,
+    "raw_missed": 1132
+   },
+   "pez": {
+    "PersonaJB": 0.16954022988505746,
+    "Gaussian": 0.18869731800766282,
+    "raw_missed": 348
+   }
+  },
+  "stable_rescues": {
+   "PersonaJB": 2,
+   "Gaussian_mean": 0.3333333333333333,
+   "n_jailbroken_test": 963,
+   "semantic_category": {
+    "chemical_biological": 2
+   }
+  },
+  "rescue_trait_profile_top": [
+   {
+    "trait": "skeptical",
+    "z_rescued": 2.3136409383936956,
+    "z_raw_caught": 0.6602101516883322
+   },
+   {
+    "trait": "critical",
+    "z_rescued": 2.072337605055318,
+    "z_raw_caught": 0.8488180699725704
+   },
+   {
+    "trait": "deconstructionist",
+    "z_rescued": 1.936555222534453,
+    "z_raw_caught": 0.8019513330219019
+   },
+   {
+    "trait": "introspective",
+    "z_rescued": 1.8931838120457467,
+    "z_raw_caught": 0.3962177501744405
+   },
+   {
+    "trait": "specialized",
+    "z_rescued": 1.88024573194684,
+    "z_raw_caught": 0.9691411534780427
+   },
+   {
+    "trait": "proactive",
+    "z_rescued": 1.877588089108553,
+    "z_raw_caught": 0.6105750228142693
+   },
+   {
+    "trait": "challenging",
+    "z_rescued": 1.839888332458317,
+    "z_raw_caught": 0.7641237112903773
+   },
+   {
+    "trait": "pedantic",
+    "z_rescued": 1.8146690936574212,
+    "z_raw_caught": 0.6710147804746666
+   }
+  ],
+  "rescue_profile_vs_raw_caught_cos": 0.648111491351464,
+  "score_average_auc": {
+   "raw": 0.6164750757344201,
+   "raw+PersonaJB": 0.6406138875266211,
+   "raw+Gaussian": 0.637940835888173
+  },
+  "score_average_delta": {
+   "raw+PersonaJB - raw": [
+    0.02413881179220101,
+    [
+     0.010554993570728893,
+     0.037881055413904845
+    ]
+   ],
+   "raw+PersonaJB - raw+Gaussian": [
+    0.0026730516384481096,
+    [
+     -0.009759292685810788,
+     0.01494095886668091
+    ]
+   ]
+  }
+ },
+ "olmo": {
+  "PersonaJB_vs_raw": {
+   "both": 551.0,
+   "alt_only": 310.0,
+   "raw_only": 701.0,
+   "neither": 2308.0,
+   "rescue_recall": 0.11841100076394194,
+   "extra_flag_precision": 0.22048364153627312
+  },
+  "Gaussian_vs_raw": {
+   "both": 735.3333333333331,
+   "alt_only": 341.9999999999999,
+   "raw_only": 516.6666666666666,
+   "neither": 2276.0000000000005,
+   "rescue_recall": 0.13063407181054235,
+   "extra_flag_precision": 0.26704841228526793
+  },
+  "per_family_rescue": {
+   "gcg": {
+    "PersonaJB": 0.06944444444444445,
+    "Gaussian": 0.14814814814814814,
+    "raw_missed": 360
+   },
+   "pair": {
+    "PersonaJB": 0.10407239819004525,
+    "Gaussian": 0.1372549019607843,
+    "raw_missed": 221
+   },
+   "pap": {
+    "PersonaJB": 0.09133489461358314,
+    "Gaussian": 0.08391881342701013,
+    "raw_missed": 854
+   },
+   "gptfuzz": {
+    "PersonaJB": 0.1396761133603239,
+    "Gaussian": 0.15215924426450744,
+    "raw_missed": 988
+   },
+   "pez": {
+    "PersonaJB": 0.2358974358974359,
+    "Gaussian": 0.18632478632478633,
+    "raw_missed": 195
+   }
+  },
+  "stable_rescues": {
+   "PersonaJB": 1,
+   "Gaussian_mean": 2.3333333333333335,
+   "n_jailbroken_test": 645,
+   "semantic_category": {
+    "harmful": 1
+   }
+  },
+  "rescue_trait_profile_top": [
+   {
+    "trait": "convergent",
+    "z_rescued": 1.5407807481134193,
+    "z_raw_caught": 0.8228982319685939
+   },
+   {
+    "trait": "avoidant",
+    "z_rescued": -1.4754524629118972,
+    "z_raw_caught": -0.8738463354488805
+   },
+   {
+    "trait": "libertarian",
+    "z_rescued": -1.4610075306683303,
+    "z_raw_caught": -0.8716291423506387
+   },
+   {
+    "trait": "cryptic",
+    "z_rescued": -1.4257236114813436,
+    "z_raw_caught": -0.5021195756443171
+   },
+   {
+    "trait": "elitist",
+    "z_rescued": -1.3918705900041837,
+    "z_raw_caught": -0.3958148988885114
+   },
+   {
+    "trait": "evil",
+    "z_rescued": -1.3779439074946789,
+    "z_raw_caught": -0.8056791765763048
+   },
+   {
+    "trait": "manipulative",
+    "z_rescued": -1.340381314225606,
+    "z_raw_caught": -0.71402691926521
+   },
+   {
+    "trait": "ethereal",
+    "z_rescued": -1.331381120968444,
+    "z_raw_caught": -0.5809823101840759
+   }
+  ],
+  "rescue_profile_vs_raw_caught_cos": 0.6802397706387037,
+  "score_average_auc": {
+   "raw": 0.74085947061855,
+   "raw+PersonaJB": 0.7247683015096932,
+   "raw+Gaussian": 0.745825910264993
+  },
+  "score_average_delta": {
+   "raw+PersonaJB - raw": [
+    -0.016091169108856773,
+    [
+     -0.026497073357866684,
+     -0.006383977899704733
+    ]
+   ],
+   "raw+PersonaJB - raw+Gaussian": [
+    -0.021057608755299828,
+    [
+     -0.0332282897705348,
+     -0.009482084953246168
+    ]
+   ]
+  }
+ }
+}

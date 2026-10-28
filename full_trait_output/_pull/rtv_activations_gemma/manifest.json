@@ -1,0 +1,18 @@
+{
+  "model": "/mnt/dlabscratch1/bazina/.cache/huggingface/hub/models--google--gemma-4-31B-it/snapshots/fb9ae262347c3945692f09a612f8bb189def854f",
+  "paper_layers": [
+    18,
+    25,
+    32
+  ],
+  "model_layers": [
+    34,
+    48,
+    59
+  ],
+  "n_last_tokens": 5,
+  "datasets": [
+    "gcg"
+  ],
+  "note": "keys are Llama labels [18,25,32]; actual Gemma layers are [34,48,59]"
+}

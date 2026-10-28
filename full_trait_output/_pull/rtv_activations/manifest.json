@@ -1,0 +1,26 @@
+{
+  "created_at_utc": "2026-05-17T14:01:10.161172+00:00",
+  "model": "meta-llama/Llama-3.1-8B-Instruct",
+  "paper_layers": [
+    18,
+    25,
+    32
+  ],
+  "model_layers": [
+    18,
+    25,
+    31
+  ],
+  "n_last_tokens": 5,
+  "datasets": [
+    "alpaca_harmless",
+    "harmbench",
+    "gcg",
+    "pair",
+    "pap",
+    "gptfuzz",
+    "pez"
+  ],
+  "test_mode": false,
+  "notes": "RTV-style forward-only cache; paper layer 32 maps to HF model layer 31."
+}

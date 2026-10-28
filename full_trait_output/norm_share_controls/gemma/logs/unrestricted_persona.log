@@ -1,0 +1,18 @@
+(a) jailbreak-persona vs neutral-persona framing of the same request, within-request AUC
+    w_out                                      0.995
+    w_in                                       0.963
+    dmu                                        0.984
+    refusal                                    0.998
+    u_jbp (in-sample)                          1.000
+    random Alpaca activation (median of 100)   0.940
+
+(b) share of squared norm in each 240-dim span
+    u_jbp                                                trait span 0.315  Alpaca-activation span 0.452  random span 0.046
+    null (neutral persona vs neutral persona), mean of 10 trait span 0.277  Alpaca-activation span 0.351  random span 0.044
+
+(c) cos(w_out, u_jbp) -0.234  cos(w_in, u_jbp) -0.348  share of w_out in U6 (6 dims) +0.095  share of a random direction in a 6-dim span +0.001
+    HarmBench score                              within-request AUC rho_template
+    w_out                                                     0.937        0.536
+    u_jbp                                                     0.783        0.058
+    u_jbp, trait-span part removed                            0.739        0.051
+    w_out with U6 projected out                               0.939        0.600

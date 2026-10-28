@@ -1,0 +1,122 @@
+{
+ "A": {
+  "refusal|intact": {
+   "HarmBench": 0.8440557636138543,
+   "GCG": 0.6203852327447833,
+   "GCG_reversed": false,
+   "PAIR": 0.7315255530129672,
+   "PAIR_reversed": false,
+   "PAP": 0.5447919239953887,
+   "PAP_reversed": true,
+   "GPTFuzz": 0.6249126349304962,
+   "GPTFuzz_reversed": true,
+   "PEZ": 0.8285076252723311,
+   "PEZ_reversed": false,
+   "mean5": 0.6700245939911934,
+   "mean3": 0.7268061370100272
+  },
+  "refusal|persona removed": {
+   "HarmBench": 0.7331795201743738,
+   "GCG": 0.5232744783306581,
+   "GCG_reversed": false,
+   "PAIR": 0.6395270785659801,
+   "PAIR_reversed": false,
+   "PAP": 0.5886227252140975,
+   "PAP_reversed": true,
+   "GPTFuzz": 0.7419947710388031,
+   "GPTFuzz_reversed": true,
+   "PEZ": 0.7796405228758171,
+   "PEZ_reversed": false,
+   "mean5": 0.6546119152050711,
+   "mean3": 0.647480693257485
+  },
+  "dmu|intact": {
+   "HarmBench": 0.8562769887602968,
+   "GCG": 0.7219903691813805,
+   "GCG_reversed": false,
+   "PAIR": 0.7374141876430206,
+   "PAIR_reversed": false,
+   "PAP": 0.5778831110013175,
+   "PAP_reversed": true,
+   "GPTFuzz": 0.6370790297947244,
+   "GPTFuzz_reversed": false,
+   "PEZ": 0.8135729847494553,
+   "PEZ_reversed": false,
+   "mean5": 0.6975879364739797,
+   "mean3": 0.7576591805246187
+  },
+  "dmu|persona removed": {
+   "HarmBench": 0.8388326029235641,
+   "GCG": 0.7459069020866773,
+   "GCG_reversed": false,
+   "PAIR": 0.7218535469107552,
+   "PAIR_reversed": false,
+   "PAP": 0.6046555912384717,
+   "PAP_reversed": true,
+   "GPTFuzz": 0.6867800471124226,
+   "GPTFuzz_reversed": false,
+   "PEZ": 0.8139760348583878,
+   "PEZ_reversed": false,
+   "mean5": 0.714634424441343,
+   "mean3": 0.7605788279519401
+  }
+ },
+ "B": {
+  "dmu intact": {
+   "dprime": 1.9102511127043855,
+   "within_template": 0.8986466632640407,
+   "within_request": 0.9026328898893146,
+   "rho_request": 0.9204116184681227,
+   "rho_template": 0.7699248120300751,
+   "cos_refusal": 0.36256023860125197
+  },
+  "dmu persona component": {
+   "dprime": 1.631046839402329,
+   "within_template": 0.898707094828606,
+   "within_request": 0.8540269968317814,
+   "rho_request": 0.9190674914604964,
+   "rho_template": 0.6661654135338345,
+   "cos_refusal": 0.40682588541382897
+  },
+  "dmu persona removed": {
+   "dprime": 1.9071288348903,
+   "within_template": 0.897229218451224,
+   "within_request": 0.9176214806606676,
+   "rho_request": 0.9197297931480531,
+   "rho_template": 0.8390977443609022,
+   "cos_refusal": 0.1111916427416206
+  },
+  "refusal intact": {
+   "dprime": 1.3762685949458688,
+   "within_template": 0.9085008745591339,
+   "within_request": 0.7999390256446949,
+   "rho_request": 0.9241211086455947,
+   "rho_template": 0.39999999999999997,
+   "cos_refusal": 1.0
+  },
+  "refusal persona removed": {
+   "dprime": 0.9070173193227059,
+   "within_template": 0.8775610582088939,
+   "within_request": 0.6853282922284593,
+   "rho_request": 0.9011177640916126,
+   "rho_template": 0.16240601503759397,
+   "cos_refusal": 0.7697560420437257
+  },
+  "random Alpaca activation (median of 229)": {
+   "dprime": 0.8640558320681901,
+   "within_template": 0.8797653333884876,
+   "within_request": 0.6788770253143025,
+   "rho_request": 0.8836486184461259,
+   "rho_template": 0.2150375939849624,
+   "cos_refusal": 0.31905360705570535
+  },
+  "random Gaussian direction (median of 229)": {
+   "dprime": 0.35034508617382065,
+   "within_template": 0.7087347154694497,
+   "within_request": 0.6315665931793906,
+   "rho_request": 0.4016071280641489,
+   "rho_template": 0.2270676691729323,
+   "cos_refusal": 0.009670788972971456
+  }
+ }
+}

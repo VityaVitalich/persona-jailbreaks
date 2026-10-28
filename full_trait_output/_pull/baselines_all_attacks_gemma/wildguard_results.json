@@ -1,0 +1,167 @@
+{
+  "HarmBench": {
+    "n": 3180,
+    "n_jb": 63,
+    "parse_error_rate": 0.0006289308176100629,
+    "prompt_harmfulness": {
+      "auc": 0.5004812319538017,
+      "balanced_auc": 0.5,
+      "ap": 0.019830028328611898,
+      "balanced_acc": 0.5004812319538018,
+      "coverage": 1.0
+    },
+    "response_compliance": {
+      "auc": 0.9638130907793829,
+      "balanced_auc": 0.9761904761904762,
+      "ap": 0.25668387766266565,
+      "balanced_acc": 0.9638130907793829,
+      "coverage": 0.9993710691823899
+    },
+    "response_harmfulness": {
+      "auc": 0.9676119136793294,
+      "balanced_auc": 0.9682539682539683,
+      "ap": 0.8783057683833854,
+      "balanced_acc": 0.9676119136793294,
+      "coverage": 0.9993710691823899
+    },
+    "harmful_or_compliance": {
+      "auc": 0.9638130907793829,
+      "balanced_auc": 0.9761904761904762,
+      "ap": 0.25668387766266565,
+      "balanced_acc": 0.9638130907793829,
+      "coverage": 0.9993710691823899
+    }
+  },
+  "PAIR": {
+    "n": 400,
+    "n_jb": 103,
+    "parse_error_rate": 0.0,
+    "prompt_harmfulness": {
+      "auc": 0.524517014808277,
+      "balanced_auc": 0.5242718446601942,
+      "ap": 0.26733009708737865,
+      "balanced_acc": 0.524517014808277,
+      "coverage": 1.0
+    },
+    "response_compliance": {
+      "auc": 0.7093426171096073,
+      "balanced_auc": 0.7038834951456311,
+      "ap": 0.3752552221241542,
+      "balanced_acc": 0.7093426171096074,
+      "coverage": 1.0
+    },
+    "response_harmfulness": {
+      "auc": 0.7751299401784839,
+      "balanced_auc": 0.7718446601941749,
+      "ap": 0.5558923311879569,
+      "balanced_acc": 0.7751299401784839,
+      "coverage": 1.0
+    },
+    "harmful_or_compliance": {
+      "auc": 0.7093426171096073,
+      "balanced_auc": 0.7038834951456311,
+      "ap": 0.3752552221241542,
+      "balanced_acc": 0.7093426171096074,
+      "coverage": 1.0
+    }
+  },
+  "PAP": {
+    "n": 2000,
+    "n_jb": 138,
+    "parse_error_rate": 0.0,
+    "prompt_harmfulness": {
+      "auc": 0.5255257709491119,
+      "balanced_auc": 0.5579710144927537,
+      "ap": 0.07267461104682134,
+      "balanced_acc": 0.4744742290508881,
+      "coverage": 1.0
+    },
+    "response_compliance": {
+      "auc": 0.780343716433942,
+      "balanced_auc": 0.8333333333333334,
+      "ap": 0.14435146443514643,
+      "balanced_acc": 0.780343716433942,
+      "coverage": 1.0
+    },
+    "response_harmfulness": {
+      "auc": 0.6102951478074067,
+      "balanced_auc": 0.6231884057971016,
+      "ap": 0.13560634547591072,
+      "balanced_acc": 0.6102951478074067,
+      "coverage": 1.0
+    },
+    "harmful_or_compliance": {
+      "auc": 0.780343716433942,
+      "balanced_auc": 0.8333333333333334,
+      "ap": 0.14435146443514643,
+      "balanced_acc": 0.780343716433942,
+      "coverage": 1.0
+    }
+  },
+  "GPTFuzz": {
+    "n": 400,
+    "n_jb": 117,
+    "parse_error_rate": 0.0,
+    "prompt_harmfulness": {
+      "auc": 0.5017667844522968,
+      "balanced_auc": 0.5,
+      "ap": 0.2932330827067669,
+      "balanced_acc": 0.5017667844522968,
+      "coverage": 1.0
+    },
+    "response_compliance": {
+      "auc": 0.7196853009573857,
+      "balanced_auc": 0.7478632478632479,
+      "ap": 0.45589798378259916,
+      "balanced_acc": 0.7196853009573858,
+      "coverage": 1.0
+    },
+    "response_harmfulness": {
+      "auc": 0.7260880070067349,
+      "balanced_auc": 0.7307692307692307,
+      "ap": 0.5286273911273911,
+      "balanced_acc": 0.7260880070067349,
+      "coverage": 1.0
+    },
+    "harmful_or_compliance": {
+      "auc": 0.7196853009573857,
+      "balanced_auc": 0.7478632478632479,
+      "ap": 0.45589798378259916,
+      "balanced_acc": 0.7196853009573858,
+      "coverage": 1.0
+    }
+  },
+  "PEZ": {
+    "n": 1200,
+    "n_jb": 77,
+    "parse_error_rate": 0.0,
+    "prompt_harmfulness": {
+      "auc": 0.5056030345433729,
+      "balanced_auc": 0.5064935064935066,
+      "ap": 0.06766233766233766,
+      "balanced_acc": 0.4943969654566271,
+      "coverage": 1.0
+    },
+    "response_compliance": {
+      "auc": 0.8777451399891293,
+      "balanced_auc": 0.9025974025974025,
+      "ap": 0.22408627087198515,
+      "balanced_acc": 0.8777451399891293,
+      "coverage": 1.0
+    },
+    "response_harmfulness": {
+      "auc": 0.8192226295521041,
+      "balanced_auc": 0.8246753246753247,
+      "ap": 0.35468366495889436,
+      "balanced_acc": 0.8192226295521041,
+      "coverage": 1.0
+    },
+    "harmful_or_compliance": {
+      "auc": 0.8777451399891293,
+      "balanced_auc": 0.9025974025974025,
+      "ap": 0.22408627087198515,
+      "balanced_acc": 0.8777451399891293,
+      "coverage": 1.0
+    }
+  }
+}

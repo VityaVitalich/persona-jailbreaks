@@ -1,0 +1,30 @@
+persona     share ref 0.407 dmu 0.482 | proj AUC ref 0.868 dmu 0.846 | LDA d'2 1.573 AUC 0.777 xfer 0.632
+alpaca_pca  share ref 0.344 dmu 0.476 | proj AUC ref 0.871 dmu 0.861 | LDA d'2 2.721 AUC 0.845 xfer 0.594
+hb_pca      share ref 0.523 dmu 1.000 | proj AUC ref 0.844 dmu 0.856 | LDA d'2 1.717 AUC 0.774 xfer 0.632
+acts_d0     share ref 0.313 dmu 0.383 | proj AUC ref 0.868 dmu 0.872 | LDA d'2 2.932 AUC 0.851 xfer 0.630
+noise_d0    share ref 0.303 dmu 0.427 | proj AUC ref 0.875 dmu 0.865 | LDA d'2 2.175 AUC 0.815 xfer 0.604
+gauss_d0    share ref 0.048 dmu 0.059 | proj AUC ref 0.838 dmu 0.867 | LDA d'2 1.175 AUC 0.740 xfer 0.609
+acts_d1     share ref 0.304 dmu 0.391 | proj AUC ref 0.868 dmu 0.859 | LDA d'2 2.834 AUC 0.846 xfer 0.650
+noise_d1    share ref 0.307 dmu 0.432 | proj AUC ref 0.875 dmu 0.859 | LDA d'2 1.740 AUC 0.785 xfer 0.586
+gauss_d1    share ref 0.059 dmu 0.056 | proj AUC ref 0.809 dmu 0.862 | LDA d'2 2.059 AUC 0.818 xfer 0.551
+acts_d2     share ref 0.318 dmu 0.392 | proj AUC ref 0.868 dmu 0.864 | LDA d'2 2.641 AUC 0.854 xfer 0.604
+noise_d2    share ref 0.302 dmu 0.438 | proj AUC ref 0.878 dmu 0.862 | LDA d'2 2.194 AUC 0.829 xfer 0.598
+gauss_d2    share ref 0.048 dmu 0.054 | proj AUC ref 0.840 dmu 0.806 | LDA d'2 1.551 AUC 0.770 xfer 0.605
+acts_d3     share ref 0.332 dmu 0.410 | proj AUC ref 0.869 dmu 0.863 | LDA d'2 2.756 AUC 0.844 xfer 0.568
+noise_d3    share ref 0.293 dmu 0.427 | proj AUC ref 0.871 dmu 0.859 | LDA d'2 1.989 AUC 0.789 xfer 0.606
+gauss_d3    share ref 0.058 dmu 0.054 | proj AUC ref 0.777 dmu 0.849 | LDA d'2 1.539 AUC 0.762 xfer 0.642
+acts_d4     share ref 0.328 dmu 0.440 | proj AUC ref 0.867 dmu 0.864 | LDA d'2 2.454 AUC 0.832 xfer 0.641
+noise_d4    share ref 0.303 dmu 0.411 | proj AUC ref 0.870 dmu 0.852 | LDA d'2 1.960 AUC 0.803 xfer 0.583
+gauss_d4    share ref 0.061 dmu 0.057 | proj AUC ref 0.854 dmu 0.860 | LDA d'2 2.251 AUC 0.811 xfer 0.594
+full        share ref 1.000 dmu 1.000 | proj AUC ref 0.844 dmu 0.856 | LDA d'2 0.648 AUC 0.614 xfer 0.551
+| subspace | share refusal | share Δμ | proj AUC refusal | proj AUC Δμ | LDA d'² kept (HB) | LDA AUC HB | LDA AUC transfer | LDA d'² kept (harmful vs Alpaca) |
+|---|---|---|---|---|---|---|---|---|
+| persona span | 0.407 | 0.482 | 0.868 | 0.846 | 2.425 | 0.777 | 0.632 | 0.722 |
+| Alpaca PCA-229 | 0.344 | 0.476 | 0.871 | 0.861 | 4.195 | 0.845 | 0.594 | 0.440 |
+| HB PCA-229 (unlabeled) | 0.523 | 1.000 | 0.844 | 0.856 | 2.648 | 0.774 | 0.632 | 0.795 |
+| 229 Alpaca activations | 0.319 [0.304, 0.332] | 0.403 [0.383, 0.440] | 0.868 [0.867, 0.869] | 0.865 [0.859, 0.872] | 4.200 [3.784, 4.521] | 0.845 [0.832, 0.854] | 0.619 [0.568, 0.650] | 0.474 [0.463, 0.488] |
+| 229 shuffled-label contrasts | 0.302 [0.293, 0.307] | 0.427 [0.411, 0.438] | 0.874 [0.870, 0.878] | 0.859 [0.852, 0.865] | 3.102 [2.684, 3.383] | 0.804 [0.785, 0.829] | 0.595 [0.583, 0.606] | 0.442 [0.427, 0.454] |
+| random 229 | 0.055 [0.048, 0.061] | 0.056 [0.054, 0.059] | 0.824 [0.777, 0.854] | 0.849 [0.806, 0.867] | 2.644 [1.812, 3.471] | 0.780 [0.740, 0.818] | 0.600 [0.551, 0.642] | 0.576 [0.517, 0.615] |
+| full space (4096) | 1.000 | 1.000 | 0.844 | 0.856 | 1.000 | 0.614 | 0.551 | 1.000 |
+
+full-space held-out d'² HB 0.65, harmful vs Alpaca 184.87. 50 HB pool splits (20 for harmful vs Alpaca).

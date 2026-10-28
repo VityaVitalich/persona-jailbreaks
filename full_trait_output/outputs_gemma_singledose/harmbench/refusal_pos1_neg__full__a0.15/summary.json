@@ -1,0 +1,16 @@
+{
+  "steering_vector": "refusal_pos1_neg__full",
+  "benchmark": "harmbench",
+  "single_dose_alpha": 0.15,
+  "n": 300,
+  "n_jailbroken": 200,
+  "n_degenerate": 5,
+  "config": {
+    "model": "/mnt/dlabscratch1/bazina/.cache/huggingface/hub/models--google--gemma-4-31B-it/snapshots/fb9ae262347c3945692f09a612f8bb189def854f",
+    "layer": 30,
+    "residual_norm": 258.088,
+    "max_new_tokens": 300,
+    "attn_implementation": "gqa_fold",
+    "target": "HarmBench human_jailbreak Gemma-refused group, n=300 (subsampled from 3117, seed 7)"
+  }
+}

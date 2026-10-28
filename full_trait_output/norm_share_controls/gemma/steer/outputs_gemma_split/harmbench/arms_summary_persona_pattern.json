@@ -1,0 +1,33 @@
+{
+  "persona_pattern": {
+    "steering_vector": "persona_pattern",
+    "direction_meta": {
+      "description": "trait-span projection of Cov w, w = w_persona__full, Cov over HB+WJB layer-30 activations",
+      "mean_gap_hbwjb": 13.859099164734687
+    },
+    "directions_file": "inputs/gemma/steer_pattern_gemma_layer30.pt",
+    "benchmark": "harmbench",
+    "alpha_schedule": [
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5
+    ],
+    "config": {
+      "model": "/mnt/dlabscratch1/bazina/.cache/huggingface/hub/models--google--gemma-4-31B-it/snapshots/fb9ae262347c3945692f09a612f8bb189def854f",
+      "layer": 30,
+      "residual_norm": 258.088,
+      "max_new_tokens": 300,
+      "batch_size": 128,
+      "token_budget": 180000,
+      "attn_implementation": "gqa_fold",
+      "target": "HarmBench human_jailbreak Gemma-refused group, n=300 (subsampled from 3117, seed 0)",
+      "judge_inloop": "gpt-4.1-mini binary YES/NO",
+      "gpu": "NVIDIA B300 SXM6 AC"
+    },
+    "asr_started_not_jailbroken": 0.15,
+    "n_started_rf": 300,
+    "n_degenerate": 11
+  }
+}

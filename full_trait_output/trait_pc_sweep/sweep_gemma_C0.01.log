@@ -1,0 +1,52 @@
+[gemma] T (240, 5376); rank centered 239, uncentered 240
+  HB: (3180, 5376) jb=63
+  GCG: (159, 5376) jb=34
+  PAIR: (400, 5376) jb=103
+  PAP: (2000, 5376) jb=138
+  GPTFuzz: (400, 5376) jb=117
+  PEZ: (1200, 5376) jb=77
+  AUG_train_only: (2000, 5376) jb=184
+  loaded in 1s
+  50 seeds; train ~1554 (fit 1320 / val 234), test ~288
+  pca    k=   1 ev=0.295 | val=0.727 HB=0.752 GCG=0.592 PAIR=0.620 PAP=0.520 GPTFuzz=0.629 PEZ=0.635 | xfer=0.599±0.000 signed=0.548 | 1s
+  pca    k=   2 ev=0.379 | val=0.702 HB=0.726 GCG=0.552 PAIR=0.647 PAP=0.558 GPTFuzz=0.636 PEZ=0.644 | xfer=0.607±0.000 signed=0.553 | 1s
+  pca    k=   3 ev=0.446 | val=0.713 HB=0.744 GCG=0.616 PAIR=0.644 PAP=0.573 GPTFuzz=0.702 PEZ=0.733 | xfer=0.654±0.001 signed=0.573 | 1s
+  pca    k=   4 ev=0.488 | val=0.742 HB=0.774 GCG=0.646 PAIR=0.621 PAP=0.567 GPTFuzz=0.692 PEZ=0.754 | xfer=0.656±0.001 signed=0.579 | 1s
+  pca    k=   5 ev=0.521 | val=0.754 HB=0.781 GCG=0.664 PAIR=0.621 PAP=0.599 GPTFuzz=0.672 PEZ=0.765 | xfer=0.664±0.001 signed=0.595 | 1s
+  pca    k=   6 ev=0.550 | val=0.752 HB=0.773 GCG=0.659 PAIR=0.621 PAP=0.597 GPTFuzz=0.673 PEZ=0.761 | xfer=0.662±0.001 signed=0.593 | 1s
+  pca    k=   8 ev=0.596 | val=0.826 HB=0.851 GCG=0.666 PAIR=0.628 PAP=0.563 GPTFuzz=0.646 PEZ=0.774 | xfer=0.655±0.001 signed=0.597 | 1s
+  pca    k=  10 ev=0.627 | val=0.820 HB=0.837 GCG=0.647 PAIR=0.626 PAP=0.559 GPTFuzz=0.630 PEZ=0.770 | xfer=0.646±0.001 signed=0.594 | 1s
+  pca    k=  12 ev=0.653 | val=0.839 HB=0.846 GCG=0.645 PAIR=0.644 PAP=0.589 GPTFuzz=0.575 PEZ=0.756 | xfer=0.642±0.001 signed=0.612 | 1s
+  pca    k=  16 ev=0.695 | val=0.832 HB=0.845 GCG=0.654 PAIR=0.645 PAP=0.588 GPTFuzz=0.594 PEZ=0.757 | xfer=0.648±0.001 signed=0.610 | 1s
+  pca    k=  20 ev=0.726 | val=0.825 HB=0.830 GCG=0.660 PAIR=0.648 PAP=0.604 GPTFuzz=0.546 PEZ=0.766 | xfer=0.645±0.001 signed=0.626 | 1s
+  pca    k=  24 ev=0.751 | val=0.832 HB=0.819 GCG=0.667 PAIR=0.656 PAP=0.611 GPTFuzz=0.547 PEZ=0.770 | xfer=0.650±0.002 signed=0.649 | 1s
+  pca    k=  32 ev=0.790 | val=0.875 HB=0.864 GCG=0.676 PAIR=0.680 PAP=0.617 GPTFuzz=0.624 PEZ=0.810 | xfer=0.682±0.002 signed=0.682 | 1s
+  pca    k=  48 ev=0.843 | val=0.888 HB=0.889 GCG=0.699 PAIR=0.681 PAP=0.638 GPTFuzz=0.683 PEZ=0.833 | xfer=0.707±0.002 signed=0.707 | 1s
+  pca    k=  64 ev=0.880 | val=0.903 HB=0.898 GCG=0.697 PAIR=0.678 PAP=0.626 GPTFuzz=0.713 PEZ=0.828 | xfer=0.708±0.002 signed=0.708 | 1s
+  pca    k=  96 ev=0.927 | val=0.909 HB=0.912 GCG=0.704 PAIR=0.700 PAP=0.637 GPTFuzz=0.710 PEZ=0.828 | xfer=0.716±0.002 signed=0.716 | 1s
+  pca    k= 128 ev=0.957 | val=0.921 HB=0.918 GCG=0.715 PAIR=0.693 PAP=0.645 GPTFuzz=0.774 PEZ=0.837 | xfer=0.733±0.002 signed=0.733 | 2s
+  pca    k= 160 ev=0.977 | val=0.930 HB=0.918 GCG=0.714 PAIR=0.698 PAP=0.642 GPTFuzz=0.746 PEZ=0.838 | xfer=0.728±0.002 signed=0.728 | 2s
+  pca    k= 192 ev=0.990 | val=0.935 HB=0.919 GCG=0.725 PAIR=0.690 PAP=0.656 GPTFuzz=0.762 PEZ=0.821 | xfer=0.731±0.002 signed=0.731 | 3s
+  pca    k= 239 ev=1.000 | val=0.941 HB=0.923 GCG=0.718 PAIR=0.700 PAP=0.659 GPTFuzz=0.766 PEZ=0.805 | xfer=0.729±0.002 signed=0.729 | 3s
+  svd    k=   1 ev=0.285 | val=0.727 HB=0.752 GCG=0.592 PAIR=0.620 PAP=0.521 GPTFuzz=0.628 PEZ=0.635 | xfer=0.599±0.000 signed=0.548 | 1s
+  svd    k=   2 ev=0.385 | val=0.704 HB=0.722 GCG=0.545 PAIR=0.614 PAP=0.544 GPTFuzz=0.602 PEZ=0.608 | xfer=0.583±0.001 signed=0.542 | 1s
+  svd    k=   3 ev=0.459 | val=0.703 HB=0.732 GCG=0.571 PAIR=0.651 PAP=0.569 GPTFuzz=0.663 PEZ=0.681 | xfer=0.627±0.000 signed=0.562 | 1s
+  svd    k=   4 ev=0.501 | val=0.735 HB=0.772 GCG=0.603 PAIR=0.617 PAP=0.563 GPTFuzz=0.664 PEZ=0.721 | xfer=0.634±0.001 signed=0.568 | 1s
+  svd    k=   5 ev=0.533 | val=0.744 HB=0.768 GCG=0.626 PAIR=0.622 PAP=0.589 GPTFuzz=0.647 PEZ=0.734 | xfer=0.644±0.001 signed=0.585 | 1s
+  svd    k=   6 ev=0.561 | val=0.742 HB=0.762 GCG=0.623 PAIR=0.622 PAP=0.586 GPTFuzz=0.647 PEZ=0.731 | xfer=0.642±0.001 signed=0.583 | 1s
+  svd    k=   8 ev=0.606 | val=0.827 HB=0.857 GCG=0.651 PAIR=0.622 PAP=0.555 GPTFuzz=0.622 PEZ=0.762 | xfer=0.643±0.001 signed=0.594 | 1s
+  svd    k=  10 ev=0.637 | val=0.820 HB=0.840 GCG=0.635 PAIR=0.612 PAP=0.546 GPTFuzz=0.602 PEZ=0.760 | xfer=0.631±0.001 signed=0.590 | 1s
+  svd    k=  12 ev=0.663 | val=0.838 HB=0.853 GCG=0.635 PAIR=0.646 PAP=0.587 GPTFuzz=0.546 PEZ=0.745 | xfer=0.632±0.001 signed=0.613 | 1s
+  svd    k=  16 ev=0.703 | val=0.830 HB=0.843 GCG=0.648 PAIR=0.643 PAP=0.587 GPTFuzz=0.557 PEZ=0.751 | xfer=0.637±0.001 signed=0.614 | 1s
+  svd    k=  20 ev=0.734 | val=0.825 HB=0.824 GCG=0.651 PAIR=0.635 PAP=0.606 GPTFuzz=0.525 PEZ=0.767 | xfer=0.637±0.001 signed=0.630 | 1s
+  svd    k=  24 ev=0.758 | val=0.833 HB=0.820 GCG=0.662 PAIR=0.656 PAP=0.617 GPTFuzz=0.572 PEZ=0.766 | xfer=0.655±0.002 signed=0.655 | 1s
+  svd    k=  32 ev=0.796 | val=0.874 HB=0.864 GCG=0.673 PAIR=0.674 PAP=0.611 GPTFuzz=0.658 PEZ=0.810 | xfer=0.685±0.002 signed=0.685 | 1s
+  svd    k=  48 ev=0.848 | val=0.890 HB=0.894 GCG=0.693 PAIR=0.670 PAP=0.631 GPTFuzz=0.688 PEZ=0.834 | xfer=0.703±0.002 signed=0.703 | 1s
+  svd    k=  64 ev=0.883 | val=0.904 HB=0.899 GCG=0.690 PAIR=0.668 PAP=0.620 GPTFuzz=0.721 PEZ=0.829 | xfer=0.706±0.002 signed=0.706 | 1s
+  svd    k=  96 ev=0.929 | val=0.908 HB=0.914 GCG=0.705 PAIR=0.695 PAP=0.639 GPTFuzz=0.704 PEZ=0.831 | xfer=0.715±0.002 signed=0.715 | 1s
+  svd    k= 128 ev=0.958 | val=0.920 HB=0.919 GCG=0.718 PAIR=0.691 PAP=0.646 GPTFuzz=0.790 PEZ=0.839 | xfer=0.737±0.002 signed=0.737 | 2s
+  svd    k= 160 ev=0.977 | val=0.927 HB=0.915 GCG=0.715 PAIR=0.695 PAP=0.639 GPTFuzz=0.777 PEZ=0.835 | xfer=0.732±0.002 signed=0.732 | 2s
+  svd    k= 192 ev=0.990 | val=0.933 HB=0.921 GCG=0.728 PAIR=0.689 PAP=0.659 GPTFuzz=0.779 PEZ=0.822 | xfer=0.735±0.002 signed=0.735 | 2s
+  svd    k= 240 ev=1.000 | val=0.938 HB=0.923 GCG=0.722 PAIR=0.698 PAP=0.659 GPTFuzz=0.782 PEZ=0.808 | xfer=0.734±0.002 signed=0.734 | 3s
+  traits k= 240 ev=1.000 | val=0.870 HB=0.870 GCG=0.657 PAIR=0.661 PAP=0.591 GPTFuzz=0.532 PEZ=0.772 | xfer=0.643±0.001 signed=0.635 | 2s
+done in 54s -> /Users/viktor/persona-vector-jbing/full_trait_output/trait_pc_sweep/summary_gemma_C0.01.json, scores_gemma_C0.01.npz

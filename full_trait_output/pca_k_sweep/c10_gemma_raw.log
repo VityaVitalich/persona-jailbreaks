@@ -1,0 +1,13 @@
+  classifier: L2 logistic regression, C=10.0, class_weight=balanced
+[gemma] loading
+  HB human: (3180, 5376), jb=63
+  GCG: (159, 5376), jb=34  paper-cell protocol: sym
+  PAIR: (400, 5376), jb=103  paper-cell protocol: sym
+  PAP: (2000, 5376), jb=138  paper-cell protocol: sym
+  GPTFuzz: (400, 5376), jb=117  paper-cell protocol: sym
+  PEZ: (1200, 5376), jb=77  paper-cell protocol: sym
+  AUG(train-only): (2000, 5376), jb=184
+  loaded in 1s
+  50 usable seeds; train pool ~1554, test ~288
+  k=    0 ev=1.000 | PAPER: human_test=0.773 GCG=0.558 PAIR=0.610 PAP=0.550 GPTFuzz=0.691 PEZ=0.569 xfer=0.596±0.004 | SIGNED: human_test=0.735 GCG=0.558 PAIR=0.610 PAP=0.550 GPTFuzz=0.691 PEZ=0.434 xfer=0.569 | 42s
+done in 42s -> c10_gemma_raw.json

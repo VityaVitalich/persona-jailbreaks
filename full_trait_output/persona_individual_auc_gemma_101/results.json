@@ -1,0 +1,1929 @@
+{
+  "method": "persona_individual_auc",
+  "layer": 30,
+  "n_seeds": 101,
+  "n_seeds_used": 101,
+  "n_traits": 240,
+  "ranked": [
+    {
+      "trait": "forgiving",
+      "mean_auc": 0.8364671272048553,
+      "std_auc": 0.12462696006921219,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.16409082548075696,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "convergent",
+      "mean_auc": 0.8339768536768898,
+      "std_auc": 0.1152964273624318,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.830926712328876,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "essentialist",
+      "mean_auc": 0.8253526214632071,
+      "std_auc": 0.11590863802712062,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.8216329368924588,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "introverted",
+      "mean_auc": 0.8219121452680385,
+      "std_auc": 0.10714249504162522,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.1909402567780929,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "flirty",
+      "mean_auc": 0.8125395214846532,
+      "std_auc": 0.12083414684665157,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.8059699076239134,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "stoic",
+      "mean_auc": 0.7924516225490627,
+      "std_auc": 0.13087224659705957,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.23912591325374846,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "sycophantic",
+      "mean_auc": 0.7897903651638417,
+      "std_auc": 0.1136499569688298,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.7878561291870526,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "romantic",
+      "mean_auc": 0.7881696663039175,
+      "std_auc": 0.12588020191894758,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.7589119368672895,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "obsessive",
+      "mean_auc": 0.7828351494502302,
+      "std_auc": 0.11982620630322798,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.7528809527533464,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "dispassionate",
+      "mean_auc": 0.7802354279840151,
+      "std_auc": 0.12698532225216608,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.25533138808153094,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "stream_of_consciousness",
+      "mean_auc": 0.7787466836235021,
+      "std_auc": 0.12718790752451864,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.7451783752456996,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "calm",
+      "mean_auc": 0.778415841588421,
+      "std_auc": 0.1261176572068346,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.2588045226332814,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "reserved",
+      "mean_auc": 0.7755364916961607,
+      "std_auc": 0.1253920114562406,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.26041087590936113,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "blunt",
+      "mean_auc": 0.7754196348644009,
+      "std_auc": 0.13076636104181408,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.7307805826351484,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "intuitive",
+      "mean_auc": 0.7701579432427546,
+      "std_auc": 0.1272356018697923,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.26693137897070385,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "factual",
+      "mean_auc": 0.768868113920005,
+      "std_auc": 0.1259803281605019,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.27286308222902106,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "tactful",
+      "mean_auc": 0.7670172753913405,
+      "std_auc": 0.12541821009896129,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.28141977419557374,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "big_picture",
+      "mean_auc": 0.7668329007142713,
+      "std_auc": 0.12885282580958796,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.27504957594683577,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "altruistic",
+      "mean_auc": 0.7652177983628434,
+      "std_auc": 0.12602894352988106,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.2801716747053228,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "zealous",
+      "mean_auc": 0.7643284970899435,
+      "std_auc": 0.12425759268100608,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.7226096110602935,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "naive",
+      "mean_auc": 0.7625215484242378,
+      "std_auc": 0.13406379952598274,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.2907924356370217,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "radical",
+      "mean_auc": 0.7594980574589577,
+      "std_auc": 0.12442061281142917,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.7096619060891981,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "rhetorical",
+      "mean_auc": 0.759359568892253,
+      "std_auc": 0.12855443060955463,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.7092462254186275,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "fundamentalist",
+      "mean_auc": 0.7588246220123134,
+      "std_auc": 0.1266076459006947,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.7138117741125127,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "systems_thinker",
+      "mean_auc": 0.757491602677786,
+      "std_auc": 0.12566712603254174,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.2843521127736641,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "evil",
+      "mean_auc": 0.7573448860778064,
+      "std_auc": 0.12520994743637606,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.7101578934984666,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "conceptual",
+      "mean_auc": 0.7566619095947585,
+      "std_auc": 0.12622120121726593,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.28888515737639253,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "prescriptive",
+      "mean_auc": 0.7549802326419762,
+      "std_auc": 0.12687049942334125,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.7131650265108167,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "dominant",
+      "mean_auc": 0.7543210129518548,
+      "std_auc": 0.12406191956563074,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.2835199077694637,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "mercurial",
+      "mean_auc": 0.7542425598774618,
+      "std_auc": 0.1255307517047699,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.7022208633742969,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "proactive",
+      "mean_auc": 0.7538070799081402,
+      "std_auc": 0.12696762485869953,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.29075967051172275,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "playful",
+      "mean_auc": 0.753714185306843,
+      "std_auc": 0.12594244288021103,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.7046067137551576,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "historical",
+      "mean_auc": 0.7530007678146706,
+      "std_auc": 0.12866870196889835,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.7026307639980348,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "collectivistic",
+      "mean_auc": 0.7522961999454831,
+      "std_auc": 0.12360034324251168,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.29410499124854106,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "manipulative",
+      "mean_auc": 0.7519999936375145,
+      "std_auc": 0.11823828012543512,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.7443656347153617,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "irreverent",
+      "mean_auc": 0.7513312465470999,
+      "std_auc": 0.12839986713951956,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.7022612346906462,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "inclusive",
+      "mean_auc": 0.7508759361843177,
+      "std_auc": 0.1273781307771655,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.2905057290645529,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "concise",
+      "mean_auc": 0.750520577582825,
+      "std_auc": 0.1269177352829933,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.7027734223506232,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "divergent",
+      "mean_auc": 0.7504718483410043,
+      "std_auc": 0.12538374763702478,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.29845407710692146,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "benevolent",
+      "mean_auc": 0.750331703014124,
+      "std_auc": 0.12714482383013775,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.29401185541732666,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "emotional",
+      "mean_auc": 0.7503059985905701,
+      "std_auc": 0.12637972292560187,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.7045225744169568,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "misanthropic",
+      "mean_auc": 0.7502532868816534,
+      "std_auc": 0.12500747569184734,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.7002756151453168,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "risk_taking",
+      "mean_auc": 0.7500791611805554,
+      "std_auc": 0.1250710950481024,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6994723589568412,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "verbose",
+      "mean_auc": 0.7494997680790383,
+      "std_auc": 0.126980975759976,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.2970719957816668,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "interdisciplinary",
+      "mean_auc": 0.7492632242647367,
+      "std_auc": 0.12671338904281093,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3003151449378095,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "deconstructionist",
+      "mean_auc": 0.748842709747018,
+      "std_auc": 0.13058162304985518,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6937975801169274,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "adventurous",
+      "mean_auc": 0.7485194668786449,
+      "std_auc": 0.12681296458826316,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6962094067120859,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "impulsive",
+      "mean_auc": 0.748502340054123,
+      "std_auc": 0.1166684178574349,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.7151596358472448,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "vindictive",
+      "mean_auc": 0.7478701198741358,
+      "std_auc": 0.11614355011080159,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.7025438899526981,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "moderate",
+      "mean_auc": 0.7470504541474545,
+      "std_auc": 0.12333515917718699,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3034034042147969,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "chaotic",
+      "mean_auc": 0.7469321881793057,
+      "std_auc": 0.12765357910219474,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3005328093061762,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "accessible",
+      "mean_auc": 0.7460965960173016,
+      "std_auc": 0.12696601677164834,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3031161493457182,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "philosophical",
+      "mean_auc": 0.7460425980296905,
+      "std_auc": 0.13786370697121247,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.2994345540991904,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "nonchalant",
+      "mean_auc": 0.7459663360867874,
+      "std_auc": 0.11956425266862072,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.704154743985807,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "empathetic",
+      "mean_auc": 0.7452431968008659,
+      "std_auc": 0.13056117161980293,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.298735274606028,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "agreeable",
+      "mean_auc": 0.7443359054980245,
+      "std_auc": 0.12372400591855394,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.30766738820357303,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "calculating",
+      "mean_auc": 0.7436409133013338,
+      "std_auc": 0.12997767697230395,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.31151918484213115,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "disorganized",
+      "mean_auc": 0.7435269235912368,
+      "std_auc": 0.12665357748357936,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6924595256292932,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "holistic",
+      "mean_auc": 0.7434481022367859,
+      "std_auc": 0.12986322577349774,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3071925179884082,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "flippant",
+      "mean_auc": 0.7433653516114229,
+      "std_auc": 0.12236663359674933,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6954362256840448,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "conciliatory",
+      "mean_auc": 0.7426000130927608,
+      "std_auc": 0.13322156921046316,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3115578627049697,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "universalist",
+      "mean_auc": 0.7425169564476217,
+      "std_auc": 0.13184968768221733,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6886381693934596,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "competitive",
+      "mean_auc": 0.7421643337679572,
+      "std_auc": 0.12793171214678054,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6891663160565864,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "challenging",
+      "mean_auc": 0.7416163035390915,
+      "std_auc": 0.1289381703155198,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6788795862070117,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "narrative",
+      "mean_auc": 0.7404913747407066,
+      "std_auc": 0.1270921764554789,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.687571386957419,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "deterministic",
+      "mean_auc": 0.7403546335154763,
+      "std_auc": 0.1292687909313301,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6881893045628978,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "iconoclastic",
+      "mean_auc": 0.7402447112437686,
+      "std_auc": 0.13107491334855423,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6797370677751549,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "abstract",
+      "mean_auc": 0.7399206124322915,
+      "std_auc": 0.12994161100305932,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.31441130931420974,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "circumspect",
+      "mean_auc": 0.739076909815726,
+      "std_auc": 0.12808697660166335,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3092771811871507,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "structuralist",
+      "mean_auc": 0.737958615744169,
+      "std_auc": 0.12912278993452722,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3166742577931921,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "effusive",
+      "mean_auc": 0.7375092989835565,
+      "std_auc": 0.13447271292187835,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3202469983598018,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "traditional",
+      "mean_auc": 0.7373616270193505,
+      "std_auc": 0.13141860354862991,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3241524213463628,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "flexible",
+      "mean_auc": 0.7373118640438358,
+      "std_auc": 0.1222050994541953,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.31453420156224826,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "submissive",
+      "mean_auc": 0.7370372190389056,
+      "std_auc": 0.12825049689683882,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6835535613654793,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "rationalist",
+      "mean_auc": 0.736831957665072,
+      "std_auc": 0.12910934273726812,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6831464925739146,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "collaborative",
+      "mean_auc": 0.7364867985233328,
+      "std_auc": 0.13125177398392748,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.31221148156005213,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "futuristic",
+      "mean_auc": 0.736293163200454,
+      "std_auc": 0.12091241120585199,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.2982734524680701,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "wry",
+      "mean_auc": 0.7361552939705601,
+      "std_auc": 0.12558293667972328,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.31423968397610696,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "sarcastic",
+      "mean_auc": 0.7361455802277188,
+      "std_auc": 0.13094487942087357,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6766745376700677,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "sassy",
+      "mean_auc": 0.7361429002011215,
+      "std_auc": 0.13011701521876806,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3114693148046201,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "goofy",
+      "mean_auc": 0.7360353112189729,
+      "std_auc": 0.14054247487122096,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6855454760855129,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "generous",
+      "mean_auc": 0.7358909292111085,
+      "std_auc": 0.1263348062347605,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3125071181449592,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "solemn",
+      "mean_auc": 0.7355419503670476,
+      "std_auc": 0.13035661194093032,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3189388901870457,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "environmental",
+      "mean_auc": 0.7349517184507498,
+      "std_auc": 0.12780201409118885,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.31597686093880345,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "humanistic",
+      "mean_auc": 0.7348349968137565,
+      "std_auc": 0.12829225692182933,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3115524692837956,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "educational",
+      "mean_auc": 0.7346744554371198,
+      "std_auc": 0.1284408279729524,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.314488527387404,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "elitist",
+      "mean_auc": 0.7346603168046499,
+      "std_auc": 0.12720905807788963,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.682578884184884,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "dogmatic",
+      "mean_auc": 0.7345288309213689,
+      "std_auc": 0.12705901897784666,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.685496782024518,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "spontaneous",
+      "mean_auc": 0.7341322231788736,
+      "std_auc": 0.12799051558224037,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6773854801171606,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "entertaining",
+      "mean_auc": 0.7337705217064407,
+      "std_auc": 0.12777756855737044,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6799431817621479,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "practical",
+      "mean_auc": 0.7337544238499724,
+      "std_auc": 0.1287764975051611,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3209655072359801,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "patient",
+      "mean_auc": 0.7337273165689187,
+      "std_auc": 0.13191149454068565,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6814012392558149,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "impatient",
+      "mean_auc": 0.7335999913846398,
+      "std_auc": 0.13072352349726882,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6785111709378866,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "reductionist",
+      "mean_auc": 0.7335727667238141,
+      "std_auc": 0.1395662981500345,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.686631288899835,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "petty",
+      "mean_auc": 0.7335288863386504,
+      "std_auc": 0.12492031098433715,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3164911719298443,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "diplomatic",
+      "mean_auc": 0.7332106979672748,
+      "std_auc": 0.12900160097187532,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.32044299030253354,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "efficient",
+      "mean_auc": 0.7331457232777785,
+      "std_auc": 0.13008211310733672,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6788858550433657,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "generalist",
+      "mean_auc": 0.7330558524273769,
+      "std_auc": 0.12909345508560768,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.32133206748508336,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "socratic",
+      "mean_auc": 0.7329353949133263,
+      "std_auc": 0.13181355791115337,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6770806057902989,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "sardonic",
+      "mean_auc": 0.7329291075711901,
+      "std_auc": 0.12579827607072702,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.31688302732547724,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "reactive",
+      "mean_auc": 0.7327827005100802,
+      "std_auc": 0.12953405724430864,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6768765790275241,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "secular",
+      "mean_auc": 0.7322778264110306,
+      "std_auc": 0.12894002012103334,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6771139484533901,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "regulatory",
+      "mean_auc": 0.7322764339097669,
+      "std_auc": 0.13075117971520273,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3245931766006269,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "critical",
+      "mean_auc": 0.7319067566284913,
+      "std_auc": 0.12867902182587027,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3211997374443263,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "libertarian",
+      "mean_auc": 0.730306160792475,
+      "std_auc": 0.12809408881888892,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6767853117304248,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "pessimistic",
+      "mean_auc": 0.7298692670205041,
+      "std_auc": 0.1318190366377596,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6727366846564465,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "grounded",
+      "mean_auc": 0.7298127742021979,
+      "std_auc": 0.13229142050623965,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.32561399757809856,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "contrarian",
+      "mean_auc": 0.7297821551840872,
+      "std_auc": 0.13108272667106538,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6707000427602656,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "militant",
+      "mean_auc": 0.7295254938230229,
+      "std_auc": 0.13093688526013764,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6739046406248065,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "meticulous",
+      "mean_auc": 0.7294710453336789,
+      "std_auc": 0.13153273219549508,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.32487672739775436,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "erudite",
+      "mean_auc": 0.728969646853973,
+      "std_auc": 0.13115725444153903,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3266381167714343,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "rebellious",
+      "mean_auc": 0.7289665254452707,
+      "std_auc": 0.13071203176249888,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6678873103811322,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "casual",
+      "mean_auc": 0.7283556892473114,
+      "std_auc": 0.12901607025575434,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.672891151478674,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "perfectionist",
+      "mean_auc": 0.7281946176911869,
+      "std_auc": 0.12947743532236253,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.326791812302968,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "nostalgic",
+      "mean_auc": 0.7279492576267114,
+      "std_auc": 0.137181476238974,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6499624683175168,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "formal",
+      "mean_auc": 0.7277696140181297,
+      "std_auc": 0.13105703482383352,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3278088471908454,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "inquisitive",
+      "mean_auc": 0.7277310001600867,
+      "std_auc": 0.13120011663225828,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6670176754230545,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "skeptical",
+      "mean_auc": 0.7276632073209696,
+      "std_auc": 0.1319262921432207,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3258563566363364,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "quantitative",
+      "mean_auc": 0.7276163907794975,
+      "std_auc": 0.13118338155476994,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.32820483773449033,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "hedonistic",
+      "mean_auc": 0.7273571938753507,
+      "std_auc": 0.13195611572839863,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6716733516839839,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "egalitarian",
+      "mean_auc": 0.7265549570874338,
+      "std_auc": 0.13034431521218567,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3303760168174909,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "strategic",
+      "mean_auc": 0.7263627013439701,
+      "std_auc": 0.1311587637789697,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3299033358687254,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "conscientious",
+      "mean_auc": 0.7263422429236834,
+      "std_auc": 0.1316444859194682,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3307480830167184,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "methodical",
+      "mean_auc": 0.7262952651400995,
+      "std_auc": 0.13253005758289213,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3297329388806208,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "paranoid",
+      "mean_auc": 0.7260463642000415,
+      "std_auc": 0.13331167758614534,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6698569285238114,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "formalist",
+      "mean_auc": 0.7256253599076993,
+      "std_auc": 0.13399277941492693,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3373983366559967,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "mischievous",
+      "mean_auc": 0.7252717602269242,
+      "std_auc": 0.13425218832733607,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6649415864206627,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "relativist",
+      "mean_auc": 0.7251115262036445,
+      "std_auc": 0.1352020748087651,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6685997631887265,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "analytical",
+      "mean_auc": 0.7247156700856604,
+      "std_auc": 0.13052704439343357,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3325738623971095,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "metaphorical",
+      "mean_auc": 0.7237184008171428,
+      "std_auc": 0.13446347246353849,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6602110289930528,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "spiritual",
+      "mean_auc": 0.7211427022777487,
+      "std_auc": 0.1373425502920673,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.34477444821859454,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "constructivist",
+      "mean_auc": 0.7211155927609207,
+      "std_auc": 0.13852589839187043,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.35349946605208604,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "reverent",
+      "mean_auc": 0.7211071063510719,
+      "std_auc": 0.13763599076969252,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3406468249348827,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "existentialist",
+      "mean_auc": 0.7210468252171324,
+      "std_auc": 0.1372439915261453,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.33971983819247303,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "cosmopolitan",
+      "mean_auc": 0.7209938176557004,
+      "std_auc": 0.13545598499315764,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.34050390555752674,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "artistic",
+      "mean_auc": 0.7209231372432282,
+      "std_auc": 0.13547241362871426,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.33557985572723037,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "literal",
+      "mean_auc": 0.7205009805009488,
+      "std_auc": 0.12676042736441967,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3352735944963069,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "ethereal",
+      "mean_auc": 0.720412779553311,
+      "std_auc": 0.1294439231235378,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6649102203130083,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "confrontational",
+      "mean_auc": 0.7194397307306523,
+      "std_auc": 0.136075527162093,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3401142830325194,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "speculative",
+      "mean_auc": 0.7190482992052475,
+      "std_auc": 0.14002484520116912,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.35169031428556125,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "enigmatic",
+      "mean_auc": 0.718722442190188,
+      "std_auc": 0.13557156688241143,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6623795983181252,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "whimsical",
+      "mean_auc": 0.7186702877966775,
+      "std_auc": 0.13737420178633053,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.658402297457401,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "problem_solving",
+      "mean_auc": 0.7184153896713893,
+      "std_auc": 0.13263481817485273,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3407099411653264,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "idealistic",
+      "mean_auc": 0.7182438976505844,
+      "std_auc": 0.13615097835938236,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.34795268822254777,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "serious",
+      "mean_auc": 0.7176310851027393,
+      "std_auc": 0.13492514904446598,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3419068391676569,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "individualistic",
+      "mean_auc": 0.7174355703395112,
+      "std_auc": 0.1352850352981938,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6528149220039902,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "specialized",
+      "mean_auc": 0.7168745618979312,
+      "std_auc": 0.1384750923018421,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.37623269322428793,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "improvisational",
+      "mean_auc": 0.7163709938357588,
+      "std_auc": 0.13720067867002597,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6506913877661273,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "edgy",
+      "mean_auc": 0.7162950061993595,
+      "std_auc": 0.13102922359749933,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6714364188340123,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "provocative",
+      "mean_auc": 0.7162526607461567,
+      "std_auc": 0.12522390714803938,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3394090465887644,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "manic",
+      "mean_auc": 0.7158960630754899,
+      "std_auc": 0.14209796022801355,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3494800478549442,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "urgent",
+      "mean_auc": 0.715610885562488,
+      "std_auc": 0.13692167585937862,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6772221255237348,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "poetic",
+      "mean_auc": 0.7153883655801476,
+      "std_auc": 0.14374327571182302,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.5737605911999749,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "optimistic",
+      "mean_auc": 0.7144072625846274,
+      "std_auc": 0.13712153155482354,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.35092267160102025,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "adaptable",
+      "mean_auc": 0.7143295651436247,
+      "std_auc": 0.13527762016281525,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6506859108431065,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "eloquent",
+      "mean_auc": 0.7141824316341205,
+      "std_auc": 0.13223872583383536,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6452845075177579,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "meditative",
+      "mean_auc": 0.7131403521288826,
+      "std_auc": 0.1520228392215247,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.452317925311063,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "nihilistic",
+      "mean_auc": 0.7123641519968024,
+      "std_auc": 0.14118924912371164,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.649609055555613,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "judgmental",
+      "mean_auc": 0.7121251462667305,
+      "std_auc": 0.136794389100149,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3593030890706046,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "progressive",
+      "mean_auc": 0.7119312676413307,
+      "std_auc": 0.13362907325378892,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.40108911689332766,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "understated",
+      "mean_auc": 0.7117350965317171,
+      "std_auc": 0.13719228755185534,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6476821571937362,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "passionate",
+      "mean_auc": 0.7116060106850509,
+      "std_auc": 0.13654640572933696,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3638265876712593,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "mystical",
+      "mean_auc": 0.7111020059613301,
+      "std_auc": 0.14087506356413365,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.37376301908138115,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "descriptive",
+      "mean_auc": 0.7108759545811956,
+      "std_auc": 0.1393778294523604,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3672633687753696,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "pacifist",
+      "mean_auc": 0.7107054311671495,
+      "std_auc": 0.13840674821097843,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6468602476377057,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "eclectic",
+      "mean_auc": 0.7104531252303762,
+      "std_auc": 0.13567262880330874,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.34711148942154113,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "cryptic",
+      "mean_auc": 0.7102022494986747,
+      "std_auc": 0.1389863382299588,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6443246225139783,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "materialist",
+      "mean_auc": 0.7099654718478552,
+      "std_auc": 0.1393754172672632,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6484216586641913,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "humble",
+      "mean_auc": 0.7099126417665401,
+      "std_auc": 0.13453159291708347,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6381806888551053,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "earnest",
+      "mean_auc": 0.7097489881914175,
+      "std_auc": 0.13418367316710827,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.35431367654212786,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "theatrical",
+      "mean_auc": 0.7090656033625141,
+      "std_auc": 0.13271641170166057,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3485765608403604,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "serene",
+      "mean_auc": 0.7075177596316377,
+      "std_auc": 0.1383904624870128,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6403705977860366,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "cynical",
+      "mean_auc": 0.7067204875564704,
+      "std_auc": 0.13598993963878733,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6420397415824651,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "savage",
+      "mean_auc": 0.7065076443174472,
+      "std_auc": 0.13490093266020872,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.35453666514026155,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "fatalistic",
+      "mean_auc": 0.7062648008435909,
+      "std_auc": 0.14298898535325363,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6370319712003516,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "pedantic",
+      "mean_auc": 0.7060779388322136,
+      "std_auc": 0.1417356667346546,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6379593799209586,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "passive_aggressive",
+      "mean_auc": 0.7055798888735384,
+      "std_auc": 0.12044816867865886,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6597676355216279,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "neurotic",
+      "mean_auc": 0.705454014384236,
+      "std_auc": 0.13938870814387178,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3604896515222026,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "pensive",
+      "mean_auc": 0.7048144574890689,
+      "std_auc": 0.13511683503680733,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3778703005802583,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "absolutist",
+      "mean_auc": 0.7042134813436554,
+      "std_auc": 0.13842111831361462,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6398857022306095,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "witty",
+      "mean_auc": 0.7041285286491755,
+      "std_auc": 0.13622443839852144,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.34498044610582945,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "experiential",
+      "mean_auc": 0.7038847153424612,
+      "std_auc": 0.13203662283661252,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.35473360807390825,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "accommodating",
+      "mean_auc": 0.7037013866890388,
+      "std_auc": 0.13699383085927855,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.359151764182879,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "data_driven",
+      "mean_auc": 0.7032446255409022,
+      "std_auc": 0.14151029260816053,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.35838620291574613,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "ritualistic",
+      "mean_auc": 0.7029966051747869,
+      "std_auc": 0.1403801389137302,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.37408594698538733,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "cruel",
+      "mean_auc": 0.702944497877862,
+      "std_auc": 0.13760100515377324,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6426125068627504,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "grandiose",
+      "mean_auc": 0.7024759214162465,
+      "std_auc": 0.13539628784137334,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.388333954523333,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "epicurean",
+      "mean_auc": 0.7018800476565344,
+      "std_auc": 0.1360418022574006,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.37177065848117263,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "contemporary",
+      "mean_auc": 0.7014976675121757,
+      "std_auc": 0.13535959601218683,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6364904609503705,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "independent",
+      "mean_auc": 0.7012543361348252,
+      "std_auc": 0.1355934199541211,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6374598382463708,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "acerbic",
+      "mean_auc": 0.7010109706891677,
+      "std_auc": 0.12461631999869399,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3526447641811004,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "technical",
+      "mean_auc": 0.7008713224096454,
+      "std_auc": 0.1353738421153945,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.37083307369287843,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "animated",
+      "mean_auc": 0.7007976528759648,
+      "std_auc": 0.1428351951361143,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3913679964970445,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "assertive",
+      "mean_auc": 0.6996227194149992,
+      "std_auc": 0.13719368289751094,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6362208168650058,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "confident",
+      "mean_auc": 0.6992551128744231,
+      "std_auc": 0.12878221838095022,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3669987635085673,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "principled",
+      "mean_auc": 0.6988662786942103,
+      "std_auc": 0.13384060775842985,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6384917026803515,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "nurturing",
+      "mean_auc": 0.6988643753684863,
+      "std_auc": 0.13992162289429289,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.37221085946065063,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "charismatic",
+      "mean_auc": 0.6988044545797013,
+      "std_auc": 0.13271137868007088,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.45963622385519876,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "ironic",
+      "mean_auc": 0.6973506356353064,
+      "std_auc": 0.14655955935850867,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.38379007347370075,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "deontological",
+      "mean_auc": 0.6970757596934162,
+      "std_auc": 0.14247484261242918,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3857650703787314,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "anthropocentric",
+      "mean_auc": 0.6938989917295966,
+      "std_auc": 0.1319985950210616,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.5904382488171227,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "deferential",
+      "mean_auc": 0.6938668665381351,
+      "std_auc": 0.1388614344837773,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.586995663394095,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "paradoxical",
+      "mean_auc": 0.6938590771418464,
+      "std_auc": 0.14112528321161358,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3867972089187004,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "resilient",
+      "mean_auc": 0.6934142250502111,
+      "std_auc": 0.1270206987263387,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.34104541300346075,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "esoteric",
+      "mean_auc": 0.6923960207342059,
+      "std_auc": 0.1261450140123163,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6455292307601405,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "curious",
+      "mean_auc": 0.6919474621542038,
+      "std_auc": 0.12348011188768,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.4059261186806729,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "melodramatic",
+      "mean_auc": 0.6914021238585947,
+      "std_auc": 0.13596096928982765,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.41384069950780883,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "utilitarian",
+      "mean_auc": 0.6907611382483418,
+      "std_auc": 0.12545419508754221,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3761564365107084,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "ascetic",
+      "mean_auc": 0.6887894660368086,
+      "std_auc": 0.14385352324443118,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6021542716724116,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "supportive",
+      "mean_auc": 0.6876980516459763,
+      "std_auc": 0.13201618674439605,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.39348963241200663,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "theoretical",
+      "mean_auc": 0.687019446307626,
+      "std_auc": 0.1371608158006753,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.4295759652500771,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "hostile",
+      "mean_auc": 0.6863028264587874,
+      "std_auc": 0.13038021878162673,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.4006036591038352,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "inspirational",
+      "mean_auc": 0.6861274126451993,
+      "std_auc": 0.12631358251362665,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6101438565915167,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "bombastic",
+      "mean_auc": 0.6858293782930295,
+      "std_auc": 0.1501416564352018,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.5394787376989832,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "visceral",
+      "mean_auc": 0.6856398606518747,
+      "std_auc": 0.157977401549575,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.5490441132955829,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "transparent",
+      "mean_auc": 0.6855909616381468,
+      "std_auc": 0.12132966507537843,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6236455069462781,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "extroverted",
+      "mean_auc": 0.685392337837848,
+      "std_auc": 0.14399360603518185,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.5122710094973312,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "bitter",
+      "mean_auc": 0.6852346862246846,
+      "std_auc": 0.11203383513536352,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.37606991474047674,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "dramatic",
+      "mean_auc": 0.6850226528590098,
+      "std_auc": 0.13399666879247596,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6092032692079583,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "closure_seeking",
+      "mean_auc": 0.6844447050590917,
+      "std_auc": 0.1190920174690533,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.3840571510290956,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "qualitative",
+      "mean_auc": 0.6779209169611392,
+      "std_auc": 0.1263167351381109,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.37315783060187135,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "gregarious",
+      "mean_auc": 0.677834349876827,
+      "std_auc": 0.13850291533586123,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.5404313983361368,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "temperamental",
+      "mean_auc": 0.675315319835317,
+      "std_auc": 0.13751990703714825,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.5569270503440331,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "innovative",
+      "mean_auc": 0.675213892291739,
+      "std_auc": 0.13251036463935595,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.5914859981263224,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "condescending",
+      "mean_auc": 0.6718564274115741,
+      "std_auc": 0.13910382959402123,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.541074460040719,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "avoidant",
+      "mean_auc": 0.6708960569344772,
+      "std_auc": 0.12303742888480391,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.5394107799979434,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "anxious",
+      "mean_auc": 0.6706622280646415,
+      "std_auc": 0.13260108192437806,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.38314409768229757,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "detached",
+      "mean_auc": 0.6702659804827119,
+      "std_auc": 0.13972827533770968,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.4800603209634027,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "callous",
+      "mean_auc": 0.6665824553373567,
+      "std_auc": 0.1304395780864556,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.551831663550217,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "subversive",
+      "mean_auc": 0.6659952321299659,
+      "std_auc": 0.13819531599958482,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.5184575845980142,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "introspective",
+      "mean_auc": 0.6635213629271939,
+      "std_auc": 0.13327172135017987,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.42787458358681146,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "exploratory",
+      "mean_auc": 0.6623073188763884,
+      "std_auc": 0.11784291859316685,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.5711148398941387,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "melancholic",
+      "mean_auc": 0.6605320340352232,
+      "std_auc": 0.0994023647697303,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.44084333845779594,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "open_ended",
+      "mean_auc": 0.6541563999543343,
+      "std_auc": 0.11246081814774998,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.5042102841303249,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "decisive",
+      "mean_auc": 0.6506682382102069,
+      "std_auc": 0.12592487879923708,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.6016810310493801,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "chill",
+      "mean_auc": 0.6439441263070951,
+      "std_auc": 0.11345693843811441,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.5116135153385045,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "arrogant",
+      "mean_auc": 0.640293265046875,
+      "std_auc": 0.10702506765012815,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.479100206064835,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "cautious",
+      "mean_auc": 0.6310802528854106,
+      "std_auc": 0.09527313828046012,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.5036187116793889,
+      "direction": "high_score_predicts_jailbreak"
+    },
+    {
+      "trait": "creative",
+      "mean_auc": 0.6295933488019949,
+      "std_auc": 0.11478229723976086,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.4554209846525196,
+      "direction": "high_score_predicts_refusal"
+    },
+    {
+      "trait": "pluralist",
+      "mean_auc": 0.6244683722427907,
+      "std_auc": 0.0832329718255795,
+      "n_seeds": 94,
+      "raw_auc_mean": 0.43752952329655626,
+      "direction": "high_score_predicts_refusal"
+    }
+  ]
+}

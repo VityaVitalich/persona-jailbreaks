@@ -1,0 +1,33 @@
+A pc5     logreg   HB=0.743 xfer=0.677±0.005 GCG=0.67 PAIR=0.70 PAP=0.55 GPTFuzz=0.68 PEZ=0.78
+A pc5     qda      HB=0.731 xfer=0.658±0.014 GCG=0.64 PAIR=0.68 PAP=0.57 GPTFuzz=0.69 PEZ=0.71
+A pc5     rbf_svm  HB=0.693 xfer=0.652±0.016 GCG=0.63 PAIR=0.68 PAP=0.61 GPTFuzz=0.62 PEZ=0.72
+A pc5     hgb      HB=0.783 xfer=0.651±0.007 GCG=0.66 PAIR=0.69 PAP=0.53 GPTFuzz=0.62 PEZ=0.76
+A pc5     knn25    HB=0.681 xfer=0.631±0.008 GCG=0.61 PAIR=0.67 PAP=0.55 GPTFuzz=0.60 PEZ=0.73
+A pc10    logreg   HB=0.738 xfer=0.672±0.005 GCG=0.69 PAIR=0.73 PAP=0.55 GPTFuzz=0.60 PEZ=0.79
+A pc10    qda      HB=0.750 xfer=0.693±0.013 GCG=0.67 PAIR=0.76 PAP=0.60 GPTFuzz=0.65 PEZ=0.79
+A pc10    rbf_svm  HB=0.776 xfer=0.721±0.010 GCG=0.69 PAIR=0.75 PAP=0.68 GPTFuzz=0.69 PEZ=0.79
+A pc10    hgb      HB=0.802 xfer=0.665±0.007 GCG=0.64 PAIR=0.73 PAP=0.55 GPTFuzz=0.63 PEZ=0.78
+A pc10    knn25    HB=0.733 xfer=0.679±0.009 GCG=0.67 PAIR=0.72 PAP=0.53 GPTFuzz=0.71 PEZ=0.77
+A pc20    logreg   HB=0.756 xfer=0.663±0.008 GCG=0.67 PAIR=0.71 PAP=0.55 GPTFuzz=0.58 PEZ=0.80
+A pc20    qda      HB=0.745 xfer=0.680±0.011 GCG=0.66 PAIR=0.72 PAP=0.57 GPTFuzz=0.67 PEZ=0.78
+A pc20    rbf_svm  HB=0.798 xfer=0.698±0.015 GCG=0.70 PAIR=0.74 PAP=0.64 GPTFuzz=0.62 PEZ=0.80
+A pc20    hgb      HB=0.864 xfer=0.652±0.006 GCG=0.61 PAIR=0.70 PAP=0.53 GPTFuzz=0.64 PEZ=0.78
+A pc20    knn25    HB=0.788 xfer=0.663±0.006 GCG=0.68 PAIR=0.73 PAP=0.53 GPTFuzz=0.59 PEZ=0.79
+A traits  logreg   HB=0.820 xfer=0.759±0.007 GCG=0.81 PAIR=0.79 PAP=0.65 GPTFuzz=0.71 PEZ=0.84
+A traits  rbf_svm  HB=0.773 xfer=0.702±0.016 GCG=0.71 PAIR=0.75 PAP=0.66 GPTFuzz=0.61 PEZ=0.78
+A traits  hgb      HB=0.848 xfer=0.677±0.010 GCG=0.68 PAIR=0.73 PAP=0.59 GPTFuzz=0.60 PEZ=0.78
+B HB       n=3180 jb=1245 | pc2/logreg=0.577 pc5/logreg=0.858 pc10/logreg=0.893 pc10/hgb=0.967 pc20/logreg=0.932 pc50/logreg=0.960 traits/logreg=0.968
+B GCG      n=159 jb=70 | pc2/logreg=0.592 pc5/logreg=0.706 pc10/logreg=0.747 pc10/hgb=0.747 pc20/logreg=0.821 pc50/logreg=0.879 traits/logreg=0.857
+B PAIR     n=800 jb=230 | pc2/logreg=0.721 pc5/logreg=0.782 pc10/logreg=0.806 pc10/hgb=0.823 pc20/logreg=0.837 pc50/logreg=0.837 traits/logreg=0.845
+B PAP      n=2000 jb=528 | pc2/logreg=0.635 pc5/logreg=0.688 pc10/logreg=0.773 pc10/hgb=0.797 pc20/logreg=0.782 pc50/logreg=0.830 traits/logreg=0.856
+B GPTFuzz  n=400 jb=237 | pc2/logreg=0.713 pc5/logreg=0.753 pc10/logreg=0.738 pc10/hgb=0.777 pc20/logreg=0.774 pc50/logreg=0.810 traits/logreg=0.833
+B PEZ      n=1200 jb=180 | pc2/logreg=0.716 pc5/logreg=0.797 pc10/logreg=0.823 pc10/hgb=0.870 pc20/logreg=0.876 pc50/logreg=0.898 traits/logreg=0.894
+cos between per-family normals in top-10 PC space:
+              HB      GCG     PAIR      PAP  GPTFuzz      PEZ
+HB          1.00     0.35     0.15    -0.27     0.27     0.16
+GCG         0.35     1.00     0.56     0.20     0.33     0.70
+PAIR        0.15     0.56     1.00     0.78     0.26     0.37
+PAP        -0.27     0.20     0.78     1.00     0.04     0.36
+GPTFuzz     0.27     0.33     0.26     0.04     1.00     0.45
+PEZ         0.16     0.70     0.37     0.36     0.45     1.00
+done 564s

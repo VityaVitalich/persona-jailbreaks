@@ -1,0 +1,110 @@
+[llama] T (229, 4096); rank centered 228, uncentered 229
+  HB: (3180, 4096) jb=1245
+  GCG: (159, 4096) jb=70
+  PAIR: (800, 4096) jb=230
+  PAP: (2000, 4096) jb=528
+  GPTFuzz: (400, 4096) jb=237
+  PEZ: (1200, 4096) jb=180
+  loaded in 4s
+  50 seeds; train ~1554 (fit 1320 / val 234), test ~288
+  lda_a0.001 k=   1 ev=nan | val=0.654 HB=0.656 GCG=0.550 PAIR=0.625 PAP=0.612 GPTFuzz=0.699 PEZ=0.604 | xfer=0.618±0.000 signed=0.518 | 3s
+  lda_a0.001 k=   2 ev=nan | val=0.667 HB=0.630 GCG=0.557 PAIR=0.602 PAP=0.592 GPTFuzz=0.644 PEZ=0.584 | xfer=0.596±0.008 signed=0.514 | 5s
+  lda_a0.001 k=   3 ev=nan | val=0.705 HB=0.636 GCG=0.537 PAIR=0.571 PAP=0.541 GPTFuzz=0.596 PEZ=0.698 | xfer=0.589±0.006 signed=0.543 | 4s
+  lda_a0.001 k=   4 ev=nan | val=0.726 HB=0.619 GCG=0.531 PAIR=0.545 PAP=0.546 GPTFuzz=0.654 PEZ=0.625 | xfer=0.580±0.004 signed=0.496 | 4s
+  lda_a0.001 k=   5 ev=nan | val=0.751 HB=0.619 GCG=0.533 PAIR=0.529 PAP=0.541 GPTFuzz=0.598 PEZ=0.635 | xfer=0.567±0.005 signed=0.516 | 5s
+  lda_a0.001 k=   6 ev=nan | val=0.766 HB=0.624 GCG=0.583 PAIR=0.528 PAP=0.540 GPTFuzz=0.641 PEZ=0.664 | xfer=0.591±0.011 signed=0.564 | 5s
+  lda_a0.001 k=   8 ev=nan | val=0.784 HB=0.622 GCG=0.651 PAIR=0.528 PAP=0.540 GPTFuzz=0.677 PEZ=0.651 | xfer=0.609±0.010 signed=0.597 | 4s
+  lda_a0.001 k=  10 ev=nan | val=0.827 HB=0.632 GCG=0.627 PAIR=0.548 PAP=0.562 GPTFuzz=0.668 PEZ=0.612 | xfer=0.603±0.006 signed=0.556 | 4s
+  lda_a0.001 k=  12 ev=nan | val=0.847 HB=0.619 GCG=0.628 PAIR=0.530 PAP=0.579 GPTFuzz=0.623 PEZ=0.636 | xfer=0.599±0.008 signed=0.551 | 4s
+  lda_a0.001 k=  16 ev=nan | val=0.894 HB=0.703 GCG=0.550 PAIR=0.524 PAP=0.590 GPTFuzz=0.645 PEZ=0.632 | xfer=0.588±0.007 signed=0.535 | 4s
+  lda_a0.001 k=  20 ev=nan | val=0.905 HB=0.682 GCG=0.583 PAIR=0.559 PAP=0.568 GPTFuzz=0.607 PEZ=0.682 | xfer=0.600±0.005 signed=0.566 | 6s
+  lda_a0.001 k=  24 ev=nan | val=0.920 HB=0.711 GCG=0.555 PAIR=0.560 PAP=0.559 GPTFuzz=0.616 PEZ=0.634 | xfer=0.585±0.006 signed=0.558 | 5s
+  lda_a0.001 k=  32 ev=nan | val=0.934 HB=0.702 GCG=0.634 PAIR=0.625 PAP=0.557 GPTFuzz=0.579 PEZ=0.712 | xfer=0.621±0.007 signed=0.581 | 4s
+  lda_a0.001 k=  48 ev=nan | val=0.949 HB=0.800 GCG=0.678 PAIR=0.704 PAP=0.530 GPTFuzz=0.633 PEZ=0.760 | xfer=0.661±0.006 signed=0.654 | 5s
+  lda_a0.001 k=  64 ev=nan | val=0.955 HB=0.824 GCG=0.708 PAIR=0.722 PAP=0.550 GPTFuzz=0.633 PEZ=0.727 | xfer=0.668±0.007 signed=0.666 | 4s
+  lda_a0.001 k=  96 ev=nan | val=0.961 HB=0.806 GCG=0.669 PAIR=0.711 PAP=0.588 GPTFuzz=0.602 PEZ=0.671 | xfer=0.648±0.007 signed=0.646 | 6s
+  lda_a0.001 k= 128 ev=nan | val=0.961 HB=0.785 GCG=0.647 PAIR=0.717 PAP=0.600 GPTFuzz=0.580 PEZ=0.644 | xfer=0.638±0.007 signed=0.627 | 7s
+  lda_a0.001 k= 160 ev=nan | val=0.960 HB=0.791 GCG=0.687 PAIR=0.696 PAP=0.610 GPTFuzz=0.595 PEZ=0.652 | xfer=0.648±0.008 signed=0.627 | 9s
+  lda_a0.001 k= 192 ev=nan | val=0.960 HB=0.785 GCG=0.635 PAIR=0.636 PAP=0.585 GPTFuzz=0.611 PEZ=0.657 | xfer=0.625±0.010 signed=0.610 | 10s
+  lda_a0.001 k= 228 ev=nan | val=0.960 HB=0.797 GCG=0.608 PAIR=0.590 PAP=0.578 GPTFuzz=0.630 PEZ=0.640 | xfer=0.609±0.009 signed=0.602 | 14s
+  lda_a0.01 k=   1 ev=nan | val=0.653 HB=0.656 GCG=0.545 PAIR=0.623 PAP=0.618 GPTFuzz=0.710 PEZ=0.607 | xfer=0.621±0.000 signed=0.519 | 3s
+  lda_a0.01 k=   2 ev=nan | val=0.666 HB=0.630 GCG=0.559 PAIR=0.596 PAP=0.592 GPTFuzz=0.647 PEZ=0.581 | xfer=0.595±0.009 signed=0.511 | 2s
+  lda_a0.01 k=   3 ev=nan | val=0.695 HB=0.634 GCG=0.542 PAIR=0.569 PAP=0.550 GPTFuzz=0.620 PEZ=0.681 | xfer=0.592±0.007 signed=0.532 | 3s
+  lda_a0.01 k=   4 ev=nan | val=0.713 HB=0.616 GCG=0.539 PAIR=0.551 PAP=0.551 GPTFuzz=0.663 PEZ=0.626 | xfer=0.586±0.005 signed=0.497 | 2s
+  lda_a0.01 k=   5 ev=nan | val=0.744 HB=0.624 GCG=0.539 PAIR=0.526 PAP=0.545 GPTFuzz=0.601 PEZ=0.621 | xfer=0.567±0.006 signed=0.516 | 3s
+  lda_a0.01 k=   6 ev=nan | val=0.763 HB=0.636 GCG=0.594 PAIR=0.522 PAP=0.542 GPTFuzz=0.662 PEZ=0.640 | xfer=0.592±0.010 signed=0.567 | 3s
+  lda_a0.01 k=   8 ev=nan | val=0.788 HB=0.629 GCG=0.688 PAIR=0.531 PAP=0.541 GPTFuzz=0.696 PEZ=0.627 | xfer=0.617±0.009 signed=0.607 | 2s
+  lda_a0.01 k=  10 ev=nan | val=0.821 HB=0.630 GCG=0.674 PAIR=0.536 PAP=0.540 GPTFuzz=0.693 PEZ=0.598 | xfer=0.608±0.007 signed=0.576 | 3s
+  lda_a0.01 k=  12 ev=nan | val=0.843 HB=0.620 GCG=0.661 PAIR=0.527 PAP=0.562 GPTFuzz=0.637 PEZ=0.614 | xfer=0.600±0.009 signed=0.562 | 3s
+  lda_a0.01 k=  16 ev=nan | val=0.900 HB=0.752 GCG=0.544 PAIR=0.524 PAP=0.585 GPTFuzz=0.670 PEZ=0.652 | xfer=0.595±0.005 signed=0.550 | 3s
+  lda_a0.01 k=  20 ev=nan | val=0.909 HB=0.732 GCG=0.582 PAIR=0.551 PAP=0.569 GPTFuzz=0.629 PEZ=0.679 | xfer=0.602±0.005 signed=0.569 | 2s
+  lda_a0.01 k=  24 ev=nan | val=0.923 HB=0.742 GCG=0.547 PAIR=0.553 PAP=0.558 GPTFuzz=0.634 PEZ=0.636 | xfer=0.586±0.006 signed=0.559 | 2s
+  lda_a0.01 k=  32 ev=nan | val=0.936 HB=0.732 GCG=0.619 PAIR=0.608 PAP=0.542 GPTFuzz=0.590 PEZ=0.706 | xfer=0.613±0.007 signed=0.588 | 3s
+  lda_a0.01 k=  48 ev=nan | val=0.948 HB=0.796 GCG=0.673 PAIR=0.709 PAP=0.535 GPTFuzz=0.660 PEZ=0.761 | xfer=0.668±0.006 signed=0.664 | 4s
+  lda_a0.01 k=  64 ev=nan | val=0.955 HB=0.817 GCG=0.707 PAIR=0.725 PAP=0.562 GPTFuzz=0.653 PEZ=0.723 | xfer=0.674±0.007 signed=0.673 | 5s
+  lda_a0.01 k=  96 ev=nan | val=0.960 HB=0.796 GCG=0.701 PAIR=0.715 PAP=0.606 GPTFuzz=0.632 PEZ=0.703 | xfer=0.671±0.007 signed=0.671 | 5s
+  lda_a0.01 k= 128 ev=nan | val=0.961 HB=0.800 GCG=0.673 PAIR=0.718 PAP=0.613 GPTFuzz=0.580 PEZ=0.671 | xfer=0.651±0.007 signed=0.641 | 8s
+  lda_a0.01 k= 160 ev=nan | val=0.959 HB=0.786 GCG=0.692 PAIR=0.693 PAP=0.609 GPTFuzz=0.590 PEZ=0.663 | xfer=0.649±0.008 signed=0.631 | 10s
+  lda_a0.01 k= 192 ev=nan | val=0.959 HB=0.791 GCG=0.651 PAIR=0.643 PAP=0.586 GPTFuzz=0.608 PEZ=0.657 | xfer=0.629±0.011 signed=0.619 | 10s
+  lda_a0.01 k= 228 ev=nan | val=0.960 HB=0.801 GCG=0.619 PAIR=0.604 PAP=0.582 GPTFuzz=0.640 PEZ=0.646 | xfer=0.618±0.010 signed=0.613 | 8s
+  lda_a0.1 k=   1 ev=nan | val=0.630 HB=0.653 GCG=0.525 PAIR=0.598 PAP=0.635 GPTFuzz=0.709 PEZ=0.586 | xfer=0.611±0.000 signed=0.517 | 2s
+  lda_a0.1 k=   2 ev=nan | val=0.648 HB=0.628 GCG=0.553 PAIR=0.565 PAP=0.598 GPTFuzz=0.644 PEZ=0.559 | xfer=0.584±0.009 signed=0.499 | 2s
+  lda_a0.1 k=   3 ev=nan | val=0.660 HB=0.639 GCG=0.538 PAIR=0.549 PAP=0.588 GPTFuzz=0.667 PEZ=0.597 | xfer=0.588±0.007 signed=0.489 | 2s
+  lda_a0.1 k=   4 ev=nan | val=0.673 HB=0.631 GCG=0.551 PAIR=0.560 PAP=0.574 GPTFuzz=0.689 PEZ=0.593 | xfer=0.593±0.004 signed=0.478 | 2s
+  lda_a0.1 k=   5 ev=nan | val=0.723 HB=0.635 GCG=0.556 PAIR=0.528 PAP=0.551 GPTFuzz=0.611 PEZ=0.567 | xfer=0.562±0.006 signed=0.500 | 1s
+  lda_a0.1 k=   6 ev=nan | val=0.725 HB=0.637 GCG=0.574 PAIR=0.528 PAP=0.552 GPTFuzz=0.616 PEZ=0.560 | xfer=0.566±0.006 signed=0.503 | 2s
+  lda_a0.1 k=   8 ev=nan | val=0.785 HB=0.628 GCG=0.690 PAIR=0.539 PAP=0.549 GPTFuzz=0.677 PEZ=0.578 | xfer=0.607±0.007 signed=0.589 | 2s
+  lda_a0.1 k=  10 ev=nan | val=0.799 HB=0.633 GCG=0.672 PAIR=0.537 PAP=0.557 GPTFuzz=0.664 PEZ=0.581 | xfer=0.602±0.008 signed=0.570 | 2s
+  lda_a0.1 k=  12 ev=nan | val=0.823 HB=0.615 GCG=0.671 PAIR=0.539 PAP=0.552 GPTFuzz=0.649 PEZ=0.561 | xfer=0.595±0.007 signed=0.567 | 2s
+  lda_a0.1 k=  16 ev=nan | val=0.895 HB=0.746 GCG=0.553 PAIR=0.545 PAP=0.570 GPTFuzz=0.678 PEZ=0.598 | xfer=0.589±0.006 signed=0.539 | 2s
+  lda_a0.1 k=  20 ev=nan | val=0.917 HB=0.784 GCG=0.556 PAIR=0.542 PAP=0.603 GPTFuzz=0.616 PEZ=0.615 | xfer=0.586±0.008 signed=0.511 | 2s
+  lda_a0.1 k=  24 ev=nan | val=0.931 HB=0.800 GCG=0.561 PAIR=0.580 PAP=0.559 GPTFuzz=0.624 PEZ=0.604 | xfer=0.586±0.006 signed=0.545 | 2s
+  lda_a0.1 k=  32 ev=nan | val=0.941 HB=0.821 GCG=0.648 PAIR=0.647 PAP=0.536 GPTFuzz=0.597 PEZ=0.658 | xfer=0.617±0.005 signed=0.607 | 2s
+  lda_a0.1 k=  48 ev=nan | val=0.950 HB=0.817 GCG=0.679 PAIR=0.720 PAP=0.542 GPTFuzz=0.678 PEZ=0.751 | xfer=0.674±0.007 signed=0.673 | 2s
+  lda_a0.1 k=  64 ev=nan | val=0.955 HB=0.814 GCG=0.716 PAIR=0.739 PAP=0.590 GPTFuzz=0.636 PEZ=0.764 | xfer=0.689±0.007 signed=0.689 | 3s
+  lda_a0.1 k=  96 ev=nan | val=0.959 HB=0.814 GCG=0.732 PAIR=0.748 PAP=0.628 GPTFuzz=0.622 PEZ=0.790 | xfer=0.704±0.006 signed=0.703 | 3s
+  lda_a0.1 k= 128 ev=nan | val=0.960 HB=0.808 GCG=0.750 PAIR=0.748 PAP=0.609 GPTFuzz=0.590 PEZ=0.774 | xfer=0.694±0.007 signed=0.678 | 3s
+  lda_a0.1 k= 160 ev=nan | val=0.958 HB=0.800 GCG=0.731 PAIR=0.718 PAP=0.567 GPTFuzz=0.602 PEZ=0.735 | xfer=0.671±0.007 signed=0.639 | 4s
+  lda_a0.1 k= 192 ev=nan | val=0.959 HB=0.798 GCG=0.705 PAIR=0.696 PAP=0.592 GPTFuzz=0.604 PEZ=0.715 | xfer=0.662±0.009 signed=0.635 | 5s
+  lda_a0.1 k= 228 ev=nan | val=0.960 HB=0.797 GCG=0.683 PAIR=0.680 PAP=0.605 GPTFuzz=0.604 PEZ=0.727 | xfer=0.660±0.008 signed=0.641 | 7s
+  lda_a0.3 k=   1 ev=nan | val=0.614 HB=0.646 GCG=0.534 PAIR=0.559 PAP=0.631 GPTFuzz=0.711 PEZ=0.520 | xfer=0.591±0.000 signed=0.493 | 1s
+  lda_a0.3 k=   2 ev=nan | val=0.628 HB=0.630 GCG=0.546 PAIR=0.533 PAP=0.590 GPTFuzz=0.653 PEZ=0.538 | xfer=0.572±0.006 signed=0.475 | 1s
+  lda_a0.3 k=   3 ev=nan | val=0.649 HB=0.646 GCG=0.525 PAIR=0.531 PAP=0.600 GPTFuzz=0.695 PEZ=0.572 | xfer=0.584±0.005 signed=0.465 | 3s
+  lda_a0.3 k=   4 ev=nan | val=0.686 HB=0.646 GCG=0.531 PAIR=0.562 PAP=0.587 GPTFuzz=0.713 PEZ=0.561 | xfer=0.591±0.003 signed=0.449 | 4s
+  lda_a0.3 k=   5 ev=nan | val=0.699 HB=0.635 GCG=0.568 PAIR=0.555 PAP=0.548 GPTFuzz=0.715 PEZ=0.562 | xfer=0.590±0.005 signed=0.485 | 2s
+  lda_a0.3 k=   6 ev=nan | val=0.706 HB=0.631 GCG=0.586 PAIR=0.565 PAP=0.549 GPTFuzz=0.732 PEZ=0.573 | xfer=0.601±0.006 signed=0.492 | 5s
+  lda_a0.3 k=   8 ev=nan | val=0.749 HB=0.622 GCG=0.655 PAIR=0.556 PAP=0.558 GPTFuzz=0.616 PEZ=0.566 | xfer=0.590±0.006 signed=0.550 | 8s
+  lda_a0.3 k=  10 ev=nan | val=0.761 HB=0.626 GCG=0.652 PAIR=0.556 PAP=0.549 GPTFuzz=0.639 PEZ=0.583 | xfer=0.596±0.007 signed=0.547 | 6s
+  lda_a0.3 k=  12 ev=nan | val=0.798 HB=0.607 GCG=0.649 PAIR=0.551 PAP=0.546 GPTFuzz=0.632 PEZ=0.567 | xfer=0.589±0.007 signed=0.550 | 5s
+  lda_a0.3 k=  16 ev=nan | val=0.866 HB=0.663 GCG=0.555 PAIR=0.569 PAP=0.542 GPTFuzz=0.609 PEZ=0.565 | xfer=0.568±0.006 signed=0.517 | 5s
+  lda_a0.3 k=  20 ev=nan | val=0.926 HB=0.778 GCG=0.589 PAIR=0.592 PAP=0.584 GPTFuzz=0.650 PEZ=0.649 | xfer=0.613±0.008 signed=0.522 | 3s
+  lda_a0.3 k=  24 ev=nan | val=0.931 HB=0.789 GCG=0.633 PAIR=0.630 PAP=0.563 GPTFuzz=0.607 PEZ=0.627 | xfer=0.612±0.007 signed=0.560 | 3s
+  lda_a0.3 k=  32 ev=nan | val=0.945 HB=0.805 GCG=0.654 PAIR=0.671 PAP=0.526 GPTFuzz=0.618 PEZ=0.691 | xfer=0.632±0.004 signed=0.623 | 5s
+  lda_a0.3 k=  48 ev=nan | val=0.954 HB=0.822 GCG=0.709 PAIR=0.719 PAP=0.540 GPTFuzz=0.617 PEZ=0.704 | xfer=0.658±0.006 signed=0.656 | 4s
+  lda_a0.3 k=  64 ev=nan | val=0.958 HB=0.816 GCG=0.685 PAIR=0.722 PAP=0.590 GPTFuzz=0.585 PEZ=0.741 | xfer=0.665±0.007 signed=0.661 | 3s
+  lda_a0.3 k=  96 ev=nan | val=0.961 HB=0.839 GCG=0.711 PAIR=0.751 PAP=0.614 GPTFuzz=0.616 PEZ=0.792 | xfer=0.697±0.008 signed=0.693 | 4s
+  lda_a0.3 k= 128 ev=nan | val=0.960 HB=0.815 GCG=0.751 PAIR=0.763 PAP=0.609 GPTFuzz=0.591 PEZ=0.788 | xfer=0.700±0.006 signed=0.683 | 5s
+  lda_a0.3 k= 160 ev=nan | val=0.960 HB=0.798 GCG=0.708 PAIR=0.750 PAP=0.562 GPTFuzz=0.665 PEZ=0.761 | xfer=0.689±0.006 signed=0.625 | 5s
+  lda_a0.3 k= 192 ev=nan | val=0.960 HB=0.812 GCG=0.700 PAIR=0.747 PAP=0.617 GPTFuzz=0.642 PEZ=0.755 | xfer=0.692±0.007 signed=0.638 | 5s
+  lda_a0.3 k= 228 ev=nan | val=0.961 HB=0.818 GCG=0.692 PAIR=0.729 PAP=0.633 GPTFuzz=0.615 PEZ=0.755 | xfer=0.685±0.008 signed=0.645 | 7s
+  lda_lw k=   1 ev=nan | val=0.654 HB=0.656 GCG=0.549 PAIR=0.625 PAP=0.613 GPTFuzz=0.703 PEZ=0.604 | xfer=0.619±0.000 signed=0.518 | 1s
+  lda_lw k=   2 ev=nan | val=0.667 HB=0.630 GCG=0.558 PAIR=0.601 PAP=0.592 GPTFuzz=0.645 PEZ=0.583 | xfer=0.596±0.009 signed=0.513 | 1s
+  lda_lw k=   3 ev=nan | val=0.703 HB=0.635 GCG=0.539 PAIR=0.571 PAP=0.542 GPTFuzz=0.600 PEZ=0.694 | xfer=0.589±0.006 signed=0.541 | 1s
+  lda_lw k=   4 ev=nan | val=0.723 HB=0.618 GCG=0.533 PAIR=0.546 PAP=0.547 GPTFuzz=0.656 PEZ=0.626 | xfer=0.582±0.004 signed=0.496 | 1s
+  lda_lw k=   5 ev=nan | val=0.749 HB=0.621 GCG=0.535 PAIR=0.528 PAP=0.542 GPTFuzz=0.598 PEZ=0.633 | xfer=0.567±0.005 signed=0.516 | 2s
+  lda_lw k=   6 ev=nan | val=0.765 HB=0.627 GCG=0.586 PAIR=0.526 PAP=0.541 GPTFuzz=0.646 PEZ=0.660 | xfer=0.592±0.010 signed=0.565 | 1s
+  lda_lw k=   8 ev=nan | val=0.784 HB=0.624 GCG=0.663 PAIR=0.530 PAP=0.541 GPTFuzz=0.682 PEZ=0.647 | xfer=0.612±0.010 signed=0.601 | 1s
+  lda_lw k=  10 ev=nan | val=0.826 HB=0.631 GCG=0.639 PAIR=0.546 PAP=0.557 GPTFuzz=0.675 PEZ=0.610 | xfer=0.605±0.006 signed=0.561 | 2s
+  lda_lw k=  12 ev=nan | val=0.847 HB=0.619 GCG=0.639 PAIR=0.529 PAP=0.574 GPTFuzz=0.627 PEZ=0.633 | xfer=0.601±0.008 signed=0.555 | 1s
+  lda_lw k=  16 ev=nan | val=0.895 HB=0.713 GCG=0.548 PAIR=0.523 PAP=0.588 GPTFuzz=0.652 PEZ=0.637 | xfer=0.590±0.006 signed=0.539 | 1s
+  lda_lw k=  20 ev=nan | val=0.906 HB=0.693 GCG=0.583 PAIR=0.557 PAP=0.568 GPTFuzz=0.614 PEZ=0.683 | xfer=0.601±0.005 signed=0.568 | 1s
+  lda_lw k=  24 ev=nan | val=0.920 HB=0.719 GCG=0.552 PAIR=0.559 PAP=0.558 GPTFuzz=0.620 PEZ=0.637 | xfer=0.585±0.006 signed=0.559 | 1s
+  lda_lw k=  32 ev=nan | val=0.935 HB=0.709 GCG=0.630 PAIR=0.620 PAP=0.553 GPTFuzz=0.579 PEZ=0.712 | xfer=0.619±0.007 signed=0.583 | 2s
+  lda_lw k=  48 ev=nan | val=0.949 HB=0.798 GCG=0.677 PAIR=0.705 PAP=0.530 GPTFuzz=0.637 PEZ=0.760 | xfer=0.662±0.006 signed=0.656 | 2s
+  lda_lw k=  64 ev=nan | val=0.955 HB=0.822 GCG=0.707 PAIR=0.723 PAP=0.552 GPTFuzz=0.639 PEZ=0.725 | xfer=0.669±0.007 signed=0.668 | 2s
+  lda_lw k=  96 ev=nan | val=0.961 HB=0.806 GCG=0.675 PAIR=0.712 PAP=0.592 GPTFuzz=0.607 PEZ=0.676 | xfer=0.652±0.007 signed=0.651 | 2s
+  lda_lw k= 128 ev=nan | val=0.961 HB=0.789 GCG=0.654 PAIR=0.717 PAP=0.603 GPTFuzz=0.581 PEZ=0.649 | xfer=0.641±0.007 signed=0.631 | 3s
+  lda_lw k= 160 ev=nan | val=0.960 HB=0.791 GCG=0.690 PAIR=0.696 PAP=0.611 GPTFuzz=0.594 PEZ=0.655 | xfer=0.649±0.007 signed=0.629 | 3s
+  lda_lw k= 192 ev=nan | val=0.960 HB=0.787 GCG=0.640 PAIR=0.638 PAP=0.585 GPTFuzz=0.611 PEZ=0.658 | xfer=0.627±0.011 signed=0.613 | 4s
+  lda_lw k= 228 ev=nan | val=0.960 HB=0.800 GCG=0.610 PAIR=0.592 PAP=0.578 GPTFuzz=0.634 PEZ=0.641 | xfer=0.611±0.009 signed=0.605 | 4s
+done in 398s -> /Users/viktor/persona-vector-jbing/full_trait_output/trait_pc_sweep/summary_llama_lda_C1.json, scores_llama_lda_C1.npz

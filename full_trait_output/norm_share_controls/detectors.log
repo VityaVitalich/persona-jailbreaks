@@ -1,0 +1,29 @@
+[llama] T (229, 4096); rank centered 228, uncentered 229
+  HB: (3180, 4096) jb=1245
+  GCG: (159, 4096) jb=70
+  PAIR: (800, 4096) jb=230
+  PAP: (2000, 4096) jb=528
+  GPTFuzz: (400, 4096) jb=237
+  PEZ: (1200, 4096) jb=180
+  loaded in 0s
+  50 seeds; train ~1554 (fit 1320 / val 234), test ~288
+  traits k= 229 ev=1.000 | val=0.967 HB=0.854 GCG=0.817 PAIR=0.790 PAP=0.642 GPTFuzz=0.708 PEZ=0.842 | xfer=0.760±0.004 signed=0.676 | 3s
+  svd    k= 229 ev=1.000 | val=0.952 HB=0.785 GCG=0.719 PAIR=0.732 PAP=0.652 GPTFuzz=0.635 PEZ=0.776 | xfer=0.703±0.008 signed=0.659 | 2s
+  alpaca_pca k= 229 ev=nan | val=0.954 HB=0.794 GCG=0.673 PAIR=0.734 PAP=0.616 GPTFuzz=0.643 PEZ=0.743 | xfer=0.682±0.008 signed=0.626 | 2s
+  hb_pca k= 229 ev=nan | val=0.936 HB=0.610 GCG=0.615 PAIR=0.666 PAP=0.567 GPTFuzz=0.613 PEZ=0.641 | xfer=0.620±0.011 signed=0.580 | 1s
+  acts_d0 k= 229 ev=nan | val=0.967 HB=0.860 GCG=0.775 PAIR=0.757 PAP=0.617 GPTFuzz=0.638 PEZ=0.791 | xfer=0.716±0.008 signed=0.669 | 3s
+  noise_d0 k= 229 ev=nan | val=0.964 HB=0.839 GCG=0.741 PAIR=0.751 PAP=0.590 GPTFuzz=0.683 PEZ=0.780 | xfer=0.709±0.008 signed=0.637 | 3s
+  gauss_d0 k= 229 ev=nan | val=0.949 HB=0.753 GCG=0.635 PAIR=0.735 PAP=0.629 GPTFuzz=0.618 PEZ=0.705 | xfer=0.664±0.008 signed=0.650 | 2s
+  acts_d1 k= 229 ev=nan | val=0.967 HB=0.859 GCG=0.830 PAIR=0.787 PAP=0.627 GPTFuzz=0.616 PEZ=0.802 | xfer=0.732±0.006 signed=0.691 | 3s
+  noise_d1 k= 229 ev=nan | val=0.963 HB=0.798 GCG=0.777 PAIR=0.762 PAP=0.627 GPTFuzz=0.689 PEZ=0.763 | xfer=0.724±0.008 signed=0.650 | 3s
+  gauss_d1 k= 229 ev=nan | val=0.946 HB=0.773 GCG=0.617 PAIR=0.700 PAP=0.553 GPTFuzz=0.610 PEZ=0.727 | xfer=0.641±0.009 signed=0.603 | 2s
+  acts_d2 k= 229 ev=nan | val=0.966 HB=0.853 GCG=0.802 PAIR=0.773 PAP=0.632 GPTFuzz=0.667 PEZ=0.809 | xfer=0.737±0.008 signed=0.672 | 3s
+  noise_d2 k= 229 ev=nan | val=0.965 HB=0.852 GCG=0.767 PAIR=0.770 PAP=0.600 GPTFuzz=0.683 PEZ=0.788 | xfer=0.722±0.006 signed=0.651 | 3s
+  gauss_d2 k= 229 ev=nan | val=0.946 HB=0.737 GCG=0.658 PAIR=0.675 PAP=0.614 GPTFuzz=0.625 PEZ=0.730 | xfer=0.660±0.009 signed=0.645 | 2s
+  acts_d3 k= 229 ev=nan | val=0.968 HB=0.877 GCG=0.781 PAIR=0.770 PAP=0.610 GPTFuzz=0.714 PEZ=0.808 | xfer=0.737±0.006 signed=0.651 | 3s
+  noise_d3 k= 229 ev=nan | val=0.964 HB=0.802 GCG=0.769 PAIR=0.770 PAP=0.599 GPTFuzz=0.664 PEZ=0.791 | xfer=0.719±0.007 signed=0.656 | 3s
+  gauss_d3 k= 229 ev=nan | val=0.951 HB=0.732 GCG=0.695 PAIR=0.748 PAP=0.600 GPTFuzz=0.656 PEZ=0.743 | xfer=0.688±0.007 signed=0.682 | 2s
+  acts_d4 k= 229 ev=nan | val=0.966 HB=0.851 GCG=0.793 PAIR=0.783 PAP=0.612 GPTFuzz=0.674 PEZ=0.796 | xfer=0.731±0.006 signed=0.664 | 3s
+  noise_d4 k= 229 ev=nan | val=0.964 HB=0.810 GCG=0.727 PAIR=0.734 PAP=0.587 GPTFuzz=0.663 PEZ=0.748 | xfer=0.692±0.008 signed=0.632 | 3s
+  gauss_d4 k= 229 ev=nan | val=0.948 HB=0.753 GCG=0.610 PAIR=0.675 PAP=0.602 GPTFuzz=0.635 PEZ=0.669 | xfer=0.638±0.009 signed=0.616 | 2s
+done in 47s -> /Users/viktor/persona-vector-jbing/full_trait_output/trait_pc_sweep/summary_llama_subspace_controls.json, scores_llama_subspace_controls.npz

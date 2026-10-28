@@ -1,0 +1,8 @@
+{'hb': (3180, 800), 'wjb': (2000, 142), 'pair': (400, 65), 'pap': (2000, 191), 'gptfuzz': (400, 234), 'pez': (1200, 86)}
+fits done
+hb act cos vs ours: {'n_shared': 3180, 'median': 0.9999377385104589, 'p1': 0.9910187749881649, 'min': 0.9898819053441058}
+PersonaJB  hb:0.662 wjb:0.654 pair:0.749 pap:0.726 gptfuzz:0.652 pez:0.650 avg:0.682
+Gaussian   hb:0.676 wjb:0.707 pair:0.771 pap:0.734 gptfuzz:0.722 pez:0.656 avg:0.711
+raw        hb:0.724 wjb:0.750 pair:0.821 pap:0.780 gptfuzz:0.790 pez:0.694 avg:0.760
+PJB-Gaussian hb:-0.014 wjb:-0.053 pair:-0.022 pap:-0.008 gptfuzz:-0.071 pez:-0.006 avg:-0.029 avg CI [-0.04156037823131001, -0.017373253395831314]
+PJB-raw      hb:-0.062 wjb:-0.096 pair:-0.072 pap:-0.054 gptfuzz:-0.139 pez:-0.044 avg:-0.078 avg CI [-0.08864286809885424, -0.065851093461629]

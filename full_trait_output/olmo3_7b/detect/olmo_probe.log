@@ -1,0 +1,13 @@
+{'hb': '791/3180', 'wjb': '119/2000', 'pap': '190/2000', 'gcg': '93/159', 'pair': '60/400', 'gptfuzz': '223/400', 'pez': '79/1200'}
+transfer fits done
+within fits done
+transfer L16 hb: 0.696 [0.667,0.724] | wjb: 0.706 [0.680,0.730] | pap: 0.769 [0.740,0.797] | gcg: 0.755 [0.725,0.782] | pair: 0.811 [0.783,0.835] | gptfuzz: 0.683 [0.641,0.721] | pez: 0.765 [0.735,0.794] | avg: 0.741 [0.723,0.757]
+within   L16 hb: 0.956 | wjb: 0.903 | pap: 0.875 | gcg: 0.842 | pair: 0.778 | gptfuzz: 0.745 | pez: 0.868
+sweep L 4 avg 0.666
+sweep L 8 avg 0.689
+sweep L12 avg 0.727
+sweep L16 avg 0.741
+sweep L20 avg 0.730
+sweep L24 avg 0.713
+sweep L28 avg 0.733
+sweep L31 avg 0.714

@@ -1,0 +1,34 @@
+[llama] loading
+  HB human: (3180, 4096), jb=1245
+  GCG: (159, 4096), jb=70  paper-cell protocol: signed
+  PAIR: (800, 4096), jb=230  paper-cell protocol: signed
+  PAP: (2000, 4096), jb=528  paper-cell protocol: undersample_sym (n=1056)
+  GPTFuzz: (400, 4096), jb=237  paper-cell protocol: undersample_sym (n=326)
+  PEZ: (1200, 4096), jb=180  paper-cell protocol: undersample_sym (n=360)
+  loaded in 1s
+  50 usable seeds; train pool ~1554, test ~288
+  k=    0 ev=1.000 | PAPER: human_test=0.815 GCG=0.722 PAIR=0.760 PAP=0.651 GPTFuzz=0.619 PEZ=0.813 xfer=0.713±0.007 | SIGNED: human_test=0.815 GCG=0.722 PAIR=0.760 PAP=0.650 GPTFuzz=0.410 PEZ=0.801 xfer=0.668 | 95s
+  k=    1 ev=0.160 | PAPER: human_test=0.781 GCG=0.670 PAIR=0.696 PAP=0.616 GPTFuzz=0.642 PEZ=0.793 xfer=0.684±0.006 | SIGNED: human_test=0.781 GCG=0.670 PAIR=0.696 PAP=0.400 GPTFuzz=0.396 PEZ=0.789 xfer=0.590 | 9s
+  k=    2 ev=0.287 | PAPER: human_test=0.830 GCG=0.685 PAIR=0.711 PAP=0.600 GPTFuzz=0.602 PEZ=0.797 xfer=0.679±0.002 | SIGNED: human_test=0.830 GCG=0.685 PAIR=0.711 PAP=0.414 GPTFuzz=0.586 PEZ=0.801 xfer=0.639 | 10s
+  k=    3 ev=0.382 | PAPER: human_test=0.831 GCG=0.692 PAIR=0.706 PAP=0.604 GPTFuzz=0.613 PEZ=0.793 xfer=0.681±0.002 | SIGNED: human_test=0.831 GCG=0.692 PAIR=0.706 PAP=0.410 GPTFuzz=0.612 PEZ=0.796 xfer=0.643 | 10s
+  k=    4 ev=0.461 | PAPER: human_test=0.878 GCG=0.699 PAIR=0.708 PAP=0.602 GPTFuzz=0.621 PEZ=0.791 xfer=0.684±0.002 | SIGNED: human_test=0.878 GCG=0.699 PAIR=0.708 PAP=0.413 GPTFuzz=0.638 PEZ=0.795 xfer=0.650 | 10s
+  k=    5 ev=0.521 | PAPER: human_test=0.876 GCG=0.697 PAIR=0.707 PAP=0.605 GPTFuzz=0.621 PEZ=0.789 xfer=0.684±0.002 | SIGNED: human_test=0.876 GCG=0.697 PAIR=0.707 PAP=0.409 GPTFuzz=0.636 PEZ=0.793 xfer=0.649 | 8s
+  k=    6 ev=0.572 | PAPER: human_test=0.875 GCG=0.697 PAIR=0.708 PAP=0.605 GPTFuzz=0.621 PEZ=0.791 xfer=0.684±0.002 | SIGNED: human_test=0.875 GCG=0.697 PAIR=0.708 PAP=0.409 GPTFuzz=0.640 PEZ=0.795 xfer=0.650 | 7s
+  k=    8 ev=0.655 | PAPER: human_test=0.865 GCG=0.727 PAIR=0.724 PAP=0.591 GPTFuzz=0.624 PEZ=0.810 xfer=0.695±0.004 | SIGNED: human_test=0.865 GCG=0.727 PAIR=0.724 PAP=0.425 GPTFuzz=0.642 PEZ=0.813 xfer=0.666 | 8s
+  k=   10 ev=0.724 | PAPER: human_test=0.865 GCG=0.760 PAIR=0.739 PAP=0.575 GPTFuzz=0.631 PEZ=0.827 xfer=0.707±0.003 | SIGNED: human_test=0.865 GCG=0.760 PAIR=0.739 PAP=0.443 GPTFuzz=0.650 PEZ=0.828 xfer=0.684 | 8s
+  k=   12 ev=0.778 | PAPER: human_test=0.865 GCG=0.766 PAIR=0.743 PAP=0.577 GPTFuzz=0.628 PEZ=0.833 xfer=0.709±0.003 | SIGNED: human_test=0.865 GCG=0.766 PAIR=0.743 PAP=0.442 GPTFuzz=0.648 PEZ=0.831 xfer=0.686 | 8s
+  k=   16 ev=0.837 | PAPER: human_test=0.858 GCG=0.819 PAIR=0.797 PAP=0.576 GPTFuzz=0.613 PEZ=0.881 xfer=0.737±0.006 | SIGNED: human_test=0.858 GCG=0.819 PAIR=0.797 PAP=0.570 GPTFuzz=0.624 PEZ=0.874 xfer=0.737 | 10s
+  k=   20 ev=0.865 | PAPER: human_test=0.866 GCG=0.836 PAIR=0.811 PAP=0.588 GPTFuzz=0.617 PEZ=0.886 xfer=0.747±0.005 | SIGNED: human_test=0.866 GCG=0.836 PAIR=0.811 PAP=0.602 GPTFuzz=0.621 PEZ=0.878 xfer=0.749 | 10s
+  k=   24 ev=0.881 | PAPER: human_test=0.872 GCG=0.836 PAIR=0.816 PAP=0.611 GPTFuzz=0.619 PEZ=0.880 xfer=0.752±0.005 | SIGNED: human_test=0.872 GCG=0.836 PAIR=0.816 PAP=0.625 GPTFuzz=0.621 PEZ=0.873 xfer=0.754 | 8s
+  k=   32 ev=0.902 | PAPER: human_test=0.866 GCG=0.841 PAIR=0.822 PAP=0.635 GPTFuzz=0.622 PEZ=0.878 xfer=0.760±0.006 | SIGNED: human_test=0.866 GCG=0.841 PAIR=0.822 PAP=0.647 GPTFuzz=0.628 PEZ=0.871 xfer=0.762 | 8s
+  k=   48 ev=0.926 | PAPER: human_test=0.859 GCG=0.834 PAIR=0.830 PAP=0.637 GPTFuzz=0.614 PEZ=0.875 xfer=0.758±0.007 | SIGNED: human_test=0.859 GCG=0.834 PAIR=0.830 PAP=0.651 GPTFuzz=0.583 PEZ=0.869 xfer=0.753 | 9s
+  k=   64 ev=0.940 | PAPER: human_test=0.856 GCG=0.822 PAIR=0.820 PAP=0.638 GPTFuzz=0.593 PEZ=0.870 xfer=0.748±0.006 | SIGNED: human_test=0.856 GCG=0.822 PAIR=0.820 PAP=0.649 GPTFuzz=0.430 PEZ=0.863 xfer=0.717 | 10s
+  k=   96 ev=0.956 | PAPER: human_test=0.857 GCG=0.809 PAIR=0.807 PAP=0.638 GPTFuzz=0.605 PEZ=0.859 xfer=0.744±0.005 | SIGNED: human_test=0.857 GCG=0.809 PAIR=0.807 PAP=0.645 GPTFuzz=0.444 PEZ=0.850 xfer=0.711 | 11s
+  k=  128 ev=0.966 | PAPER: human_test=0.862 GCG=0.794 PAIR=0.800 PAP=0.655 GPTFuzz=0.601 PEZ=0.835 xfer=0.737±0.007 | SIGNED: human_test=0.862 GCG=0.794 PAIR=0.800 PAP=0.655 GPTFuzz=0.441 PEZ=0.828 xfer=0.704 | 14s
+  k=  192 ev=0.977 | PAPER: human_test=0.854 GCG=0.772 PAIR=0.783 PAP=0.649 GPTFuzz=0.624 PEZ=0.809 xfer=0.727±0.007 | SIGNED: human_test=0.854 GCG=0.772 PAIR=0.783 PAP=0.646 GPTFuzz=0.425 PEZ=0.805 xfer=0.686 | 15s
+  k=  256 ev=0.984 | PAPER: human_test=0.824 GCG=0.750 PAIR=0.768 PAP=0.640 GPTFuzz=0.598 PEZ=0.801 xfer=0.711±0.010 | SIGNED: human_test=0.824 GCG=0.750 PAIR=0.768 PAP=0.639 GPTFuzz=0.466 PEZ=0.796 xfer=0.684 | 18s
+  k=  384 ev=0.991 | PAPER: human_test=0.823 GCG=0.741 PAIR=0.768 PAP=0.635 GPTFuzz=0.624 PEZ=0.809 xfer=0.716±0.009 | SIGNED: human_test=0.823 GCG=0.741 PAIR=0.768 PAP=0.632 GPTFuzz=0.413 PEZ=0.804 xfer=0.672 | 21s
+  k=  512 ev=0.995 | PAPER: human_test=0.826 GCG=0.737 PAIR=0.768 PAP=0.647 GPTFuzz=0.616 PEZ=0.815 xfer=0.717±0.006 | SIGNED: human_test=0.826 GCG=0.737 PAIR=0.768 PAP=0.643 GPTFuzz=0.430 PEZ=0.807 xfer=0.677 | 26s
+  k=  768 ev=0.998 | PAPER: human_test=0.830 GCG=0.728 PAIR=0.768 PAP=0.651 GPTFuzz=0.618 PEZ=0.825 xfer=0.718±0.007 | SIGNED: human_test=0.830 GCG=0.728 PAIR=0.768 PAP=0.649 GPTFuzz=0.426 PEZ=0.813 xfer=0.677 | 41s
+  k= 1024 ev=0.999 | PAPER: human_test=0.823 GCG=0.726 PAIR=0.768 PAP=0.655 GPTFuzz=0.612 PEZ=0.826 xfer=0.717±0.007 | SIGNED: human_test=0.823 GCG=0.726 PAIR=0.768 PAP=0.654 GPTFuzz=0.432 PEZ=0.814 xfer=0.679 | 63s
+done in 438s -> sweep_llama.json

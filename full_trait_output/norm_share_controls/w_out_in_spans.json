@@ -1,0 +1,138 @@
+{
+ "share": {
+  "trait span": {
+   "w_out": 1.3384107619829058e-30,
+   "w_in": 0.9999999999999996,
+   "jailbreak direction": 0.48241413308372216,
+   "refusal direction": 0.4074756357371781,
+   "refusal, persona removed": 9.900365365633942e-31
+  },
+  "Wikipedia acts": {
+   "w_out": 0.08261225587205437,
+   "w_in": 0.16975212724194305,
+   "jailbreak direction": 0.1492008513554633,
+   "refusal direction": 0.17135215052381822,
+   "refusal, persona removed": 0.09172147714245021
+  },
+  "No Robots acts": {
+   "w_out": 0.2186083071460769,
+   "w_in": 0.484297913862852,
+   "jailbreak direction": 0.4328780825768922,
+   "refusal direction": 0.3201068346230429,
+   "refusal, persona removed": 0.11664129418628241
+  },
+  "Alpaca acts": {
+   "w_out": 0.19135246718823243,
+   "w_in": 0.4713643463710777,
+   "jailbreak direction": 0.3831992481176458,
+   "refusal direction": 0.3133572777492791,
+   "refusal, persona removed": 0.10431090899630607
+  },
+  "Wikipedia acts - P": {
+   "w_out": 0.0855666480949995,
+   "w_in": 4.07563312506941e-30,
+   "jailbreak direction": 0.04428808773337044,
+   "refusal direction": 0.06128212268968511,
+   "refusal, persona removed": 0.10342548996432921
+  },
+  "No Robots acts - P": {
+   "w_out": 0.213609630497146,
+   "w_in": 3.748022041655113e-29,
+   "jailbreak direction": 0.11056132578253128,
+   "refusal direction": 0.08114741940110712,
+   "refusal, persona removed": 0.1369520382542668
+  },
+  "Alpaca acts - P": {
+   "w_out": 0.24749139679685853,
+   "w_in": 6.613553578498758e-29,
+   "jailbreak direction": 0.12809804916542222,
+   "refusal direction": 0.08380622334567069,
+   "refusal, persona removed": 0.14143928655142549
+  },
+  "Alpaca PCA-229": {
+   "w_out": 0.22246971237749752,
+   "w_in": 0.5597074978397515,
+   "jailbreak direction": 0.4761731992085267,
+   "refusal direction": 0.34420579764129733,
+   "refusal, persona removed": 0.11194791776580158
+  },
+  "HarmBench PCA-229": {
+   "w_out": 0.7176258960409181,
+   "w_in": 0.6970749194574805,
+   "jailbreak direction": 0.9999512660746802,
+   "refusal direction": 0.5233675077726658,
+   "refusal, persona removed": 0.2613965383022097
+  },
+  "random Gaussian": {
+   "w_out": 0.0635389241693012,
+   "w_in": 0.05664959680318128,
+   "jailbreak direction": 0.059430050266511485,
+   "refusal direction": 0.048480727373855476,
+   "refusal, persona removed": 0.059592929422442945
+  },
+  "Alpaca acts x5 (1145)": {
+   "w_out": 0.460918921583405,
+   "w_in": 0.7033913249282111,
+   "jailbreak direction": 0.6552923151553685,
+   "refusal direction": 0.5360071768480168,
+   "refusal, persona removed": 0.35061166519616405
+  },
+  "random (1145)": {
+   "w_out": 0.2701337489868553,
+   "w_in": 0.2783954536786737,
+   "jailbreak direction": 0.2720347270026876,
+   "refusal direction": 0.27108191998665704,
+   "refusal, persona removed": 0.2687347588055447
+  }
+ },
+ "w_out_projection_auc": {
+  "Wikipedia acts": {
+   "hb": 0.9111559415958407,
+   "transfer": 0.716185881792134
+  },
+  "No Robots acts": {
+   "hb": 0.8974834739474694,
+   "transfer": 0.700967046998487
+  },
+  "Alpaca acts": {
+   "hb": 0.9034405321544576,
+   "transfer": 0.7025081267840945
+  },
+  "Wikipedia acts - P": {
+   "hb": 0.909153098180837,
+   "transfer": 0.6736278184419797
+  },
+  "No Robots acts - P": {
+   "hb": 0.8826101304442576,
+   "transfer": 0.6763563965862276
+  },
+  "Alpaca acts - P": {
+   "hb": 0.9023313927544805,
+   "transfer": 0.6979343080374965
+  },
+  "Alpaca PCA-229": {
+   "hb": 0.9063013812355365,
+   "transfer": 0.7026429143818498
+  },
+  "HarmBench PCA-229": {
+   "hb": 0.9174596058653217,
+   "transfer": 0.7136567367171285
+  },
+  "random Gaussian": {
+   "hb": 0.9140939987339539,
+   "transfer": 0.7056937995534953
+  },
+  "Alpaca acts x5 (1145)": {
+   "hb": 0.9112676027105839,
+   "transfer": 0.7111054326969315
+  },
+  "random (1145)": {
+   "hb": 0.9117864740616212,
+   "transfer": 0.7039004269500118
+  },
+  "w_out itself": {
+   "hb": 0.9173877940703382,
+   "transfer": 0.714634424441343
+  }
+ }
+}

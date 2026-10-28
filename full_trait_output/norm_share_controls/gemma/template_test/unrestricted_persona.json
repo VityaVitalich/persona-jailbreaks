@@ -1,0 +1,44 @@
+{
+ "a": {
+  "w_out": 0.9947045707915273,
+  "w_in": 0.9629319955406912,
+  "dmu": 0.9841137123745819,
+  "refusal": 0.9980490523968785,
+  "u_jbp (in-sample)": 1.0,
+  "random Alpaca activation (median of 100)": 0.9402173913043479
+ },
+ "b": {
+  "u_jbp": {
+   "trait span": 0.31543529187487657,
+   "Alpaca-activation span": 0.45241173892214404,
+   "random span": 0.04618784840375221
+  },
+  "null (neutral persona vs neutral persona), mean of 10": {
+   "trait span": 0.27671159280324475,
+   "Alpaca-activation span": 0.35095797272914486,
+   "random span": 0.043785033916638474
+  }
+ },
+ "c": {
+  "cos(w_out, u_jbp)": -0.23409793334007734,
+  "cos(w_in, u_jbp)": -0.3475794801967239,
+  "share of w_out in U6 (6 dims)": 0.09526680443095062,
+  "share of a random direction in a 6-dim span": 0.0011160714285714285,
+  "hb|w_out": {
+   "within_request": 0.9371257444927835,
+   "rho_template": 0.536103172689282
+  },
+  "hb|u_jbp": {
+   "within_request": 0.7829047782876287,
+   "rho_template": 0.05793622183241519
+  },
+  "hb|u_jbp, trait-span part removed": {
+   "within_request": 0.73867753992367,
+   "rho_template": 0.05098387521252537
+  },
+  "hb|w_out with U6 projected out": {
+   "within_request": 0.9387147530565819,
+   "rho_template": 0.6002192581838214
+  }
+ }
+}

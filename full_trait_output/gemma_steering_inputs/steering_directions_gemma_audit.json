@@ -1,0 +1,183 @@
+{
+  "layer": 30,
+  "n_hb": 3180,
+  "n_wjb": 2000,
+  "meta": {
+    "w_persona__full": {
+      "description": "trait-classifier normal (HB+WJB, scaler+LR C=1) mapped to hidden space",
+      "share_in_span": 1.0000000000000007,
+      "auc_hbwjb": 0.9572243775088206,
+      "auc_hb": 0.9638592256494085,
+      "mean_gap": 2.7645613964409037,
+      "cos_w_persona": 1.0,
+      "cos_dmu": 0.11216432013922725
+    },
+    "w_raw__full": {
+      "description": "raw-activation classifier normal (harmbench_logreg_gemma_hbwjb)",
+      "share_in_span": 0.0008945747124558432,
+      "auc_hbwjb": 0.9285740665812577,
+      "auc_hb": 0.7332854647580345,
+      "mean_gap": 0.11284369427343982,
+      "cos_w_persona": 0.00462087116351155,
+      "cos_dmu": 0.004578316208304819
+    },
+    "refusal_pos1_neg__full": {
+      "description": "-(harmful-harmless mean diff), layer 30, last token, Arditi recipe",
+      "share_in_span": 0.26500868692509294,
+      "auc_hbwjb": 0.7877419773138189,
+      "auc_hb": 0.8003523941926253,
+      "mean_gap": 7.42998849518664,
+      "cos_w_persona": 0.10983304414585457,
+      "cos_dmu": 0.3014509315212832
+    },
+    "dmu__full": {
+      "description": "unsupervised jailbreak direction mean(jb)-mean(refused), HB human_jailbreak + WJB",
+      "share_in_span": 0.3297444594553481,
+      "auc_hbwjb": 0.8574846259718282,
+      "auc_hb": 0.7816785574244669,
+      "mean_gap": 24.647422576174904,
+      "cos_w_persona": 0.11216432013922724,
+      "cos_dmu": 1.0,
+      "cos_dmu_hb_only": 0.5531246421047112
+    },
+    "trait__romantic": {
+      "description": "single trait direction 'romantic' oriented toward the jailbroken class",
+      "share_in_span": 1.0,
+      "auc_hbwjb": 0.8392270185670165,
+      "auc_hb": 0.774090878999445,
+      "mean_gap": 4.736250862245072,
+      "cos_w_persona": 0.08190124788642898,
+      "cos_dmu": 0.19216008682479144,
+      "trait": "romantic",
+      "sign": 1.0,
+      "lr_coef_scaled": 0.2438867395786108
+    },
+    "trait__stoic": {
+      "description": "single trait direction 'stoic' oriented toward the jailbroken class",
+      "share_in_span": 1.000000000000001,
+      "auc_hbwjb": 0.8404736833898122,
+      "auc_hb": 0.7754352730291132,
+      "mean_gap": 3.373957327531336,
+      "cos_w_persona": 0.02852601781559761,
+      "cos_dmu": 0.13688884982207905,
+      "trait": "stoic",
+      "sign": -1.0,
+      "lr_coef_scaled": 0.04338235938713321
+    },
+    "trait__dispassionate": {
+      "description": "single trait direction 'dispassionate' oriented toward the jailbroken class",
+      "share_in_span": 1.0000000000000016,
+      "auc_hbwjb": 0.8270689588666266,
+      "auc_hb": 0.7608098955548426,
+      "mean_gap": 4.016185641441609,
+      "cos_w_persona": 0.06481609710370155,
+      "cos_dmu": 0.1629454612963796,
+      "trait": "dispassionate",
+      "sign": -1.0,
+      "lr_coef_scaled": -0.18952737065733968
+    },
+    "trait__emotional": {
+      "description": "single trait direction 'emotional' oriented toward the jailbroken class",
+      "share_in_span": 0.9999999999999991,
+      "auc_hbwjb": 0.8251082727167527,
+      "auc_hb": 0.7159356524130346,
+      "mean_gap": 5.163269653622862,
+      "cos_w_persona": 0.05446975237822024,
+      "cos_dmu": 0.20948517589071772,
+      "trait": "emotional",
+      "sign": 1.0,
+      "lr_coef_scaled": 0.05357190702747799
+    },
+    "trait__literal": {
+      "description": "single trait direction 'literal' oriented toward the jailbroken class",
+      "share_in_span": 0.9999999999999993,
+      "auc_hbwjb": 0.8205442812226343,
+      "auc_hb": 0.6648639564905205,
+      "mean_gap": 5.67522785129438,
+      "cos_w_persona": 0.022949384708741548,
+      "cos_dmu": 0.23025644299133544,
+      "trait": "literal",
+      "sign": -1.0,
+      "lr_coef_scaled": -0.02458659019393543
+    },
+    "trait__flirty": {
+      "description": "single trait direction 'flirty' oriented toward the jailbroken class",
+      "share_in_span": 1.0000000000000013,
+      "auc_hbwjb": 0.819345217821644,
+      "auc_hb": 0.808877074517113,
+      "mean_gap": 2.7701587924005118,
+      "cos_w_persona": 0.0765147839042177,
+      "cos_dmu": 0.11239141877164242,
+      "trait": "flirty",
+      "sign": 1.0,
+      "lr_coef_scaled": -0.056362718033344604
+    },
+    "trait__patient": {
+      "description": "single trait direction 'patient' oriented toward the jailbroken class",
+      "share_in_span": 0.9999999999999976,
+      "auc_hbwjb": 0.8181420508498086,
+      "auc_hb": 0.709875694476272,
+      "mean_gap": 5.605948962139834,
+      "cos_w_persona": 0.09017354357605747,
+      "cos_dmu": 0.2274456464895735,
+      "trait": "patient",
+      "sign": 1.0,
+      "lr_coef_scaled": -0.0027586495736748986
+    },
+    "trait__dominant": {
+      "description": "single trait direction 'dominant' oriented toward the jailbroken class",
+      "share_in_span": 1.0,
+      "auc_hbwjb": 0.8186492522062848,
+      "auc_hb": 0.7441017258149115,
+      "mean_gap": 4.859836614353256,
+      "cos_w_persona": 0.00878622778783202,
+      "cos_dmu": 0.19717423188301103,
+      "trait": "dominant",
+      "sign": -1.0,
+      "lr_coef_scaled": 0.13304555272417415
+    },
+    "trait__reserved": {
+      "description": "single trait direction 'reserved' oriented toward the jailbroken class",
+      "share_in_span": 1.0000000000000007,
+      "auc_hbwjb": 0.8020256867120631,
+      "auc_hb": 0.761935316314527,
+      "mean_gap": 4.814966325766008,
+      "cos_w_persona": 0.1785429630681471,
+      "cos_dmu": 0.19535374584847398,
+      "trait": "reserved",
+      "sign": -1.0,
+      "lr_coef_scaled": -0.19979600544570134
+    },
+    "trait__confident": {
+      "description": "single trait direction 'confident' oriented toward the jailbroken class",
+      "share_in_span": 1.0000000000000002,
+      "auc_hbwjb": 0.8047865691767663,
+      "auc_hb": 0.6622770164637345,
+      "mean_gap": 4.191872915813178,
+      "cos_w_persona": -0.070512171568334,
+      "cos_dmu": 0.1700734794016635,
+      "trait": "confident",
+      "sign": -1.0,
+      "lr_coef_scaled": 0.06748478396437795
+    },
+    "random_full_s0__full": {
+      "description": "isotropic random direction, default_rng(0)",
+      "share_in_span": 0.03694521337516579,
+      "auc_hbwjb": 0.4547413067903428,
+      "auc_hb": 0.4759002092977069,
+      "mean_gap": -0.08508550286010053,
+      "cos_w_persona": 0.0005119035532095556,
+      "cos_dmu": -0.003452105492861934
+    },
+    "random_persona_s0__full": {
+      "description": "uniform random direction in the 240-trait span, default_rng(0)",
+      "share_in_span": 1.0,
+      "auc_hbwjb": 0.7652962655043166,
+      "auc_hb": 0.6214817870255791,
+      "mean_gap": 2.136242878879788,
+      "cos_w_persona": 0.015195944775545221,
+      "cos_dmu": 0.08667205961505853
+    }
+  },
+  "random_span_share_expect": 0.044642857142857144
+}

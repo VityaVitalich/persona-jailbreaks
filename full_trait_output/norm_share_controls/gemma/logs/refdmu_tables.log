@@ -1,0 +1,13 @@
+A
+  refusal|intact             HarmBench 0.814 GCG 0.649 PAIR 0.542 PAP 0.546 GPTFuzz 0.789 PEZ 0.782  mean5 0.662 mean3 0.658
+  refusal|persona removed    HarmBench 0.811 GCG 0.644 PAIR 0.540 PAP 0.541 GPTFuzz 0.795 PEZ 0.776  mean5 0.659 mean3 0.653
+  dmu|intact                 HarmBench 0.869 GCG 0.672 PAIR 0.623 PAP 0.577 GPTFuzz 0.582 PEZ 0.768  mean5 0.644 mean3 0.688
+  dmu|persona removed        HarmBench 0.886 GCG 0.682 PAIR 0.607 PAP 0.578 GPTFuzz 0.730 PEZ 0.802  mean5 0.680 mean3 0.697
+B
+  dmu intact                                 dprime 1.630 within_template 0.936 within_request 0.920 rho_request 0.537 rho_template 0.457 cos_refusal 0.343
+  dmu persona component                      dprime 1.096 within_template 0.839 within_request 0.856 rho_request 0.507 rho_template 0.324 cos_refusal 0.153
+  dmu persona removed                        dprime 1.971 within_template 0.962 within_request 0.937 rho_request 0.548 rho_template 0.536 cos_refusal 0.314
+  refusal intact                             dprime 1.217 within_template 0.971 within_request 0.784 rho_request 0.531 rho_template 0.011 cos_refusal 1.000
+  refusal persona removed                    dprime 1.284 within_template 0.971 within_request 0.789 rho_request 0.536 rho_template 0.074 cos_refusal 0.857
+  random Alpaca activation (median of 240)   dprime 0.695 within_template 0.772 within_request 0.763 rho_request 0.442 rho_template 0.306 cos_refusal 0.079
+  random Gaussian direction (median of 240)  dprime 0.390 within_template 0.768 within_request 0.699 rho_request 0.320 rho_template 0.171 cos_refusal 0.009

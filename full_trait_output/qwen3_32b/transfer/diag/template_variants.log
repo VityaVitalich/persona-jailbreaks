@@ -1,0 +1,10 @@
+base      hb    n_train~1554 pos~205 | PersonaJB 0.616 Gaussian 0.576 full 0.610 | PersonaJB per fam gcg 0.612 pair 0.590 pap 0.641 gptfuzz 0.588 pez 0.650
+base      hbwjb n_train~1554 pos~205 | PersonaJB 0.618 Gaussian 0.622 full 0.679 | PersonaJB per fam gcg 0.546 pair 0.559 pap 0.701 gptfuzz 0.539 pez 0.747
+drop100   hb    n_train~1443 pos~109 | PersonaJB 0.616 Gaussian 0.576 full 0.606 | PersonaJB per fam gcg 0.609 pair 0.591 pap 0.646 gptfuzz 0.558 pez 0.676
+drop100   hbwjb n_train~1443 pos~109 | PersonaJB 0.611 Gaussian 0.618 full 0.676 | PersonaJB per fam gcg 0.529 pair 0.556 pap 0.689 gptfuzz 0.525 pez 0.754
+mixed     hb    n_train~1110 pos~109 | PersonaJB 0.618 Gaussian 0.575 full 0.604 | PersonaJB per fam gcg 0.610 pair 0.611 pap 0.638 gptfuzz 0.565 pez 0.664
+mixed     hbwjb n_train~1110 pos~109 | PersonaJB 0.615 Gaussian 0.621 full 0.675 | PersonaJB per fam gcg 0.534 pair 0.562 pap 0.691 gptfuzz 0.532 pez 0.757
+tplweight hb    n_train~1554 pos~205 | PersonaJB 0.616 Gaussian 0.576 full 0.610 | PersonaJB per fam gcg 0.612 pair 0.590 pap 0.641 gptfuzz 0.588 pez 0.650
+tplweight hbwjb n_train~1554 pos~205 | PersonaJB 0.618 Gaussian 0.622 full 0.679 | PersonaJB per fam gcg 0.546 pair 0.559 pap 0.701 gptfuzz 0.539 pez 0.747
+behsplit  hb    n_train~2220 pos~280 | PersonaJB 0.624 Gaussian 0.582 full 0.615 | PersonaJB per fam gcg 0.648 pair 0.606 pap 0.655 gptfuzz 0.583 pez 0.630
+behsplit  hbwjb n_train~2220 pos~280 | PersonaJB 0.628 Gaussian 0.618 full 0.685 | PersonaJB per fam gcg 0.554 pair 0.588 pap 0.715 gptfuzz 0.556 pez 0.729

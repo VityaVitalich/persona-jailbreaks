@@ -1,0 +1,25 @@
+share of refusal / dmu in each 240-dim space
+  persona        refusal 0.265  dmu 0.365
+  alpaca_pca     refusal 0.584  dmu 0.467
+  alpaca_acts    refusal 0.504  dmu 0.419
+  norobots_acts  refusal 0.473  dmu 0.460
+  wiki_acts      refusal 0.180  dmu 0.325
+  random         refusal 0.043  dmu 0.041
+share in the trait span
+  refusal          0.265 [0.265, 0.265]
+  dmu              0.365 [0.365, 0.365]
+  shuf_refusal     0.257 [0.185, 0.386]
+  shuf_dmu         0.250 [0.158, 0.390]
+  strat_refusal    0.238 [0.167, 0.349]
+  strat_dmu        0.242 [0.150, 0.401]
+  shuf_alpaca      0.247 [0.164, 0.376]
+  random_direction 0.044 [0.038, 0.052]
+folded AUC: HarmBench / transfer
+  refusal          full 0.814/0.662  persona_component 0.807/0.664  persona_removed 0.811/0.659  random_removed 0.814/0.661
+  dmu              full 0.869/0.648  persona_component 0.813/0.625  persona_removed 0.886/0.678  random_removed 0.869/0.648
+  shuf_refusal     full 0.772/0.635  persona_component 0.746/0.615  persona_removed 0.776/0.642  random_removed 0.771/0.635
+  shuf_dmu         full 0.714/0.620  persona_component 0.736/0.604  persona_removed 0.708/0.632  random_removed 0.714/0.620
+  strat_refusal    full 0.745/0.608  persona_component 0.757/0.603  persona_removed 0.715/0.600  random_removed 0.745/0.608
+  strat_dmu        full 0.720/0.622  persona_component 0.740/0.603  persona_removed 0.719/0.634  random_removed 0.720/0.622
+  shuf_alpaca      full 0.728/0.591  persona_component 0.739/0.597  persona_removed 0.703/0.594  random_removed 0.728/0.591
+  random_direction full 0.700/0.596  persona_component 0.720/0.598  persona_removed 0.684/0.602  random_removed 0.698/0.598

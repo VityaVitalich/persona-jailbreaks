@@ -1,0 +1,5872 @@
+{
+  "layer_16": {
+    "layer": 16,
+    "n_pca": 4,
+    "var_explained": 0.41580796241760254,
+    "stability": {
+      "mean": 0.9722972733120926,
+      "std": 0.020565832051904605,
+      "min": 0.909372178467015,
+      "max": 0.9981581810780804,
+      "mean_angle_deg": 13.5178186330615
+    },
+    "mean_auc": 0.8330792534021481,
+    "std_auc": 0.040233679072844315,
+    "n_seeds": 10,
+    "cosine_ranking": [
+      {
+        "trait": "absolutist",
+        "cos_sim_pca": 0.7986577063003717,
+        "angle_deg": 36.99788675473723,
+        "abs_cos": 0.7986577063003717,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 4,
+        "rank_neg": 227,
+        "rank_abs": 8
+      },
+      {
+        "trait": "abstract",
+        "cos_sim_pca": 0.2272744882767236,
+        "angle_deg": 76.86333760359672,
+        "abs_cos": 0.2272744882767236,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 97,
+        "rank_neg": 134,
+        "rank_abs": 156
+      },
+      {
+        "trait": "accessible",
+        "cos_sim_pca": 0.09464471384099288,
+        "angle_deg": 84.56912872194091,
+        "abs_cos": 0.09464471384099288,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 129,
+        "rank_neg": 102,
+        "rank_abs": 208
+      },
+      {
+        "trait": "accommodating",
+        "cos_sim_pca": 0.5580029439382701,
+        "angle_deg": 56.08219978473151,
+        "abs_cos": 0.5580029439382701,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 21,
+        "rank_neg": 210,
+        "rank_abs": 45
+      },
+      {
+        "trait": "acerbic",
+        "cos_sim_pca": 0.40968252257668436,
+        "angle_deg": 65.81510707187036,
+        "abs_cos": 0.40968252257668436,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 49,
+        "rank_neg": 182,
+        "rank_abs": 87
+      },
+      {
+        "trait": "adaptable",
+        "cos_sim_pca": -0.1382377795413951,
+        "angle_deg": 97.94588695418076,
+        "abs_cos": 0.1382377795413951,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 159,
+        "rank_neg": 72,
+        "rank_abs": 187
+      },
+      {
+        "trait": "adventurous",
+        "cos_sim_pca": 0.525633667766883,
+        "angle_deg": 58.289088742839546,
+        "abs_cos": 0.525633667766883,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 26,
+        "rank_neg": 205,
+        "rank_abs": 53
+      },
+      {
+        "trait": "agreeable",
+        "cos_sim_pca": -0.4100178905809309,
+        "angle_deg": 114.20595866459894,
+        "abs_cos": 0.4100178905809309,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 193,
+        "rank_neg": 38,
+        "rank_abs": 86
+      },
+      {
+        "trait": "altruistic",
+        "cos_sim_pca": 0.0434583487348591,
+        "angle_deg": 87.50923559167362,
+        "abs_cos": 0.0434583487348591,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 136,
+        "rank_neg": 95,
+        "rank_abs": 220
+      },
+      {
+        "trait": "analytical",
+        "cos_sim_pca": -0.5617681560609397,
+        "angle_deg": 124.17816592379242,
+        "abs_cos": 0.5617681560609397,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 207,
+        "rank_neg": 24,
+        "rank_abs": 44
+      },
+      {
+        "trait": "animated",
+        "cos_sim_pca": 0.10776153061127686,
+        "angle_deg": 83.81370636629443,
+        "abs_cos": 0.10776153061127686,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 127,
+        "rank_neg": 104,
+        "rank_abs": 204
+      },
+      {
+        "trait": "anthropocentric",
+        "cos_sim_pca": 0.3941130397165773,
+        "angle_deg": 66.78933190267742,
+        "abs_cos": 0.3941130397165773,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 55,
+        "rank_neg": 176,
+        "rank_abs": 95
+      },
+      {
+        "trait": "anxious",
+        "cos_sim_pca": 0.12343513720051036,
+        "angle_deg": 82.90960409898825,
+        "abs_cos": 0.12343513720051036,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 121,
+        "rank_neg": 110,
+        "rank_abs": 195
+      },
+      {
+        "trait": "arrogant",
+        "cos_sim_pca": 0.4566870165401805,
+        "angle_deg": 62.82646751920449,
+        "abs_cos": 0.4566870165401805,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 39,
+        "rank_neg": 192,
+        "rank_abs": 73
+      },
+      {
+        "trait": "artistic",
+        "cos_sim_pca": 0.20105990386644362,
+        "angle_deg": 78.4010538364731,
+        "abs_cos": 0.20105990386644362,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 106,
+        "rank_neg": 125,
+        "rank_abs": 169
+      },
+      {
+        "trait": "ascetic",
+        "cos_sim_pca": -0.511274697734613,
+        "angle_deg": 120.74877407511246,
+        "abs_cos": 0.511274697734613,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 201,
+        "rank_neg": 30,
+        "rank_abs": 57
+      },
+      {
+        "trait": "assertive",
+        "cos_sim_pca": 0.49600484474578826,
+        "angle_deg": 60.26396721407631,
+        "abs_cos": 0.49600484474578826,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 30,
+        "rank_neg": 201,
+        "rank_abs": 63
+      },
+      {
+        "trait": "avoidant",
+        "cos_sim_pca": -0.6044422476152759,
+        "angle_deg": 127.18871710981864,
+        "abs_cos": 0.6044422476152759,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 213,
+        "rank_neg": 18,
+        "rank_abs": 37
+      },
+      {
+        "trait": "benevolent",
+        "cos_sim_pca": -0.6289703049674047,
+        "angle_deg": 128.9741942962499,
+        "abs_cos": 0.6289703049674047,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 214,
+        "rank_neg": 17,
+        "rank_abs": 33
+      },
+      {
+        "trait": "big_picture",
+        "cos_sim_pca": 0.2145910921606614,
+        "angle_deg": 77.60846130598503,
+        "abs_cos": 0.2145910921606614,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 102,
+        "rank_neg": 129,
+        "rank_abs": 163
+      },
+      {
+        "trait": "bitter",
+        "cos_sim_pca": 0.3017872341526383,
+        "angle_deg": 72.43501978264592,
+        "abs_cos": 0.3017872341526383,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 85,
+        "rank_neg": 146,
+        "rank_abs": 133
+      },
+      {
+        "trait": "blunt",
+        "cos_sim_pca": 0.12869892241494985,
+        "angle_deg": 82.60558550723222,
+        "abs_cos": 0.12869892241494985,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 119,
+        "rank_neg": 112,
+        "rank_abs": 191
+      },
+      {
+        "trait": "bombastic",
+        "cos_sim_pca": 0.3725806397975364,
+        "angle_deg": 68.12513967995535,
+        "abs_cos": 0.3725806397975364,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 59,
+        "rank_neg": 172,
+        "rank_abs": 101
+      },
+      {
+        "trait": "callous",
+        "cos_sim_pca": 0.6390916578222398,
+        "angle_deg": 50.275879988204004,
+        "abs_cos": 0.6390916578222398,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 16,
+        "rank_neg": 215,
+        "rank_abs": 31
+      },
+      {
+        "trait": "calm",
+        "cos_sim_pca": -0.39449776049575125,
+        "angle_deg": 113.23465435392647,
+        "abs_cos": 0.39449776049575125,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 191,
+        "rank_neg": 40,
+        "rank_abs": 94
+      },
+      {
+        "trait": "casual",
+        "cos_sim_pca": 0.41514940897879893,
+        "angle_deg": 65.47127417047913,
+        "abs_cos": 0.41514940897879893,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 48,
+        "rank_neg": 183,
+        "rank_abs": 85
+      },
+      {
+        "trait": "cautious",
+        "cos_sim_pca": -0.8811862294986396,
+        "angle_deg": 151.78579029813028,
+        "abs_cos": 0.8811862294986396,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 229,
+        "rank_neg": 2,
+        "rank_abs": 2
+      },
+      {
+        "trait": "challenging",
+        "cos_sim_pca": -0.5746319219619318,
+        "angle_deg": 125.07385954002615,
+        "abs_cos": 0.5746319219619318,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 209,
+        "rank_neg": 22,
+        "rank_abs": 42
+      },
+      {
+        "trait": "chaotic",
+        "cos_sim_pca": 0.012899012234599772,
+        "angle_deg": 89.26092054287385,
+        "abs_cos": 0.012899012234599772,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 140,
+        "rank_neg": 91,
+        "rank_abs": 228
+      },
+      {
+        "trait": "charismatic",
+        "cos_sim_pca": -0.017663037082570443,
+        "angle_deg": 91.01207010762452,
+        "abs_cos": 0.017663037082570443,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 144,
+        "rank_neg": 87,
+        "rank_abs": 226
+      },
+      {
+        "trait": "chill",
+        "cos_sim_pca": 0.07491494764105963,
+        "angle_deg": 85.70366458466879,
+        "abs_cos": 0.07491494764105963,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 134,
+        "rank_neg": 97,
+        "rank_abs": 216
+      },
+      {
+        "trait": "circumspect",
+        "cos_sim_pca": -0.7735650273519791,
+        "angle_deg": 140.67511354156636,
+        "abs_cos": 0.7735650273519791,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 224,
+        "rank_neg": 7,
+        "rank_abs": 12
+      },
+      {
+        "trait": "closure_seeking",
+        "cos_sim_pca": 0.3576023073586323,
+        "angle_deg": 69.04698167041037,
+        "abs_cos": 0.3576023073586323,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 64,
+        "rank_neg": 167,
+        "rank_abs": 106
+      },
+      {
+        "trait": "collaborative",
+        "cos_sim_pca": -0.5981818785461724,
+        "angle_deg": 126.73979496160578,
+        "abs_cos": 0.5981818785461724,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 211,
+        "rank_neg": 20,
+        "rank_abs": 39
+      },
+      {
+        "trait": "collectivistic",
+        "cos_sim_pca": -0.29767077124295094,
+        "angle_deg": 107.31775782724785,
+        "abs_cos": 0.29767077124295094,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 182,
+        "rank_neg": 49,
+        "rank_abs": 135
+      },
+      {
+        "trait": "competitive",
+        "cos_sim_pca": 0.2999003452170561,
+        "angle_deg": 72.54838227312848,
+        "abs_cos": 0.2999003452170561,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 86,
+        "rank_neg": 145,
+        "rank_abs": 134
+      },
+      {
+        "trait": "conceptual",
+        "cos_sim_pca": 0.5373484480524491,
+        "angle_deg": 57.49668201445505,
+        "abs_cos": 0.5373484480524491,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 23,
+        "rank_neg": 208,
+        "rank_abs": 49
+      },
+      {
+        "trait": "conciliatory",
+        "cos_sim_pca": -0.2723697851500939,
+        "angle_deg": 105.80533166430821,
+        "abs_cos": 0.2723697851500939,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 178,
+        "rank_neg": 53,
+        "rank_abs": 144
+      },
+      {
+        "trait": "concise",
+        "cos_sim_pca": 0.2969607194465525,
+        "angle_deg": 72.72485199477293,
+        "abs_cos": 0.2969607194465525,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 87,
+        "rank_neg": 144,
+        "rank_abs": 136
+      },
+      {
+        "trait": "condescending",
+        "cos_sim_pca": 0.10571480070365696,
+        "angle_deg": 83.93164916109875,
+        "abs_cos": 0.10571480070365696,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 128,
+        "rank_neg": 103,
+        "rank_abs": 206
+      },
+      {
+        "trait": "confident",
+        "cos_sim_pca": 0.7521528937153994,
+        "angle_deg": 41.222786086873874,
+        "abs_cos": 0.7521528937153994,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 7,
+        "rank_neg": 224,
+        "rank_abs": 16
+      },
+      {
+        "trait": "confrontational",
+        "cos_sim_pca": 0.35574938556067837,
+        "angle_deg": 69.16062052560586,
+        "abs_cos": 0.35574938556067837,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 65,
+        "rank_neg": 166,
+        "rank_abs": 108
+      },
+      {
+        "trait": "conscientious",
+        "cos_sim_pca": -0.386818475471934,
+        "angle_deg": 112.7566799317916,
+        "abs_cos": 0.386818475471934,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 190,
+        "rank_neg": 41,
+        "rank_abs": 98
+      },
+      {
+        "trait": "constructivist",
+        "cos_sim_pca": 0.3255421141089814,
+        "angle_deg": 71.00157796474006,
+        "abs_cos": 0.3255421141089814,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 77,
+        "rank_neg": 154,
+        "rank_abs": 122
+      },
+      {
+        "trait": "contemporary",
+        "cos_sim_pca": -0.22673722954880077,
+        "angle_deg": 103.10505456508774,
+        "abs_cos": 0.22673722954880077,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 171,
+        "rank_neg": 60,
+        "rank_abs": 157
+      },
+      {
+        "trait": "contrarian",
+        "cos_sim_pca": 0.15968136779310704,
+        "angle_deg": 80.8115978408162,
+        "abs_cos": 0.15968136779310704,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 112,
+        "rank_neg": 119,
+        "rank_abs": 181
+      },
+      {
+        "trait": "convergent",
+        "cos_sim_pca": -0.23480228717318694,
+        "angle_deg": 103.57996857021386,
+        "abs_cos": 0.23480228717318694,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 172,
+        "rank_neg": 59,
+        "rank_abs": 155
+      },
+      {
+        "trait": "cosmopolitan",
+        "cos_sim_pca": -0.070238955563032,
+        "angle_deg": 94.0277121458774,
+        "abs_cos": 0.070238955563032,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 148,
+        "rank_neg": 83,
+        "rank_abs": 217
+      },
+      {
+        "trait": "creative",
+        "cos_sim_pca": 0.17931502702441238,
+        "angle_deg": 79.67013538180069,
+        "abs_cos": 0.17931502702441238,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 108,
+        "rank_neg": 123,
+        "rank_abs": 173
+      },
+      {
+        "trait": "critical",
+        "cos_sim_pca": -0.2643601071747461,
+        "angle_deg": 105.32893373777863,
+        "abs_cos": 0.2643601071747461,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 177,
+        "rank_neg": 54,
+        "rank_abs": 146
+      },
+      {
+        "trait": "cruel",
+        "cos_sim_pca": 0.5322766143688943,
+        "angle_deg": 57.84059406988597,
+        "abs_cos": 0.5322766143688943,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 24,
+        "rank_neg": 207,
+        "rank_abs": 51
+      },
+      {
+        "trait": "cryptic",
+        "cos_sim_pca": 0.40519215004767806,
+        "angle_deg": 66.09683118970325,
+        "abs_cos": 0.40519215004767806,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 50,
+        "rank_neg": 181,
+        "rank_abs": 88
+      },
+      {
+        "trait": "curious",
+        "cos_sim_pca": -0.15113037059643358,
+        "angle_deg": 98.69243886170167,
+        "abs_cos": 0.15113037059643358,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 161,
+        "rank_neg": 70,
+        "rank_abs": 183
+      },
+      {
+        "trait": "cynical",
+        "cos_sim_pca": -0.026599468724749775,
+        "angle_deg": 91.52421706992159,
+        "abs_cos": 0.026599468724749775,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 146,
+        "rank_neg": 85,
+        "rank_abs": 224
+      },
+      {
+        "trait": "data_driven",
+        "cos_sim_pca": -0.21114089744773737,
+        "angle_deg": 102.189220123371,
+        "abs_cos": 0.21114089744773737,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 169,
+        "rank_neg": 62,
+        "rank_abs": 164
+      },
+      {
+        "trait": "decisive",
+        "cos_sim_pca": 0.1335761828586458,
+        "angle_deg": 82.32370449865223,
+        "abs_cos": 0.1335761828586458,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 116,
+        "rank_neg": 115,
+        "rank_abs": 188
+      },
+      {
+        "trait": "deconstructionist",
+        "cos_sim_pca": -0.545644580551237,
+        "angle_deg": 123.068723022452,
+        "abs_cos": 0.545644580551237,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 205,
+        "rank_neg": 26,
+        "rank_abs": 47
+      },
+      {
+        "trait": "deferential",
+        "cos_sim_pca": -0.014390854363982616,
+        "angle_deg": 90.82456368104856,
+        "abs_cos": 0.014390854363982616,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 143,
+        "rank_neg": 88,
+        "rank_abs": 227
+      },
+      {
+        "trait": "deontological",
+        "cos_sim_pca": 0.619513529686027,
+        "angle_deg": 51.719381469007374,
+        "abs_cos": 0.619513529686027,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 17,
+        "rank_neg": 214,
+        "rank_abs": 34
+      },
+      {
+        "trait": "descriptive",
+        "cos_sim_pca": 0.3692068113727003,
+        "angle_deg": 68.33329239295242,
+        "abs_cos": 0.3692068113727003,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 62,
+        "rank_neg": 169,
+        "rank_abs": 104
+      },
+      {
+        "trait": "detached",
+        "cos_sim_pca": -0.10127901576871423,
+        "angle_deg": 95.81282664350282,
+        "abs_cos": 0.10127901576871423,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 152,
+        "rank_neg": 79,
+        "rank_abs": 207
+      },
+      {
+        "trait": "deterministic",
+        "cos_sim_pca": 0.4744020779131405,
+        "angle_deg": 61.6795734803745,
+        "abs_cos": 0.4744020779131405,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 33,
+        "rank_neg": 198,
+        "rank_abs": 66
+      },
+      {
+        "trait": "diplomatic",
+        "cos_sim_pca": -0.5359090462383428,
+        "angle_deg": 122.40558171246926,
+        "abs_cos": 0.5359090462383428,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 204,
+        "rank_neg": 27,
+        "rank_abs": 50
+      },
+      {
+        "trait": "disorganized",
+        "cos_sim_pca": 0.5117921085022675,
+        "angle_deg": 59.21672491571153,
+        "abs_cos": 0.5117921085022675,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 27,
+        "rank_neg": 204,
+        "rank_abs": 56
+      },
+      {
+        "trait": "dispassionate",
+        "cos_sim_pca": -0.18993672350369967,
+        "angle_deg": 100.94909147906708,
+        "abs_cos": 0.18993672350369967,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 166,
+        "rank_neg": 65,
+        "rank_abs": 172
+      },
+      {
+        "trait": "divergent",
+        "cos_sim_pca": 0.0934467056165601,
+        "angle_deg": 84.63807511995724,
+        "abs_cos": 0.0934467056165601,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 130,
+        "rank_neg": 101,
+        "rank_abs": 209
+      },
+      {
+        "trait": "dogmatic",
+        "cos_sim_pca": 0.5407733090998309,
+        "angle_deg": 57.263703124857,
+        "abs_cos": 0.5407733090998309,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 22,
+        "rank_neg": 209,
+        "rank_abs": 48
+      },
+      {
+        "trait": "dominant",
+        "cos_sim_pca": 0.13349199634426567,
+        "angle_deg": 82.32857161948078,
+        "abs_cos": 0.13349199634426567,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 118,
+        "rank_neg": 113,
+        "rank_abs": 190
+      },
+      {
+        "trait": "dramatic",
+        "cos_sim_pca": 0.17722963767779226,
+        "angle_deg": 79.7915645660142,
+        "abs_cos": 0.17722963767779226,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 109,
+        "rank_neg": 122,
+        "rank_abs": 174
+      },
+      {
+        "trait": "earnest",
+        "cos_sim_pca": -0.37458352932286615,
+        "angle_deg": 111.99857475025811,
+        "abs_cos": 0.37458352932286615,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 189,
+        "rank_neg": 42,
+        "rank_abs": 100
+      },
+      {
+        "trait": "eclectic",
+        "cos_sim_pca": -0.1249962819987861,
+        "angle_deg": 97.18054107170674,
+        "abs_cos": 0.1249962819987861,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 157,
+        "rank_neg": 74,
+        "rank_abs": 193
+      },
+      {
+        "trait": "edgy",
+        "cos_sim_pca": 0.40092590652956384,
+        "angle_deg": 66.36392586519423,
+        "abs_cos": 0.40092590652956384,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 51,
+        "rank_neg": 180,
+        "rank_abs": 89
+      },
+      {
+        "trait": "educational",
+        "cos_sim_pca": -0.2888098501163394,
+        "angle_deg": 106.78671689896397,
+        "abs_cos": 0.2888098501163394,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 181,
+        "rank_neg": 50,
+        "rank_abs": 138
+      },
+      {
+        "trait": "efficient",
+        "cos_sim_pca": 0.27892483035329074,
+        "angle_deg": 73.80395428927524,
+        "abs_cos": 0.27892483035329074,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 91,
+        "rank_neg": 140,
+        "rank_abs": 142
+      },
+      {
+        "trait": "effusive",
+        "cos_sim_pca": 0.3048827204145129,
+        "angle_deg": 72.24889177276162,
+        "abs_cos": 0.3048827204145129,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 83,
+        "rank_neg": 148,
+        "rank_abs": 130
+      },
+      {
+        "trait": "egalitarian",
+        "cos_sim_pca": 0.6801610507978723,
+        "angle_deg": 47.14377059701226,
+        "abs_cos": 0.6801610507978723,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 12,
+        "rank_neg": 219,
+        "rank_abs": 27
+      },
+      {
+        "trait": "elitist",
+        "cos_sim_pca": 0.08871787944372417,
+        "angle_deg": 84.91014806946113,
+        "abs_cos": 0.08871787944372417,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 131,
+        "rank_neg": 100,
+        "rank_abs": 210
+      },
+      {
+        "trait": "eloquent",
+        "cos_sim_pca": -0.20171365122770207,
+        "angle_deg": 101.63718660683885,
+        "abs_cos": 0.20171365122770207,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 168,
+        "rank_neg": 63,
+        "rank_abs": 168
+      },
+      {
+        "trait": "emotional",
+        "cos_sim_pca": 0.07647015648329819,
+        "angle_deg": 85.61430130752798,
+        "abs_cos": 0.07647015648329819,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 133,
+        "rank_neg": 98,
+        "rank_abs": 215
+      },
+      {
+        "trait": "empathetic",
+        "cos_sim_pca": -0.10628658342817032,
+        "angle_deg": 96.1012971942026,
+        "abs_cos": 0.10628658342817032,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 153,
+        "rank_neg": 78,
+        "rank_abs": 205
+      },
+      {
+        "trait": "enigmatic",
+        "cos_sim_pca": 0.3171470255254114,
+        "angle_deg": 71.50952347121105,
+        "abs_cos": 0.3171470255254114,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 79,
+        "rank_neg": 152,
+        "rank_abs": 125
+      },
+      {
+        "trait": "entertaining",
+        "cos_sim_pca": 0.2074779107280717,
+        "angle_deg": 78.02540781973076,
+        "abs_cos": 0.2074779107280717,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 105,
+        "rank_neg": 126,
+        "rank_abs": 167
+      },
+      {
+        "trait": "environmental",
+        "cos_sim_pca": -0.12037439518245957,
+        "angle_deg": 96.913710473602,
+        "abs_cos": 0.12037439518245957,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 156,
+        "rank_neg": 75,
+        "rank_abs": 196
+      },
+      {
+        "trait": "epicurean",
+        "cos_sim_pca": 0.11244392614038695,
+        "angle_deg": 83.54378353382951,
+        "abs_cos": 0.11244392614038695,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 124,
+        "rank_neg": 107,
+        "rank_abs": 200
+      },
+      {
+        "trait": "erudite",
+        "cos_sim_pca": -0.8859864542553604,
+        "angle_deg": 152.37316019742414,
+        "abs_cos": 0.8859864542553604,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 230,
+        "rank_neg": 1,
+        "rank_abs": 1
+      },
+      {
+        "trait": "esoteric",
+        "cos_sim_pca": 0.028740392584768182,
+        "angle_deg": 88.3530700201071,
+        "abs_cos": 0.028740392584768182,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 139,
+        "rank_neg": 92,
+        "rank_abs": 223
+      },
+      {
+        "trait": "essentialist",
+        "cos_sim_pca": 0.8425954067355514,
+        "angle_deg": 32.58478841960901,
+        "abs_cos": 0.8425954067355514,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 2,
+        "rank_neg": 229,
+        "rank_abs": 4
+      },
+      {
+        "trait": "ethereal",
+        "cos_sim_pca": 0.33471540510106096,
+        "angle_deg": 70.44476718999643,
+        "abs_cos": 0.33471540510106096,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 74,
+        "rank_neg": 157,
+        "rank_abs": 119
+      },
+      {
+        "trait": "evil",
+        "cos_sim_pca": 0.10848428791338083,
+        "angle_deg": 83.7720512204507,
+        "abs_cos": 0.10848428791338083,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 126,
+        "rank_neg": 105,
+        "rank_abs": 203
+      },
+      {
+        "trait": "existentialist",
+        "cos_sim_pca": 0.7188361896995514,
+        "angle_deg": 44.04152248771032,
+        "abs_cos": 0.7188361896995514,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 8,
+        "rank_neg": 223,
+        "rank_abs": 18
+      },
+      {
+        "trait": "experiential",
+        "cos_sim_pca": -0.22220988002616848,
+        "angle_deg": 102.83886311706453,
+        "abs_cos": 0.22220988002616848,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 170,
+        "rank_neg": 61,
+        "rank_abs": 161
+      },
+      {
+        "trait": "exploratory",
+        "cos_sim_pca": -0.2521348030159834,
+        "angle_deg": 104.60387486490957,
+        "abs_cos": 0.2521348030159834,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 175,
+        "rank_neg": 56,
+        "rank_abs": 148
+      },
+      {
+        "trait": "extroverted",
+        "cos_sim_pca": 0.4675113115677258,
+        "angle_deg": 62.12712872372684,
+        "abs_cos": 0.4675113115677258,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 37,
+        "rank_neg": 194,
+        "rank_abs": 70
+      },
+      {
+        "trait": "fatalistic",
+        "cos_sim_pca": 0.34898825060857,
+        "angle_deg": 69.5745555103243,
+        "abs_cos": 0.34898825060857,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 69,
+        "rank_neg": 162,
+        "rank_abs": 113
+      },
+      {
+        "trait": "flexible",
+        "cos_sim_pca": 0.2245897978813973,
+        "angle_deg": 77.02124201682842,
+        "abs_cos": 0.2245897978813973,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 100,
+        "rank_neg": 131,
+        "rank_abs": 160
+      },
+      {
+        "trait": "flippant",
+        "cos_sim_pca": 0.5107002963793356,
+        "angle_deg": 59.28951260308688,
+        "abs_cos": 0.5107002963793356,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 28,
+        "rank_neg": 203,
+        "rank_abs": 58
+      },
+      {
+        "trait": "flirty",
+        "cos_sim_pca": 0.43269514662308745,
+        "angle_deg": 64.36127708992873,
+        "abs_cos": 0.43269514662308745,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 43,
+        "rank_neg": 188,
+        "rank_abs": 80
+      },
+      {
+        "trait": "forgiving",
+        "cos_sim_pca": -0.11235584305307009,
+        "angle_deg": 96.45113749183564,
+        "abs_cos": 0.11235584305307009,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 154,
+        "rank_neg": 77,
+        "rank_abs": 201
+      },
+      {
+        "trait": "formal",
+        "cos_sim_pca": -0.4350323706694259,
+        "angle_deg": 115.78735369185841,
+        "abs_cos": 0.4350323706694259,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 194,
+        "rank_neg": 37,
+        "rank_abs": 79
+      },
+      {
+        "trait": "fundamentalist",
+        "cos_sim_pca": -0.12682170658111291,
+        "angle_deg": 97.28596923034773,
+        "abs_cos": 0.12682170658111291,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 158,
+        "rank_neg": 73,
+        "rank_abs": 192
+      },
+      {
+        "trait": "futuristic",
+        "cos_sim_pca": 0.22480291322220025,
+        "angle_deg": 77.00871097381115,
+        "abs_cos": 0.22480291322220025,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 98,
+        "rank_neg": 133,
+        "rank_abs": 158
+      },
+      {
+        "trait": "generous",
+        "cos_sim_pca": -0.2738337798592798,
+        "angle_deg": 105.89252711496647,
+        "abs_cos": 0.2738337798592798,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 179,
+        "rank_neg": 52,
+        "rank_abs": 143
+      },
+      {
+        "trait": "goofy",
+        "cos_sim_pca": 0.42064653544575004,
+        "angle_deg": 65.1245872979753,
+        "abs_cos": 0.42064653544575004,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 46,
+        "rank_neg": 185,
+        "rank_abs": 83
+      },
+      {
+        "trait": "grandiose",
+        "cos_sim_pca": 0.46811828138426953,
+        "angle_deg": 62.08778071902387,
+        "abs_cos": 0.46811828138426953,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 36,
+        "rank_neg": 195,
+        "rank_abs": 69
+      },
+      {
+        "trait": "gregarious",
+        "cos_sim_pca": 0.28409696256365446,
+        "angle_deg": 73.49512273507835,
+        "abs_cos": 0.28409696256365446,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 90,
+        "rank_neg": 141,
+        "rank_abs": 140
+      },
+      {
+        "trait": "grounded",
+        "cos_sim_pca": -0.25862265465454237,
+        "angle_deg": 104.98835103370709,
+        "abs_cos": 0.25862265465454237,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 176,
+        "rank_neg": 55,
+        "rank_abs": 147
+      },
+      {
+        "trait": "hedonistic",
+        "cos_sim_pca": 0.39834300027678815,
+        "angle_deg": 66.52536778326753,
+        "abs_cos": 0.39834300027678815,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 53,
+        "rank_neg": 178,
+        "rank_abs": 92
+      },
+      {
+        "trait": "historical",
+        "cos_sim_pca": 0.21898755896929123,
+        "angle_deg": 77.35042556917912,
+        "abs_cos": 0.21898755896929123,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 101,
+        "rank_neg": 130,
+        "rank_abs": 162
+      },
+      {
+        "trait": "hostile",
+        "cos_sim_pca": 0.33427465312748167,
+        "angle_deg": 70.47156397991198,
+        "abs_cos": 0.33427465312748167,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 75,
+        "rank_neg": 156,
+        "rank_abs": 120
+      },
+      {
+        "trait": "humanistic",
+        "cos_sim_pca": -0.6918802096233818,
+        "angle_deg": 133.7791286494859,
+        "abs_cos": 0.6918802096233818,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 217,
+        "rank_neg": 14,
+        "rank_abs": 22
+      },
+      {
+        "trait": "humble",
+        "cos_sim_pca": -0.713514906483482,
+        "angle_deg": 135.521622198387,
+        "abs_cos": 0.713514906483482,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 220,
+        "rank_neg": 11,
+        "rank_abs": 19
+      },
+      {
+        "trait": "iconoclastic",
+        "cos_sim_pca": 0.30681603167036553,
+        "angle_deg": 72.1325458663394,
+        "abs_cos": 0.30681603167036553,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 81,
+        "rank_neg": 150,
+        "rank_abs": 128
+      },
+      {
+        "trait": "idealistic",
+        "cos_sim_pca": 0.688228968651498,
+        "angle_deg": 46.509920618260516,
+        "abs_cos": 0.688228968651498,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 9,
+        "rank_neg": 222,
+        "rank_abs": 23
+      },
+      {
+        "trait": "impatient",
+        "cos_sim_pca": 0.20820443148054574,
+        "angle_deg": 77.98285193539864,
+        "abs_cos": 0.20820443148054574,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 104,
+        "rank_neg": 127,
+        "rank_abs": 166
+      },
+      {
+        "trait": "improvisational",
+        "cos_sim_pca": 0.48314450834057854,
+        "angle_deg": 61.10902298965475,
+        "abs_cos": 0.48314450834057854,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 32,
+        "rank_neg": 199,
+        "rank_abs": 65
+      },
+      {
+        "trait": "impulsive",
+        "cos_sim_pca": 0.7667668033111938,
+        "angle_deg": 39.93556821744279,
+        "abs_cos": 0.7667668033111938,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 6,
+        "rank_neg": 225,
+        "rank_abs": 14
+      },
+      {
+        "trait": "inclusive",
+        "cos_sim_pca": -0.7112065664840559,
+        "angle_deg": 135.33316987513894,
+        "abs_cos": 0.7112065664840559,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 219,
+        "rank_neg": 12,
+        "rank_abs": 20
+      },
+      {
+        "trait": "independent",
+        "cos_sim_pca": 0.507934121490039,
+        "angle_deg": 59.473679671506865,
+        "abs_cos": 0.507934121490039,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 29,
+        "rank_neg": 202,
+        "rank_abs": 59
+      },
+      {
+        "trait": "individualistic",
+        "cos_sim_pca": 0.286218585618457,
+        "angle_deg": 73.36829692423812,
+        "abs_cos": 0.286218585618457,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 89,
+        "rank_neg": 142,
+        "rank_abs": 139
+      },
+      {
+        "trait": "innovative",
+        "cos_sim_pca": 0.46894219902065626,
+        "angle_deg": 62.03434572878369,
+        "abs_cos": 0.46894219902065626,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 35,
+        "rank_neg": 196,
+        "rank_abs": 68
+      },
+      {
+        "trait": "inquisitive",
+        "cos_sim_pca": 0.031814308709090744,
+        "angle_deg": 88.17686674714021,
+        "abs_cos": 0.031814308709090744,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 138,
+        "rank_neg": 93,
+        "rank_abs": 222
+      },
+      {
+        "trait": "inspirational",
+        "cos_sim_pca": -0.24477285564735718,
+        "angle_deg": 104.16841060546086,
+        "abs_cos": 0.24477285564735718,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 174,
+        "rank_neg": 57,
+        "rank_abs": 151
+      },
+      {
+        "trait": "interdisciplinary",
+        "cos_sim_pca": 0.006342586934650063,
+        "angle_deg": 89.63659410088178,
+        "abs_cos": 0.006342586934650063,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 141,
+        "rank_neg": 90,
+        "rank_abs": 229
+      },
+      {
+        "trait": "introspective",
+        "cos_sim_pca": -0.14964524826289194,
+        "angle_deg": 98.6063687429488,
+        "abs_cos": 0.14964524826289194,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 160,
+        "rank_neg": 71,
+        "rank_abs": 185
+      },
+      {
+        "trait": "introverted",
+        "cos_sim_pca": -0.5656341844552969,
+        "angle_deg": 124.44634180572514,
+        "abs_cos": 0.5656341844552969,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 208,
+        "rank_neg": 23,
+        "rank_abs": 43
+      },
+      {
+        "trait": "ironic",
+        "cos_sim_pca": 0.417861932840481,
+        "angle_deg": 65.30032421828307,
+        "abs_cos": 0.417861932840481,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 47,
+        "rank_neg": 184,
+        "rank_abs": 84
+      },
+      {
+        "trait": "irreverent",
+        "cos_sim_pca": 0.40046408405666195,
+        "angle_deg": 66.39280618256213,
+        "abs_cos": 0.40046408405666195,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 52,
+        "rank_neg": 179,
+        "rank_abs": 90
+      },
+      {
+        "trait": "judgmental",
+        "cos_sim_pca": 0.11569459990384012,
+        "angle_deg": 83.35630988211537,
+        "abs_cos": 0.11569459990384012,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 123,
+        "rank_neg": 108,
+        "rank_abs": 198
+      },
+      {
+        "trait": "libertarian",
+        "cos_sim_pca": -0.0020266423403617617,
+        "angle_deg": 90.11611813217361,
+        "abs_cos": 0.0020266423403617617,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 142,
+        "rank_neg": 89,
+        "rank_abs": 230
+      },
+      {
+        "trait": "literal",
+        "cos_sim_pca": -0.08553506113342368,
+        "angle_deg": 94.90679367185173,
+        "abs_cos": 0.08553506113342368,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 151,
+        "rank_neg": 80,
+        "rank_abs": 211
+      },
+      {
+        "trait": "manic",
+        "cos_sim_pca": 0.4884463672504537,
+        "angle_deg": 60.76148314031342,
+        "abs_cos": 0.4884463672504537,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 31,
+        "rank_neg": 200,
+        "rank_abs": 64
+      },
+      {
+        "trait": "manipulative",
+        "cos_sim_pca": 0.1691993545924343,
+        "angle_deg": 80.25872888563886,
+        "abs_cos": 0.1691993545924343,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 110,
+        "rank_neg": 121,
+        "rank_abs": 176
+      },
+      {
+        "trait": "materialist",
+        "cos_sim_pca": -0.594666408782418,
+        "angle_deg": 126.48885479076715,
+        "abs_cos": 0.594666408782418,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 210,
+        "rank_neg": 21,
+        "rank_abs": 40
+      },
+      {
+        "trait": "meditative",
+        "cos_sim_pca": -0.49622258333938374,
+        "angle_deg": 119.75040122122881,
+        "abs_cos": 0.49622258333938374,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 198,
+        "rank_neg": 33,
+        "rank_abs": 62
+      },
+      {
+        "trait": "melancholic",
+        "cos_sim_pca": 0.15833432875825415,
+        "angle_deg": 80.88977208479035,
+        "abs_cos": 0.15833432875825415,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 113,
+        "rank_neg": 118,
+        "rank_abs": 182
+      },
+      {
+        "trait": "melodramatic",
+        "cos_sim_pca": 0.2911508819628119,
+        "angle_deg": 73.07312978974494,
+        "abs_cos": 0.2911508819628119,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 88,
+        "rank_neg": 143,
+        "rank_abs": 137
+      },
+      {
+        "trait": "mercurial",
+        "cos_sim_pca": 0.42890580277998464,
+        "angle_deg": 64.60186033688339,
+        "abs_cos": 0.42890580277998464,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 44,
+        "rank_neg": 187,
+        "rank_abs": 81
+      },
+      {
+        "trait": "metaphorical",
+        "cos_sim_pca": 0.1394513931339147,
+        "angle_deg": 81.98389801444858,
+        "abs_cos": 0.1394513931339147,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 115,
+        "rank_neg": 116,
+        "rank_abs": 186
+      },
+      {
+        "trait": "methodical",
+        "cos_sim_pca": -0.5030587875607069,
+        "angle_deg": 120.20257493390866,
+        "abs_cos": 0.5030587875607069,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 200,
+        "rank_neg": 31,
+        "rank_abs": 60
+      },
+      {
+        "trait": "militant",
+        "cos_sim_pca": 0.47258661760766113,
+        "angle_deg": 61.79766909682824,
+        "abs_cos": 0.47258661760766113,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 34,
+        "rank_neg": 197,
+        "rank_abs": 67
+      },
+      {
+        "trait": "misanthropic",
+        "cos_sim_pca": 0.24277297457506708,
+        "angle_deg": 75.94973844412918,
+        "abs_cos": 0.24277297457506708,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 95,
+        "rank_neg": 136,
+        "rank_abs": 153
+      },
+      {
+        "trait": "mischievous",
+        "cos_sim_pca": 0.34089393560007564,
+        "angle_deg": 70.06865319140225,
+        "abs_cos": 0.34089393560007564,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 72,
+        "rank_neg": 159,
+        "rank_abs": 117
+      },
+      {
+        "trait": "moderate",
+        "cos_sim_pca": -0.5029283799366929,
+        "angle_deg": 120.19392991287027,
+        "abs_cos": 0.5029283799366929,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 199,
+        "rank_neg": 32,
+        "rank_abs": 61
+      },
+      {
+        "trait": "mystical",
+        "cos_sim_pca": 0.20986224359491512,
+        "angle_deg": 77.88572050761067,
+        "abs_cos": 0.20986224359491512,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 103,
+        "rank_neg": 128,
+        "rank_abs": 165
+      },
+      {
+        "trait": "naive",
+        "cos_sim_pca": 0.8652623361132239,
+        "angle_deg": 30.08732588384071,
+        "abs_cos": 0.8652623361132239,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 1,
+        "rank_neg": 230,
+        "rank_abs": 3
+      },
+      {
+        "trait": "narrative",
+        "cos_sim_pca": 0.24713072688031273,
+        "angle_deg": 75.69221189517485,
+        "abs_cos": 0.24713072688031273,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 93,
+        "rank_neg": 138,
+        "rank_abs": 149
+      },
+      {
+        "trait": "neurotic",
+        "cos_sim_pca": 0.3788812628354351,
+        "angle_deg": 67.73559729171713,
+        "abs_cos": 0.3788812628354351,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 58,
+        "rank_neg": 173,
+        "rank_abs": 99
+      },
+      {
+        "trait": "nihilistic",
+        "cos_sim_pca": 0.2245950937754499,
+        "angle_deg": 77.02093062936858,
+        "abs_cos": 0.2245950937754499,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 99,
+        "rank_neg": 132,
+        "rank_abs": 159
+      },
+      {
+        "trait": "nonchalant",
+        "cos_sim_pca": 0.68111751947374,
+        "angle_deg": 47.068968203717716,
+        "abs_cos": 0.68111751947374,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 11,
+        "rank_neg": 220,
+        "rank_abs": 25
+      },
+      {
+        "trait": "nostalgic",
+        "cos_sim_pca": 0.35325049912413686,
+        "angle_deg": 69.31374044754438,
+        "abs_cos": 0.35325049912413686,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 66,
+        "rank_neg": 165,
+        "rank_abs": 109
+      },
+      {
+        "trait": "nurturing",
+        "cos_sim_pca": -0.5156821258217793,
+        "angle_deg": 121.04306013093178,
+        "abs_cos": 0.5156821258217793,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 203,
+        "rank_neg": 28,
+        "rank_abs": 54
+      },
+      {
+        "trait": "obsessive",
+        "cos_sim_pca": 0.35141010513393783,
+        "angle_deg": 69.42641228051008,
+        "abs_cos": 0.35141010513393783,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 67,
+        "rank_neg": 164,
+        "rank_abs": 110
+      },
+      {
+        "trait": "open_ended",
+        "cos_sim_pca": -0.24289376099840498,
+        "angle_deg": 104.05739564561665,
+        "abs_cos": 0.24289376099840498,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 173,
+        "rank_neg": 58,
+        "rank_abs": 152
+      },
+      {
+        "trait": "optimistic",
+        "cos_sim_pca": 0.12468098258975302,
+        "angle_deg": 82.8376666920599,
+        "abs_cos": 0.12468098258975302,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 120,
+        "rank_neg": 111,
+        "rank_abs": 194
+      },
+      {
+        "trait": "pacifist",
+        "cos_sim_pca": -0.7077479833757061,
+        "angle_deg": 135.05197921647812,
+        "abs_cos": 0.7077479833757061,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 218,
+        "rank_neg": 13,
+        "rank_abs": 21
+      },
+      {
+        "trait": "paradoxical",
+        "cos_sim_pca": 0.6115466065017742,
+        "angle_deg": 52.29858310832378,
+        "abs_cos": 0.6115466065017742,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 18,
+        "rank_neg": 213,
+        "rank_abs": 35
+      },
+      {
+        "trait": "paranoid",
+        "cos_sim_pca": 0.052055088865852917,
+        "angle_deg": 87.01611448126012,
+        "abs_cos": 0.052055088865852917,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 135,
+        "rank_neg": 96,
+        "rank_abs": 219
+      },
+      {
+        "trait": "passionate",
+        "cos_sim_pca": 0.3069619439647526,
+        "angle_deg": 72.12376183714008,
+        "abs_cos": 0.3069619439647526,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 80,
+        "rank_neg": 151,
+        "rank_abs": 127
+      },
+      {
+        "trait": "passive_aggressive",
+        "cos_sim_pca": 0.45332360174991937,
+        "angle_deg": 63.04287640926764,
+        "abs_cos": 0.45332360174991937,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 41,
+        "rank_neg": 190,
+        "rank_abs": 75
+      },
+      {
+        "trait": "patient",
+        "cos_sim_pca": -0.16911257390440843,
+        "angle_deg": 99.73622624710187,
+        "abs_cos": 0.16911257390440843,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 164,
+        "rank_neg": 67,
+        "rank_abs": 177
+      },
+      {
+        "trait": "pedantic",
+        "cos_sim_pca": -0.7954451606701198,
+        "angle_deg": 142.69732242845905,
+        "abs_cos": 0.7954451606701198,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 226,
+        "rank_neg": 5,
+        "rank_abs": 10
+      },
+      {
+        "trait": "pensive",
+        "cos_sim_pca": -0.5996582196498947,
+        "angle_deg": 126.84542335101041,
+        "abs_cos": 0.5996582196498947,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 212,
+        "rank_neg": 19,
+        "rank_abs": 38
+      },
+      {
+        "trait": "perfectionist",
+        "cos_sim_pca": -0.8384951825661023,
+        "angle_deg": 146.981554109549,
+        "abs_cos": 0.8384951825661023,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 228,
+        "rank_neg": 3,
+        "rank_abs": 5
+      },
+      {
+        "trait": "pessimistic",
+        "cos_sim_pca": -0.0824798151043149,
+        "angle_deg": 94.73111991464711,
+        "abs_cos": 0.0824798151043149,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 150,
+        "rank_neg": 81,
+        "rank_abs": 212
+      },
+      {
+        "trait": "petty",
+        "cos_sim_pca": 0.19593881535695895,
+        "angle_deg": 78.70042821499133,
+        "abs_cos": 0.19593881535695895,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 107,
+        "rank_neg": 124,
+        "rank_abs": 170
+      },
+      {
+        "trait": "philosophical",
+        "cos_sim_pca": -0.11350217880801894,
+        "angle_deg": 96.51724055368166,
+        "abs_cos": 0.11350217880801894,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 155,
+        "rank_neg": 76,
+        "rank_abs": 199
+      },
+      {
+        "trait": "playful",
+        "cos_sim_pca": 0.30244183861286156,
+        "angle_deg": 72.39567520081955,
+        "abs_cos": 0.30244183861286156,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 84,
+        "rank_neg": 147,
+        "rank_abs": 132
+      },
+      {
+        "trait": "pluralist",
+        "cos_sim_pca": -0.6807133833198951,
+        "angle_deg": 132.89941451417067,
+        "abs_cos": 0.6807133833198951,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 216,
+        "rank_neg": 15,
+        "rank_abs": 26
+      },
+      {
+        "trait": "poetic",
+        "cos_sim_pca": 0.2382633016601649,
+        "angle_deg": 76.2159383369182,
+        "abs_cos": 0.2382633016601649,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 96,
+        "rank_neg": 135,
+        "rank_abs": 154
+      },
+      {
+        "trait": "practical",
+        "cos_sim_pca": 0.3722113417534003,
+        "angle_deg": 68.14793874666172,
+        "abs_cos": 0.3722113417534003,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 60,
+        "rank_neg": 171,
+        "rank_abs": 102
+      },
+      {
+        "trait": "prescriptive",
+        "cos_sim_pca": 0.03621209904164513,
+        "angle_deg": 87.92474583660578,
+        "abs_cos": 0.03621209904164513,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 137,
+        "rank_neg": 94,
+        "rank_abs": 221
+      },
+      {
+        "trait": "principled",
+        "cos_sim_pca": 0.6581305067084772,
+        "angle_deg": 48.84255001710585,
+        "abs_cos": 0.6581305067084772,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 13,
+        "rank_neg": 218,
+        "rank_abs": 28
+      },
+      {
+        "trait": "proactive",
+        "cos_sim_pca": -0.2791137575080677,
+        "angle_deg": 106.2073181173917,
+        "abs_cos": 0.2791137575080677,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 180,
+        "rank_neg": 51,
+        "rank_abs": 141
+      },
+      {
+        "trait": "problem_solving",
+        "cos_sim_pca": -0.5142956699767547,
+        "angle_deg": 120.95038820069136,
+        "abs_cos": 0.5142956699767547,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 202,
+        "rank_neg": 29,
+        "rank_abs": 55
+      },
+      {
+        "trait": "progressive",
+        "cos_sim_pca": 0.7980018794830538,
+        "angle_deg": 37.06028270404738,
+        "abs_cos": 0.7980018794830538,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 5,
+        "rank_neg": 226,
+        "rank_abs": 9
+      },
+      {
+        "trait": "provocative",
+        "cos_sim_pca": -0.16216941038421273,
+        "angle_deg": 99.33283904708063,
+        "abs_cos": 0.16216941038421273,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 162,
+        "rank_neg": 69,
+        "rank_abs": 180
+      },
+      {
+        "trait": "qualitative",
+        "cos_sim_pca": 0.27101389474675897,
+        "angle_deg": 74.27539160333016,
+        "abs_cos": 0.27101389474675897,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 92,
+        "rank_neg": 139,
+        "rank_abs": 145
+      },
+      {
+        "trait": "quantitative",
+        "cos_sim_pca": -0.6322902422813009,
+        "angle_deg": 129.21929530785658,
+        "abs_cos": 0.6322902422813009,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 215,
+        "rank_neg": 16,
+        "rank_abs": 32
+      },
+      {
+        "trait": "radical",
+        "cos_sim_pca": 0.3614106084428461,
+        "angle_deg": 68.81314838624571,
+        "abs_cos": 0.3614106084428461,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 63,
+        "rank_neg": 168,
+        "rank_abs": 105
+      },
+      {
+        "trait": "rationalist",
+        "cos_sim_pca": -0.16636952653406367,
+        "angle_deg": 99.57680229115624,
+        "abs_cos": 0.16636952653406367,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 163,
+        "rank_neg": 68,
+        "rank_abs": 178
+      },
+      {
+        "trait": "reactive",
+        "cos_sim_pca": 0.6554726963582249,
+        "angle_deg": 49.04449798066512,
+        "abs_cos": 0.6554726963582249,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 14,
+        "rank_neg": 217,
+        "rank_abs": 29
+      },
+      {
+        "trait": "rebellious",
+        "cos_sim_pca": 0.12030670532582138,
+        "angle_deg": 83.090196261034,
+        "abs_cos": 0.12030670532582138,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 122,
+        "rank_neg": 109,
+        "rank_abs": 197
+      },
+      {
+        "trait": "reductionist",
+        "cos_sim_pca": 0.07811937433403796,
+        "angle_deg": 85.51952452905245,
+        "abs_cos": 0.07811937433403796,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 132,
+        "rank_neg": 99,
+        "rank_abs": 213
+      },
+      {
+        "trait": "regulatory",
+        "cos_sim_pca": -0.7887513445618817,
+        "angle_deg": 142.06897534532362,
+        "abs_cos": 0.7887513445618817,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 225,
+        "rank_neg": 6,
+        "rank_abs": 11
+      },
+      {
+        "trait": "relativist",
+        "cos_sim_pca": 0.16249094154724095,
+        "angle_deg": 80.64849094448988,
+        "abs_cos": 0.16249094154724095,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 111,
+        "rank_neg": 120,
+        "rank_abs": 179
+      },
+      {
+        "trait": "reserved",
+        "cos_sim_pca": -0.30355561492959693,
+        "angle_deg": 107.67128733043357,
+        "abs_cos": 0.30355561492959693,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 183,
+        "rank_neg": 48,
+        "rank_abs": 131
+      },
+      {
+        "trait": "resilient",
+        "cos_sim_pca": -0.3435390047150038,
+        "angle_deg": 110.092636673456,
+        "abs_cos": 0.3435390047150038,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 186,
+        "rank_neg": 45,
+        "rank_abs": 116
+      },
+      {
+        "trait": "reverent",
+        "cos_sim_pca": -0.4592198218678538,
+        "angle_deg": 117.33677548487971,
+        "abs_cos": 0.4592198218678538,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 197,
+        "rank_neg": 34,
+        "rank_abs": 72
+      },
+      {
+        "trait": "rhetorical",
+        "cos_sim_pca": 0.10912510386282448,
+        "angle_deg": 83.7351158907831,
+        "abs_cos": 0.10912510386282448,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 125,
+        "rank_neg": 106,
+        "rank_abs": 202
+      },
+      {
+        "trait": "risk_taking",
+        "cos_sim_pca": 0.6081357115660381,
+        "angle_deg": 52.54517549590214,
+        "abs_cos": 0.6081357115660381,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 19,
+        "rank_neg": 212,
+        "rank_abs": 36
+      },
+      {
+        "trait": "ritualistic",
+        "cos_sim_pca": -0.4378830629678564,
+        "angle_deg": 115.9688900454412,
+        "abs_cos": 0.4378830629678564,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 195,
+        "rank_neg": 36,
+        "rank_abs": 78
+      },
+      {
+        "trait": "romantic",
+        "cos_sim_pca": 0.3513321459115848,
+        "angle_deg": 69.4311832284147,
+        "abs_cos": 0.3513321459115848,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 68,
+        "rank_neg": 163,
+        "rank_abs": 111
+      },
+      {
+        "trait": "sarcastic",
+        "cos_sim_pca": 0.37120982171439004,
+        "angle_deg": 68.20975051806855,
+        "abs_cos": 0.37120982171439004,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 61,
+        "rank_neg": 170,
+        "rank_abs": 103
+      },
+      {
+        "trait": "sardonic",
+        "cos_sim_pca": 0.4223371444199768,
+        "angle_deg": 65.01777064243154,
+        "abs_cos": 0.4223371444199768,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 45,
+        "rank_neg": 186,
+        "rank_abs": 82
+      },
+      {
+        "trait": "sassy",
+        "cos_sim_pca": 0.3489152104519167,
+        "angle_deg": 69.57902110734415,
+        "abs_cos": 0.3489152104519167,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 70,
+        "rank_neg": 161,
+        "rank_abs": 114
+      },
+      {
+        "trait": "savage",
+        "cos_sim_pca": 0.4452823988149346,
+        "angle_deg": 63.558592025786304,
+        "abs_cos": 0.4452823988149346,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 42,
+        "rank_neg": 189,
+        "rank_abs": 77
+      },
+      {
+        "trait": "secular",
+        "cos_sim_pca": 0.46551624976354355,
+        "angle_deg": 62.2563620368683,
+        "abs_cos": 0.46551624976354355,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 38,
+        "rank_neg": 193,
+        "rank_abs": 71
+      },
+      {
+        "trait": "serene",
+        "cos_sim_pca": -0.3193307529240914,
+        "angle_deg": 108.62245649474416,
+        "abs_cos": 0.3193307529240914,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 185,
+        "rank_neg": 46,
+        "rank_abs": 124
+      },
+      {
+        "trait": "serious",
+        "cos_sim_pca": -0.35642662486016585,
+        "angle_deg": 110.88090427951796,
+        "abs_cos": 0.35642662486016585,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 188,
+        "rank_neg": 43,
+        "rank_abs": 107
+      },
+      {
+        "trait": "skeptical",
+        "cos_sim_pca": -0.762238575682576,
+        "angle_deg": 139.66194520161466,
+        "abs_cos": 0.762238575682576,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 222,
+        "rank_neg": 9,
+        "rank_abs": 15
+      },
+      {
+        "trait": "socratic",
+        "cos_sim_pca": 0.45525413615142957,
+        "angle_deg": 62.918713013261566,
+        "abs_cos": 0.45525413615142957,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 40,
+        "rank_neg": 191,
+        "rank_abs": 74
+      },
+      {
+        "trait": "solemn",
+        "cos_sim_pca": -0.4492566438101212,
+        "angle_deg": 116.69600098621132,
+        "abs_cos": 0.4492566438101212,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 196,
+        "rank_neg": 35,
+        "rank_abs": 76
+      },
+      {
+        "trait": "speculative",
+        "cos_sim_pca": 0.393415360564682,
+        "angle_deg": 66.83281925350508,
+        "abs_cos": 0.393415360564682,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 56,
+        "rank_neg": 175,
+        "rank_abs": 96
+      },
+      {
+        "trait": "spiritual",
+        "cos_sim_pca": 0.3405398012877766,
+        "angle_deg": 70.09023491494749,
+        "abs_cos": 0.3405398012877766,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 73,
+        "rank_neg": 158,
+        "rank_abs": 118
+      },
+      {
+        "trait": "spontaneous",
+        "cos_sim_pca": 0.34799415142433654,
+        "angle_deg": 69.63532256365446,
+        "abs_cos": 0.34799415142433654,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 71,
+        "rank_neg": 160,
+        "rank_abs": 115
+      },
+      {
+        "trait": "stoic",
+        "cos_sim_pca": -0.05926258174862775,
+        "angle_deg": 93.39748649217924,
+        "abs_cos": 0.05926258174862775,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 147,
+        "rank_neg": 84,
+        "rank_abs": 218
+      },
+      {
+        "trait": "strategic",
+        "cos_sim_pca": -0.8066210730740179,
+        "angle_deg": 143.76710267455317,
+        "abs_cos": 0.8066210730740179,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 227,
+        "rank_neg": 4,
+        "rank_abs": 7
+      },
+      {
+        "trait": "stream_of_consciousness",
+        "cos_sim_pca": 0.5855997448662192,
+        "angle_deg": 54.154629456775154,
+        "abs_cos": 0.5855997448662192,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 20,
+        "rank_neg": 211,
+        "rank_abs": 41
+      },
+      {
+        "trait": "submissive",
+        "cos_sim_pca": -0.19073151762368226,
+        "angle_deg": 100.99547780025615,
+        "abs_cos": 0.19073151762368226,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 167,
+        "rank_neg": 64,
+        "rank_abs": 171
+      },
+      {
+        "trait": "subversive",
+        "cos_sim_pca": 0.13355736175938127,
+        "angle_deg": 82.32479261795484,
+        "abs_cos": 0.13355736175938127,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 117,
+        "rank_neg": 114,
+        "rank_abs": 189
+      },
+      {
+        "trait": "supportive",
+        "cos_sim_pca": -0.3510392149844478,
+        "angle_deg": 110.55089131894758,
+        "abs_cos": 0.3510392149844478,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 187,
+        "rank_neg": 44,
+        "rank_abs": 112
+      },
+      {
+        "trait": "sycophantic",
+        "cos_sim_pca": 0.6866080471932048,
+        "angle_deg": 46.63779746020927,
+        "abs_cos": 0.6866080471932048,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 10,
+        "rank_neg": 221,
+        "rank_abs": 24
+      },
+      {
+        "trait": "systems_thinker",
+        "cos_sim_pca": -0.5487150760520977,
+        "angle_deg": 123.27890640339332,
+        "abs_cos": 0.5487150760520977,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 206,
+        "rank_neg": 25,
+        "rank_abs": 46
+      },
+      {
+        "trait": "technical",
+        "cos_sim_pca": -0.7427830533812325,
+        "angle_deg": 137.9690317621231,
+        "abs_cos": 0.7427830533812325,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 221,
+        "rank_neg": 10,
+        "rank_abs": 17
+      },
+      {
+        "trait": "temperamental",
+        "cos_sim_pca": 0.39730318412306176,
+        "angle_deg": 66.59030461188424,
+        "abs_cos": 0.39730318412306176,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 54,
+        "rank_neg": 177,
+        "rank_abs": 93
+      },
+      {
+        "trait": "theatrical",
+        "cos_sim_pca": 0.3314447931742178,
+        "angle_deg": 70.64350796852518,
+        "abs_cos": 0.3314447931742178,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 76,
+        "rank_neg": 155,
+        "rank_abs": 121
+      },
+      {
+        "trait": "theoretical",
+        "cos_sim_pca": -0.17344058044419047,
+        "angle_deg": 99.9879222886851,
+        "abs_cos": 0.17344058044419047,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 165,
+        "rank_neg": 66,
+        "rank_abs": 175
+      },
+      {
+        "trait": "traditional",
+        "cos_sim_pca": -0.02054086939248334,
+        "angle_deg": 91.1769879008396,
+        "abs_cos": 0.02054086939248334,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 145,
+        "rank_neg": 86,
+        "rank_abs": 225
+      },
+      {
+        "trait": "transparent",
+        "cos_sim_pca": -0.07678449957274447,
+        "angle_deg": 94.40376233554481,
+        "abs_cos": 0.07678449957274447,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 149,
+        "rank_neg": 82,
+        "rank_abs": 214
+      },
+      {
+        "trait": "understated",
+        "cos_sim_pca": 0.6531691331312701,
+        "angle_deg": 49.21903071082926,
+        "abs_cos": 0.6531691331312701,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 15,
+        "rank_neg": 216,
+        "rank_abs": 30
+      },
+      {
+        "trait": "universalist",
+        "cos_sim_pca": -0.7730788808029381,
+        "angle_deg": 140.6311804897854,
+        "abs_cos": 0.7730788808029381,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 223,
+        "rank_neg": 8,
+        "rank_abs": 13
+      },
+      {
+        "trait": "urgent",
+        "cos_sim_pca": 0.15100888966650491,
+        "angle_deg": 81.31460229334198,
+        "abs_cos": 0.15100888966650491,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 114,
+        "rank_neg": 117,
+        "rank_abs": 184
+      },
+      {
+        "trait": "utilitarian",
+        "cos_sim_pca": 0.8301024525763391,
+        "angle_deg": 33.89073620252894,
+        "abs_cos": 0.8301024525763391,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 3,
+        "rank_neg": 228,
+        "rank_abs": 6
+      },
+      {
+        "trait": "verbose",
+        "cos_sim_pca": -0.3165172657047254,
+        "angle_deg": 108.4524340619714,
+        "abs_cos": 0.3165172657047254,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 184,
+        "rank_neg": 47,
+        "rank_abs": 126
+      },
+      {
+        "trait": "visceral",
+        "cos_sim_pca": 0.5314673977459338,
+        "angle_deg": 57.89534530462801,
+        "abs_cos": 0.5314673977459338,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 25,
+        "rank_neg": 206,
+        "rank_abs": 52
+      },
+      {
+        "trait": "whimsical",
+        "cos_sim_pca": 0.3066022129850643,
+        "angle_deg": 72.1454171269602,
+        "abs_cos": 0.3066022129850643,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 82,
+        "rank_neg": 149,
+        "rank_abs": 129
+      },
+      {
+        "trait": "witty",
+        "cos_sim_pca": 0.2453619083122136,
+        "angle_deg": 75.79677761355617,
+        "abs_cos": 0.2453619083122136,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 94,
+        "rank_neg": 137,
+        "rank_abs": 150
+      },
+      {
+        "trait": "wry",
+        "cos_sim_pca": 0.38714786372968496,
+        "angle_deg": 67.22285284365775,
+        "abs_cos": 0.38714786372968496,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 57,
+        "rank_neg": 174,
+        "rank_abs": 97
+      },
+      {
+        "trait": "zealous",
+        "cos_sim_pca": 0.3194210280253906,
+        "angle_deg": 71.37208526459044,
+        "abs_cos": 0.3194210280253906,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 78,
+        "rank_neg": 153,
+        "rank_abs": 123
+      },
+      {
+        "trait": "assistant_axis",
+        "cos_sim_pca": -0.3989649876031302,
+        "angle_deg": 113.51349078728691,
+        "abs_cos": 0.3989649876031302,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 192,
+        "rank_neg": 39,
+        "rank_abs": 91
+      }
+    ],
+    "assistant_axis": {
+      "trait": "assistant_axis",
+      "cos_sim_pca": -0.3989649876031302,
+      "angle_deg": 113.51349078728691,
+      "abs_cos": 0.3989649876031302,
+      "direction": "\u2192 jailbreak less likely",
+      "rank_pos": 192,
+      "rank_neg": 39,
+      "rank_abs": 91
+    },
+    "sum_cos_sq_all": 41.17649477649951,
+    "sum_cos_sq_top20": 12.606508919015017,
+    "top_positive": [
+      {
+        "trait": "naive",
+        "cos_sim_pca": 0.8652623361132239,
+        "angle_deg": 30.08732588384071,
+        "abs_cos": 0.8652623361132239,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 1,
+        "rank_neg": 230,
+        "rank_abs": 3
+      },
+      {
+        "trait": "essentialist",
+        "cos_sim_pca": 0.8425954067355514,
+        "angle_deg": 32.58478841960901,
+        "abs_cos": 0.8425954067355514,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 2,
+        "rank_neg": 229,
+        "rank_abs": 4
+      },
+      {
+        "trait": "utilitarian",
+        "cos_sim_pca": 0.8301024525763391,
+        "angle_deg": 33.89073620252894,
+        "abs_cos": 0.8301024525763391,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 3,
+        "rank_neg": 228,
+        "rank_abs": 6
+      },
+      {
+        "trait": "absolutist",
+        "cos_sim_pca": 0.7986577063003717,
+        "angle_deg": 36.99788675473723,
+        "abs_cos": 0.7986577063003717,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 4,
+        "rank_neg": 227,
+        "rank_abs": 8
+      },
+      {
+        "trait": "progressive",
+        "cos_sim_pca": 0.7980018794830538,
+        "angle_deg": 37.06028270404738,
+        "abs_cos": 0.7980018794830538,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 5,
+        "rank_neg": 226,
+        "rank_abs": 9
+      },
+      {
+        "trait": "impulsive",
+        "cos_sim_pca": 0.7667668033111938,
+        "angle_deg": 39.93556821744279,
+        "abs_cos": 0.7667668033111938,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 6,
+        "rank_neg": 225,
+        "rank_abs": 14
+      },
+      {
+        "trait": "confident",
+        "cos_sim_pca": 0.7521528937153994,
+        "angle_deg": 41.222786086873874,
+        "abs_cos": 0.7521528937153994,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 7,
+        "rank_neg": 224,
+        "rank_abs": 16
+      },
+      {
+        "trait": "existentialist",
+        "cos_sim_pca": 0.7188361896995514,
+        "angle_deg": 44.04152248771032,
+        "abs_cos": 0.7188361896995514,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 8,
+        "rank_neg": 223,
+        "rank_abs": 18
+      },
+      {
+        "trait": "idealistic",
+        "cos_sim_pca": 0.688228968651498,
+        "angle_deg": 46.509920618260516,
+        "abs_cos": 0.688228968651498,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 9,
+        "rank_neg": 222,
+        "rank_abs": 23
+      },
+      {
+        "trait": "sycophantic",
+        "cos_sim_pca": 0.6866080471932048,
+        "angle_deg": 46.63779746020927,
+        "abs_cos": 0.6866080471932048,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 10,
+        "rank_neg": 221,
+        "rank_abs": 24
+      },
+      {
+        "trait": "nonchalant",
+        "cos_sim_pca": 0.68111751947374,
+        "angle_deg": 47.068968203717716,
+        "abs_cos": 0.68111751947374,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 11,
+        "rank_neg": 220,
+        "rank_abs": 25
+      },
+      {
+        "trait": "egalitarian",
+        "cos_sim_pca": 0.6801610507978723,
+        "angle_deg": 47.14377059701226,
+        "abs_cos": 0.6801610507978723,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 12,
+        "rank_neg": 219,
+        "rank_abs": 27
+      },
+      {
+        "trait": "principled",
+        "cos_sim_pca": 0.6581305067084772,
+        "angle_deg": 48.84255001710585,
+        "abs_cos": 0.6581305067084772,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 13,
+        "rank_neg": 218,
+        "rank_abs": 28
+      },
+      {
+        "trait": "reactive",
+        "cos_sim_pca": 0.6554726963582249,
+        "angle_deg": 49.04449798066512,
+        "abs_cos": 0.6554726963582249,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 14,
+        "rank_neg": 217,
+        "rank_abs": 29
+      },
+      {
+        "trait": "understated",
+        "cos_sim_pca": 0.6531691331312701,
+        "angle_deg": 49.21903071082926,
+        "abs_cos": 0.6531691331312701,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 15,
+        "rank_neg": 216,
+        "rank_abs": 30
+      },
+      {
+        "trait": "callous",
+        "cos_sim_pca": 0.6390916578222398,
+        "angle_deg": 50.275879988204004,
+        "abs_cos": 0.6390916578222398,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 16,
+        "rank_neg": 215,
+        "rank_abs": 31
+      },
+      {
+        "trait": "deontological",
+        "cos_sim_pca": 0.619513529686027,
+        "angle_deg": 51.719381469007374,
+        "abs_cos": 0.619513529686027,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 17,
+        "rank_neg": 214,
+        "rank_abs": 34
+      },
+      {
+        "trait": "paradoxical",
+        "cos_sim_pca": 0.6115466065017742,
+        "angle_deg": 52.29858310832378,
+        "abs_cos": 0.6115466065017742,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 18,
+        "rank_neg": 213,
+        "rank_abs": 35
+      },
+      {
+        "trait": "risk_taking",
+        "cos_sim_pca": 0.6081357115660381,
+        "angle_deg": 52.54517549590214,
+        "abs_cos": 0.6081357115660381,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 19,
+        "rank_neg": 212,
+        "rank_abs": 36
+      },
+      {
+        "trait": "stream_of_consciousness",
+        "cos_sim_pca": 0.5855997448662192,
+        "angle_deg": 54.154629456775154,
+        "abs_cos": 0.5855997448662192,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 20,
+        "rank_neg": 211,
+        "rank_abs": 41
+      }
+    ],
+    "top_negative": [
+      {
+        "trait": "erudite",
+        "cos_sim_pca": -0.8859864542553604,
+        "angle_deg": 152.37316019742414,
+        "abs_cos": 0.8859864542553604,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 230,
+        "rank_neg": 1,
+        "rank_abs": 1
+      },
+      {
+        "trait": "cautious",
+        "cos_sim_pca": -0.8811862294986396,
+        "angle_deg": 151.78579029813028,
+        "abs_cos": 0.8811862294986396,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 229,
+        "rank_neg": 2,
+        "rank_abs": 2
+      },
+      {
+        "trait": "perfectionist",
+        "cos_sim_pca": -0.8384951825661023,
+        "angle_deg": 146.981554109549,
+        "abs_cos": 0.8384951825661023,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 228,
+        "rank_neg": 3,
+        "rank_abs": 5
+      },
+      {
+        "trait": "strategic",
+        "cos_sim_pca": -0.8066210730740179,
+        "angle_deg": 143.76710267455317,
+        "abs_cos": 0.8066210730740179,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 227,
+        "rank_neg": 4,
+        "rank_abs": 7
+      },
+      {
+        "trait": "pedantic",
+        "cos_sim_pca": -0.7954451606701198,
+        "angle_deg": 142.69732242845905,
+        "abs_cos": 0.7954451606701198,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 226,
+        "rank_neg": 5,
+        "rank_abs": 10
+      },
+      {
+        "trait": "regulatory",
+        "cos_sim_pca": -0.7887513445618817,
+        "angle_deg": 142.06897534532362,
+        "abs_cos": 0.7887513445618817,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 225,
+        "rank_neg": 6,
+        "rank_abs": 11
+      },
+      {
+        "trait": "circumspect",
+        "cos_sim_pca": -0.7735650273519791,
+        "angle_deg": 140.67511354156636,
+        "abs_cos": 0.7735650273519791,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 224,
+        "rank_neg": 7,
+        "rank_abs": 12
+      },
+      {
+        "trait": "universalist",
+        "cos_sim_pca": -0.7730788808029381,
+        "angle_deg": 140.6311804897854,
+        "abs_cos": 0.7730788808029381,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 223,
+        "rank_neg": 8,
+        "rank_abs": 13
+      },
+      {
+        "trait": "skeptical",
+        "cos_sim_pca": -0.762238575682576,
+        "angle_deg": 139.66194520161466,
+        "abs_cos": 0.762238575682576,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 222,
+        "rank_neg": 9,
+        "rank_abs": 15
+      },
+      {
+        "trait": "technical",
+        "cos_sim_pca": -0.7427830533812325,
+        "angle_deg": 137.9690317621231,
+        "abs_cos": 0.7427830533812325,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 221,
+        "rank_neg": 10,
+        "rank_abs": 17
+      },
+      {
+        "trait": "humble",
+        "cos_sim_pca": -0.713514906483482,
+        "angle_deg": 135.521622198387,
+        "abs_cos": 0.713514906483482,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 220,
+        "rank_neg": 11,
+        "rank_abs": 19
+      },
+      {
+        "trait": "inclusive",
+        "cos_sim_pca": -0.7112065664840559,
+        "angle_deg": 135.33316987513894,
+        "abs_cos": 0.7112065664840559,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 219,
+        "rank_neg": 12,
+        "rank_abs": 20
+      },
+      {
+        "trait": "pacifist",
+        "cos_sim_pca": -0.7077479833757061,
+        "angle_deg": 135.05197921647812,
+        "abs_cos": 0.7077479833757061,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 218,
+        "rank_neg": 13,
+        "rank_abs": 21
+      },
+      {
+        "trait": "humanistic",
+        "cos_sim_pca": -0.6918802096233818,
+        "angle_deg": 133.7791286494859,
+        "abs_cos": 0.6918802096233818,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 217,
+        "rank_neg": 14,
+        "rank_abs": 22
+      },
+      {
+        "trait": "pluralist",
+        "cos_sim_pca": -0.6807133833198951,
+        "angle_deg": 132.89941451417067,
+        "abs_cos": 0.6807133833198951,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 216,
+        "rank_neg": 15,
+        "rank_abs": 26
+      },
+      {
+        "trait": "quantitative",
+        "cos_sim_pca": -0.6322902422813009,
+        "angle_deg": 129.21929530785658,
+        "abs_cos": 0.6322902422813009,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 215,
+        "rank_neg": 16,
+        "rank_abs": 32
+      },
+      {
+        "trait": "benevolent",
+        "cos_sim_pca": -0.6289703049674047,
+        "angle_deg": 128.9741942962499,
+        "abs_cos": 0.6289703049674047,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 214,
+        "rank_neg": 17,
+        "rank_abs": 33
+      },
+      {
+        "trait": "avoidant",
+        "cos_sim_pca": -0.6044422476152759,
+        "angle_deg": 127.18871710981864,
+        "abs_cos": 0.6044422476152759,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 213,
+        "rank_neg": 18,
+        "rank_abs": 37
+      },
+      {
+        "trait": "pensive",
+        "cos_sim_pca": -0.5996582196498947,
+        "angle_deg": 126.84542335101041,
+        "abs_cos": 0.5996582196498947,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 212,
+        "rank_neg": 19,
+        "rank_abs": 38
+      },
+      {
+        "trait": "collaborative",
+        "cos_sim_pca": -0.5981818785461724,
+        "angle_deg": 126.73979496160578,
+        "abs_cos": 0.5981818785461724,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 211,
+        "rank_neg": 20,
+        "rank_abs": 39
+      }
+    ],
+    "top_abs": [
+      {
+        "trait": "erudite",
+        "cos_sim_pca": -0.8859864542553604,
+        "angle_deg": 152.37316019742414,
+        "abs_cos": 0.8859864542553604,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 230,
+        "rank_neg": 1,
+        "rank_abs": 1
+      },
+      {
+        "trait": "cautious",
+        "cos_sim_pca": -0.8811862294986396,
+        "angle_deg": 151.78579029813028,
+        "abs_cos": 0.8811862294986396,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 229,
+        "rank_neg": 2,
+        "rank_abs": 2
+      },
+      {
+        "trait": "naive",
+        "cos_sim_pca": 0.8652623361132239,
+        "angle_deg": 30.08732588384071,
+        "abs_cos": 0.8652623361132239,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 1,
+        "rank_neg": 230,
+        "rank_abs": 3
+      },
+      {
+        "trait": "essentialist",
+        "cos_sim_pca": 0.8425954067355514,
+        "angle_deg": 32.58478841960901,
+        "abs_cos": 0.8425954067355514,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 2,
+        "rank_neg": 229,
+        "rank_abs": 4
+      },
+      {
+        "trait": "perfectionist",
+        "cos_sim_pca": -0.8384951825661023,
+        "angle_deg": 146.981554109549,
+        "abs_cos": 0.8384951825661023,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 228,
+        "rank_neg": 3,
+        "rank_abs": 5
+      },
+      {
+        "trait": "utilitarian",
+        "cos_sim_pca": 0.8301024525763391,
+        "angle_deg": 33.89073620252894,
+        "abs_cos": 0.8301024525763391,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 3,
+        "rank_neg": 228,
+        "rank_abs": 6
+      },
+      {
+        "trait": "strategic",
+        "cos_sim_pca": -0.8066210730740179,
+        "angle_deg": 143.76710267455317,
+        "abs_cos": 0.8066210730740179,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 227,
+        "rank_neg": 4,
+        "rank_abs": 7
+      },
+      {
+        "trait": "absolutist",
+        "cos_sim_pca": 0.7986577063003717,
+        "angle_deg": 36.99788675473723,
+        "abs_cos": 0.7986577063003717,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 4,
+        "rank_neg": 227,
+        "rank_abs": 8
+      },
+      {
+        "trait": "progressive",
+        "cos_sim_pca": 0.7980018794830538,
+        "angle_deg": 37.06028270404738,
+        "abs_cos": 0.7980018794830538,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 5,
+        "rank_neg": 226,
+        "rank_abs": 9
+      },
+      {
+        "trait": "pedantic",
+        "cos_sim_pca": -0.7954451606701198,
+        "angle_deg": 142.69732242845905,
+        "abs_cos": 0.7954451606701198,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 226,
+        "rank_neg": 5,
+        "rank_abs": 10
+      },
+      {
+        "trait": "regulatory",
+        "cos_sim_pca": -0.7887513445618817,
+        "angle_deg": 142.06897534532362,
+        "abs_cos": 0.7887513445618817,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 225,
+        "rank_neg": 6,
+        "rank_abs": 11
+      },
+      {
+        "trait": "circumspect",
+        "cos_sim_pca": -0.7735650273519791,
+        "angle_deg": 140.67511354156636,
+        "abs_cos": 0.7735650273519791,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 224,
+        "rank_neg": 7,
+        "rank_abs": 12
+      },
+      {
+        "trait": "universalist",
+        "cos_sim_pca": -0.7730788808029381,
+        "angle_deg": 140.6311804897854,
+        "abs_cos": 0.7730788808029381,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 223,
+        "rank_neg": 8,
+        "rank_abs": 13
+      },
+      {
+        "trait": "impulsive",
+        "cos_sim_pca": 0.7667668033111938,
+        "angle_deg": 39.93556821744279,
+        "abs_cos": 0.7667668033111938,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 6,
+        "rank_neg": 225,
+        "rank_abs": 14
+      },
+      {
+        "trait": "skeptical",
+        "cos_sim_pca": -0.762238575682576,
+        "angle_deg": 139.66194520161466,
+        "abs_cos": 0.762238575682576,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 222,
+        "rank_neg": 9,
+        "rank_abs": 15
+      },
+      {
+        "trait": "confident",
+        "cos_sim_pca": 0.7521528937153994,
+        "angle_deg": 41.222786086873874,
+        "abs_cos": 0.7521528937153994,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 7,
+        "rank_neg": 224,
+        "rank_abs": 16
+      },
+      {
+        "trait": "technical",
+        "cos_sim_pca": -0.7427830533812325,
+        "angle_deg": 137.9690317621231,
+        "abs_cos": 0.7427830533812325,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 221,
+        "rank_neg": 10,
+        "rank_abs": 17
+      },
+      {
+        "trait": "existentialist",
+        "cos_sim_pca": 0.7188361896995514,
+        "angle_deg": 44.04152248771032,
+        "abs_cos": 0.7188361896995514,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 8,
+        "rank_neg": 223,
+        "rank_abs": 18
+      },
+      {
+        "trait": "humble",
+        "cos_sim_pca": -0.713514906483482,
+        "angle_deg": 135.521622198387,
+        "abs_cos": 0.713514906483482,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 220,
+        "rank_neg": 11,
+        "rank_abs": 19
+      },
+      {
+        "trait": "inclusive",
+        "cos_sim_pca": -0.7112065664840559,
+        "angle_deg": 135.33316987513894,
+        "abs_cos": 0.7112065664840559,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 219,
+        "rank_neg": 12,
+        "rank_abs": 20
+      }
+    ]
+  },
+  "layer_28": {
+    "layer": 28,
+    "n_pca": 4,
+    "var_explained": 0.3918881416320801,
+    "stability": {
+      "mean": 0.9620713646534865,
+      "std": 0.03000100433539561,
+      "min": 0.9040125037760725,
+      "max": 0.9992337912408594,
+      "mean_angle_deg": 15.830825729192314
+    },
+    "mean_auc": 0.8520401646724926,
+    "std_auc": 0.05941780198150503,
+    "n_seeds": 10,
+    "cosine_ranking": [
+      {
+        "trait": "absolutist",
+        "cos_sim_pca": -0.5389036375115948,
+        "angle_deg": 122.60903584790304,
+        "abs_cos": 0.5389036375115948,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 193,
+        "rank_neg": 38,
+        "rank_abs": 78
+      },
+      {
+        "trait": "abstract",
+        "cos_sim_pca": 0.6985120570028283,
+        "angle_deg": 45.69225230570248,
+        "abs_cos": 0.6985120570028283,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 12,
+        "rank_neg": 219,
+        "rank_abs": 28
+      },
+      {
+        "trait": "accessible",
+        "cos_sim_pca": 0.09688202647020985,
+        "angle_deg": 84.44034826453338,
+        "abs_cos": 0.09688202647020985,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 137,
+        "rank_neg": 94,
+        "rank_abs": 219
+      },
+      {
+        "trait": "accommodating",
+        "cos_sim_pca": 0.6246366783071207,
+        "angle_deg": 51.34447442630229,
+        "abs_cos": 0.6246366783071207,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 21,
+        "rank_neg": 210,
+        "rank_abs": 40
+      },
+      {
+        "trait": "acerbic",
+        "cos_sim_pca": 0.4057831553997924,
+        "angle_deg": 66.05978699982956,
+        "abs_cos": 0.4057831553997924,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 95,
+        "rank_neg": 136,
+        "rank_abs": 154
+      },
+      {
+        "trait": "adaptable",
+        "cos_sim_pca": 0.3669409117488552,
+        "angle_deg": 68.47292136003354,
+        "abs_cos": 0.3669409117488552,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 105,
+        "rank_neg": 126,
+        "rank_abs": 168
+      },
+      {
+        "trait": "adventurous",
+        "cos_sim_pca": 0.5364227405101605,
+        "angle_deg": 57.55955029286015,
+        "abs_cos": 0.5364227405101605,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 42,
+        "rank_neg": 189,
+        "rank_abs": 80
+      },
+      {
+        "trait": "agreeable",
+        "cos_sim_pca": -0.29151668596840186,
+        "angle_deg": 106.94877963481906,
+        "abs_cos": 0.29151668596840186,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 157,
+        "rank_neg": 74,
+        "rank_abs": 193
+      },
+      {
+        "trait": "altruistic",
+        "cos_sim_pca": -0.21290536542953128,
+        "angle_deg": 102.29266864608876,
+        "abs_cos": 0.21290536542953128,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 153,
+        "rank_neg": 78,
+        "rank_abs": 208
+      },
+      {
+        "trait": "analytical",
+        "cos_sim_pca": -0.6851495799669992,
+        "angle_deg": 133.24737190063257,
+        "abs_cos": 0.6851495799669992,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 213,
+        "rank_neg": 18,
+        "rank_abs": 32
+      },
+      {
+        "trait": "animated",
+        "cos_sim_pca": 0.36366328291909245,
+        "angle_deg": 68.67465801762046,
+        "abs_cos": 0.36366328291909245,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 107,
+        "rank_neg": 124,
+        "rank_abs": 170
+      },
+      {
+        "trait": "anthropocentric",
+        "cos_sim_pca": -0.7156991016816641,
+        "angle_deg": 135.70052241119495,
+        "abs_cos": 0.7156991016816641,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 216,
+        "rank_neg": 15,
+        "rank_abs": 26
+      },
+      {
+        "trait": "anxious",
+        "cos_sim_pca": 0.36607525025209864,
+        "angle_deg": 68.52622957186433,
+        "abs_cos": 0.36607525025209864,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 106,
+        "rank_neg": 125,
+        "rank_abs": 169
+      },
+      {
+        "trait": "arrogant",
+        "cos_sim_pca": 0.4716058943776788,
+        "angle_deg": 61.86141079966455,
+        "abs_cos": 0.4716058943776788,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 56,
+        "rank_neg": 175,
+        "rank_abs": 105
+      },
+      {
+        "trait": "artistic",
+        "cos_sim_pca": 0.5342782387746863,
+        "angle_deg": 57.70502342307531,
+        "abs_cos": 0.5342782387746863,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 43,
+        "rank_neg": 188,
+        "rank_abs": 81
+      },
+      {
+        "trait": "ascetic",
+        "cos_sim_pca": -0.5330191413772576,
+        "angle_deg": 122.2096739310364,
+        "abs_cos": 0.5330191413772576,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 192,
+        "rank_neg": 39,
+        "rank_abs": 85
+      },
+      {
+        "trait": "assertive",
+        "cos_sim_pca": -0.2956183058614315,
+        "angle_deg": 107.1946173928495,
+        "abs_cos": 0.2956183058614315,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 159,
+        "rank_neg": 72,
+        "rank_abs": 191
+      },
+      {
+        "trait": "avoidant",
+        "cos_sim_pca": -0.6239428717649315,
+        "angle_deg": 128.60463904776682,
+        "abs_cos": 0.6239428717649315,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 211,
+        "rank_neg": 20,
+        "rank_abs": 42
+      },
+      {
+        "trait": "benevolent",
+        "cos_sim_pca": -0.4903656012161692,
+        "angle_deg": 119.36461431323032,
+        "abs_cos": 0.4903656012161692,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 183,
+        "rank_neg": 48,
+        "rank_abs": 99
+      },
+      {
+        "trait": "big_picture",
+        "cos_sim_pca": 0.9524601391544042,
+        "angle_deg": 17.737904131452357,
+        "abs_cos": 0.9524601391544042,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 2,
+        "rank_neg": 229,
+        "rank_abs": 2
+      },
+      {
+        "trait": "bitter",
+        "cos_sim_pca": 0.41714495827348663,
+        "angle_deg": 65.34553246445583,
+        "abs_cos": 0.41714495827348663,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 89,
+        "rank_neg": 142,
+        "rank_abs": 144
+      },
+      {
+        "trait": "blunt",
+        "cos_sim_pca": 0.8051869208821275,
+        "angle_deg": 36.37168884931893,
+        "abs_cos": 0.8051869208821275,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 9,
+        "rank_neg": 222,
+        "rank_abs": 19
+      },
+      {
+        "trait": "bombastic",
+        "cos_sim_pca": 0.4624624361325191,
+        "angle_deg": 62.453881494251824,
+        "abs_cos": 0.4624624361325191,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 61,
+        "rank_neg": 170,
+        "rank_abs": 112
+      },
+      {
+        "trait": "callous",
+        "cos_sim_pca": 0.573088668102454,
+        "angle_deg": 55.03410995570798,
+        "abs_cos": 0.573088668102454,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 31,
+        "rank_neg": 200,
+        "rank_abs": 62
+      },
+      {
+        "trait": "calm",
+        "cos_sim_pca": -0.4383086108441376,
+        "angle_deg": 115.99601356402303,
+        "abs_cos": 0.4383086108441376,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 177,
+        "rank_neg": 54,
+        "rank_abs": 131
+      },
+      {
+        "trait": "casual",
+        "cos_sim_pca": 0.523193228970535,
+        "angle_deg": 58.45330823406223,
+        "abs_cos": 0.523193228970535,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 48,
+        "rank_neg": 183,
+        "rank_abs": 88
+      },
+      {
+        "trait": "cautious",
+        "cos_sim_pca": -0.7286934877497176,
+        "angle_deg": 136.77697606193047,
+        "abs_cos": 0.7286934877497176,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 217,
+        "rank_neg": 14,
+        "rank_abs": 25
+      },
+      {
+        "trait": "challenging",
+        "cos_sim_pca": -0.6181802123716388,
+        "angle_deg": 128.18336538237148,
+        "abs_cos": 0.6181802123716388,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 209,
+        "rank_neg": 22,
+        "rank_abs": 44
+      },
+      {
+        "trait": "chaotic",
+        "cos_sim_pca": 0.5175940410544458,
+        "angle_deg": 58.82899753745436,
+        "abs_cos": 0.5175940410544458,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 50,
+        "rank_neg": 181,
+        "rank_abs": 91
+      },
+      {
+        "trait": "charismatic",
+        "cos_sim_pca": 0.3231200786516962,
+        "angle_deg": 71.14828064054257,
+        "abs_cos": 0.3231200786516962,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 116,
+        "rank_neg": 115,
+        "rank_abs": 185
+      },
+      {
+        "trait": "chill",
+        "cos_sim_pca": -0.23151056801246292,
+        "angle_deg": 103.38602152181176,
+        "abs_cos": 0.23151056801246292,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 155,
+        "rank_neg": 76,
+        "rank_abs": 202
+      },
+      {
+        "trait": "circumspect",
+        "cos_sim_pca": -0.45032028168785626,
+        "angle_deg": 116.76423474664273,
+        "abs_cos": 0.45032028168785626,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 179,
+        "rank_neg": 52,
+        "rank_abs": 118
+      },
+      {
+        "trait": "closure_seeking",
+        "cos_sim_pca": -0.4450722811932843,
+        "angle_deg": 116.42796338789755,
+        "abs_cos": 0.4450722811932843,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 178,
+        "rank_neg": 53,
+        "rank_abs": 120
+      },
+      {
+        "trait": "collaborative",
+        "cos_sim_pca": -0.7532729578111141,
+        "angle_deg": 138.8746925984322,
+        "abs_cos": 0.7532729578111141,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 218,
+        "rank_neg": 13,
+        "rank_abs": 23
+      },
+      {
+        "trait": "collectivistic",
+        "cos_sim_pca": -0.05604242376078292,
+        "angle_deg": 93.2126775586992,
+        "abs_cos": 0.05604242376078292,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 144,
+        "rank_neg": 87,
+        "rank_abs": 227
+      },
+      {
+        "trait": "competitive",
+        "cos_sim_pca": 0.3393909755111762,
+        "angle_deg": 70.1602266397689,
+        "abs_cos": 0.3393909755111762,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 112,
+        "rank_neg": 119,
+        "rank_abs": 180
+      },
+      {
+        "trait": "conceptual",
+        "cos_sim_pca": 0.915656052536211,
+        "angle_deg": 23.700932343708224,
+        "abs_cos": 0.915656052536211,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 3,
+        "rank_neg": 228,
+        "rank_abs": 5
+      },
+      {
+        "trait": "conciliatory",
+        "cos_sim_pca": -0.19349314922058067,
+        "angle_deg": 101.1567109935778,
+        "abs_cos": 0.19349314922058067,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 152,
+        "rank_neg": 79,
+        "rank_abs": 211
+      },
+      {
+        "trait": "concise",
+        "cos_sim_pca": 0.8137065278291545,
+        "angle_deg": 35.54033365965379,
+        "abs_cos": 0.8137065278291545,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 8,
+        "rank_neg": 223,
+        "rank_abs": 17
+      },
+      {
+        "trait": "condescending",
+        "cos_sim_pca": 0.22851247578294528,
+        "angle_deg": 76.7904892112637,
+        "abs_cos": 0.22851247578294528,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 130,
+        "rank_neg": 101,
+        "rank_abs": 206
+      },
+      {
+        "trait": "confident",
+        "cos_sim_pca": 0.601754533478074,
+        "angle_deg": 53.00433953171704,
+        "abs_cos": 0.601754533478074,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 26,
+        "rank_neg": 205,
+        "rank_abs": 50
+      },
+      {
+        "trait": "confrontational",
+        "cos_sim_pca": -0.2915743662155287,
+        "angle_deg": 106.95223456210647,
+        "abs_cos": 0.2915743662155287,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 158,
+        "rank_neg": 73,
+        "rank_abs": 192
+      },
+      {
+        "trait": "conscientious",
+        "cos_sim_pca": -0.3920021105596836,
+        "angle_deg": 113.07913405782381,
+        "abs_cos": 0.3920021105596836,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 170,
+        "rank_neg": 61,
+        "rank_abs": 160
+      },
+      {
+        "trait": "constructivist",
+        "cos_sim_pca": 0.8600607961781659,
+        "angle_deg": 30.676590232745532,
+        "abs_cos": 0.8600607961781659,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 5,
+        "rank_neg": 226,
+        "rank_abs": 10
+      },
+      {
+        "trait": "contemporary",
+        "cos_sim_pca": 0.28819291649488477,
+        "angle_deg": 73.2502005434661,
+        "abs_cos": 0.28819291649488477,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 120,
+        "rank_neg": 111,
+        "rank_abs": 194
+      },
+      {
+        "trait": "contrarian",
+        "cos_sim_pca": 0.2397679631854933,
+        "angle_deg": 76.12715422821474,
+        "abs_cos": 0.2397679631854933,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 124,
+        "rank_neg": 107,
+        "rank_abs": 199
+      },
+      {
+        "trait": "convergent",
+        "cos_sim_pca": -0.5686163186342181,
+        "angle_deg": 124.65379370105043,
+        "abs_cos": 0.5686163186342181,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 199,
+        "rank_neg": 32,
+        "rank_abs": 66
+      },
+      {
+        "trait": "cosmopolitan",
+        "cos_sim_pca": -0.06215297509537776,
+        "angle_deg": 93.56339990428741,
+        "abs_cos": 0.06215297509537776,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 145,
+        "rank_neg": 86,
+        "rank_abs": 225
+      },
+      {
+        "trait": "creative",
+        "cos_sim_pca": 0.4250694279939682,
+        "angle_deg": 64.84494194329697,
+        "abs_cos": 0.4250694279939682,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 83,
+        "rank_neg": 148,
+        "rank_abs": 138
+      },
+      {
+        "trait": "critical",
+        "cos_sim_pca": 0.0652459709493563,
+        "angle_deg": 86.25902378037291,
+        "abs_cos": 0.0652459709493563,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 139,
+        "rank_neg": 92,
+        "rank_abs": 224
+      },
+      {
+        "trait": "cruel",
+        "cos_sim_pca": 0.5495282779436214,
+        "angle_deg": 56.66534311694769,
+        "abs_cos": 0.5495282779436214,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 40,
+        "rank_neg": 191,
+        "rank_abs": 77
+      },
+      {
+        "trait": "cryptic",
+        "cos_sim_pca": 0.5794020953624095,
+        "angle_deg": 54.59149980654348,
+        "abs_cos": 0.5794020953624095,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 30,
+        "rank_neg": 201,
+        "rank_abs": 58
+      },
+      {
+        "trait": "curious",
+        "cos_sim_pca": -0.35236493861187707,
+        "angle_deg": 110.63203372378193,
+        "abs_cos": 0.35236493861187707,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 166,
+        "rank_neg": 65,
+        "rank_abs": 175
+      },
+      {
+        "trait": "cynical",
+        "cos_sim_pca": 0.3059079522539153,
+        "angle_deg": 72.18720317916821,
+        "abs_cos": 0.3059079522539153,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 118,
+        "rank_neg": 113,
+        "rank_abs": 188
+      },
+      {
+        "trait": "data_driven",
+        "cos_sim_pca": -0.58459374238728,
+        "angle_deg": 125.77429495771351,
+        "abs_cos": 0.58459374238728,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 203,
+        "rank_neg": 28,
+        "rank_abs": 55
+      },
+      {
+        "trait": "decisive",
+        "cos_sim_pca": -0.6016978360692127,
+        "angle_deg": 126.99159321864344,
+        "abs_cos": 0.6016978360692127,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 206,
+        "rank_neg": 25,
+        "rank_abs": 51
+      },
+      {
+        "trait": "deconstructionist",
+        "cos_sim_pca": -0.4143372027256216,
+        "angle_deg": 114.47758391690124,
+        "abs_cos": 0.4143372027256216,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 175,
+        "rank_neg": 56,
+        "rank_abs": 147
+      },
+      {
+        "trait": "deferential",
+        "cos_sim_pca": -0.3114181799070443,
+        "angle_deg": 108.14471739346419,
+        "abs_cos": 0.3114181799070443,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 161,
+        "rank_neg": 70,
+        "rank_abs": 186
+      },
+      {
+        "trait": "deontological",
+        "cos_sim_pca": 0.6125571192506227,
+        "angle_deg": 52.225370113585896,
+        "abs_cos": 0.6125571192506227,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 24,
+        "rank_neg": 207,
+        "rank_abs": 47
+      },
+      {
+        "trait": "descriptive",
+        "cos_sim_pca": 0.5555569867946895,
+        "angle_deg": 56.25091277989162,
+        "abs_cos": 0.5555569867946895,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 38,
+        "rank_neg": 193,
+        "rank_abs": 73
+      },
+      {
+        "trait": "detached",
+        "cos_sim_pca": -0.5767536284205736,
+        "angle_deg": 125.22253258922623,
+        "abs_cos": 0.5767536284205736,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 201,
+        "rank_neg": 30,
+        "rank_abs": 60
+      },
+      {
+        "trait": "deterministic",
+        "cos_sim_pca": 0.46442508769675883,
+        "angle_deg": 62.32697894228291,
+        "abs_cos": 0.46442508769675883,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 59,
+        "rank_neg": 172,
+        "rank_abs": 110
+      },
+      {
+        "trait": "diplomatic",
+        "cos_sim_pca": -0.34259175419967125,
+        "angle_deg": 110.03485663104216,
+        "abs_cos": 0.34259175419967125,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 164,
+        "rank_neg": 67,
+        "rank_abs": 177
+      },
+      {
+        "trait": "disorganized",
+        "cos_sim_pca": 0.5612644150974767,
+        "angle_deg": 55.85671435309892,
+        "abs_cos": 0.5612644150974767,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 36,
+        "rank_neg": 195,
+        "rank_abs": 69
+      },
+      {
+        "trait": "dispassionate",
+        "cos_sim_pca": -0.5612519342203348,
+        "angle_deg": 124.14242162279571,
+        "abs_cos": 0.5612519342203348,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 197,
+        "rank_neg": 34,
+        "rank_abs": 70
+      },
+      {
+        "trait": "divergent",
+        "cos_sim_pca": 0.3804279099204373,
+        "angle_deg": 67.639809102468,
+        "abs_cos": 0.3804279099204373,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 102,
+        "rank_neg": 129,
+        "rank_abs": 164
+      },
+      {
+        "trait": "dogmatic",
+        "cos_sim_pca": 0.4395011731468383,
+        "angle_deg": 63.92794164360674,
+        "abs_cos": 0.4395011731468383,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 77,
+        "rank_neg": 154,
+        "rank_abs": 130
+      },
+      {
+        "trait": "dominant",
+        "cos_sim_pca": -0.3535059214064707,
+        "angle_deg": 110.70190351105468,
+        "abs_cos": 0.3535059214064707,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 167,
+        "rank_neg": 64,
+        "rank_abs": 174
+      },
+      {
+        "trait": "dramatic",
+        "cos_sim_pca": 0.41472227920981475,
+        "angle_deg": 65.49817169793725,
+        "abs_cos": 0.41472227920981475,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 91,
+        "rank_neg": 140,
+        "rank_abs": 146
+      },
+      {
+        "trait": "earnest",
+        "cos_sim_pca": -0.4082070066578881,
+        "angle_deg": 114.09225142575266,
+        "abs_cos": 0.4082070066578881,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 172,
+        "rank_neg": 59,
+        "rank_abs": 151
+      },
+      {
+        "trait": "eclectic",
+        "cos_sim_pca": 0.3243711919497166,
+        "angle_deg": 71.07251679601202,
+        "abs_cos": 0.3243711919497166,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 115,
+        "rank_neg": 116,
+        "rank_abs": 184
+      },
+      {
+        "trait": "edgy",
+        "cos_sim_pca": 0.4459486959631741,
+        "angle_deg": 63.5159479527911,
+        "abs_cos": 0.4459486959631741,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 67,
+        "rank_neg": 164,
+        "rank_abs": 119
+      },
+      {
+        "trait": "educational",
+        "cos_sim_pca": -0.5913357546253978,
+        "angle_deg": 126.25185480362282,
+        "abs_cos": 0.5913357546253978,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 204,
+        "rank_neg": 27,
+        "rank_abs": 53
+      },
+      {
+        "trait": "efficient",
+        "cos_sim_pca": 0.2046787525474788,
+        "angle_deg": 78.18930582056,
+        "abs_cos": 0.2046787525474788,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 132,
+        "rank_neg": 99,
+        "rank_abs": 210
+      },
+      {
+        "trait": "effusive",
+        "cos_sim_pca": 0.36163004002471244,
+        "angle_deg": 68.79966384534804,
+        "abs_cos": 0.36163004002471244,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 108,
+        "rank_neg": 123,
+        "rank_abs": 171
+      },
+      {
+        "trait": "egalitarian",
+        "cos_sim_pca": 0.695790724540288,
+        "angle_deg": 45.9097387290424,
+        "abs_cos": 0.695790724540288,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 13,
+        "rank_neg": 218,
+        "rank_abs": 30
+      },
+      {
+        "trait": "elitist",
+        "cos_sim_pca": -0.48587930592821094,
+        "angle_deg": 119.07009821379083,
+        "abs_cos": 0.48587930592821094,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 182,
+        "rank_neg": 49,
+        "rank_abs": 102
+      },
+      {
+        "trait": "eloquent",
+        "cos_sim_pca": 0.06191130085904284,
+        "angle_deg": 86.45047372800614,
+        "abs_cos": 0.06191130085904284,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 140,
+        "rank_neg": 91,
+        "rank_abs": 226
+      },
+      {
+        "trait": "emotional",
+        "cos_sim_pca": 0.4270004457207264,
+        "angle_deg": 64.7226490504067,
+        "abs_cos": 0.4270004457207264,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 82,
+        "rank_neg": 149,
+        "rank_abs": 137
+      },
+      {
+        "trait": "empathetic",
+        "cos_sim_pca": -0.011235406985195498,
+        "angle_deg": 90.64375494584797,
+        "abs_cos": 0.011235406985195498,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 142,
+        "rank_neg": 89,
+        "rank_abs": 230
+      },
+      {
+        "trait": "enigmatic",
+        "cos_sim_pca": 0.5521397475029879,
+        "angle_deg": 56.486067213766276,
+        "abs_cos": 0.5521397475029879,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 39,
+        "rank_neg": 192,
+        "rank_abs": 74
+      },
+      {
+        "trait": "entertaining",
+        "cos_sim_pca": 0.4443408871760679,
+        "angle_deg": 63.618823371851526,
+        "abs_cos": 0.4443408871760679,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 68,
+        "rank_neg": 163,
+        "rank_abs": 121
+      },
+      {
+        "trait": "environmental",
+        "cos_sim_pca": 0.6513351247472297,
+        "angle_deg": 49.3576596469448,
+        "abs_cos": 0.6513351247472297,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 17,
+        "rank_neg": 214,
+        "rank_abs": 36
+      },
+      {
+        "trait": "epicurean",
+        "cos_sim_pca": 0.3308064492987041,
+        "angle_deg": 70.68226901896114,
+        "abs_cos": 0.3308064492987041,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 114,
+        "rank_neg": 117,
+        "rank_abs": 183
+      },
+      {
+        "trait": "erudite",
+        "cos_sim_pca": -0.9219099824726804,
+        "angle_deg": 157.20692513519958,
+        "abs_cos": 0.9219099824726804,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 229,
+        "rank_neg": 2,
+        "rank_abs": 4
+      },
+      {
+        "trait": "esoteric",
+        "cos_sim_pca": -0.11229225959263617,
+        "angle_deg": 96.44747122641981,
+        "abs_cos": 0.11229225959263617,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 149,
+        "rank_neg": 82,
+        "rank_abs": 216
+      },
+      {
+        "trait": "essentialist",
+        "cos_sim_pca": -0.5650535046923982,
+        "angle_deg": 124.40600685295142,
+        "abs_cos": 0.5650535046923982,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 198,
+        "rank_neg": 33,
+        "rank_abs": 67
+      },
+      {
+        "trait": "ethereal",
+        "cos_sim_pca": 0.36962013103740055,
+        "angle_deg": 68.3078083068445,
+        "abs_cos": 0.36962013103740055,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 104,
+        "rank_neg": 127,
+        "rank_abs": 167
+      },
+      {
+        "trait": "evil",
+        "cos_sim_pca": -0.2217828214715003,
+        "angle_deg": 102.8137682851681,
+        "abs_cos": 0.2217828214715003,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 154,
+        "rank_neg": 77,
+        "rank_abs": 207
+      },
+      {
+        "trait": "existentialist",
+        "cos_sim_pca": 0.9149724354241368,
+        "angle_deg": 23.798187181540527,
+        "abs_cos": 0.9149724354241368,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 4,
+        "rank_neg": 227,
+        "rank_abs": 6
+      },
+      {
+        "trait": "experiential",
+        "cos_sim_pca": -0.08478348713508033,
+        "angle_deg": 94.86357465318429,
+        "abs_cos": 0.08478348713508033,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 148,
+        "rank_neg": 83,
+        "rank_abs": 220
+      },
+      {
+        "trait": "exploratory",
+        "cos_sim_pca": 0.1922659588778825,
+        "angle_deg": 78.91494740874927,
+        "abs_cos": 0.1922659588778825,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 133,
+        "rank_neg": 98,
+        "rank_abs": 212
+      },
+      {
+        "trait": "extroverted",
+        "cos_sim_pca": 0.4432918000488386,
+        "angle_deg": 63.68589967908859,
+        "abs_cos": 0.4432918000488386,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 72,
+        "rank_neg": 159,
+        "rank_abs": 125
+      },
+      {
+        "trait": "fatalistic",
+        "cos_sim_pca": 0.38048524777059234,
+        "angle_deg": 67.63625674396962,
+        "abs_cos": 0.38048524777059234,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 101,
+        "rank_neg": 130,
+        "rank_abs": 163
+      },
+      {
+        "trait": "flexible",
+        "cos_sim_pca": 0.533565958094693,
+        "angle_deg": 57.753289601854284,
+        "abs_cos": 0.533565958094693,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 46,
+        "rank_neg": 185,
+        "rank_abs": 84
+      },
+      {
+        "trait": "flippant",
+        "cos_sim_pca": 0.46718692665768546,
+        "angle_deg": 62.14815174972889,
+        "abs_cos": 0.46718692665768546,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 57,
+        "rank_neg": 174,
+        "rank_abs": 108
+      },
+      {
+        "trait": "flirty",
+        "cos_sim_pca": 0.6141724708016948,
+        "angle_deg": 52.10818487406398,
+        "abs_cos": 0.6141724708016948,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 23,
+        "rank_neg": 208,
+        "rank_abs": 45
+      },
+      {
+        "trait": "forgiving",
+        "cos_sim_pca": 0.40534830664834387,
+        "angle_deg": 66.0870443332792,
+        "abs_cos": 0.40534830664834387,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 96,
+        "rank_neg": 135,
+        "rank_abs": 155
+      },
+      {
+        "trait": "formal",
+        "cos_sim_pca": -0.5198397144540226,
+        "angle_deg": 121.32150047489779,
+        "abs_cos": 0.5198397144540226,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 190,
+        "rank_neg": 41,
+        "rank_abs": 89
+      },
+      {
+        "trait": "fundamentalist",
+        "cos_sim_pca": -0.7709135641457664,
+        "angle_deg": 140.43599713807578,
+        "abs_cos": 0.7709135641457664,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 220,
+        "rank_neg": 11,
+        "rank_abs": 21
+      },
+      {
+        "trait": "futuristic",
+        "cos_sim_pca": 0.4205187581314273,
+        "angle_deg": 65.13265681211905,
+        "abs_cos": 0.4205187581314273,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 85,
+        "rank_neg": 146,
+        "rank_abs": 140
+      },
+      {
+        "trait": "generous",
+        "cos_sim_pca": -0.8918310827827225,
+        "angle_deg": 153.10424944407566,
+        "abs_cos": 0.8918310827827225,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 226,
+        "rank_neg": 5,
+        "rank_abs": 9
+      },
+      {
+        "trait": "goofy",
+        "cos_sim_pca": 0.451412618329756,
+        "angle_deg": 63.165647745129185,
+        "abs_cos": 0.451412618329756,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 64,
+        "rank_neg": 167,
+        "rank_abs": 115
+      },
+      {
+        "trait": "grandiose",
+        "cos_sim_pca": 0.5183523084030586,
+        "angle_deg": 58.7782076365643,
+        "abs_cos": 0.5183523084030586,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 49,
+        "rank_neg": 182,
+        "rank_abs": 90
+      },
+      {
+        "trait": "gregarious",
+        "cos_sim_pca": 0.3559896986596003,
+        "angle_deg": 69.1458870839443,
+        "abs_cos": 0.3559896986596003,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 110,
+        "rank_neg": 121,
+        "rank_abs": 173
+      },
+      {
+        "trait": "grounded",
+        "cos_sim_pca": -0.3040231562103565,
+        "angle_deg": 107.69940430316107,
+        "abs_cos": 0.3040231562103565,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 160,
+        "rank_neg": 71,
+        "rank_abs": 189
+      },
+      {
+        "trait": "hedonistic",
+        "cos_sim_pca": 0.37113646199204464,
+        "angle_deg": 68.21427708161055,
+        "abs_cos": 0.37113646199204464,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 103,
+        "rank_neg": 128,
+        "rank_abs": 166
+      },
+      {
+        "trait": "historical",
+        "cos_sim_pca": 0.10796122848593234,
+        "angle_deg": 83.80219737678156,
+        "abs_cos": 0.10796122848593234,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 135,
+        "rank_neg": 96,
+        "rank_abs": 217
+      },
+      {
+        "trait": "hostile",
+        "cos_sim_pca": 0.35996556883781783,
+        "angle_deg": 68.90191849582814,
+        "abs_cos": 0.35996556883781783,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 109,
+        "rank_neg": 122,
+        "rank_abs": 172
+      },
+      {
+        "trait": "humanistic",
+        "cos_sim_pca": 0.4336415133345794,
+        "angle_deg": 64.30111727842103,
+        "abs_cos": 0.4336415133345794,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 79,
+        "rank_neg": 152,
+        "rank_abs": 134
+      },
+      {
+        "trait": "humble",
+        "cos_sim_pca": -0.619711724481367,
+        "angle_deg": 128.29508612317827,
+        "abs_cos": 0.619711724481367,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 210,
+        "rank_neg": 21,
+        "rank_abs": 43
+      },
+      {
+        "trait": "iconoclastic",
+        "cos_sim_pca": 0.42808854370232663,
+        "angle_deg": 64.65368464661944,
+        "abs_cos": 0.42808854370232663,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 81,
+        "rank_neg": 150,
+        "rank_abs": 136
+      },
+      {
+        "trait": "idealistic",
+        "cos_sim_pca": 0.17094354244776894,
+        "angle_deg": 80.15731687144257,
+        "abs_cos": 0.17094354244776894,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 134,
+        "rank_neg": 97,
+        "rank_abs": 213
+      },
+      {
+        "trait": "impatient",
+        "cos_sim_pca": 0.33765380213597734,
+        "angle_deg": 70.26600467305121,
+        "abs_cos": 0.33765380213597734,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 113,
+        "rank_neg": 118,
+        "rank_abs": 181
+      },
+      {
+        "trait": "improvisational",
+        "cos_sim_pca": 0.5713910109930908,
+        "angle_deg": 55.15271775130327,
+        "abs_cos": 0.5713910109930908,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 32,
+        "rank_neg": 199,
+        "rank_abs": 63
+      },
+      {
+        "trait": "impulsive",
+        "cos_sim_pca": 0.4433078053405726,
+        "angle_deg": 63.684876628137935,
+        "abs_cos": 0.4433078053405726,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 71,
+        "rank_neg": 160,
+        "rank_abs": 124
+      },
+      {
+        "trait": "inclusive",
+        "cos_sim_pca": 0.7876455094295904,
+        "angle_deg": 38.03397810758859,
+        "abs_cos": 0.7876455094295904,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 10,
+        "rank_neg": 221,
+        "rank_abs": 20
+      },
+      {
+        "trait": "independent",
+        "cos_sim_pca": 0.8142869658664752,
+        "angle_deg": 35.483080415542204,
+        "abs_cos": 0.8142869658664752,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 7,
+        "rank_neg": 224,
+        "rank_abs": 16
+      },
+      {
+        "trait": "individualistic",
+        "cos_sim_pca": 0.43709697294509464,
+        "angle_deg": 64.08119722956535,
+        "abs_cos": 0.43709697294509464,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 78,
+        "rank_neg": 153,
+        "rank_abs": 132
+      },
+      {
+        "trait": "innovative",
+        "cos_sim_pca": 0.5700367232150771,
+        "angle_deg": 55.24721338530808,
+        "abs_cos": 0.5700367232150771,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 33,
+        "rank_neg": 198,
+        "rank_abs": 64
+      },
+      {
+        "trait": "inquisitive",
+        "cos_sim_pca": -0.3788026117517405,
+        "angle_deg": 112.25953338018896,
+        "abs_cos": 0.3788026117517405,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 168,
+        "rank_neg": 63,
+        "rank_abs": 165
+      },
+      {
+        "trait": "inspirational",
+        "cos_sim_pca": -0.4115360948076212,
+        "angle_deg": 114.30136646356681,
+        "abs_cos": 0.4115360948076212,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 173,
+        "rank_neg": 58,
+        "rank_abs": 149
+      },
+      {
+        "trait": "interdisciplinary",
+        "cos_sim_pca": 0.8400146716972592,
+        "angle_deg": 32.8583310515757,
+        "abs_cos": 0.8400146716972592,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 6,
+        "rank_neg": 225,
+        "rank_abs": 13
+      },
+      {
+        "trait": "introspective",
+        "cos_sim_pca": 0.33981583234576995,
+        "angle_deg": 70.13434601761075,
+        "abs_cos": 0.33981583234576995,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 111,
+        "rank_neg": 120,
+        "rank_abs": 179
+      },
+      {
+        "trait": "introverted",
+        "cos_sim_pca": -0.3344019690892079,
+        "angle_deg": 109.53617610506625,
+        "abs_cos": 0.3344019690892079,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 162,
+        "rank_neg": 69,
+        "rank_abs": 182
+      },
+      {
+        "trait": "ironic",
+        "cos_sim_pca": 0.5613808209152806,
+        "angle_deg": 55.848655404746324,
+        "abs_cos": 0.5613808209152806,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 35,
+        "rank_neg": 196,
+        "rank_abs": 68
+      },
+      {
+        "trait": "irreverent",
+        "cos_sim_pca": 0.42075510067062616,
+        "angle_deg": 65.117730669843,
+        "abs_cos": 0.42075510067062616,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 84,
+        "rank_neg": 147,
+        "rank_abs": 139
+      },
+      {
+        "trait": "judgmental",
+        "cos_sim_pca": 0.03267904759954626,
+        "angle_deg": 88.12729507657501,
+        "abs_cos": 0.03267904759954626,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 141,
+        "rank_neg": 90,
+        "rank_abs": 229
+      },
+      {
+        "trait": "libertarian",
+        "cos_sim_pca": -0.5612231293580578,
+        "angle_deg": 124.140427558265,
+        "abs_cos": 0.5612231293580578,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 196,
+        "rank_neg": 35,
+        "rank_abs": 71
+      },
+      {
+        "trait": "literal",
+        "cos_sim_pca": -0.6135295025558135,
+        "angle_deg": 127.84514886442246,
+        "abs_cos": 0.6135295025558135,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 208,
+        "rank_neg": 23,
+        "rank_abs": 46
+      },
+      {
+        "trait": "manic",
+        "cos_sim_pca": 0.45083239279869514,
+        "angle_deg": 63.20289804128072,
+        "abs_cos": 0.45083239279869514,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 66,
+        "rank_neg": 165,
+        "rank_abs": 117
+      },
+      {
+        "trait": "manipulative",
+        "cos_sim_pca": -0.15314513780135833,
+        "angle_deg": 98.80923614289154,
+        "abs_cos": 0.15314513780135833,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 151,
+        "rank_neg": 80,
+        "rank_abs": 214
+      },
+      {
+        "trait": "materialist",
+        "cos_sim_pca": -0.8060543425737431,
+        "angle_deg": 143.71220204560177,
+        "abs_cos": 0.8060543425737431,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 221,
+        "rank_neg": 10,
+        "rank_abs": 18
+      },
+      {
+        "trait": "meditative",
+        "cos_sim_pca": -0.2675489400744495,
+        "angle_deg": 105.51846641704158,
+        "abs_cos": 0.2675489400744495,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 156,
+        "rank_neg": 75,
+        "rank_abs": 197
+      },
+      {
+        "trait": "melancholic",
+        "cos_sim_pca": 0.5849189795479067,
+        "angle_deg": 54.20273350526187,
+        "abs_cos": 0.5849189795479067,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 27,
+        "rank_neg": 204,
+        "rank_abs": 54
+      },
+      {
+        "trait": "melodramatic",
+        "cos_sim_pca": 0.47822930472960795,
+        "angle_deg": 61.430181157924004,
+        "abs_cos": 0.47822930472960795,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 54,
+        "rank_neg": 177,
+        "rank_abs": 103
+      },
+      {
+        "trait": "mercurial",
+        "cos_sim_pca": 0.44094093655870703,
+        "angle_deg": 63.836067989968846,
+        "abs_cos": 0.44094093655870703,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 75,
+        "rank_neg": 156,
+        "rank_abs": 128
+      },
+      {
+        "trait": "metaphorical",
+        "cos_sim_pca": 0.40745603841665434,
+        "angle_deg": 65.95487301808491,
+        "abs_cos": 0.40745603841665434,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 94,
+        "rank_neg": 137,
+        "rank_abs": 153
+      },
+      {
+        "trait": "methodical",
+        "cos_sim_pca": -0.5496216011739021,
+        "angle_deg": 123.34105710199876,
+        "abs_cos": 0.5496216011739021,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 194,
+        "rank_neg": 37,
+        "rank_abs": 76
+      },
+      {
+        "trait": "militant",
+        "cos_sim_pca": 0.30931812666939207,
+        "angle_deg": 71.9818575477393,
+        "abs_cos": 0.30931812666939207,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 117,
+        "rank_neg": 114,
+        "rank_abs": 187
+      },
+      {
+        "trait": "misanthropic",
+        "cos_sim_pca": 0.45969074722722747,
+        "angle_deg": 62.63284621210272,
+        "abs_cos": 0.45969074722722747,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 62,
+        "rank_neg": 169,
+        "rank_abs": 113
+      },
+      {
+        "trait": "mischievous",
+        "cos_sim_pca": 0.42866046049944995,
+        "angle_deg": 64.61742040032702,
+        "abs_cos": 0.42866046049944995,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 80,
+        "rank_neg": 151,
+        "rank_abs": 135
+      },
+      {
+        "trait": "moderate",
+        "cos_sim_pca": -0.11473312614118791,
+        "angle_deg": 96.58823241801825,
+        "abs_cos": 0.11473312614118791,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 150,
+        "rank_neg": 81,
+        "rank_abs": 215
+      },
+      {
+        "trait": "mystical",
+        "cos_sim_pca": 0.6309565600757496,
+        "angle_deg": 50.87926888496845,
+        "abs_cos": 0.6309565600757496,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 20,
+        "rank_neg": 211,
+        "rank_abs": 39
+      },
+      {
+        "trait": "naive",
+        "cos_sim_pca": 0.6240413524471522,
+        "angle_deg": 51.38814018665021,
+        "abs_cos": 0.6240413524471522,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 22,
+        "rank_neg": 209,
+        "rank_abs": 41
+      },
+      {
+        "trait": "narrative",
+        "cos_sim_pca": 0.30323948719519905,
+        "angle_deg": 72.34772145134892,
+        "abs_cos": 0.30323948719519905,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 119,
+        "rank_neg": 112,
+        "rank_abs": 190
+      },
+      {
+        "trait": "neurotic",
+        "cos_sim_pca": 0.4766530000428666,
+        "angle_deg": 61.53296863598876,
+        "abs_cos": 0.4766530000428666,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 55,
+        "rank_neg": 176,
+        "rank_abs": 104
+      },
+      {
+        "trait": "nihilistic",
+        "cos_sim_pca": 0.41542130148533385,
+        "angle_deg": 65.4541493557586,
+        "abs_cos": 0.41542130148533385,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 90,
+        "rank_neg": 141,
+        "rank_abs": 145
+      },
+      {
+        "trait": "nonchalant",
+        "cos_sim_pca": 0.5342313356929818,
+        "angle_deg": 57.708202500225745,
+        "abs_cos": 0.5342313356929818,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 44,
+        "rank_neg": 187,
+        "rank_abs": 82
+      },
+      {
+        "trait": "nostalgic",
+        "cos_sim_pca": 0.2837301450314718,
+        "angle_deg": 73.5170418039832,
+        "abs_cos": 0.2837301450314718,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 122,
+        "rank_neg": 109,
+        "rank_abs": 196
+      },
+      {
+        "trait": "nurturing",
+        "cos_sim_pca": -0.6705675773921118,
+        "angle_deg": 132.11088582163717,
+        "abs_cos": 0.6705675773921118,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 212,
+        "rank_neg": 19,
+        "rank_abs": 34
+      },
+      {
+        "trait": "obsessive",
+        "cos_sim_pca": 0.3974377148022098,
+        "angle_deg": 66.58190492729928,
+        "abs_cos": 0.3974377148022098,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 98,
+        "rank_neg": 133,
+        "rank_abs": 158
+      },
+      {
+        "trait": "open_ended",
+        "cos_sim_pca": 0.6446174608284543,
+        "angle_deg": 49.862999946016394,
+        "abs_cos": 0.6446174608284543,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 19,
+        "rank_neg": 212,
+        "rank_abs": 38
+      },
+      {
+        "trait": "optimistic",
+        "cos_sim_pca": -0.3404878089292403,
+        "angle_deg": 109.90659680435482,
+        "abs_cos": 0.3404878089292403,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 163,
+        "rank_neg": 68,
+        "rank_abs": 178
+      },
+      {
+        "trait": "pacifist",
+        "cos_sim_pca": -0.6974020455058134,
+        "angle_deg": 134.21893959491666,
+        "abs_cos": 0.6974020455058134,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 214,
+        "rank_neg": 17,
+        "rank_abs": 29
+      },
+      {
+        "trait": "paradoxical",
+        "cos_sim_pca": 0.533960690508305,
+        "angle_deg": 57.726544574888386,
+        "abs_cos": 0.533960690508305,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 45,
+        "rank_neg": 186,
+        "rank_abs": 83
+      },
+      {
+        "trait": "paranoid",
+        "cos_sim_pca": 0.2068985154718556,
+        "angle_deg": 78.059341036575,
+        "abs_cos": 0.2068985154718556,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 131,
+        "rank_neg": 100,
+        "rank_abs": 209
+      },
+      {
+        "trait": "passionate",
+        "cos_sim_pca": 0.443853273798347,
+        "angle_deg": 63.65000512874746,
+        "abs_cos": 0.443853273798347,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 69,
+        "rank_neg": 162,
+        "rank_abs": 122
+      },
+      {
+        "trait": "passive_aggressive",
+        "cos_sim_pca": 0.5137014614690696,
+        "angle_deg": 59.08930169967558,
+        "abs_cos": 0.5137014614690696,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 51,
+        "rank_neg": 180,
+        "rank_abs": 92
+      },
+      {
+        "trait": "patient",
+        "cos_sim_pca": -0.41407944693081694,
+        "angle_deg": 114.4613582416306,
+        "abs_cos": 0.41407944693081694,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 174,
+        "rank_neg": 57,
+        "rank_abs": 148
+      },
+      {
+        "trait": "pedantic",
+        "cos_sim_pca": -0.8455385219578613,
+        "angle_deg": 147.72968003294991,
+        "abs_cos": 0.8455385219578613,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 224,
+        "rank_neg": 7,
+        "rank_abs": 12
+      },
+      {
+        "trait": "pensive",
+        "cos_sim_pca": -0.07357378742409004,
+        "angle_deg": 94.21927992223794,
+        "abs_cos": 0.07357378742409004,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 146,
+        "rank_neg": 85,
+        "rank_abs": 223
+      },
+      {
+        "trait": "perfectionist",
+        "cos_sim_pca": -0.8149412554558995,
+        "angle_deg": 144.58155377626227,
+        "abs_cos": 0.8149412554558995,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 222,
+        "rank_neg": 9,
+        "rank_abs": 15
+      },
+      {
+        "trait": "pessimistic",
+        "cos_sim_pca": 0.23948685685889687,
+        "angle_deg": 76.14374377197628,
+        "abs_cos": 0.23948685685889687,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 125,
+        "rank_neg": 106,
+        "rank_abs": 200
+      },
+      {
+        "trait": "petty",
+        "cos_sim_pca": 0.2874232555590003,
+        "angle_deg": 73.29624718911258,
+        "abs_cos": 0.2874232555590003,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 121,
+        "rank_neg": 110,
+        "rank_abs": 195
+      },
+      {
+        "trait": "philosophical",
+        "cos_sim_pca": 0.3955031933747868,
+        "angle_deg": 66.70263936351796,
+        "abs_cos": 0.3955031933747868,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 99,
+        "rank_neg": 132,
+        "rank_abs": 159
+      },
+      {
+        "trait": "playful",
+        "cos_sim_pca": 0.44300858198569504,
+        "angle_deg": 63.70400135482301,
+        "abs_cos": 0.44300858198569504,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 73,
+        "rank_neg": 158,
+        "rank_abs": 126
+      },
+      {
+        "trait": "pluralist",
+        "cos_sim_pca": 0.07630721754688508,
+        "angle_deg": 85.62366437872556,
+        "abs_cos": 0.07630721754688508,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 138,
+        "rank_neg": 93,
+        "rank_abs": 222
+      },
+      {
+        "trait": "poetic",
+        "cos_sim_pca": 0.46371918782225074,
+        "angle_deg": 62.37263846338632,
+        "abs_cos": 0.46371918782225074,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 60,
+        "rank_neg": 171,
+        "rank_abs": 111
+      },
+      {
+        "trait": "practical",
+        "cos_sim_pca": 0.9597615359404617,
+        "angle_deg": 16.30893005157698,
+        "abs_cos": 0.9597615359404617,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 1,
+        "rank_neg": 230,
+        "rank_abs": 1
+      },
+      {
+        "trait": "prescriptive",
+        "cos_sim_pca": -0.5503713870928427,
+        "angle_deg": 123.39249540584179,
+        "abs_cos": 0.5503713870928427,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 195,
+        "rank_neg": 36,
+        "rank_abs": 75
+      },
+      {
+        "trait": "principled",
+        "cos_sim_pca": 0.6900163407218405,
+        "angle_deg": 46.36859760858382,
+        "abs_cos": 0.6900163407218405,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 14,
+        "rank_neg": 217,
+        "rank_abs": 31
+      },
+      {
+        "trait": "proactive",
+        "cos_sim_pca": -0.5977335552044977,
+        "angle_deg": 126.70774736308965,
+        "abs_cos": 0.5977335552044977,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 205,
+        "rank_neg": 26,
+        "rank_abs": 52
+      },
+      {
+        "trait": "problem_solving",
+        "cos_sim_pca": -0.8958552383130012,
+        "angle_deg": 153.6184946271931,
+        "abs_cos": 0.8958552383130012,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 228,
+        "rank_neg": 3,
+        "rank_abs": 7
+      },
+      {
+        "trait": "progressive",
+        "cos_sim_pca": 0.524393741938218,
+        "angle_deg": 58.37256077921884,
+        "abs_cos": 0.524393741938218,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 47,
+        "rank_neg": 184,
+        "rank_abs": 87
+      },
+      {
+        "trait": "provocative",
+        "cos_sim_pca": 0.10779613650668529,
+        "angle_deg": 83.81171197701538,
+        "abs_cos": 0.10779613650668529,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 136,
+        "rank_neg": 95,
+        "rank_abs": 218
+      },
+      {
+        "trait": "qualitative",
+        "cos_sim_pca": 0.7371615272754778,
+        "angle_deg": 42.509820712301966,
+        "abs_cos": 0.7371615272754778,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 11,
+        "rank_neg": 220,
+        "rank_abs": 24
+      },
+      {
+        "trait": "quantitative",
+        "cos_sim_pca": -0.8232115183250212,
+        "angle_deg": 145.40758338710685,
+        "abs_cos": 0.8232115183250212,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 223,
+        "rank_neg": 8,
+        "rank_abs": 14
+      },
+      {
+        "trait": "radical",
+        "cos_sim_pca": 0.23386958982779166,
+        "angle_deg": 76.47500166234289,
+        "abs_cos": 0.23386958982779166,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 126,
+        "rank_neg": 105,
+        "rank_abs": 201
+      },
+      {
+        "trait": "rationalist",
+        "cos_sim_pca": -0.49817774949659266,
+        "angle_deg": 119.87951392922733,
+        "abs_cos": 0.49817774949659266,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 186,
+        "rank_neg": 45,
+        "rank_abs": 96
+      },
+      {
+        "trait": "reactive",
+        "cos_sim_pca": 0.4866613146590495,
+        "angle_deg": 60.87862532699398,
+        "abs_cos": 0.4866613146590495,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 53,
+        "rank_neg": 178,
+        "rank_abs": 101
+      },
+      {
+        "trait": "rebellious",
+        "cos_sim_pca": 0.4529841195166513,
+        "angle_deg": 63.0646962367401,
+        "abs_cos": 0.4529841195166513,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 63,
+        "rank_neg": 168,
+        "rank_abs": 114
+      },
+      {
+        "trait": "reductionist",
+        "cos_sim_pca": -0.4939641043004558,
+        "angle_deg": 119.60146537547092,
+        "abs_cos": 0.4939641043004558,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 185,
+        "rank_neg": 46,
+        "rank_abs": 97
+      },
+      {
+        "trait": "regulatory",
+        "cos_sim_pca": -0.7604957007443204,
+        "angle_deg": 139.5079172784102,
+        "abs_cos": 0.7604957007443204,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 219,
+        "rank_neg": 12,
+        "rank_abs": 22
+      },
+      {
+        "trait": "relativist",
+        "cos_sim_pca": 0.23041315465965218,
+        "angle_deg": 76.67860289868403,
+        "abs_cos": 0.23041315465965218,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 128,
+        "rank_neg": 103,
+        "rank_abs": 204
+      },
+      {
+        "trait": "reserved",
+        "cos_sim_pca": -0.5758147679841708,
+        "angle_deg": 125.1567108825353,
+        "abs_cos": 0.5758147679841708,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 200,
+        "rank_neg": 31,
+        "rank_abs": 61
+      },
+      {
+        "trait": "resilient",
+        "cos_sim_pca": -0.49255209474467615,
+        "angle_deg": 119.50846182797962,
+        "abs_cos": 0.49255209474467615,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 184,
+        "rank_neg": 47,
+        "rank_abs": 98
+      },
+      {
+        "trait": "reverent",
+        "cos_sim_pca": -0.5015531601361362,
+        "angle_deg": 120.10280955681016,
+        "abs_cos": 0.5015531601361362,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 188,
+        "rank_neg": 43,
+        "rank_abs": 94
+      },
+      {
+        "trait": "rhetorical",
+        "cos_sim_pca": 0.2599653369746451,
+        "angle_deg": 74.93199462575976,
+        "abs_cos": 0.2599653369746451,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 123,
+        "rank_neg": 108,
+        "rank_abs": 198
+      },
+      {
+        "trait": "risk_taking",
+        "cos_sim_pca": 0.5592189794351206,
+        "angle_deg": 55.9981978397556,
+        "abs_cos": 0.5592189794351206,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 37,
+        "rank_neg": 194,
+        "rank_abs": 72
+      },
+      {
+        "trait": "ritualistic",
+        "cos_sim_pca": -0.49871602102346696,
+        "angle_deg": 119.91508892942295,
+        "abs_cos": 0.49871602102346696,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 187,
+        "rank_neg": 44,
+        "rank_abs": 95
+      },
+      {
+        "trait": "romantic",
+        "cos_sim_pca": 0.5843222411161857,
+        "angle_deg": 54.244876126411114,
+        "abs_cos": 0.5843222411161857,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 28,
+        "rank_neg": 203,
+        "rank_abs": 56
+      },
+      {
+        "trait": "sarcastic",
+        "cos_sim_pca": 0.400591565535143,
+        "angle_deg": 66.38483469562327,
+        "abs_cos": 0.400591565535143,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 97,
+        "rank_neg": 134,
+        "rank_abs": 156
+      },
+      {
+        "trait": "sardonic",
+        "cos_sim_pca": 0.44342778283136364,
+        "angle_deg": 63.67720743389942,
+        "abs_cos": 0.44342778283136364,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 70,
+        "rank_neg": 161,
+        "rank_abs": 123
+      },
+      {
+        "trait": "sassy",
+        "cos_sim_pca": 0.41804208059909315,
+        "angle_deg": 65.28896257021526,
+        "abs_cos": 0.41804208059909315,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 88,
+        "rank_neg": 143,
+        "rank_abs": 143
+      },
+      {
+        "trait": "savage",
+        "cos_sim_pca": 0.4080695388222033,
+        "angle_deg": 65.91637619305001,
+        "abs_cos": 0.4080695388222033,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 93,
+        "rank_neg": 138,
+        "rank_abs": 152
+      },
+      {
+        "trait": "secular",
+        "cos_sim_pca": -0.4358676825183475,
+        "angle_deg": 115.84051872223795,
+        "abs_cos": 0.4358676825183475,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 176,
+        "rank_neg": 55,
+        "rank_abs": 133
+      },
+      {
+        "trait": "serene",
+        "cos_sim_pca": -0.3513762322527626,
+        "angle_deg": 110.57151474884462,
+        "abs_cos": 0.3513762322527626,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 165,
+        "rank_neg": 66,
+        "rank_abs": 176
+      },
+      {
+        "trait": "serious",
+        "cos_sim_pca": -0.4672080266387563,
+        "angle_deg": 117.85321559265488,
+        "abs_cos": 0.4672080266387563,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 180,
+        "rank_neg": 51,
+        "rank_abs": 107
+      },
+      {
+        "trait": "skeptical",
+        "cos_sim_pca": -0.9227897456129031,
+        "angle_deg": 157.33739276325048,
+        "abs_cos": 0.9227897456129031,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 230,
+        "rank_neg": 1,
+        "rank_abs": 3
+      },
+      {
+        "trait": "socratic",
+        "cos_sim_pca": 0.38388785043124857,
+        "angle_deg": 67.42528600209678,
+        "abs_cos": 0.38388785043124857,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 100,
+        "rank_neg": 131,
+        "rank_abs": 161
+      },
+      {
+        "trait": "solemn",
+        "cos_sim_pca": -0.46989177169691726,
+        "angle_deg": 118.02727143175893,
+        "abs_cos": 0.46989177169691726,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 181,
+        "rank_neg": 50,
+        "rank_abs": 106
+      },
+      {
+        "trait": "speculative",
+        "cos_sim_pca": 0.6663298163270135,
+        "angle_deg": 48.21557367890046,
+        "abs_cos": 0.6663298163270135,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 16,
+        "rank_neg": 215,
+        "rank_abs": 35
+      },
+      {
+        "trait": "spiritual",
+        "cos_sim_pca": 0.4889067542696697,
+        "angle_deg": 60.73124899568042,
+        "abs_cos": 0.4889067542696697,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 52,
+        "rank_neg": 179,
+        "rank_abs": 100
+      },
+      {
+        "trait": "spontaneous",
+        "cos_sim_pca": 0.5691562641110551,
+        "angle_deg": 55.30858958035019,
+        "abs_cos": 0.5691562641110551,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 34,
+        "rank_neg": 197,
+        "rank_abs": 65
+      },
+      {
+        "trait": "stoic",
+        "cos_sim_pca": -0.39873615664707385,
+        "angle_deg": 113.4991932733752,
+        "abs_cos": 0.39873615664707385,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 171,
+        "rank_neg": 60,
+        "rank_abs": 157
+      },
+      {
+        "trait": "strategic",
+        "cos_sim_pca": -0.5769014220039183,
+        "angle_deg": 125.23289897606035,
+        "abs_cos": 0.5769014220039183,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 202,
+        "rank_neg": 29,
+        "rank_abs": 59
+      },
+      {
+        "trait": "stream_of_consciousness",
+        "cos_sim_pca": 0.6829168919919263,
+        "angle_deg": 46.92799807922118,
+        "abs_cos": 0.6829168919919263,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 15,
+        "rank_neg": 216,
+        "rank_abs": 33
+      },
+      {
+        "trait": "submissive",
+        "cos_sim_pca": -0.048828857190348796,
+        "angle_deg": 92.79880036439297,
+        "abs_cos": 0.048828857190348796,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 143,
+        "rank_neg": 88,
+        "rank_abs": 228
+      },
+      {
+        "trait": "subversive",
+        "cos_sim_pca": 0.4427202466850506,
+        "angle_deg": 63.722427192501705,
+        "abs_cos": 0.4427202466850506,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 74,
+        "rank_neg": 157,
+        "rank_abs": 127
+      },
+      {
+        "trait": "supportive",
+        "cos_sim_pca": -0.702969138746349,
+        "angle_deg": 134.66570649212275,
+        "abs_cos": 0.702969138746349,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 215,
+        "rank_neg": 16,
+        "rank_abs": 27
+      },
+      {
+        "trait": "sycophantic",
+        "cos_sim_pca": 0.6474250252156456,
+        "angle_deg": 49.652260026251035,
+        "abs_cos": 0.6474250252156456,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 18,
+        "rank_neg": 213,
+        "rank_abs": 37
+      },
+      {
+        "trait": "systems_thinker",
+        "cos_sim_pca": 0.6082911611470918,
+        "angle_deg": 52.53395490888096,
+        "abs_cos": 0.6082911611470918,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 25,
+        "rank_neg": 206,
+        "rank_abs": 48
+      },
+      {
+        "trait": "technical",
+        "cos_sim_pca": -0.8504219730391263,
+        "angle_deg": 148.25759519358294,
+        "abs_cos": 0.8504219730391263,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 225,
+        "rank_neg": 6,
+        "rank_abs": 11
+      },
+      {
+        "trait": "temperamental",
+        "cos_sim_pca": 0.41984085831762963,
+        "angle_deg": 65.17545938044145,
+        "abs_cos": 0.41984085831762963,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 87,
+        "rank_neg": 144,
+        "rank_abs": 142
+      },
+      {
+        "trait": "theatrical",
+        "cos_sim_pca": 0.580935017984411,
+        "angle_deg": 54.48366627251312,
+        "abs_cos": 0.580935017984411,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 29,
+        "rank_neg": 202,
+        "rank_abs": 57
+      },
+      {
+        "trait": "theoretical",
+        "cos_sim_pca": -0.5122773515225766,
+        "angle_deg": 120.81564239387575,
+        "abs_cos": 0.5122773515225766,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 189,
+        "rank_neg": 42,
+        "rank_abs": 93
+      },
+      {
+        "trait": "traditional",
+        "cos_sim_pca": -0.38247050722968856,
+        "angle_deg": 112.48679575741926,
+        "abs_cos": 0.38247050722968856,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 169,
+        "rank_neg": 62,
+        "rank_abs": 162
+      },
+      {
+        "trait": "transparent",
+        "cos_sim_pca": -0.5300272823291126,
+        "angle_deg": 122.00729820320956,
+        "abs_cos": 0.5300272823291126,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 191,
+        "rank_neg": 40,
+        "rank_abs": 86
+      },
+      {
+        "trait": "understated",
+        "cos_sim_pca": -0.07704894510264837,
+        "angle_deg": 94.41895896807283,
+        "abs_cos": 0.07704894510264837,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 147,
+        "rank_neg": 84,
+        "rank_abs": 221
+      },
+      {
+        "trait": "universalist",
+        "cos_sim_pca": -0.8941615877488025,
+        "angle_deg": 153.40094064643648,
+        "abs_cos": 0.8941615877488025,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 227,
+        "rank_neg": 4,
+        "rank_abs": 8
+      },
+      {
+        "trait": "urgent",
+        "cos_sim_pca": 0.23049088324720046,
+        "angle_deg": 76.67402619057248,
+        "abs_cos": 0.23049088324720046,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 127,
+        "rank_neg": 104,
+        "rank_abs": 203
+      },
+      {
+        "trait": "utilitarian",
+        "cos_sim_pca": 0.22997286739468709,
+        "angle_deg": 76.70452565683925,
+        "abs_cos": 0.22997286739468709,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 129,
+        "rank_neg": 102,
+        "rank_abs": 205
+      },
+      {
+        "trait": "verbose",
+        "cos_sim_pca": -0.6039335408525333,
+        "angle_deg": 127.15213927368777,
+        "abs_cos": 0.6039335408525333,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 207,
+        "rank_neg": 24,
+        "rank_abs": 49
+      },
+      {
+        "trait": "visceral",
+        "cos_sim_pca": 0.42037649899825696,
+        "angle_deg": 65.14164027617704,
+        "abs_cos": 0.42037649899825696,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 86,
+        "rank_neg": 145,
+        "rank_abs": 141
+      },
+      {
+        "trait": "whimsical",
+        "cos_sim_pca": 0.4408379187608347,
+        "angle_deg": 63.842644124894655,
+        "abs_cos": 0.4408379187608347,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 76,
+        "rank_neg": 155,
+        "rank_abs": 129
+      },
+      {
+        "trait": "witty",
+        "cos_sim_pca": 0.46445887315219725,
+        "angle_deg": 62.32479312899554,
+        "abs_cos": 0.46445887315219725,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 58,
+        "rank_neg": 173,
+        "rank_abs": 109
+      },
+      {
+        "trait": "wry",
+        "cos_sim_pca": 0.5367098443765156,
+        "angle_deg": 57.540056685340794,
+        "abs_cos": 0.5367098443765156,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 41,
+        "rank_neg": 190,
+        "rank_abs": 79
+      },
+      {
+        "trait": "zealous",
+        "cos_sim_pca": 0.40886013383731695,
+        "angle_deg": 65.86674971688741,
+        "abs_cos": 0.40886013383731695,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 92,
+        "rank_neg": 139,
+        "rank_abs": 150
+      },
+      {
+        "trait": "assistant_axis",
+        "cos_sim_pca": 0.45091177387739745,
+        "angle_deg": 63.19780252369046,
+        "abs_cos": 0.45091177387739745,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 65,
+        "rank_neg": 166,
+        "rank_abs": 116
+      }
+    ],
+    "assistant_axis": {
+      "trait": "assistant_axis",
+      "cos_sim_pca": 0.45091177387739745,
+      "angle_deg": 63.19780252369046,
+      "abs_cos": 0.45091177387739745,
+      "direction": "\u2192 jailbreak more likely",
+      "rank_pos": 65,
+      "rank_neg": 166,
+      "rank_abs": 116
+    },
+    "sum_cos_sq_all": 60.01358135198465,
+    "sum_cos_sq_top20": 15.071731455664588,
+    "top_positive": [
+      {
+        "trait": "practical",
+        "cos_sim_pca": 0.9597615359404617,
+        "angle_deg": 16.30893005157698,
+        "abs_cos": 0.9597615359404617,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 1,
+        "rank_neg": 230,
+        "rank_abs": 1
+      },
+      {
+        "trait": "big_picture",
+        "cos_sim_pca": 0.9524601391544042,
+        "angle_deg": 17.737904131452357,
+        "abs_cos": 0.9524601391544042,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 2,
+        "rank_neg": 229,
+        "rank_abs": 2
+      },
+      {
+        "trait": "conceptual",
+        "cos_sim_pca": 0.915656052536211,
+        "angle_deg": 23.700932343708224,
+        "abs_cos": 0.915656052536211,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 3,
+        "rank_neg": 228,
+        "rank_abs": 5
+      },
+      {
+        "trait": "existentialist",
+        "cos_sim_pca": 0.9149724354241368,
+        "angle_deg": 23.798187181540527,
+        "abs_cos": 0.9149724354241368,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 4,
+        "rank_neg": 227,
+        "rank_abs": 6
+      },
+      {
+        "trait": "constructivist",
+        "cos_sim_pca": 0.8600607961781659,
+        "angle_deg": 30.676590232745532,
+        "abs_cos": 0.8600607961781659,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 5,
+        "rank_neg": 226,
+        "rank_abs": 10
+      },
+      {
+        "trait": "interdisciplinary",
+        "cos_sim_pca": 0.8400146716972592,
+        "angle_deg": 32.8583310515757,
+        "abs_cos": 0.8400146716972592,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 6,
+        "rank_neg": 225,
+        "rank_abs": 13
+      },
+      {
+        "trait": "independent",
+        "cos_sim_pca": 0.8142869658664752,
+        "angle_deg": 35.483080415542204,
+        "abs_cos": 0.8142869658664752,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 7,
+        "rank_neg": 224,
+        "rank_abs": 16
+      },
+      {
+        "trait": "concise",
+        "cos_sim_pca": 0.8137065278291545,
+        "angle_deg": 35.54033365965379,
+        "abs_cos": 0.8137065278291545,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 8,
+        "rank_neg": 223,
+        "rank_abs": 17
+      },
+      {
+        "trait": "blunt",
+        "cos_sim_pca": 0.8051869208821275,
+        "angle_deg": 36.37168884931893,
+        "abs_cos": 0.8051869208821275,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 9,
+        "rank_neg": 222,
+        "rank_abs": 19
+      },
+      {
+        "trait": "inclusive",
+        "cos_sim_pca": 0.7876455094295904,
+        "angle_deg": 38.03397810758859,
+        "abs_cos": 0.7876455094295904,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 10,
+        "rank_neg": 221,
+        "rank_abs": 20
+      },
+      {
+        "trait": "qualitative",
+        "cos_sim_pca": 0.7371615272754778,
+        "angle_deg": 42.509820712301966,
+        "abs_cos": 0.7371615272754778,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 11,
+        "rank_neg": 220,
+        "rank_abs": 24
+      },
+      {
+        "trait": "abstract",
+        "cos_sim_pca": 0.6985120570028283,
+        "angle_deg": 45.69225230570248,
+        "abs_cos": 0.6985120570028283,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 12,
+        "rank_neg": 219,
+        "rank_abs": 28
+      },
+      {
+        "trait": "egalitarian",
+        "cos_sim_pca": 0.695790724540288,
+        "angle_deg": 45.9097387290424,
+        "abs_cos": 0.695790724540288,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 13,
+        "rank_neg": 218,
+        "rank_abs": 30
+      },
+      {
+        "trait": "principled",
+        "cos_sim_pca": 0.6900163407218405,
+        "angle_deg": 46.36859760858382,
+        "abs_cos": 0.6900163407218405,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 14,
+        "rank_neg": 217,
+        "rank_abs": 31
+      },
+      {
+        "trait": "stream_of_consciousness",
+        "cos_sim_pca": 0.6829168919919263,
+        "angle_deg": 46.92799807922118,
+        "abs_cos": 0.6829168919919263,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 15,
+        "rank_neg": 216,
+        "rank_abs": 33
+      },
+      {
+        "trait": "speculative",
+        "cos_sim_pca": 0.6663298163270135,
+        "angle_deg": 48.21557367890046,
+        "abs_cos": 0.6663298163270135,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 16,
+        "rank_neg": 215,
+        "rank_abs": 35
+      },
+      {
+        "trait": "environmental",
+        "cos_sim_pca": 0.6513351247472297,
+        "angle_deg": 49.3576596469448,
+        "abs_cos": 0.6513351247472297,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 17,
+        "rank_neg": 214,
+        "rank_abs": 36
+      },
+      {
+        "trait": "sycophantic",
+        "cos_sim_pca": 0.6474250252156456,
+        "angle_deg": 49.652260026251035,
+        "abs_cos": 0.6474250252156456,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 18,
+        "rank_neg": 213,
+        "rank_abs": 37
+      },
+      {
+        "trait": "open_ended",
+        "cos_sim_pca": 0.6446174608284543,
+        "angle_deg": 49.862999946016394,
+        "abs_cos": 0.6446174608284543,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 19,
+        "rank_neg": 212,
+        "rank_abs": 38
+      },
+      {
+        "trait": "mystical",
+        "cos_sim_pca": 0.6309565600757496,
+        "angle_deg": 50.87926888496845,
+        "abs_cos": 0.6309565600757496,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 20,
+        "rank_neg": 211,
+        "rank_abs": 39
+      }
+    ],
+    "top_negative": [
+      {
+        "trait": "skeptical",
+        "cos_sim_pca": -0.9227897456129031,
+        "angle_deg": 157.33739276325048,
+        "abs_cos": 0.9227897456129031,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 230,
+        "rank_neg": 1,
+        "rank_abs": 3
+      },
+      {
+        "trait": "erudite",
+        "cos_sim_pca": -0.9219099824726804,
+        "angle_deg": 157.20692513519958,
+        "abs_cos": 0.9219099824726804,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 229,
+        "rank_neg": 2,
+        "rank_abs": 4
+      },
+      {
+        "trait": "problem_solving",
+        "cos_sim_pca": -0.8958552383130012,
+        "angle_deg": 153.6184946271931,
+        "abs_cos": 0.8958552383130012,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 228,
+        "rank_neg": 3,
+        "rank_abs": 7
+      },
+      {
+        "trait": "universalist",
+        "cos_sim_pca": -0.8941615877488025,
+        "angle_deg": 153.40094064643648,
+        "abs_cos": 0.8941615877488025,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 227,
+        "rank_neg": 4,
+        "rank_abs": 8
+      },
+      {
+        "trait": "generous",
+        "cos_sim_pca": -0.8918310827827225,
+        "angle_deg": 153.10424944407566,
+        "abs_cos": 0.8918310827827225,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 226,
+        "rank_neg": 5,
+        "rank_abs": 9
+      },
+      {
+        "trait": "technical",
+        "cos_sim_pca": -0.8504219730391263,
+        "angle_deg": 148.25759519358294,
+        "abs_cos": 0.8504219730391263,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 225,
+        "rank_neg": 6,
+        "rank_abs": 11
+      },
+      {
+        "trait": "pedantic",
+        "cos_sim_pca": -0.8455385219578613,
+        "angle_deg": 147.72968003294991,
+        "abs_cos": 0.8455385219578613,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 224,
+        "rank_neg": 7,
+        "rank_abs": 12
+      },
+      {
+        "trait": "quantitative",
+        "cos_sim_pca": -0.8232115183250212,
+        "angle_deg": 145.40758338710685,
+        "abs_cos": 0.8232115183250212,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 223,
+        "rank_neg": 8,
+        "rank_abs": 14
+      },
+      {
+        "trait": "perfectionist",
+        "cos_sim_pca": -0.8149412554558995,
+        "angle_deg": 144.58155377626227,
+        "abs_cos": 0.8149412554558995,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 222,
+        "rank_neg": 9,
+        "rank_abs": 15
+      },
+      {
+        "trait": "materialist",
+        "cos_sim_pca": -0.8060543425737431,
+        "angle_deg": 143.71220204560177,
+        "abs_cos": 0.8060543425737431,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 221,
+        "rank_neg": 10,
+        "rank_abs": 18
+      },
+      {
+        "trait": "fundamentalist",
+        "cos_sim_pca": -0.7709135641457664,
+        "angle_deg": 140.43599713807578,
+        "abs_cos": 0.7709135641457664,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 220,
+        "rank_neg": 11,
+        "rank_abs": 21
+      },
+      {
+        "trait": "regulatory",
+        "cos_sim_pca": -0.7604957007443204,
+        "angle_deg": 139.5079172784102,
+        "abs_cos": 0.7604957007443204,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 219,
+        "rank_neg": 12,
+        "rank_abs": 22
+      },
+      {
+        "trait": "collaborative",
+        "cos_sim_pca": -0.7532729578111141,
+        "angle_deg": 138.8746925984322,
+        "abs_cos": 0.7532729578111141,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 218,
+        "rank_neg": 13,
+        "rank_abs": 23
+      },
+      {
+        "trait": "cautious",
+        "cos_sim_pca": -0.7286934877497176,
+        "angle_deg": 136.77697606193047,
+        "abs_cos": 0.7286934877497176,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 217,
+        "rank_neg": 14,
+        "rank_abs": 25
+      },
+      {
+        "trait": "anthropocentric",
+        "cos_sim_pca": -0.7156991016816641,
+        "angle_deg": 135.70052241119495,
+        "abs_cos": 0.7156991016816641,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 216,
+        "rank_neg": 15,
+        "rank_abs": 26
+      },
+      {
+        "trait": "supportive",
+        "cos_sim_pca": -0.702969138746349,
+        "angle_deg": 134.66570649212275,
+        "abs_cos": 0.702969138746349,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 215,
+        "rank_neg": 16,
+        "rank_abs": 27
+      },
+      {
+        "trait": "pacifist",
+        "cos_sim_pca": -0.6974020455058134,
+        "angle_deg": 134.21893959491666,
+        "abs_cos": 0.6974020455058134,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 214,
+        "rank_neg": 17,
+        "rank_abs": 29
+      },
+      {
+        "trait": "analytical",
+        "cos_sim_pca": -0.6851495799669992,
+        "angle_deg": 133.24737190063257,
+        "abs_cos": 0.6851495799669992,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 213,
+        "rank_neg": 18,
+        "rank_abs": 32
+      },
+      {
+        "trait": "nurturing",
+        "cos_sim_pca": -0.6705675773921118,
+        "angle_deg": 132.11088582163717,
+        "abs_cos": 0.6705675773921118,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 212,
+        "rank_neg": 19,
+        "rank_abs": 34
+      },
+      {
+        "trait": "avoidant",
+        "cos_sim_pca": -0.6239428717649315,
+        "angle_deg": 128.60463904776682,
+        "abs_cos": 0.6239428717649315,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 211,
+        "rank_neg": 20,
+        "rank_abs": 42
+      }
+    ],
+    "top_abs": [
+      {
+        "trait": "practical",
+        "cos_sim_pca": 0.9597615359404617,
+        "angle_deg": 16.30893005157698,
+        "abs_cos": 0.9597615359404617,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 1,
+        "rank_neg": 230,
+        "rank_abs": 1
+      },
+      {
+        "trait": "big_picture",
+        "cos_sim_pca": 0.9524601391544042,
+        "angle_deg": 17.737904131452357,
+        "abs_cos": 0.9524601391544042,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 2,
+        "rank_neg": 229,
+        "rank_abs": 2
+      },
+      {
+        "trait": "skeptical",
+        "cos_sim_pca": -0.9227897456129031,
+        "angle_deg": 157.33739276325048,
+        "abs_cos": 0.9227897456129031,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 230,
+        "rank_neg": 1,
+        "rank_abs": 3
+      },
+      {
+        "trait": "erudite",
+        "cos_sim_pca": -0.9219099824726804,
+        "angle_deg": 157.20692513519958,
+        "abs_cos": 0.9219099824726804,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 229,
+        "rank_neg": 2,
+        "rank_abs": 4
+      },
+      {
+        "trait": "conceptual",
+        "cos_sim_pca": 0.915656052536211,
+        "angle_deg": 23.700932343708224,
+        "abs_cos": 0.915656052536211,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 3,
+        "rank_neg": 228,
+        "rank_abs": 5
+      },
+      {
+        "trait": "existentialist",
+        "cos_sim_pca": 0.9149724354241368,
+        "angle_deg": 23.798187181540527,
+        "abs_cos": 0.9149724354241368,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 4,
+        "rank_neg": 227,
+        "rank_abs": 6
+      },
+      {
+        "trait": "problem_solving",
+        "cos_sim_pca": -0.8958552383130012,
+        "angle_deg": 153.6184946271931,
+        "abs_cos": 0.8958552383130012,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 228,
+        "rank_neg": 3,
+        "rank_abs": 7
+      },
+      {
+        "trait": "universalist",
+        "cos_sim_pca": -0.8941615877488025,
+        "angle_deg": 153.40094064643648,
+        "abs_cos": 0.8941615877488025,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 227,
+        "rank_neg": 4,
+        "rank_abs": 8
+      },
+      {
+        "trait": "generous",
+        "cos_sim_pca": -0.8918310827827225,
+        "angle_deg": 153.10424944407566,
+        "abs_cos": 0.8918310827827225,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 226,
+        "rank_neg": 5,
+        "rank_abs": 9
+      },
+      {
+        "trait": "constructivist",
+        "cos_sim_pca": 0.8600607961781659,
+        "angle_deg": 30.676590232745532,
+        "abs_cos": 0.8600607961781659,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 5,
+        "rank_neg": 226,
+        "rank_abs": 10
+      },
+      {
+        "trait": "technical",
+        "cos_sim_pca": -0.8504219730391263,
+        "angle_deg": 148.25759519358294,
+        "abs_cos": 0.8504219730391263,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 225,
+        "rank_neg": 6,
+        "rank_abs": 11
+      },
+      {
+        "trait": "pedantic",
+        "cos_sim_pca": -0.8455385219578613,
+        "angle_deg": 147.72968003294991,
+        "abs_cos": 0.8455385219578613,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 224,
+        "rank_neg": 7,
+        "rank_abs": 12
+      },
+      {
+        "trait": "interdisciplinary",
+        "cos_sim_pca": 0.8400146716972592,
+        "angle_deg": 32.8583310515757,
+        "abs_cos": 0.8400146716972592,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 6,
+        "rank_neg": 225,
+        "rank_abs": 13
+      },
+      {
+        "trait": "quantitative",
+        "cos_sim_pca": -0.8232115183250212,
+        "angle_deg": 145.40758338710685,
+        "abs_cos": 0.8232115183250212,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 223,
+        "rank_neg": 8,
+        "rank_abs": 14
+      },
+      {
+        "trait": "perfectionist",
+        "cos_sim_pca": -0.8149412554558995,
+        "angle_deg": 144.58155377626227,
+        "abs_cos": 0.8149412554558995,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 222,
+        "rank_neg": 9,
+        "rank_abs": 15
+      },
+      {
+        "trait": "independent",
+        "cos_sim_pca": 0.8142869658664752,
+        "angle_deg": 35.483080415542204,
+        "abs_cos": 0.8142869658664752,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 7,
+        "rank_neg": 224,
+        "rank_abs": 16
+      },
+      {
+        "trait": "concise",
+        "cos_sim_pca": 0.8137065278291545,
+        "angle_deg": 35.54033365965379,
+        "abs_cos": 0.8137065278291545,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 8,
+        "rank_neg": 223,
+        "rank_abs": 17
+      },
+      {
+        "trait": "materialist",
+        "cos_sim_pca": -0.8060543425737431,
+        "angle_deg": 143.71220204560177,
+        "abs_cos": 0.8060543425737431,
+        "direction": "\u2192 jailbreak less likely",
+        "rank_pos": 221,
+        "rank_neg": 10,
+        "rank_abs": 18
+      },
+      {
+        "trait": "blunt",
+        "cos_sim_pca": 0.8051869208821275,
+        "angle_deg": 36.37168884931893,
+        "abs_cos": 0.8051869208821275,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 9,
+        "rank_neg": 222,
+        "rank_abs": 19
+      },
+      {
+        "trait": "inclusive",
+        "cos_sim_pca": 0.7876455094295904,
+        "angle_deg": 38.03397810758859,
+        "abs_cos": 0.7876455094295904,
+        "direction": "\u2192 jailbreak more likely",
+        "rank_pos": 10,
+        "rank_neg": 221,
+        "rank_abs": 20
+      }
+    ]
+  }
+}

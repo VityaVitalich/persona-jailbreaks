@@ -1,0 +1,15 @@
+random-direction transfer floor: mean 0.594, 95th pct 0.648
+held-out pools: No Robots 1034, Wikipedia 1034
+split along            vectors    | share in | transfer: v  v_in  v_out | top-50: v_in>=v  v_out<=noise
+persona                Wikipedia  |    0.916 |      0.609 0.607  0.621 |        0/50       50/50
+persona                No Robots  |    0.908 |      0.615 0.609  0.635 |        0/50       36/50
+persona                Alpaca     |    0.905 |      0.612 0.609  0.624 |       11/50       46/50
+No Robots (held out)   Wikipedia  |    0.940 |      0.609 0.611  0.574 |       50/50       50/50
+No Robots (held out)   No Robots  |    0.994 |      0.615 0.615  0.599 |       19/50       49/50
+No Robots (held out)   Alpaca     |    0.992 |      0.612 0.612  0.596 |       35/50       42/50
+Wikipedia (held out)   Wikipedia  |    0.981 |      0.609 0.609  0.602 |       14/50       44/50
+Wikipedia (held out)   No Robots  |    0.933 |      0.615 0.610  0.639 |        1/50       36/50
+Wikipedia (held out)   Alpaca     |    0.925 |      0.612 0.610  0.609 |       13/50       46/50
+random                 Wikipedia  |    0.049 |      0.609 0.610  0.609 |       28/50       50/50
+random                 No Robots  |    0.048 |      0.615 0.608  0.615 |        0/50       50/50
+random                 Alpaca     |    0.048 |      0.612 0.604  0.613 |        0/50       50/50

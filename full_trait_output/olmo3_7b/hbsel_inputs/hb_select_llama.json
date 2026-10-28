@@ -1,0 +1,25 @@
+{
+ "acts": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/hb_select/llama_acts/{set}_L{layer}.npy",
+ "meta": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/hb_select/llama_acts/{set}_meta.json",
+ "traits": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/hb_select/llama_traits.npy",
+ "labels": {
+  "hb": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/hb_select/labels/llama_hb.jsonl",
+  "wjb": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/hb_select/labels/llama_wjb.jsonl",
+  "pap": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/hb_select/labels/llama_pap.jsonl",
+  "gcg": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/hb_select/labels/llama_gcg.jsonl",
+  "pair": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/hb_select/labels/llama_pair.jsonl",
+  "gptfuzz": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/hb_select/labels/llama_gptfuzz.jsonl",
+  "pez": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/hb_select/labels/llama_pez.jsonl"
+ },
+ "train": [
+  "hb"
+ ],
+ "test": [
+  "wjb",
+  "pap",
+  "gcg",
+  "pair",
+  "gptfuzz",
+  "pez"
+ ]
+}

@@ -1,0 +1,28 @@
+{
+  "steering_vector": "offdomain_gsm8k__full",
+  "direction_meta": {
+    "base": "offdomain_gsm8k",
+    "component": "full",
+    "description": "GSM8k correct-vs-incorrect diff-of-means, L16 last prompt token (dmu recipe)"
+  },
+  "directions_file": "inputs/control_directions_layer16.pt",
+  "benchmark": "harmbench",
+  "alpha_schedule": [
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5
+  ],
+  "config": {
+    "model": "/mnt/dlabscratch1/moskvore/hf_cache/transformers/models--VityaVitalich--Llama3.1-8b-instruct/snapshots/247cb7c3baebabc46cff1fb97a3a5913e4c4511d",
+    "layer": 16,
+    "residual_norm": 22.0,
+    "max_new_tokens": 300,
+    "batch_size": 32,
+    "target": "HarmBench human_jailbreak baseline-refused group, n=300 (subsampled from 1935, seed 0)",
+    "judge_inloop": "gpt-4.1-mini binary YES/NO"
+  },
+  "asr_started_not_jailbroken": 0.3433333333333333,
+  "n_started_rf": 300
+}

@@ -1,0 +1,38 @@
+{
+  "HarmBench": {
+    "n": 3180,
+    "n_jb": 1245,
+    "input_only_auc": 0.6926656021677069,
+    "input_output_auc": 0.8914107836970371
+  },
+  "GCG": {
+    "n": 159,
+    "n_jb": 70,
+    "input_only_auc": 0.6056122448979592,
+    "input_output_auc": 0.774795918367347
+  },
+  "PAIR": {
+    "n": 800,
+    "n_jb": 230,
+    "input_only_auc": 0.5748487712665407,
+    "input_output_auc": 0.7701984877126654
+  },
+  "PAP": {
+    "n": 2000,
+    "n_jb": 528,
+    "input_only_auc": 0.574817780073462,
+    "input_output_auc": 0.7640951417584941
+  },
+  "GPTFuzz": {
+    "n": 400,
+    "n_jb": 237,
+    "input_only_auc": 0.6625578681922542,
+    "input_output_auc": 0.7571041439271331
+  },
+  "PEZ": {
+    "n": 1200,
+    "n_jb": 180,
+    "input_only_auc": 0.6456944444444443,
+    "input_output_auc": 0.7850771604938273
+  }
+}

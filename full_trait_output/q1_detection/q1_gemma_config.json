@@ -1,0 +1,27 @@
+{
+ "acts": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/hb_select/gemma_acts/{set}_L{layer}.npy",
+ "meta": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/hb_select/gemma_acts/{set}_meta.json",
+ "traits": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/hb_select/gemma_traits.npy",
+ "labels": {
+  "hb": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/hb_select/labels/gemma_hb.jsonl",
+  "wjb": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/hb_select/labels/gemma_wjb.jsonl",
+  "pap": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/hb_select/labels/gemma_pap.jsonl",
+  "gcg": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/hb_select/labels/gemma_gcg.jsonl",
+  "pair": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/hb_select/labels/gemma_pair.jsonl",
+  "gptfuzz": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/hb_select/labels/gemma_gptfuzz.jsonl",
+  "pez": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/hb_select/labels/gemma_pez.jsonl"
+ },
+ "train": [
+  "hb",
+  "wjb"
+ ],
+ "test": [
+  "pap",
+  "gcg",
+  "pair",
+  "gptfuzz",
+  "pez"
+ ],
+ "ctrl_acts": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/q1_detection/ctrl_acts/{set}_L{layer}.npy",
+ "refusal": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/q1_detection/refusal_gemma.npy"
+}

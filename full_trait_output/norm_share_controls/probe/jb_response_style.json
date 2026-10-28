@@ -1,0 +1,106 @@
+{
+ "PersonaJB direction": {
+  "character_tag": 0.38495575221238937,
+  "narrative": 0.07964601769911504,
+  "instructions": 0.4469026548672566,
+  "disclaimer": 0.2610619469026549,
+  "profanity": 0.008849557522123894,
+  "n_jb": 226,
+  "mean_len": 1303.5663716814158
+ },
+ "Jailbreak direction, persona removed (w_out)": {
+  "character_tag": 0.3081395348837209,
+  "narrative": 0.05232558139534884,
+  "instructions": 0.37209302325581395,
+  "disclaimer": 0.18604651162790697,
+  "profanity": 0.023255813953488372,
+  "n_jb": 172,
+  "mean_len": 1169.3372093023256
+ },
+ "Refusal direction, persona removed": {
+  "character_tag": 0.16201117318435754,
+  "narrative": 0.03910614525139665,
+  "instructions": 0.40782122905027934,
+  "disclaimer": 0.2737430167597765,
+  "profanity": 0.0,
+  "n_jb": 179,
+  "mean_len": 1298.0949720670392
+ },
+ "Alpaca detector": {
+  "character_tag": 0.3693181818181818,
+  "narrative": 0.06818181818181818,
+  "instructions": 0.3977272727272727,
+  "disclaimer": 0.2840909090909091,
+  "profanity": 0.017045454545454544,
+  "n_jb": 176,
+  "mean_len": 1275.4204545454545
+ },
+ "Alpaca detector, persona removed": {
+  "character_tag": 0.08333333333333333,
+  "narrative": 0.0763888888888889,
+  "instructions": 0.375,
+  "disclaimer": 0.24305555555555555,
+  "profanity": 0.006944444444444444,
+  "n_jb": 144,
+  "mean_len": 1290.548611111111
+ },
+ "Random direction": {
+  "character_tag": 0.2616822429906542,
+  "narrative": 0.09345794392523364,
+  "instructions": 0.34579439252336447,
+  "disclaimer": 0.14953271028037382,
+  "profanity": 0.037383177570093455,
+  "n_jb": 107,
+  "mean_len": 1174.2242990654206
+ },
+ "jaccard": {
+  "PersonaJB direction": {
+   "PersonaJB direction": 1.0,
+   "Jailbreak direction, persona removed (w_out)": 0.7229437229437229,
+   "Refusal direction, persona removed": 0.7307692307692307,
+   "Alpaca detector": 0.7327586206896551,
+   "Alpaca detector, persona removed": 0.5811965811965812,
+   "Random direction": 0.45414847161572053
+  },
+  "Jailbreak direction, persona removed (w_out)": {
+   "PersonaJB direction": 0.7229437229437229,
+   "Jailbreak direction, persona removed (w_out)": 1.0,
+   "Refusal direction, persona removed": 0.729064039408867,
+   "Alpaca detector": 0.7755102040816326,
+   "Alpaca detector, persona removed": 0.6205128205128205,
+   "Random direction": 0.576271186440678
+  },
+  "Refusal direction, persona removed": {
+   "PersonaJB direction": 0.7307692307692307,
+   "Jailbreak direction, persona removed (w_out)": 0.729064039408867,
+   "Refusal direction, persona removed": 1.0,
+   "Alpaca detector": 0.7233009708737864,
+   "Alpaca detector, persona removed": 0.6822916666666666,
+   "Random direction": 0.4973821989528796
+  },
+  "Alpaca detector": {
+   "PersonaJB direction": 0.7327586206896551,
+   "Jailbreak direction, persona removed (w_out)": 0.7755102040816326,
+   "Refusal direction, persona removed": 0.7233009708737864,
+   "Alpaca detector": 1.0,
+   "Alpaca detector, persona removed": 0.6326530612244898,
+   "Random direction": 0.554945054945055
+  },
+  "Alpaca detector, persona removed": {
+   "PersonaJB direction": 0.5811965811965812,
+   "Jailbreak direction, persona removed (w_out)": 0.6205128205128205,
+   "Refusal direction, persona removed": 0.6822916666666666,
+   "Alpaca detector": 0.6326530612244898,
+   "Alpaca detector, persona removed": 1.0,
+   "Random direction": 0.5120481927710844
+  },
+  "Random direction": {
+   "PersonaJB direction": 0.45414847161572053,
+   "Jailbreak direction, persona removed (w_out)": 0.576271186440678,
+   "Refusal direction, persona removed": 0.4973821989528796,
+   "Alpaca detector": 0.554945054945055,
+   "Alpaca detector, persona removed": 0.5120481927710844,
+   "Random direction": 1.0
+  }
+ }
+}

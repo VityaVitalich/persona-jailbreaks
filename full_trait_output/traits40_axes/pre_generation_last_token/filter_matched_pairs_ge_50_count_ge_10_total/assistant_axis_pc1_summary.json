@@ -1,0 +1,55 @@
+{
+  "method": "pc1_per_layer_over_trait_vectors",
+  "type": "assistant_axis_pc1",
+  "n_traits": 229,
+  "n_layers": 32,
+  "hidden_dim": 4096,
+  "pc1_variance_mean": 0.2276127238292247,
+  "k70_mean": 13.71875,
+  "k90_mean": 55.6875,
+  "top_norm_layers": [
+    {
+      "layer": 13,
+      "norm": 1.0000004768371582
+    },
+    {
+      "layer": 23,
+      "norm": 1.0000003576278687
+    },
+    {
+      "layer": 20,
+      "norm": 1.000000238418579
+    },
+    {
+      "layer": 16,
+      "norm": 1.000000238418579
+    },
+    {
+      "layer": 15,
+      "norm": 1.000000238418579
+    },
+    {
+      "layer": 10,
+      "norm": 1.000000238418579
+    },
+    {
+      "layer": 1,
+      "norm": 1.0000001192092896
+    },
+    {
+      "layer": 22,
+      "norm": 1.0000001192092896
+    },
+    {
+      "layer": 12,
+      "norm": 1.0000001192092896
+    },
+    {
+      "layer": 8,
+      "norm": 1.0000001192092896
+    }
+  ],
+  "input_vectors_dir": "/mnt/dlabscratch1/bazina/assistant-axis-llama3.1-8B/full_trait_output/traits40_vectors/pre_generation_last_token/filter_matched_pairs_ge_50_count_ge_10_total",
+  "created_at_utc": "2026-03-18T17:45:07.742462+00:00",
+  "git_commit": "3891fd8a21da1ecd956be4f1462d58a6e8481f5f"
+}

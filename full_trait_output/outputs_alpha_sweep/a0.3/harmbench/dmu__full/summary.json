@@ -1,0 +1,27 @@
+{
+  "steering_vector": "dmu__full",
+  "direction_meta": {
+    "base": "dmu",
+    "component": "full",
+    "description": "unsupervised jailbreak direction, mean(jb) - mean(refused), all pairs",
+    "share_in_span": 0.4824141275024358,
+    "cos_with_w_persona": 0.18661367180358288,
+    "cos_with_dmu": 1.0
+  },
+  "directions_file": "inputs/steering_directions_layer16.pt",
+  "benchmark": "harmbench",
+  "alpha_schedule": [
+    0.3
+  ],
+  "config": {
+    "model": "/mnt/dlabscratch1/moskvore/hf_cache/transformers/models--VityaVitalich--Llama3.1-8b-instruct/snapshots/247cb7c3baebabc46cff1fb97a3a5913e4c4511d",
+    "layer": 16,
+    "residual_norm": 22.0,
+    "max_new_tokens": 300,
+    "batch_size": 32,
+    "target": "HarmBench human_jailbreak baseline-refused group, n=300 (subsampled from 1935, seed 0)",
+    "judge_inloop": "gpt-4.1-mini binary YES/NO"
+  },
+  "asr_started_not_jailbroken": 0.5466666666666666,
+  "n_started_rf": 300
+}

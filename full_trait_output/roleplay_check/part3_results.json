@@ -1,0 +1,115 @@
+{
+ "counts": {
+  "all": {
+   "refused": 1755,
+   "jailbroken": 545,
+   "benign_complied": 1471,
+   "benign_refused": 829
+  },
+  "plain": {
+   "refused": 96,
+   "jailbroken": 4,
+   "benign_complied": 76,
+   "benign_refused": 24
+  },
+  "roleplay": {
+   "refused": 1659,
+   "jailbroken": 541,
+   "benign_refused": 805,
+   "benign_complied": 1395
+  }
+ },
+ "mean_score": {
+  "jailbroken": 0.6332364082336426,
+  "refused": 0.2422284334897995,
+  "benign_complied": 0.6891463994979858,
+  "benign_refused": 0.6388800144195557
+ },
+ "all": {
+  "jailbroken__vs__refused": {
+   "auc": 0.7909619174573302,
+   "ci": [
+    0.7644273650607417,
+    0.8150621262847668
+   ],
+   "n_a": 545,
+   "n_b": 1755
+  },
+  "jailbroken__vs__benign_complied": {
+   "auc": 0.5517750640829742,
+   "ci": [
+    0.5308691148875468,
+    0.5717381158953224
+   ],
+   "n_a": 545,
+   "n_b": 1471
+  },
+  "refused__vs__benign_complied": {
+   "auc": 0.8203217339600752,
+   "ci": [
+    0.7982164931282558,
+    0.8405206720775567
+   ],
+   "n_a": 1755,
+   "n_b": 1471
+  }
+ },
+ "plain": {
+  "jailbroken__vs__refused": {
+   "auc": 0.9577083333333333,
+   "ci": [
+    0.9124902343750001,
+    0.9890817090850516
+   ],
+   "n_a": 4,
+   "n_b": 96
+  },
+  "jailbroken__vs__benign_complied": {
+   "auc": 0.6964473684210526,
+   "ci": [
+    0.5468355263157896,
+    0.8475
+   ],
+   "n_a": 4,
+   "n_b": 76
+  },
+  "refused__vs__benign_complied": {
+   "auc": 0.9701836622807017,
+   "ci": [
+    0.9474874045666392,
+    0.9869551142705124
+   ],
+   "n_a": 96,
+   "n_b": 76
+  }
+ },
+ "roleplay": {
+  "jailbroken__vs__refused": {
+   "auc": 0.7824720368036777,
+   "ci": [
+    0.7534125920168893,
+    0.8092987163270522
+   ],
+   "n_a": 541,
+   "n_b": 1659
+  },
+  "jailbroken__vs__benign_complied": {
+   "auc": 0.5417315604316975,
+   "ci": [
+    0.5209555651662503,
+    0.5649012560068507
+   ],
+   "n_a": 541,
+   "n_b": 1395
+  },
+  "refused__vs__benign_complied": {
+   "auc": 0.8088151734538015,
+   "ci": [
+    0.7851102373073526,
+    0.8310812507315999
+   ],
+   "n_a": 1659,
+   "n_b": 1395
+  }
+ }
+}

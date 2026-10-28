@@ -1,0 +1,14 @@
+gemma fits done
+olmo fits done
+gemma raw      hb:0.663 wjb:0.755 pap:0.727 gcg:0.633 pair:0.639 gptfuzz:0.660 pez:0.683 avg:0.680
+gemma gaussian hb:0.673 wjb:0.706 pap:0.713 gcg:0.653 pair:0.615 gptfuzz:0.604 pez:0.664 avg:0.661
+gemma delta    hb:-0.010[-0.025,+0.003] wjb:+0.049[+0.025,+0.072] pap:+0.014[-0.026,+0.055] gcg:-0.020[-0.058,+0.026] pair:+0.023[-0.043,+0.082] gptfuzz:+0.056[+0.020,+0.092] pez:+0.019[-0.006,+0.041] avg:+0.019[-0.000,+0.032]
+olmo  raw      hb:0.696 wjb:0.706 pap:0.769 gcg:0.755 pair:0.811 gptfuzz:0.683 pez:0.765 avg:0.741
+olmo  gaussian hb:0.644 wjb:0.688 pap:0.732 gcg:0.729 pair:0.776 gptfuzz:0.649 pez:0.716 avg:0.705
+olmo  delta    hb:+0.052[+0.019,+0.083] wjb:+0.017[-0.016,+0.050] pap:+0.037[+0.008,+0.068] gcg:+0.027[+0.004,+0.050] pair:+0.036[+0.016,+0.054] gptfuzz:+0.034[+0.002,+0.076] pez:+0.049[+0.033,+0.067] avg:+0.036[+0.024,+0.047]
+llama raw      hb:0.786 wjb:0.753 pap:0.754 gcg:0.739 pair:0.769 gptfuzz:0.608 pez:0.694 avg:0.729
+llama gaussian hb:0.704 wjb:0.703 pap:0.735 gcg:0.728 pair:0.767 gptfuzz:0.650 pez:0.699 avg:0.712
+llama delta    hb:+0.082[+0.052,+0.112] wjb:+0.049[+0.020,+0.081] pap:+0.018[-0.011,+0.049] gcg:+0.011[-0.001,+0.021] pair:+0.002[-0.027,+0.030] gptfuzz:-0.042[-0.096,+0.004] pez:-0.004[-0.029,+0.020] avg:+0.017[+0.004,+0.031]
+qwen  raw      hb:0.606 wjb:0.663 pap:0.644 gcg:0.583 pair:0.643 gptfuzz:0.608 pez:0.568 avg:0.616
+qwen  gaussian hb:0.571 wjb:0.631 pap:0.616 gcg:0.608 pair:0.645 gptfuzz:0.591 pez:0.558 avg:0.603
+qwen  delta    hb:+0.034[-0.005,+0.073] wjb:+0.032[-0.001,+0.066] pap:+0.028[+0.004,+0.047] gcg:-0.025[-0.069,+0.012] pair:-0.002[-0.084,+0.070] gptfuzz:+0.017[-0.031,+0.073] pez:+0.011[-0.047,+0.053] avg:+0.014[-0.003,+0.029]

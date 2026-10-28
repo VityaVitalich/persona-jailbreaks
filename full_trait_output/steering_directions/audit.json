@@ -1,0 +1,124 @@
+{
+  "layer": 16,
+  "n_train": 1554,
+  "n_test": 288,
+  "trait_span_rank": 229,
+  "audit": {
+    "refusal_pos1_neg": {
+      "share_in_span": 0.4074756357371781,
+      "auc": 0.8117617491832119,
+      "auc_proj": 0.8236742900226188,
+      "auc_resid": 0.7497361146016587
+    },
+    "refusal_pos5_neg": {
+      "share_in_span": 0.20906130351647603,
+      "auc": 0.8287509424478512,
+      "auc_proj": 0.8456396079416939,
+      "auc_resid": 0.7914551394822819
+    },
+    "dmu": {
+      "share_in_span": 0.4824141275024358,
+      "auc": 0.8797185222417692,
+      "auc_proj": 0.8154310128172908,
+      "auc_resid": 0.8794672028147776
+    },
+    "w_persona": {
+      "share_in_span": 1.0000000000000007,
+      "auc": 0.966272932897713,
+      "auc_proj": 0.966272932897713,
+      "auc_resid": 0.61060567981905
+    },
+    "w_raw": {
+      "share_in_span": 0.08714636866327112,
+      "auc": 0.9193264639356623,
+      "auc_proj": 0.8688615229957276,
+      "auc_resid": 0.7703945715003769
+    },
+    "dmu_train_pool": {
+      "share_in_span": 0.5877655505745385,
+      "auc": 0.8076401105805479,
+      "auc_proj": 0.787182709223423,
+      "auc_resid": 0.847700427243026
+    },
+    "random_span_share": 0.05541477554742874
+  },
+  "cosines": {
+    "refusal_pos1_neg": {
+      "refusal_pos1_neg": 1.0,
+      "refusal_pos5_neg": 0.5223612349181094,
+      "dmu": 0.3625602300694799,
+      "w_persona": 0.18226936224751566,
+      "w_raw": 0.03587916975011132
+    },
+    "refusal_pos5_neg": {
+      "refusal_pos1_neg": 0.5223612349181094,
+      "refusal_pos5_neg": 0.9999999999999999,
+      "dmu": 0.2147276560955624,
+      "w_persona": 0.03831088374540222,
+      "w_raw": 0.024639642598550233
+    },
+    "dmu": {
+      "refusal_pos1_neg": 0.3625602300694799,
+      "refusal_pos5_neg": 0.2147276560955624,
+      "dmu": 1.0,
+      "w_persona": 0.18661367180358288,
+      "w_raw": 0.12111782460891685
+    },
+    "w_persona": {
+      "refusal_pos1_neg": 0.18226936224751566,
+      "refusal_pos5_neg": 0.03831088374540222,
+      "dmu": 0.18661367180358288,
+      "w_persona": 0.9999999999999999,
+      "w_raw": 0.08892293600993015
+    },
+    "w_raw": {
+      "refusal_pos1_neg": 0.03587916975011132,
+      "refusal_pos5_neg": 0.024639642598550233,
+      "dmu": 0.12111782460891685,
+      "w_persona": 0.08892293600993015,
+      "w_raw": 1.0000000000000002
+    }
+  },
+  "meta": {
+    "refusal_pos1_neg__full": {
+      "base": "refusal_pos1_neg",
+      "component": "full",
+      "description": "-(Arditi refusal direction), layer 16 pos -1",
+      "share_in_span": 0.4074756357371781,
+      "cos_with_w_persona": 0.18226936224751566,
+      "cos_with_dmu": 0.3625602300694799
+    },
+    "refusal_pos5_neg__full": {
+      "base": "refusal_pos5_neg",
+      "component": "full",
+      "description": "-(Arditi refusal direction), layer 16 pos -5",
+      "share_in_span": 0.20906130351647603,
+      "cos_with_w_persona": 0.03831088374540222,
+      "cos_with_dmu": 0.2147276560955624
+    },
+    "dmu__full": {
+      "base": "dmu",
+      "component": "full",
+      "description": "unsupervised jailbreak direction, mean(jb) - mean(refused), all pairs",
+      "share_in_span": 0.4824141275024358,
+      "cos_with_w_persona": 0.18661367180358288,
+      "cos_with_dmu": 1.0
+    },
+    "w_persona__full": {
+      "base": "w_persona",
+      "component": "full",
+      "description": "trait-classifier normal (published steer-w persona)",
+      "share_in_span": 1.0000000000000007,
+      "cos_with_w_persona": 0.9999999999999999,
+      "cos_with_dmu": 0.18661367180358288
+    },
+    "w_raw__full": {
+      "base": "w_raw",
+      "component": "full",
+      "description": "raw-activation classifier normal (published steer-w raw)",
+      "share_in_span": 0.08714636866327112,
+      "cos_with_w_persona": 0.08892293600993015,
+      "cos_with_dmu": 0.12111782460891685
+    }
+  }
+}

@@ -1,0 +1,7 @@
+hb       n  3180 pos  403 | dup pair_ids acts 0 cls 0 | refusal-kw: P(refuse|jb=1) 0.38 P(refuse|jb=0) 0.78 agree 0.76 | resp len AUC 0.96 | within-family CV AUC full 0.958 PersonaJB 0.948
+wjb      n  2000 pos  903 | dup pair_ids acts 0 cls 0 | refusal-kw: P(refuse|jb=1) 0.01 P(refuse|jb=0) 0.45 agree 0.69 | resp len AUC 0.69 | within-family CV AUC full 0.798 PersonaJB 0.772
+pap      n  2000 pos  355 | dup pair_ids acts 0 cls 0 | refusal-kw: P(refuse|jb=1) 0.03 P(refuse|jb=0) 0.27 agree 0.39 | resp len AUC 0.50 | within-family CV AUC full 0.849 PersonaJB 0.821
+gcg      n   159 pos   85 | dup pair_ids acts 0 cls 0 | refusal-kw: P(refuse|jb=1) 0.00 P(refuse|jb=0) 0.30 agree 0.67 | resp len AUC 0.71 | within-family CV AUC full 0.738 PersonaJB 0.614
+pair     n   400 pos  205 | dup pair_ids acts 0 cls 0 | refusal-kw: P(refuse|jb=1) 0.01 P(refuse|jb=0) 0.08 agree 0.55 | resp len AUC 0.55 | within-family CV AUC full 0.828 PersonaJB 0.767
+gptfuzz  n   400 pos  238 | dup pair_ids acts 0 cls 0 | refusal-kw: P(refuse|jb=1) 0.16 P(refuse|jb=0) 0.31 agree 0.62 | resp len AUC 0.62 | within-family CV AUC full 0.846 PersonaJB 0.791
+pez      n  1200 pos   80 | dup pair_ids acts 0 cls 0 | refusal-kw: P(refuse|jb=1) 0.00 P(refuse|jb=0) 0.69 agree 0.71 | resp len AUC 0.83 | within-family CV AUC full 0.919 PersonaJB 0.906

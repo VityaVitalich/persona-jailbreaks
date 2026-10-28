@@ -1,0 +1,50 @@
+{
+  "HarmBench": {
+    "n": 3180,
+    "n_jb": 1245,
+    "direct_auc": 0.5755020080321286,
+    "cot_auc": 0.5751004016064257,
+    "n_direct_yes": 323,
+    "n_cot_yes": 320
+  },
+  "GCG": {
+    "n": 159,
+    "n_jb": 70,
+    "direct_auc": 0.5285714285714286,
+    "cot_auc": 0.5071428571428571,
+    "n_direct_yes": 8,
+    "n_cot_yes": 3
+  },
+  "PAIR": {
+    "n": 800,
+    "n_jb": 230,
+    "direct_auc": 0.5282608695652173,
+    "cot_auc": 0.5021739130434782,
+    "n_direct_yes": 125,
+    "n_cot_yes": 72
+  },
+  "PAP": {
+    "n": 2000,
+    "n_jb": 528,
+    "direct_auc": 0.6202651515151515,
+    "cot_auc": 0.5880681818181819,
+    "n_direct_yes": 554,
+    "n_cot_yes": 417
+  },
+  "GPTFuzz": {
+    "n": 400,
+    "n_jb": 237,
+    "direct_auc": 0.5736196319018405,
+    "cot_auc": 0.50920245398773,
+    "n_direct_yes": 32,
+    "n_cot_yes": 8
+  },
+  "PEZ": {
+    "n": 1200,
+    "n_jb": 180,
+    "direct_auc": 0.5083333333333334,
+    "cot_auc": 0.5,
+    "n_direct_yes": 54,
+    "n_cot_yes": 39
+  }
+}

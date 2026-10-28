@@ -1,0 +1,12 @@
+  classifier: L2 logistic regression, C=10.0, class_weight=None
+[llama] loading
+  HB human: (3180, 4096), jb=1245
+  GCG: (159, 4096), jb=70  paper-cell protocol: signed
+  PAIR: (800, 4096), jb=230  paper-cell protocol: signed
+  PAP: (2000, 4096), jb=528  paper-cell protocol: undersample_sym (n=1056)
+  GPTFuzz: (400, 4096), jb=237  paper-cell protocol: undersample_sym (n=326)
+  PEZ: (1200, 4096), jb=180  paper-cell protocol: undersample_sym (n=360)
+  loaded in 1s
+  50 usable seeds; train pool ~1554, test ~288
+  k=    0 ev=1.000 | PAPER: human_test=0.808 GCG=0.684 PAIR=0.744 PAP=0.632 GPTFuzz=0.609 PEZ=0.762 xfer=0.686±0.008 | SIGNED: human_test=0.808 GCG=0.684 PAIR=0.744 PAP=0.633 GPTFuzz=0.432 PEZ=0.748 xfer=0.648 | 36s
+done in 37s -> c10_llama_raw.json

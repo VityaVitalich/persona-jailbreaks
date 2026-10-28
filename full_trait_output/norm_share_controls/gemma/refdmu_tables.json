@@ -1,0 +1,122 @@
+{
+ "A": {
+  "refusal|intact": {
+   "HarmBench": 0.8140600291683476,
+   "GCG": 0.6487058823529412,
+   "GCG_reversed": false,
+   "PAIR": 0.5423817462652414,
+   "PAIR_reversed": false,
+   "PAP": 0.5463600772116627,
+   "PAP_reversed": false,
+   "GPTFuzz": 0.7887711032587357,
+   "GPTFuzz_reversed": false,
+   "PEZ": 0.781880630500399,
+   "PEZ_reversed": false,
+   "mean5": 0.661619887917796,
+   "mean3": 0.6576560863728605
+  },
+  "refusal|persona removed": {
+   "HarmBench": 0.8106943698708343,
+   "GCG": 0.6437647058823529,
+   "GCG_reversed": false,
+   "PAIR": 0.5404203850805793,
+   "PAIR_reversed": false,
+   "PAP": 0.5407248711841716,
+   "PAP_reversed": false,
+   "GPTFuzz": 0.795083204977198,
+   "GPTFuzz_reversed": false,
+   "PEZ": 0.7758439245527402,
+   "PEZ_reversed": false,
+   "mean5": 0.6591674183354084,
+   "mean3": 0.6533430051718908
+  },
+  "dmu|intact": {
+   "HarmBench": 0.8686162288909404,
+   "GCG": 0.672235294117647,
+   "GCG_reversed": false,
+   "PAIR": 0.6230590696610113,
+   "PAIR_reversed": false,
+   "PAP": 0.5771124239169352,
+   "PAP_reversed": false,
+   "GPTFuzz": 0.5821932288363384,
+   "GPTFuzz_reversed": false,
+   "PEZ": 0.767875935284662,
+   "PEZ_reversed": false,
+   "mean5": 0.6444951903633187,
+   "mean3": 0.6877234330211067
+  },
+  "dmu|persona removed": {
+   "HarmBench": 0.8859470025400608,
+   "GCG": 0.6821176470588235,
+   "GCG_reversed": false,
+   "PAIR": 0.6072047334183256,
+   "PAIR_reversed": false,
+   "PAP": 0.5779919519295132,
+   "PAP_reversed": false,
+   "GPTFuzz": 0.7296064751895139,
+   "GPTFuzz_reversed": false,
+   "PEZ": 0.8017369985312995,
+   "PEZ_reversed": false,
+   "mean5": 0.6797315612254952,
+   "mean3": 0.6970197930028162
+  }
+ },
+ "B": {
+  "dmu intact": {
+   "dprime": 1.6298957043399307,
+   "within_template": 0.9357237854687157,
+   "within_request": 0.9198025165470431,
+   "rho_request": 0.5372455119914143,
+   "rho_template": 0.4565374280394317,
+   "cos_refusal": 0.34304171820224616
+  },
+  "dmu persona component": {
+   "dprime": 1.0956237996731302,
+   "within_template": 0.8390959126258581,
+   "within_request": 0.8558642370067072,
+   "rho_request": 0.5068495145180986,
+   "rho_template": 0.3244428422615251,
+   "cos_refusal": 0.1533011182685733
+  },
+  "dmu persona removed": {
+   "dprime": 1.9712441244709713,
+   "within_template": 0.9624561459014184,
+   "within_request": 0.9371257444927835,
+   "rho_request": 0.5479172302326512,
+   "rho_template": 0.536103172689282,
+   "cos_refusal": 0.3142410199647917
+  },
+  "refusal intact": {
+   "dprime": 1.2172441812893806,
+   "within_template": 0.9706706485796077,
+   "within_request": 0.7838418104738317,
+   "rho_request": 0.5311673276423627,
+   "rho_template": 0.010814761408717503,
+   "cos_refusal": 1.0
+  },
+  "refusal persona removed": {
+   "dprime": 1.2843330999534566,
+   "within_template": 0.970524740220975,
+   "within_request": 0.788822861608963,
+   "rho_request": 0.5356720362935388,
+   "rho_template": 0.07415836394549144,
+   "cos_refusal": 0.8573163434981302
+  },
+  "random Alpaca activation (median of 240)": {
+   "dprime": 0.6949467168606711,
+   "within_template": 0.7716336961389904,
+   "within_request": 0.7627645429312281,
+   "rho_request": 0.44155661771633414,
+   "rho_template": 0.3059032512751522,
+   "cos_refusal": 0.07877773028945763
+  },
+  "random Gaussian direction (median of 240)": {
+   "dprime": 0.3903457144921415,
+   "within_template": 0.7675154378890607,
+   "within_request": 0.699261944850733,
+   "rho_request": 0.31967569773169763,
+   "rho_template": 0.1711049751450662,
+   "cos_refusal": 0.009467699826541595
+  }
+ }
+}

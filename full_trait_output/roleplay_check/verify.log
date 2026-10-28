@@ -1,0 +1,26 @@
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:00<00:00, 64.52it/s]
+HB       pid= 1656 human_jailbreak  cos=0.9998 |a|=9.92 |b|=9.93
+HB       pid= 3260 human_jailbreak  cos=0.9999 |a|=10.40 |b|=10.40
+HB       pid= 1809 human_jailbreak  cos=0.9998 |a|=9.47 |b|=9.45
+HB       pid=  174 human_jailbreak  cos=0.9999 |a|=10.86 |b|=10.85
+HB       pid= 1114 human_jailbreak  cos=0.9996 |a|=10.46 |b|=10.44
+HB       pid= 2199 human_jailbreak  cos=0.9999 |a|=9.43 |b|=9.43
+GCG      pid=  124 GCG              cos=0.9998 |a|=8.95 |b|=8.94
+GCG      pid=  103 GCG              cos=0.9998 |a|=9.47 |b|=9.48
+GCG      pid=   77 GCG              cos=0.9998 |a|=8.74 |b|=8.73
+GCG      pid=  122 GCG              cos=0.9998 |a|=9.38 |b|=9.35
+GCG      pid=   91 GCG              cos=0.9999 |a|=9.44 |b|=9.44
+GCG      pid=  149 GCG              cos=0.9998 |a|=9.82 |b|=9.83
+PAIR     pid=    0 PAIR             cos=0.9999 |a|=10.05 |b|=10.02
+PAIR     pid=    2 PAIR             cos=0.9999 |a|=9.75 |b|=9.73
+PAIR     pid=    4 PAIR             cos=0.9999 |a|=9.70 |b|=9.70
+PAIR     pid=    1 plain            cos=0.9999 |a|=9.84 |b|=9.85
+PAIR     pid=    3 plain            cos=0.9999 |a|=10.19 |b|=10.19
+PAIR     pid=    5 plain            cos=0.9999 |a|=9.83 |b|=9.81
+PAP      pid=  194 PAP              cos=0.9999 |a|=10.18 |b|=10.18
+PAP      pid= 1266 PAP              cos=0.9999 |a|=9.74 |b|=9.74
+PAP      pid= 1637 PAP              cos=0.9999 |a|=9.52 |b|=9.51
+PAP      pid=  513 PAP              cos=0.9998 |a|=10.16 |b|=10.15
+/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/resource_tracker.py:324: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown: {'/loky-87629-5tmdlzx8'}
+  warnings.warn(

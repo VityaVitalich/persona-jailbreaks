@@ -1,0 +1,72 @@
+[gemma] T (240, 5376); rank centered 239, uncentered 240
+  HB: (3180, 5376) jb=63
+  GCG: (159, 5376) jb=34
+  PAIR: (400, 5376) jb=103
+  PAP: (2000, 5376) jb=138
+  GPTFuzz: (400, 5376) jb=117
+  PEZ: (1200, 5376) jb=77
+  AUG_train_only: (2000, 5376) jb=184
+  loaded in 1s
+  50 seeds; train ~1554 (fit 1320 / val 234), test ~288
+  pca    k=   1 ev=0.295 | val=0.727 HB=0.752 GCG=0.592 PAIR=0.620 PAP=0.520 GPTFuzz=0.629 PEZ=0.635 | xfer=0.599±0.000 signed=0.548 | 1s
+  pca    k=   2 ev=0.379 | val=0.683 HB=0.695 GCG=0.535 PAIR=0.649 PAP=0.570 GPTFuzz=0.641 PEZ=0.646 | xfer=0.608±0.000 signed=0.552 | 1s
+  pca    k=   3 ev=0.446 | val=0.720 HB=0.752 GCG=0.618 PAIR=0.642 PAP=0.568 GPTFuzz=0.700 PEZ=0.732 | xfer=0.652±0.001 signed=0.572 | 1s
+  pca    k=   4 ev=0.488 | val=0.773 HB=0.802 GCG=0.673 PAIR=0.596 PAP=0.556 GPTFuzz=0.688 PEZ=0.764 | xfer=0.655±0.001 signed=0.580 | 1s
+  pca    k=   5 ev=0.521 | val=0.779 HB=0.802 GCG=0.686 PAIR=0.596 PAP=0.579 GPTFuzz=0.675 PEZ=0.772 | xfer=0.662±0.001 signed=0.592 | 1s
+  pca    k=   6 ev=0.550 | val=0.783 HB=0.799 GCG=0.688 PAIR=0.597 PAP=0.580 GPTFuzz=0.674 PEZ=0.774 | xfer=0.663±0.001 signed=0.593 | 1s
+  pca    k=   8 ev=0.596 | val=0.844 HB=0.862 GCG=0.650 PAIR=0.619 PAP=0.544 GPTFuzz=0.615 PEZ=0.765 | xfer=0.639±0.001 signed=0.593 | 1s
+  pca    k=  10 ev=0.627 | val=0.840 HB=0.846 GCG=0.639 PAIR=0.615 PAP=0.541 GPTFuzz=0.604 PEZ=0.762 | xfer=0.632±0.001 signed=0.591 | 1s
+  pca    k=  12 ev=0.653 | val=0.853 HB=0.860 GCG=0.637 PAIR=0.629 PAP=0.560 GPTFuzz=0.538 PEZ=0.744 | xfer=0.622±0.001 signed=0.607 | 1s
+  pca    k=  16 ev=0.695 | val=0.840 HB=0.838 GCG=0.641 PAIR=0.655 PAP=0.568 GPTFuzz=0.524 PEZ=0.743 | xfer=0.626±0.001 signed=0.619 | 1s
+  pca    k=  20 ev=0.726 | val=0.849 HB=0.813 GCG=0.664 PAIR=0.654 PAP=0.617 GPTFuzz=0.536 PEZ=0.775 | xfer=0.649±0.002 signed=0.648 | 1s
+  pca    k=  24 ev=0.751 | val=0.860 HB=0.805 GCG=0.676 PAIR=0.664 PAP=0.622 GPTFuzz=0.587 PEZ=0.780 | xfer=0.666±0.002 signed=0.666 | 1s
+  pca    k=  32 ev=0.790 | val=0.908 HB=0.867 GCG=0.677 PAIR=0.662 PAP=0.630 GPTFuzz=0.620 PEZ=0.819 | xfer=0.682±0.002 signed=0.682 | 1s
+  pca    k=  48 ev=0.843 | val=0.918 HB=0.888 GCG=0.698 PAIR=0.635 PAP=0.664 GPTFuzz=0.657 PEZ=0.844 | xfer=0.700±0.003 signed=0.700 | 1s
+  pca    k=  64 ev=0.880 | val=0.942 HB=0.896 GCG=0.691 PAIR=0.633 PAP=0.658 GPTFuzz=0.731 PEZ=0.853 | xfer=0.713±0.002 signed=0.713 | 2s
+  pca    k=  96 ev=0.927 | val=0.930 HB=0.899 GCG=0.714 PAIR=0.676 PAP=0.707 GPTFuzz=0.770 PEZ=0.836 | xfer=0.741±0.002 signed=0.741 | 2s
+  pca    k= 128 ev=0.957 | val=0.932 HB=0.862 GCG=0.777 PAIR=0.678 PAP=0.724 GPTFuzz=0.823 PEZ=0.838 | xfer=0.768±0.002 signed=0.768 | 2s
+  pca    k= 160 ev=0.977 | val=0.942 HB=0.844 GCG=0.764 PAIR=0.664 PAP=0.677 GPTFuzz=0.823 PEZ=0.839 | xfer=0.753±0.001 signed=0.753 | 3s
+  pca    k= 192 ev=0.990 | val=0.946 HB=0.825 GCG=0.760 PAIR=0.637 PAP=0.668 GPTFuzz=0.788 PEZ=0.714 | xfer=0.713±0.002 signed=0.713 | 2s
+  pca    k= 239 ev=1.000 | val=0.948 HB=0.776 GCG=0.716 PAIR=0.639 PAP=0.641 GPTFuzz=0.721 PEZ=0.704 | xfer=0.684±0.004 signed=0.684 | 3s
+  pcamean k=   1 ev=nan | val=0.598 HB=0.649 GCG=0.639 PAIR=0.564 PAP=0.520 GPTFuzz=0.732 PEZ=0.753 | xfer=0.642±0.000 signed=0.633 | 0s
+  pcamean k=   2 ev=0.295 | val=0.742 HB=0.746 GCG=0.626 PAIR=0.621 PAP=0.503 GPTFuzz=0.553 PEZ=0.699 | xfer=0.600±0.001 signed=0.579 | 1s
+  pcamean k=   3 ev=0.379 | val=0.709 HB=0.691 GCG=0.601 PAIR=0.650 PAP=0.534 GPTFuzz=0.538 PEZ=0.719 | xfer=0.608±0.001 signed=0.593 | 1s
+  pcamean k=   4 ev=0.446 | val=0.737 HB=0.727 GCG=0.646 PAIR=0.651 PAP=0.537 GPTFuzz=0.600 PEZ=0.752 | xfer=0.637±0.001 signed=0.597 | 1s
+  pcamean k=   5 ev=0.488 | val=0.786 HB=0.797 GCG=0.670 PAIR=0.615 PAP=0.536 GPTFuzz=0.615 PEZ=0.763 | xfer=0.640±0.001 signed=0.594 | 1s
+  pcamean k=   6 ev=0.521 | val=0.784 HB=0.793 GCG=0.675 PAIR=0.617 PAP=0.548 GPTFuzz=0.609 PEZ=0.766 | xfer=0.643±0.001 signed=0.600 | 1s
+  pcamean k=   8 ev=0.575 | val=0.832 HB=0.843 GCG=0.674 PAIR=0.625 PAP=0.552 GPTFuzz=0.646 PEZ=0.776 | xfer=0.654±0.001 signed=0.596 | 1s
+  pcamean k=  10 ev=0.612 | val=0.834 HB=0.843 GCG=0.646 PAIR=0.623 PAP=0.539 GPTFuzz=0.598 PEZ=0.765 | xfer=0.634±0.001 signed=0.595 | 1s
+  pcamean k=  12 ev=0.641 | val=0.847 HB=0.852 GCG=0.643 PAIR=0.632 PAP=0.554 GPTFuzz=0.552 PEZ=0.749 | xfer=0.626±0.002 signed=0.605 | 1s
+  pcamean k=  16 ev=0.685 | val=0.837 HB=0.837 GCG=0.647 PAIR=0.661 PAP=0.562 GPTFuzz=0.525 PEZ=0.747 | xfer=0.628±0.001 signed=0.621 | 1s
+  pcamean k=  20 ev=0.719 | val=0.846 HB=0.802 GCG=0.665 PAIR=0.665 PAP=0.610 GPTFuzz=0.535 PEZ=0.779 | xfer=0.651±0.002 signed=0.640 | 1s
+  pcamean k=  24 ev=0.745 | val=0.858 HB=0.805 GCG=0.674 PAIR=0.667 PAP=0.618 GPTFuzz=0.577 PEZ=0.777 | xfer=0.663±0.002 signed=0.662 | 1s
+  pcamean k=  32 ev=0.786 | val=0.907 HB=0.863 GCG=0.679 PAIR=0.664 PAP=0.627 GPTFuzz=0.617 PEZ=0.819 | xfer=0.681±0.002 signed=0.681 | 1s
+  pcamean k=  48 ev=0.841 | val=0.913 HB=0.882 GCG=0.697 PAIR=0.634 PAP=0.656 GPTFuzz=0.633 PEZ=0.842 | xfer=0.693±0.003 signed=0.692 | 1s
+  pcamean k=  64 ev=0.878 | val=0.937 HB=0.880 GCG=0.684 PAIR=0.633 PAP=0.652 GPTFuzz=0.698 PEZ=0.839 | xfer=0.701±0.002 signed=0.701 | 1s
+  pcamean k=  96 ev=0.926 | val=0.925 HB=0.899 GCG=0.707 PAIR=0.669 PAP=0.700 GPTFuzz=0.728 PEZ=0.838 | xfer=0.729±0.002 signed=0.729 | 2s
+  pcamean k= 128 ev=0.957 | val=0.930 HB=0.862 GCG=0.766 PAIR=0.678 PAP=0.716 GPTFuzz=0.796 PEZ=0.838 | xfer=0.759±0.003 signed=0.759 | 2s
+  pcamean k= 160 ev=0.976 | val=0.939 HB=0.841 GCG=0.767 PAIR=0.670 PAP=0.668 GPTFuzz=0.822 PEZ=0.844 | xfer=0.754±0.002 signed=0.754 | 2s
+  pcamean k= 192 ev=0.989 | val=0.944 HB=0.810 GCG=0.763 PAIR=0.653 PAP=0.663 GPTFuzz=0.781 PEZ=0.731 | xfer=0.718±0.002 signed=0.718 | 3s
+  pcamean k= 240 ev=1.000 | val=0.946 HB=0.754 GCG=0.721 PAIR=0.654 PAP=0.639 GPTFuzz=0.719 PEZ=0.722 | xfer=0.691±0.004 signed=0.691 | 3s
+  svd    k=   1 ev=0.285 | val=0.727 HB=0.752 GCG=0.592 PAIR=0.620 PAP=0.521 GPTFuzz=0.628 PEZ=0.635 | xfer=0.599±0.000 signed=0.548 | 0s
+  svd    k=   2 ev=0.385 | val=0.701 HB=0.710 GCG=0.530 PAIR=0.610 PAP=0.547 GPTFuzz=0.597 PEZ=0.603 | xfer=0.578±0.002 signed=0.539 | 1s
+  svd    k=   3 ev=0.459 | val=0.704 HB=0.729 GCG=0.598 PAIR=0.648 PAP=0.573 GPTFuzz=0.691 PEZ=0.715 | xfer=0.645±0.001 signed=0.568 | 1s
+  svd    k=   4 ev=0.501 | val=0.772 HB=0.800 GCG=0.674 PAIR=0.594 PAP=0.556 GPTFuzz=0.688 PEZ=0.764 | xfer=0.655±0.001 signed=0.580 | 1s
+  svd    k=   5 ev=0.533 | val=0.777 HB=0.801 GCG=0.685 PAIR=0.593 PAP=0.579 GPTFuzz=0.675 PEZ=0.772 | xfer=0.661±0.001 signed=0.591 | 1s
+  svd    k=   6 ev=0.561 | val=0.781 HB=0.798 GCG=0.688 PAIR=0.595 PAP=0.580 GPTFuzz=0.675 PEZ=0.774 | xfer=0.662±0.001 signed=0.592 | 1s
+  svd    k=   8 ev=0.606 | val=0.843 HB=0.859 GCG=0.647 PAIR=0.618 PAP=0.542 GPTFuzz=0.607 PEZ=0.764 | xfer=0.635±0.001 signed=0.593 | 1s
+  svd    k=  10 ev=0.637 | val=0.844 HB=0.848 GCG=0.635 PAIR=0.616 PAP=0.541 GPTFuzz=0.584 PEZ=0.757 | xfer=0.627±0.002 signed=0.593 | 1s
+  svd    k=  12 ev=0.663 | val=0.856 HB=0.863 GCG=0.632 PAIR=0.632 PAP=0.559 GPTFuzz=0.536 PEZ=0.740 | xfer=0.620±0.001 signed=0.606 | 1s
+  svd    k=  16 ev=0.703 | val=0.845 HB=0.844 GCG=0.636 PAIR=0.658 PAP=0.567 GPTFuzz=0.524 PEZ=0.740 | xfer=0.625±0.001 signed=0.618 | 1s
+  svd    k=  20 ev=0.734 | val=0.854 HB=0.809 GCG=0.661 PAIR=0.653 PAP=0.616 GPTFuzz=0.528 PEZ=0.776 | xfer=0.647±0.002 signed=0.643 | 1s
+  svd    k=  24 ev=0.758 | val=0.862 HB=0.814 GCG=0.672 PAIR=0.672 PAP=0.620 GPTFuzz=0.587 PEZ=0.774 | xfer=0.665±0.002 signed=0.665 | 1s
+  svd    k=  32 ev=0.796 | val=0.910 HB=0.865 GCG=0.677 PAIR=0.662 PAP=0.624 GPTFuzz=0.618 PEZ=0.818 | xfer=0.680±0.002 signed=0.680 | 1s
+  svd    k=  48 ev=0.848 | val=0.919 HB=0.891 GCG=0.691 PAIR=0.631 PAP=0.658 GPTFuzz=0.659 PEZ=0.846 | xfer=0.697±0.003 signed=0.697 | 1s
+  svd    k=  64 ev=0.883 | val=0.943 HB=0.897 GCG=0.691 PAIR=0.637 PAP=0.656 GPTFuzz=0.722 PEZ=0.853 | xfer=0.712±0.002 signed=0.712 | 1s
+  svd    k=  96 ev=0.929 | val=0.929 HB=0.903 GCG=0.705 PAIR=0.671 PAP=0.699 GPTFuzz=0.738 PEZ=0.836 | xfer=0.730±0.002 signed=0.730 | 2s
+  svd    k= 128 ev=0.958 | val=0.932 HB=0.864 GCG=0.774 PAIR=0.678 PAP=0.721 GPTFuzz=0.814 PEZ=0.841 | xfer=0.766±0.002 signed=0.766 | 2s
+  svd    k= 160 ev=0.977 | val=0.941 HB=0.840 GCG=0.766 PAIR=0.666 PAP=0.670 GPTFuzz=0.815 PEZ=0.842 | xfer=0.752±0.002 signed=0.752 | 3s
+  svd    k= 192 ev=0.990 | val=0.944 HB=0.822 GCG=0.761 PAIR=0.645 PAP=0.663 GPTFuzz=0.775 PEZ=0.743 | xfer=0.717±0.002 signed=0.717 | 3s
+  svd    k= 240 ev=1.000 | val=0.946 HB=0.757 GCG=0.721 PAIR=0.654 PAP=0.638 GPTFuzz=0.720 PEZ=0.722 | xfer=0.691±0.004 signed=0.691 | 3s
+  traits k= 240 ev=1.000 | val=0.939 HB=0.876 GCG=0.738 PAIR=0.678 PAP=0.694 GPTFuzz=0.759 PEZ=0.840 | xfer=0.742±0.003 signed=0.742 | 9s
+done in 91s -> /Users/viktor/persona-vector-jbing/full_trait_output/trait_pc_sweep/summary_gemma.json, scores_gemma.npz
