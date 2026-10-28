@@ -1,0 +1,42 @@
+{
+ "GPTFuzz|harmbench": {
+  "asr": 0.2925,
+  "lo": 0.2475,
+  "hi": 0.3375,
+  "n_pairs": 400,
+  "n_clusters": 400,
+  "clustered": true
+ },
+ "GCG|harmbench": {
+  "asr": 0.2138,
+  "lo": 0.1509,
+  "hi": 0.283,
+  "n_pairs": 159,
+  "n_clusters": 159,
+  "clustered": true
+ },
+ "PAIR|harmbench": {
+  "asr": 0.2575,
+  "lo": 0.215,
+  "hi": 0.3,
+  "n_pairs": 400,
+  "n_clusters": 400,
+  "clustered": true
+ },
+ "PAP|harmbench": {
+  "asr": 0.069,
+  "lo": 0.0555,
+  "hi": 0.083,
+  "n_pairs": 2000,
+  "n_clusters": 400,
+  "clustered": true
+ },
+ "PEZ|harmbench": {
+  "asr": 0.0642,
+  "lo": 0.045,
+  "hi": 0.0858,
+  "n_pairs": 1200,
+  "n_clusters": 400,
+  "clustered": true
+ }
+}
