@@ -30,7 +30,8 @@ Thumbs.db
 *.pkl
 *.parquet
 *.safetensors
-dashboard/data.json.gz
+# dashboard build artifact; published on gh-pages by dashboard/deploy.sh
+dashboard/data.json
 
 # Paper (separate repo, synced to Overleaf)
 /paper/
