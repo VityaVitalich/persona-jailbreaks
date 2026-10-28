@@ -176,6 +176,9 @@ const TM = {before: "before training (remove, then retrain)", after: "after trai
 const RD = {fixed: "same as full (full detector's layer / position)", reselect: "re-selected under the condition"};
 const COND_ORDER = ["full", "no_persona", "only_persona", "no_random"];
 const SET_ORDER = ["wjb", "pap", "gcg", "pair", "gptfuzz", "pez"];
+function noteLines(ms) {
+  return ms.map(m => statusOf(m, DS.train, DS.tm)).filter(s => s && s.note).map(s => `<div class="banner warn"><b>Note (${esc(mlab(s.m))}, ${esc(D.detection.trains[s.t])}, removal ${s.tm} training):</b> ${esc(s.note)}</div>`).join("");
+}
 function statusOf(m, t, tm) { return D.detection.status.find(x => x.m === m && x.t === t && x.tm === tm); }
 function qRecs(f = {}) {
   const q = Object.assign({cond: DS.cond, train: DS.train, tm: DS.tm, readout: DS.tm === "before" ? DS.readout : "fixed"}, f);
@@ -225,6 +228,7 @@ function renderDetection() {
   if (!ready.length) return;
   const recs = qRecs({models: new Set(ready), dets: DS.dets});
   const sets = SET_ORDER.filter(s => recs.some(r => r.auc && isNum(r.auc[s])));
+  if (models.length > 1) { const nl = noteLines(ready); if (nl) el.insertAdjacentHTML("beforeend", `<div class="panel">${nl}</div>`); }
   if (models.length === 1) renderDetRows(el, recs, sets, "d", `${mlab(ready[0])}: detectors`);
   else [...DS.dets].sort((a, b) => dOrd(a) - dOrd(b)).forEach(d => { const R = recs.filter(r => r.d === d); if (R.length || DS.cond === "full") renderDetRows(el, R, sets, "m", dlab(d), d); });
   renderCondOverview(el, ready);
@@ -237,7 +241,7 @@ function renderDetRows(el, recs, sets, rowKey, title, det) {
   let h = `<div class="panel"><h3>${esc(title)} · ${esc(clab(DS.cond))}${delta ? " − full" : ""}</h3><table><thead><tr><th class="l">${rowKey === "d" ? "Detector" : "Model"}</th>${sets.map(s => `<th>${esc(setLab(s))}${s === "wjb" ? " (not averaged)" : ""}</th>`).join("")}<th>Avg (PAP/GCG/PAIR/GPTFuzz/PEZ)</th>${DS.tm === "before" ? "<th>Val</th>" : ""}<th class="l">Readout / notes</th></tr></thead><tbody>`;
   const chart = [];
   rows.forEach(r => {
-    const lab = rowKey === "d" ? dlab(r.d) : mlab(r.m);
+    const lab = rowKey === "d" ? (r.lab || dlab(r.d)) : mlab(r.m) + (r.lab ? ` — ${r.lab}` : "");
     if (r.missing) { h += `<tr><td class="l model">${esc(lab)}</td><td class="missing l" colspan="${sets.length + 3}">${r.pending ? "pending" : "— (not run for this detector / component)"}</td></tr>`; return; }
     const F = delta ? fullOf(r) : null;
     h += `<tr><td class="l ${rowKey === "m" ? "model" : ""}" data-tip="${esc(recTip(r))}">${esc(lab)}</td>`;
@@ -251,7 +255,8 @@ function renderDetRows(el, recs, sets, rowKey, title, det) {
     if (DS.tm === "before") h += isNum(r.val) ? `<td class="num">${f3(r.val)}</td>` : `<td class="missing">—</td>`;
     h += `<td class="l">${esc(selText(r.sel))}${r.draws ? ` <span class="tag">${r.draws.length} draws</span>` : ""}</td></tr>`;
   });
-  el.insertAdjacentHTML("beforeend", h + `</tbody></table>${delta ? `<div class="note">Bold = saved paired CI excludes 0.</div>` : ""}</div>`);
+  const notes = rowKey === "d" ? noteLines(uniq(rows.map(r => r.m))) : "";
+  el.insertAdjacentHTML("beforeend", h + `</tbody></table>${delta ? `<div class="note">Bold = saved paired CI excludes 0.</div>` : ""}${notes}</div>`);
   if (chart.length > 1) el.insertAdjacentHTML("beforeend", dotChart(chart, {title: delta ? "Δ average transfer vs full" : "Average transfer AUC (folded)", ref: delta ? 0 : null}));
 }
 function renderCondOverview(el, ready) {
@@ -261,7 +266,7 @@ function renderCondOverview(el, ready) {
   let h = `<div class="panel"><h3>All components: ${delta ? "Δ average transfer vs full" : "average transfer AUC"} (columns = component)</h3><table><thead><tr><th class="l">Model</th><th class="l">Detector</th>${COND_ORDER.map(c => `<th>${esc(clab(c))}</th>`).join("")}</tr></thead><tbody>`;
   let lastM = null;
   keys.forEach(k => { const [m, d] = k.split("|");
-    h += `<tr class="${m !== lastM ? "grp-start" : ""}"><td class="model">${m !== lastM ? esc(mlab(m)) : ""}</td><td class="l">${esc(dlab(d))}</td>`; lastM = m;
+    h += `<tr class="${m !== lastM ? "grp-start" : ""}"><td class="model">${m !== lastM ? esc(mlab(m)) : ""}</td><td class="l">${esc((recs.find(x => x.m === m && x.d === d && x.lab) || {}).lab || dlab(d))}</td>`; lastM = m;
     COND_ORDER.forEach(c => { const r = recs.find(x => x.m === m && x.d === d && x.c === c);
       if (!r || !isNum(r.avg)) { h += `<td class="missing">—</td>`; return; }
       if (!delta || c === "full") { h += `<td class="num" data-tip="${esc(recTip(r))}">${f3(r.avg)}${r.ci ? `<span class="ci">[${f3(r.ci[0])}, ${f3(r.ci[1])}]</span>` : ""}</td>`; return; }

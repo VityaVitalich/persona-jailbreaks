@@ -158,6 +158,8 @@ def q1_before(d, m, t, f):
     AVG = d.get("avg_sets") or [s for s in d["test"] if s != "wjb"]
     TAIL = d["tail_tokens"]; sel = d["selected"]; dl = d["delta"]
     st = next(x for x in Q1_STATUS if x["m"] == m and x["t"] == t and x["tm"] == "before")
+    if d.get("note"): st["note"] = d["note"]
+    arditi = "Arditi 128/128" in (d.get("note") or "")
     st.update({"n_train": d.get("n_train"), "n_pos_train": d.get("n_pos_train"), "n_test": d.get("n_test"), "grid": d.get("grid"), "k": d.get("k"),
                "test": d["test"], "avg_sets": AVG, "swept_layers": d.get("swept_layers")})
     def one(det, cond, mode, e, dkey):
@@ -171,7 +173,9 @@ def q1_before(d, m, t, f):
         for cond in ("full", "no_persona", "no_random", "only_persona"):
             for mode in ("fixed", "reselect"):
                 k = f"{det}__{cond}__{'reselect' if cond == 'full' else mode}"
-                if k in sel: r = one(det, cond, mode, sel[k], f"{det}__{cond}__{mode}"); r["tm"] = "before"
+                if k in sel:
+                    r = one(det, cond, mode, sel[k], f"{det}__{cond}__{mode}"); r["tm"] = "before"
+                    if det == "refusal" and arditi: r["lab"] = "refusal (Arditi 128/128, to be replaced)"
     draws = sorted(x for x in dets if x.startswith("gauss_d"))
     for cond in ("full", "no_persona", "no_random", "only_persona"):
         for mode in ("fixed", "reselect"):
@@ -197,6 +201,7 @@ def q1_before(d, m, t, f):
 
 def q1_after(d, m, t, f):
     st = next(x for x in Q1_STATUS if x["m"] == m and x["t"] == t and x["tm"] == "after"); st.update({"test": d["test"], "avg_sets": d.get("avg_sets")})
+    if d.get("note"): st["note"] = d["note"]
     D_ = d["detectors"]
     def put(det, es):
         for cond in ("full", "no_persona", "no_random", "only_persona"):
