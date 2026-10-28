@@ -1,0 +1,21 @@
+{
+  "steering_vector": "harmbench_persona_classifier_w",
+  "target_pool": "HarmBench human_jailbreak ALL pairs (in-sample)",
+  "full_dataset": true,
+  "alpha_schedule": [
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7
+  ],
+  "judge": "gpt-4.1-mini binary (judge-only escalation)",
+  "n_total": 3180,
+  "n_started_jailbroken": 1245,
+  "n_started_not_jailbroken": 1935,
+  "asr_overall": 0.820440251572327,
+  "asr_started_jailbroken": 0.934136546184739,
+  "asr_started_not_jailbroken": 0.7472868217054264
+}

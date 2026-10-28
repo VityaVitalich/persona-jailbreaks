@@ -1,0 +1,18 @@
+{
+  "attack_type": "GCG",
+  "dataset": "wildjailbreak",
+  "n_pairs": 2000,
+  "n_behaviors": 2000,
+  "binary_judge": {
+    "pair_asr": 0.379,
+    "behavior_asr": 0.379,
+    "n_jailbroken_pairs": 758,
+    "n_jailbroken_behaviors": 758
+  },
+  "jbb_judge": {
+    "pair_asr": 0.1015,
+    "behavior_asr": 0.1015,
+    "n_jailbroken_pairs": 203,
+    "n_jailbroken_behaviors": 203
+  }
+}

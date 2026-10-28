@@ -1,0 +1,36 @@
+{
+  "steering_vector": "dmu__full",
+  "direction_meta": {
+    "description": "unsupervised jailbreak direction mean(jb)-mean(refused), HB human_jailbreak + WJB",
+    "share_in_span": 0.3297444594553481,
+    "auc_hbwjb": 0.8574846259718282,
+    "auc_hb": 0.7816785574244669,
+    "mean_gap": 24.647422576174904,
+    "cos_w_persona": 0.11216432013922724,
+    "cos_dmu": 1.0,
+    "cos_dmu_hb_only": 0.5531246421047112
+  },
+  "directions_file": "inputs/gemma/steering_directions_gemma_layer30.pt",
+  "benchmark": "harmbench",
+  "alpha_schedule": [
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5
+  ],
+  "config": {
+    "model": "/mnt/dlabscratch1/bazina/.cache/huggingface/hub/models--google--gemma-4-31B-it/snapshots/fb9ae262347c3945692f09a612f8bb189def854f",
+    "layer": 30,
+    "residual_norm": 258.088,
+    "max_new_tokens": 300,
+    "batch_size": 64,
+    "attn_implementation": "gqa_fold",
+    "target": "HarmBench human_jailbreak Gemma-refused group, n=3117 (all)",
+    "judge_inloop": "gpt-4.1-mini binary YES/NO",
+    "gpu": "NVIDIA B300 SXM6 AC"
+  },
+  "asr_started_not_jailbroken": 0.4084055181264036,
+  "n_started_rf": 3117,
+  "n_degenerate": 0
+}

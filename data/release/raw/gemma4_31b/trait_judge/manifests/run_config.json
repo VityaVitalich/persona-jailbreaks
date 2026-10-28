@@ -1,0 +1,14 @@
+{
+  "created_at_utc": "2026-05-09T23:25:48.490908+00:00",
+  "responses_dir": "/scratch/gemma_trait_output/traits40_generation/responses",
+  "traits_dir": "/scratch/assistant-axis-llama3.1-8B/data/traits/instructions",
+  "output_root": "/scratch/gemma_trait_output/traits40_judge",
+  "judge_model": "gpt-4.1-mini",
+  "max_tokens": 10,
+  "batch_size": 10,
+  "requests_per_second": 5,
+  "selected_traits": [
+    "nonchalant"
+  ],
+  "git_commit": "68861c39e695b859a135cdb75f056a80a11afa5a"
+}

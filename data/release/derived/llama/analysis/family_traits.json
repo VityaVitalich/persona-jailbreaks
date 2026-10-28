@@ -1,0 +1,314 @@
+{
+ "harmbench": [
+  {
+   "trait": "egalitarian",
+   "auc": 0.8733991262206449,
+   "sign": 1.0
+  },
+  {
+   "trait": "universalist",
+   "auc": 0.863810383653477,
+   "sign": -1.0
+  },
+  {
+   "trait": "progressive",
+   "auc": 0.8541128856511316,
+   "sign": 1.0
+  },
+  {
+   "trait": "principled",
+   "auc": 0.8437516474165395,
+   "sign": 1.0
+  },
+  {
+   "trait": "deontological",
+   "auc": 0.8357875948237394,
+   "sign": 1.0
+  },
+  {
+   "trait": "existentialist",
+   "auc": 0.8129165758641802,
+   "sign": 1.0
+  },
+  {
+   "trait": "essentialist",
+   "auc": 0.8108278073534448,
+   "sign": 1.0
+  },
+  {
+   "trait": "avoidant",
+   "auc": 0.8034901362556168,
+   "sign": -1.0
+  },
+  {
+   "trait": "regulatory",
+   "auc": 0.8029978311177527,
+   "sign": -1.0
+  },
+  {
+   "trait": "pedantic",
+   "auc": 0.7896292145325488,
+   "sign": -1.0
+  }
+ ],
+ "gcg": [
+  {
+   "trait": "utilitarian",
+   "auc": 0.7828250401284109,
+   "sign": 1.0
+  },
+  {
+   "trait": "fundamentalist",
+   "auc": 0.7778491171749599,
+   "sign": -1.0
+  },
+  {
+   "trait": "avoidant",
+   "auc": 0.7686998394863563,
+   "sign": -1.0
+  },
+  {
+   "trait": "egalitarian",
+   "auc": 0.7675762439807383,
+   "sign": 1.0
+  },
+  {
+   "trait": "speculative",
+   "auc": 0.7582664526484751,
+   "sign": 1.0
+  },
+  {
+   "trait": "submissive",
+   "auc": 0.7547351524879615,
+   "sign": -1.0
+  },
+  {
+   "trait": "contrarian",
+   "auc": 0.7523274478330658,
+   "sign": 1.0
+  },
+  {
+   "trait": "materialist",
+   "auc": 0.7414125200642054,
+   "sign": -1.0
+  },
+  {
+   "trait": "humble",
+   "auc": 0.7385232744783307,
+   "sign": -1.0
+  },
+  {
+   "trait": "constructivist",
+   "auc": 0.7359550561797753,
+   "sign": 1.0
+  }
+ ],
+ "pair": [
+  {
+   "trait": "utilitarian",
+   "auc": 0.7145221664841741,
+   "sign": 1.0
+  },
+  {
+   "trait": "independent",
+   "auc": 0.680527615797917,
+   "sign": 1.0
+  },
+  {
+   "trait": "submissive",
+   "auc": 0.6778793511751674,
+   "sign": -1.0
+  },
+  {
+   "trait": "egalitarian",
+   "auc": 0.6710295128720939,
+   "sign": 1.0
+  },
+  {
+   "trait": "anthropocentric",
+   "auc": 0.6678210384253012,
+   "sign": -1.0
+  },
+  {
+   "trait": "libertarian",
+   "auc": 0.666369585699371,
+   "sign": -1.0
+  },
+  {
+   "trait": "avoidant",
+   "auc": 0.6638995696569988,
+   "sign": -1.0
+  },
+  {
+   "trait": "humble",
+   "auc": 0.6628810063405566,
+   "sign": -1.0
+  },
+  {
+   "trait": "inquisitive",
+   "auc": 0.6565149856127932,
+   "sign": -1.0
+  },
+  {
+   "trait": "pacifist",
+   "auc": 0.6545797153115531,
+   "sign": -1.0
+  }
+ ],
+ "pap": [
+  {
+   "trait": "collaborative",
+   "auc": 0.7017264183959157,
+   "sign": -1.0
+  },
+  {
+   "trait": "mystical",
+   "auc": 0.6947682497529644,
+   "sign": -1.0
+  },
+  {
+   "trait": "secular",
+   "auc": 0.6896268218873518,
+   "sign": 1.0
+  },
+  {
+   "trait": "improvisational",
+   "auc": 0.6809805768280632,
+   "sign": -1.0
+  },
+  {
+   "trait": "technical",
+   "auc": 0.6801455451251647,
+   "sign": 1.0
+  },
+  {
+   "trait": "introverted",
+   "auc": 0.6783082180500659,
+   "sign": 1.0
+  },
+  {
+   "trait": "analytical",
+   "auc": 0.6730252593873518,
+   "sign": 1.0
+  },
+  {
+   "trait": "ascetic",
+   "auc": 0.6682415184453228,
+   "sign": 1.0
+  },
+  {
+   "trait": "stoic",
+   "auc": 0.66504034914361,
+   "sign": 1.0
+  },
+  {
+   "trait": "prescriptive",
+   "auc": 0.6633419795783926,
+   "sign": 1.0
+  }
+ ],
+ "gptfuzz": [
+  {
+   "trait": "obsessive",
+   "auc": 0.7671559110558878,
+   "sign": -1.0
+  },
+  {
+   "trait": "prescriptive",
+   "auc": 0.7633247909709818,
+   "sign": 1.0
+  },
+  {
+   "trait": "disorganized",
+   "auc": 0.7617457482332841,
+   "sign": -1.0
+  },
+  {
+   "trait": "strategic",
+   "auc": 0.7592606973673992,
+   "sign": 1.0
+  },
+  {
+   "trait": "socratic",
+   "auc": 0.7581734876135746,
+   "sign": -1.0
+  },
+  {
+   "trait": "regulatory",
+   "auc": 0.7526338950583729,
+   "sign": 1.0
+  },
+  {
+   "trait": "analytical",
+   "auc": 0.7476120214335638,
+   "sign": 1.0
+  },
+  {
+   "trait": "skeptical",
+   "auc": 0.7443503921720898,
+   "sign": 1.0
+  },
+  {
+   "trait": "quantitative",
+   "auc": 0.7428748932204706,
+   "sign": 1.0
+  },
+  {
+   "trait": "stream_of_consciousness",
+   "auc": 0.7414511661618908,
+   "sign": -1.0
+  }
+ ],
+ "pez": [
+  {
+   "trait": "egalitarian",
+   "auc": 0.8338779956427015,
+   "sign": 1.0
+  },
+  {
+   "trait": "principled",
+   "auc": 0.8301742919389978,
+   "sign": 1.0
+  },
+  {
+   "trait": "utilitarian",
+   "auc": 0.8243137254901961,
+   "sign": 1.0
+  },
+  {
+   "trait": "humble",
+   "auc": 0.815974945533769,
+   "sign": -1.0
+  },
+  {
+   "trait": "regulatory",
+   "auc": 0.8144281045751633,
+   "sign": -1.0
+  },
+  {
+   "trait": "avoidant",
+   "auc": 0.8124782135076253,
+   "sign": -1.0
+  },
+  {
+   "trait": "altruistic",
+   "auc": 0.8097494553376906,
+   "sign": 1.0
+  },
+  {
+   "trait": "accommodating",
+   "auc": 0.8062908496732026,
+   "sign": 1.0
+  },
+  {
+   "trait": "deontological",
+   "auc": 0.7977886710239651,
+   "sign": 1.0
+  },
+  {
+   "trait": "speculative",
+   "auc": 0.7884912854030501,
+   "sign": 1.0
+  }
+ ]
+}

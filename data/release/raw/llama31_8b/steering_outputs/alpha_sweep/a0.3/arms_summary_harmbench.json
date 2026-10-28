@@ -1,0 +1,83 @@
+{
+  "w_persona__full": {
+    "steering_vector": "w_persona__full",
+    "direction_meta": {
+      "base": "w_persona",
+      "component": "full",
+      "description": "trait-classifier normal (published steer-w persona)",
+      "share_in_span": 1.0000000000000007,
+      "cos_with_w_persona": 0.9999999999999999,
+      "cos_with_dmu": 0.18661367180358288
+    },
+    "directions_file": "inputs/steering_directions_layer16.pt",
+    "benchmark": "harmbench",
+    "alpha_schedule": [
+      0.3
+    ],
+    "config": {
+      "model": "/mnt/dlabscratch1/moskvore/hf_cache/transformers/models--VityaVitalich--Llama3.1-8b-instruct/snapshots/247cb7c3baebabc46cff1fb97a3a5913e4c4511d",
+      "layer": 16,
+      "residual_norm": 22.0,
+      "max_new_tokens": 300,
+      "batch_size": 32,
+      "target": "HarmBench human_jailbreak baseline-refused group, n=300 (subsampled from 1935, seed 0)",
+      "judge_inloop": "gpt-4.1-mini binary YES/NO"
+    },
+    "asr_started_not_jailbroken": 0.23333333333333334,
+    "n_started_rf": 300
+  },
+  "refusal_pos1_neg__full": {
+    "steering_vector": "refusal_pos1_neg__full",
+    "direction_meta": {
+      "base": "refusal_pos1_neg",
+      "component": "full",
+      "description": "-(Arditi refusal direction), layer 16 pos -1",
+      "share_in_span": 0.4074756357371781,
+      "cos_with_w_persona": 0.18226936224751566,
+      "cos_with_dmu": 0.3625602300694799
+    },
+    "directions_file": "inputs/steering_directions_layer16.pt",
+    "benchmark": "harmbench",
+    "alpha_schedule": [
+      0.3
+    ],
+    "config": {
+      "model": "/mnt/dlabscratch1/moskvore/hf_cache/transformers/models--VityaVitalich--Llama3.1-8b-instruct/snapshots/247cb7c3baebabc46cff1fb97a3a5913e4c4511d",
+      "layer": 16,
+      "residual_norm": 22.0,
+      "max_new_tokens": 300,
+      "batch_size": 32,
+      "target": "HarmBench human_jailbreak baseline-refused group, n=300 (subsampled from 1935, seed 0)",
+      "judge_inloop": "gpt-4.1-mini binary YES/NO"
+    },
+    "asr_started_not_jailbroken": 0.56,
+    "n_started_rf": 300
+  },
+  "dmu__full": {
+    "steering_vector": "dmu__full",
+    "direction_meta": {
+      "base": "dmu",
+      "component": "full",
+      "description": "unsupervised jailbreak direction, mean(jb) - mean(refused), all pairs",
+      "share_in_span": 0.4824141275024358,
+      "cos_with_w_persona": 0.18661367180358288,
+      "cos_with_dmu": 1.0
+    },
+    "directions_file": "inputs/steering_directions_layer16.pt",
+    "benchmark": "harmbench",
+    "alpha_schedule": [
+      0.3
+    ],
+    "config": {
+      "model": "/mnt/dlabscratch1/moskvore/hf_cache/transformers/models--VityaVitalich--Llama3.1-8b-instruct/snapshots/247cb7c3baebabc46cff1fb97a3a5913e4c4511d",
+      "layer": 16,
+      "residual_norm": 22.0,
+      "max_new_tokens": 300,
+      "batch_size": 32,
+      "target": "HarmBench human_jailbreak baseline-refused group, n=300 (subsampled from 1935, seed 0)",
+      "judge_inloop": "gpt-4.1-mini binary YES/NO"
+    },
+    "asr_started_not_jailbroken": 0.5466666666666666,
+    "n_started_rf": 300
+  }
+}

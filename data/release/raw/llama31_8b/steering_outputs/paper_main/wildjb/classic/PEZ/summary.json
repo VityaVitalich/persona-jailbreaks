@@ -1,0 +1,18 @@
+{
+  "attack_type": "PEZ",
+  "dataset": "wildjailbreak",
+  "n_pairs": 6000,
+  "n_behaviors": 2000,
+  "binary_judge": {
+    "pair_asr": 0.2635,
+    "behavior_asr": 0.415,
+    "n_jailbroken_pairs": 1581,
+    "n_jailbroken_behaviors": 830
+  },
+  "jbb_judge": {
+    "pair_asr": 0.049666666666666665,
+    "behavior_asr": 0.1025,
+    "n_jailbroken_pairs": 298,
+    "n_jailbroken_behaviors": 205
+  }
+}

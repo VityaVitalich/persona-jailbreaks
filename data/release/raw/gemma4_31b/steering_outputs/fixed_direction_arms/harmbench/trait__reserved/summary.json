@@ -1,0 +1,39 @@
+{
+  "steering_vector": "trait__reserved",
+  "direction_meta": {
+    "description": "single trait direction 'reserved' oriented toward the jailbroken class",
+    "share_in_span": 1.0000000000000007,
+    "auc_hbwjb": 0.8020256867120631,
+    "auc_hb": 0.761935316314527,
+    "mean_gap": 4.814966325766008,
+    "cos_w_persona": 0.1785429630681471,
+    "cos_dmu": 0.19535374584847398,
+    "trait": "reserved",
+    "sign": -1.0,
+    "lr_coef_scaled": -0.19979600544570134
+  },
+  "directions_file": "inputs/gemma/steering_directions_gemma_layer30.pt",
+  "benchmark": "harmbench",
+  "alpha_schedule": [
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5
+  ],
+  "config": {
+    "model": "/mnt/dlabscratch1/bazina/.cache/huggingface/hub/models--google--gemma-4-31B-it/snapshots/fb9ae262347c3945692f09a612f8bb189def854f",
+    "layer": 30,
+    "residual_norm": 258.088,
+    "max_new_tokens": 300,
+    "batch_size": 128,
+    "token_budget": 180000,
+    "attn_implementation": "gqa_fold",
+    "target": "HarmBench human_jailbreak Gemma-refused group, n=3117 (all)",
+    "judge_inloop": "gpt-4.1-mini binary YES/NO",
+    "gpu": "NVIDIA B300 SXM6 AC"
+  },
+  "asr_started_not_jailbroken": 0.23516201475777992,
+  "n_started_rf": 3117,
+  "n_degenerate": 828
+}

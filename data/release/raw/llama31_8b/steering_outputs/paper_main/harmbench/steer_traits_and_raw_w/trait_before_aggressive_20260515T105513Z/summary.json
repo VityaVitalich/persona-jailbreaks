@@ -1,0 +1,28 @@
+{
+  "mode": "trait",
+  "alpha_schedule": [
+    0.05,
+    0.1,
+    0.15,
+    0.2
+  ],
+  "config": {
+    "top_k": 3,
+    "n_prompts": 2490
+  },
+  "overall": {
+    "n": 2490,
+    "success_rate": 0.6401606425702812,
+    "avg_iterations": 2.3152610441767068
+  },
+  "originally_jailbroken": {
+    "n": 1245,
+    "success_rate": 0.8755020080321285,
+    "avg_iterations": 1.1429718875502008
+  },
+  "originally_not_jailbroken": {
+    "n": 1245,
+    "success_rate": 0.40481927710843374,
+    "avg_iterations": 3.487550200803213
+  }
+}

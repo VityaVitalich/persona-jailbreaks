@@ -1,0 +1,19 @@
+{
+  "created_at_utc": "2026-03-16T17:48:25.283034+00:00",
+  "model": "meta-llama/Llama-3.1-8B-Instruct",
+  "traits_dir": "/mnt/dlabscratch1/bazina/assistant-axis-llama3.1-8B/data/traits/instructions",
+  "output_root": "/mnt/dlabscratch1/bazina/assistant-axis-llama3.1-8B/full_trait_output/traits40_generation",
+  "tensor_parallel_size": 1,
+  "gpu_memory_utilization": 0.95,
+  "max_model_len": 2048,
+  "temperature": 0.7,
+  "top_p": 0.9,
+  "max_tokens": 512,
+  "questions_source": "per-trait JSON files only",
+  "expected_questions_per_trait": 40,
+  "expected_instruction_pairs_per_trait": 5,
+  "expected_rows_per_trait": 400,
+  "selected_traits": null,
+  "trait_count_to_process": 240,
+  "git_commit": "3cd83abe0500b6c20544ff620c83dd5b2d84515b"
+}

@@ -1,0 +1,41 @@
+{
+  "arm": "dmu@16",
+  "direction": "dmu",
+  "placement": "layer 16 block output only",
+  "layers": [
+    16
+  ],
+  "benchmark": "harmbench",
+  "intervention": "directional ablation x - (x.v)v, unit v, every layer (block input + attention output + MLP output), every position; Arditi et al. 2024 hook recipe",
+  "direction_meta": {
+    "source": "full_trait_output/steering_directions/steering_directions_layer16.pt:dmu__full",
+    "base": "dmu",
+    "component": "full",
+    "description": "unsupervised jailbreak direction, mean(jb) - mean(refused), all pairs",
+    "share_in_span": 0.4824141275024358,
+    "cos_with_w_persona": 0.18661367180358288,
+    "cos_with_dmu": 1.0,
+    "hb_l16_proj_mean_complied": 1.8342285807530638,
+    "hb_l16_proj_mean_refused": -1.1480885580124531,
+    "zero_projection_lands": "between"
+  },
+  "directions_file": "inputs/ablation_directions_layer16.pt",
+  "config": {
+    "model": "/mnt/dlabscratch1/bazina/.cache/huggingface/hub/models--meta-llama--Llama-3.1-8B-Instruct/snapshots/0e9e39f249a16976918f6564b8830bc894c89659",
+    "max_new_tokens": 300,
+    "decoding": "greedy",
+    "chat_template": "official Llama-3.1 (system header: Cutting Knowledge Date / Today Date)",
+    "chat_template_file": null,
+    "batch_size": 48,
+    "target": "HarmBench human_jailbreak, unsteered-complied group, n=1245 (refused 1935)",
+    "judge": "gpt-4.1-mini, judge_harmbench_responses.py prompt (behavior + response), temperature 0 (labels: 1) -- the judge that produced the complied/refused pools"
+  },
+  "label_judge": {
+    "n": 1245,
+    "still_jailbroken": 0.8827309236947791,
+    "refused": 0.11244979919678715,
+    "degenerate": 0.004819277108433735,
+    "parse_failures": 0,
+    "per_behavior_asr": 0.9873417721518988
+  }
+}

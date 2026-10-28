@@ -1,0 +1,314 @@
+{
+ "harmbench": [
+  {
+   "trait": "forgiving",
+   "auc": 0.8419420382846754,
+   "sign": -1.0
+  },
+  {
+   "trait": "convergent",
+   "auc": 0.8236806860483472,
+   "sign": 1.0
+  },
+  {
+   "trait": "introverted",
+   "auc": 0.8233751419506954,
+   "sign": -1.0
+  },
+  {
+   "trait": "essentialist",
+   "auc": 0.8231154294676912,
+   "sign": 1.0
+  },
+  {
+   "trait": "flirty",
+   "auc": 0.808877074517113,
+   "sign": 1.0
+  },
+  {
+   "trait": "sycophantic",
+   "auc": 0.7969863167168268,
+   "sign": 1.0
+  },
+  {
+   "trait": "manipulative",
+   "auc": 0.7838886597308157,
+   "sign": 1.0
+  },
+  {
+   "trait": "stoic",
+   "auc": 0.775427634426672,
+   "sign": -1.0
+  },
+  {
+   "trait": "obsessive",
+   "auc": 0.774666320383356,
+   "sign": 1.0
+  },
+  {
+   "trait": "romantic",
+   "auc": 0.7740857865978173,
+   "sign": 1.0
+  }
+ ],
+ "gcg": [
+  {
+   "trait": "convergent",
+   "auc": 0.7030588235294117,
+   "sign": 1.0
+  },
+  {
+   "trait": "introverted",
+   "auc": 0.7011764705882353,
+   "sign": -1.0
+  },
+  {
+   "trait": "essentialist",
+   "auc": 0.6936470588235294,
+   "sign": 1.0
+  },
+  {
+   "trait": "stoic",
+   "auc": 0.6818823529411765,
+   "sign": -1.0
+  },
+  {
+   "trait": "flirty",
+   "auc": 0.6807058823529412,
+   "sign": 1.0
+  },
+  {
+   "trait": "sycophantic",
+   "auc": 0.6694117647058824,
+   "sign": 1.0
+  },
+  {
+   "trait": "stream_of_consciousness",
+   "auc": 0.6658823529411765,
+   "sign": 1.0
+  },
+  {
+   "trait": "transparent",
+   "auc": 0.6517647058823529,
+   "sign": 1.0
+  },
+  {
+   "trait": "reserved",
+   "auc": 0.6515294117647059,
+   "sign": -1.0
+  },
+  {
+   "trait": "obsessive",
+   "auc": 0.6491764705882352,
+   "sign": 1.0
+  }
+ ],
+ "pair": [
+  {
+   "trait": "manic",
+   "auc": 0.6972639011473962,
+   "sign": -1.0
+  },
+  {
+   "trait": "naive",
+   "auc": 0.6848092576247916,
+   "sign": -1.0
+  },
+  {
+   "trait": "qualitative",
+   "auc": 0.6804288843123795,
+   "sign": 1.0
+  },
+  {
+   "trait": "literal",
+   "auc": 0.6749697623484031,
+   "sign": -1.0
+  },
+  {
+   "trait": "neurotic",
+   "auc": 0.660586446994214,
+   "sign": -1.0
+  },
+  {
+   "trait": "effusive",
+   "auc": 0.6599980386388153,
+   "sign": -1.0
+  },
+  {
+   "trait": "grandiose",
+   "auc": 0.6565002778595012,
+   "sign": -1.0
+  },
+  {
+   "trait": "metaphorical",
+   "auc": 0.6523160406655553,
+   "sign": 1.0
+  },
+  {
+   "trait": "utilitarian",
+   "auc": 0.652119904547089,
+   "sign": -1.0
+  },
+  {
+   "trait": "data_driven",
+   "auc": 0.6508123304239809,
+   "sign": -1.0
+  }
+ ],
+ "pap": [
+  {
+   "trait": "confident",
+   "auc": 0.6167203723594701,
+   "sign": -1.0
+  },
+  {
+   "trait": "transparent",
+   "auc": 0.6142432945718334,
+   "sign": 1.0
+  },
+  {
+   "trait": "curious",
+   "auc": 0.6142394028549635,
+   "sign": 1.0
+  },
+  {
+   "trait": "closure_seeking",
+   "auc": 0.6110559784554555,
+   "sign": -1.0
+  },
+  {
+   "trait": "exploratory",
+   "auc": 0.6107524245396099,
+   "sign": 1.0
+  },
+  {
+   "trait": "historical",
+   "auc": 0.6068178987842276,
+   "sign": 1.0
+  },
+  {
+   "trait": "pluralist",
+   "auc": 0.6060123133921761,
+   "sign": 1.0
+  },
+  {
+   "trait": "idealistic",
+   "auc": 0.6023579912514205,
+   "sign": -1.0
+  },
+  {
+   "trait": "avoidant",
+   "auc": 0.5969874219710767,
+   "sign": -1.0
+  },
+  {
+   "trait": "melancholic",
+   "auc": 0.596185728295895,
+   "sign": -1.0
+  }
+ ],
+ "gptfuzz": [
+  {
+   "trait": "qualitative",
+   "auc": 0.7724019208118148,
+   "sign": -1.0
+  },
+  {
+   "trait": "curious",
+   "auc": 0.7534958171000574,
+   "sign": -1.0
+  },
+  {
+   "trait": "creative",
+   "auc": 0.7534354142127994,
+   "sign": -1.0
+  },
+  {
+   "trait": "eloquent",
+   "auc": 0.7450998157711939,
+   "sign": -1.0
+  },
+  {
+   "trait": "principled",
+   "auc": 0.7350729364863641,
+   "sign": -1.0
+  },
+  {
+   "trait": "introspective",
+   "auc": 0.6932741385038205,
+   "sign": 1.0
+  },
+  {
+   "trait": "poetic",
+   "auc": 0.6929117211802724,
+   "sign": -1.0
+  },
+  {
+   "trait": "dramatic",
+   "auc": 0.6902539941409199,
+   "sign": -1.0
+  },
+  {
+   "trait": "introverted",
+   "auc": 0.690223792697291,
+   "sign": 1.0
+  },
+  {
+   "trait": "transparent",
+   "auc": 0.6892271450575338,
+   "sign": 1.0
+  }
+ ],
+ "pez": [
+  {
+   "trait": "inspirational",
+   "auc": 0.7912594974037539,
+   "sign": 1.0
+  },
+  {
+   "trait": "detached",
+   "auc": 0.7773241896127026,
+   "sign": -1.0
+  },
+  {
+   "trait": "flirty",
+   "auc": 0.7717038082131582,
+   "sign": 1.0
+  },
+  {
+   "trait": "introverted",
+   "auc": 0.767332400457957,
+   "sign": -1.0
+  },
+  {
+   "trait": "stream_of_consciousness",
+   "auc": 0.7565889142024493,
+   "sign": 1.0
+  },
+  {
+   "trait": "sycophantic",
+   "auc": 0.754865793156087,
+   "sign": 1.0
+  },
+  {
+   "trait": "essentialist",
+   "auc": 0.7525875727122388,
+   "sign": 1.0
+  },
+  {
+   "trait": "historical",
+   "auc": 0.7495229614552856,
+   "sign": 1.0
+  },
+  {
+   "trait": "transparent",
+   "auc": 0.7482508586693805,
+   "sign": 1.0
+  },
+  {
+   "trait": "deferential",
+   "auc": 0.7438447572018364,
+   "sign": 1.0
+  }
+ ]
+}

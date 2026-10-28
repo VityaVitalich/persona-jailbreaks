@@ -1,0 +1,18 @@
+{
+  "attack_type": "GPTFuzz",
+  "dataset": "wildjailbreak",
+  "n_pairs": 2000,
+  "n_behaviors": 2000,
+  "binary_judge": {
+    "pair_asr": 0.5435,
+    "behavior_asr": 0.5435,
+    "n_jailbroken_pairs": 1087,
+    "n_jailbroken_behaviors": 1087
+  },
+  "jbb_judge": {
+    "pair_asr": 0.244,
+    "behavior_asr": 0.244,
+    "n_jailbroken_pairs": 488,
+    "n_jailbroken_behaviors": 488
+  }
+}
