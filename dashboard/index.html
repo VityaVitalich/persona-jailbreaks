@@ -170,245 +170,131 @@ function heatColor(v, lo, hi) {
   return `background: rgba(37, 99, 235, ${a.toFixed(3)}); color: ${t > 0.55 ? "#fff" : (dark ? "#e6e8ec" : "#1a1d23")};`;
 }
 
-/* =================================================================== DETECTION */
-const DS = {setup: null, models: new Set(), dets: new Set(), train: null, cond: "full", readout: null, C: null, show: "auc", heat: {}};
-function setupById(id) { return D.detection.setups.find(s => s.id === id); }
-const SETUP_GROUPS = [
-  ["Main (q1)", ["q1"]],
-  ["Readout selection (layer × position)", ["hbsel_cv", "hbsel", "qwen_pos", "qwen_sweep"]],
-  ["Single-set / per-training-set transfer", ["single", "probe_methods", "dom", "olmo_layers"]],
-  ["Paper protocol, 50 HB splits", ["paper50", "removal50", "dir50", "few", "release", "pcak_llama", "pcak_gemma"]],
-  ["Other controls", ["removal10", "single_vec", "normality", "refdmu"]],
-];
-function pickSetup(id) {
-  const S = setupById(id); DS.setup = id;
-  const R = D.detection.records.filter(r => r.s === id);
-  DS.models = new Set(uniq(R.map(r => r.m).concat(D.detection.heat.filter(h => h.s === id).map(h => h.m))));
-  const trains = uniq(R.map(r => r.t).filter(x => x !== undefined));
-  DS.train = trains.includes("hb") ? "hb" : trains.includes("hbwjb") && trains.length === 1 ? "hbwjb" : (trains[0] ?? null);
-  if (id === "hbsel" || id === "hbsel_cv") DS.train = null;   // train set is model-determined there
-  DS.cond = "full";
-  const rds = uniq(R.map(r => r.r).filter(x => x !== undefined));
-  DS.readout = S.readout_axis ? null : (rds.includes("reselect") ? "reselect" : rds[0] ?? null);
-  const Cs = uniq(R.map(r => r.C).filter(x => x !== undefined));
-  DS.C = S.default_C && Cs.includes(S.default_C) ? S.default_C : (Cs[0] ?? null);
-  const dets = uniq(R.map(r => r.d));
-  DS.dets = new Set(S.default_dets ? dets.filter(d => S.default_dets.includes(d)) : dets);
-  if (!DS.dets.size) DS.dets = new Set(dets.slice(0, 15));
-  DS.heat = {};
+/* =================================================================== DETECTION (q1 protocol only) */
+const DS = {models: new Set(["llama", "olmo", "qwen", "gemma"]), train: "hbwjb", tm: "before", cond: "full", readout: "fixed", show: "auc", dets: null, heat: {}};
+const TM = {before: "before training (remove, then retrain)", after: "after training (trained detector scores persona-removed test activations)"};
+const RD = {fixed: "same as full (full detector's layer / position)", reselect: "re-selected under the condition"};
+const COND_ORDER = ["full", "no_persona", "only_persona", "no_random"];
+const SET_ORDER = ["wjb", "pap", "gcg", "pair", "gptfuzz", "pez"];
+function statusOf(m, t, tm) { return D.detection.status.find(x => x.m === m && x.t === t && x.tm === tm); }
+function qRecs(f = {}) {
+  const q = Object.assign({cond: DS.cond, train: DS.train, tm: DS.tm, readout: DS.tm === "before" ? DS.readout : "fixed"}, f);
+  return D.detection.records.filter(r => r.t === q.train && r.tm === q.tm && (q.cond === "*" || r.c === q.cond) && (q.readout === "*" || r.r === q.readout) &&
+    (!q.models || q.models.has(r.m)) && (!q.dets || q.dets.has(r.d)));
 }
-function recKey(r) { return [r.s, r.m, r.d, r.t ?? "", r.r ?? "", r.C ?? ""].join("|"); }
-function detRecords(extra = {}) {
-  const f = Object.assign({cond: DS.cond, train: DS.train, readout: DS.readout, C: DS.C}, extra);
-  return D.detection.records.filter(r => r.s === DS.setup && DS.models.has(r.m) && DS.dets.has(r.d) &&
-    (f.cond === "*" || r.c === f.cond) && (f.train === null || r.t === undefined || r.t === f.train) &&
-    (f.readout === null || r.r === undefined || r.r === f.readout) && (f.C === null || r.C === undefined || r.C === f.C));
-}
-function findRec(r, over) {
-  const q = Object.assign({}, r, over);
-  return D.detection.records.find(x => x.s === q.s && x.m === q.m && x.d === q.d && x.c === q.c && (x.t ?? "") === (q.t ?? "") && (x.r ?? "") === (q.r ?? "") && (x.C ?? "") === (q.C ?? ""));
-}
+function fullOf(r) { return D.detection.records.find(x => x.m === r.m && x.d === r.d && x.t === r.t && x.tm === r.tm && x.r === r.r && x.c === "full"); }
 function selText(sel) {
   if (!sel) return "";
   const p = [];
   if (sel.L !== undefined && sel.L !== null) p.push(`L${sel.L} p${sel.p}${sel.tok !== undefined ? " " + JSON.stringify(sel.tok) : ""}`);
   if (sel.C !== undefined && sel.C !== null) p.push(`C=${sel.C}`);
-  if (sel.cw !== undefined) p.push(`cw=${sel.cw}`);
-  if (sel.k !== undefined) p.push(`k=${sel.k}`);
-  if (sel.expl_var !== undefined && sel.expl_var !== null) p.push(`expl.var ${f3(sel.expl_var)}`);
-  if (sel.share_removed !== undefined) p.push(`share removed ${f3(sel.share_removed)}`);
-  if (sel.hb_ci95) p.push(`HB CI [${f3(sel.hb_ci95[0])}, ${f3(sel.hb_ci95[1])}]`);
   if (sel.per_draw) p.push("draws: " + sel.per_draw.join("; "));
+  if (sel.w_share_persona !== undefined && sel.w_share_persona !== null) p.push(`w in persona span ${f3(sel.w_share_persona)} (random ${f3(sel.w_share_random)})`);
   return p.join(" · ");
 }
 function recTip(r) {
-  const t = [`${mlab(r.m)} · ${dlab(r.d)} · ${clab(r.c)}`];
-  if (r.t) t.push("train: " + r.t); if (r.r) t.push("readout: " + r.r); if (r.C) t.push(r.C);
-  if (r.note) t.push(r.note);
+  const t = [`${mlab(r.m)} · ${dlab(r.d)} · ${clab(r.c)}`, `train ${D.detection.trains[r.t]} · removal ${r.tm} training · readout ${r.r}`];
   if (r.draws) t.push("per-draw avg: " + r.draws.map(f3).join(", "));
   const s = selText(r.sel); if (s) t.push(s);
   return t.join("\n");
 }
 function renderDetection() {
   const el = $("#detection"); el.innerHTML = "";
-  const q1 = setupById("q1");
-  if (q1 && q1.pending) el.insertAdjacentHTML("beforeend", `<div class="banner warn"><b>Q1 sweep: pending.</b> <code>${esc(q1.expected)}</code> is not on disk yet. Rebuild with <code>python3 build_data.py</code> once it lands; the Q1 setup, its layer × position heatmaps and the Q1 persona-share fields then fill in automatically.</div>`);
-  if (q1 && q1.smoke) el.insertAdjacentHTML("beforeend", `<div class="banner bad"><b>SMOKE BUILD (development only)</b>: Q1 numbers come from a one-cell smoke run and are not results.</div>`);
-  const S = setupById(DS.setup), R = D.detection.records.filter(r => r.s === DS.setup);
+  const Q = D.detection, rr = () => { renderDetection(); saveHash(); };
+  const allDets = uniq(Q.records.map(r => r.d)).sort((a, b) => dOrd(a) - dOrd(b));
+  if (DS.dets === null) DS.dets = new Set(allDets);
+  // status grid
+  let g = `<div class="panel"><h3>q1 result files</h3><table><thead><tr><th class="l">Model</th>${Object.keys(Q.trains).flatMap(t => ["before", "after"].map(tm => `<th>${esc(Q.trains[t])}<br><span style="text-transform:none">removal ${tm} training</span></th>`)).join("")}</tr></thead><tbody>`;
+  Q.models.forEach(m => { g += `<tr><td class="model">${esc(mlab(m))}</td>` + Object.keys(Q.trains).flatMap(t => ["before", "after"].map(tm => { const s = statusOf(m, t, tm);
+    return `<td class="${s && s.ready ? "num" : "missing"}" data-tip="${esc(s ? s.file : "")}">${s && s.ready ? "ready" : "pending"}</td>`; })).join("") + `</tr>`; });
+  g += `</tbody></table></div>`;
   const fp = document.createElement("div"); fp.className = "filter-panel"; el.appendChild(fp);
-  // setup select
-  const row0 = document.createElement("div"); row0.className = "filter-row";
-  let opt = "";
-  for (const [g, ids] of SETUP_GROUPS) {
-    const ss = ids.map(setupById).filter(Boolean); if (!ss.length) continue;
-    opt += `<optgroup label="${esc(g)}">` + ss.map(s => `<option value="${s.id}" ${s.id === DS.setup ? "selected" : ""}>${esc(s.label)}${s.pending ? " — PENDING" : ""}</option>`).join("") + `</optgroup>`;
-  }
-  row0.innerHTML = `<span class="label">Setup</span><select class="sel" id="setupSel">${opt}</select>`;
-  fp.appendChild(row0);
-  $("#setupSel", row0).onchange = e => { pickSetup(e.target.value); renderDetection(); saveHash(); };
-  const rerender = () => { renderDetection(); saveHash(); };
-  const models = uniq(R.map(r => r.m).concat(D.detection.heat.filter(h => h.s === DS.setup).map(h => h.m))).sort(byModel);
-  if (models.length) fp.appendChild(chipRow("Model", models.map(m => ({v: m, l: mlab(m)})), DS.models, true, rerender));
-  const trains = uniq(R.map(r => r.t).filter(x => x !== undefined));
-  if (trains.length > 1 && S.trains && !DS.setup.startsWith("hbsel")) fp.appendChild(chipRow("Training set", trains.map(t => ({v: t, l: S.trains[t] || setLab(t)})), DS.train, false, v => { DS.train = v; rerender(); }));
-  const conds = uniq(R.map(r => r.c)); const cOrder = S.conds || Object.keys(D.conds);
-  conds.sort((a, b) => cOrder.indexOf(a) - cOrder.indexOf(b));
-  if (conds.length > 1) fp.appendChild(chipRow("Component", conds.map(c => ({v: c, l: clab(c), cls: c === "no_nr" ? "invalid" : ""})), DS.cond, false, v => { DS.cond = v; rerender(); }));
-  const rds = uniq(R.map(r => r.r).filter(x => x !== undefined));
-  if (rds.length > 1 && !S.readout_axis) fp.appendChild(chipRow("Readout", rds.map(x => ({v: x, l: (S.readouts && S.readouts[x]) || x})), DS.readout, false, v => { DS.readout = v; rerender(); }));
-  const Cs = uniq(R.map(r => r.C).filter(x => x !== undefined));
-  if (Cs.length > 1) fp.appendChild(chipRow("C", Cs.map(x => ({v: x, l: x, tip: S.Cs && S.Cs[x]})), DS.C, false, v => { DS.C = v; rerender(); }));
-  const hasDfull = conds.length > 1, hasDraw = R.some(r => r.d === "raw" || r.d === "pm_LR_raw");
-  const shows = [{v: "auc", l: "Folded AUC"}].concat(hasDfull ? [{v: "dfull", l: "Δ vs full"}] : []).concat(hasDraw ? [{v: "draw", l: "Δ vs raw probe"}] : []);
-  if (!shows.find(s => s.v === DS.show)) DS.show = "auc";
-  if (shows.length > 1) fp.appendChild(chipRow("Show", shows, DS.show, false, v => { DS.show = v; rerender(); }));
-  const dets = uniq(R.map(r => r.d)).sort((a, b) => dOrd(a) - dOrd(b));
-  if (dets.length) fp.appendChild(chipRow("Detector", dets.map(d => ({v: d, l: dlab(d), g: D.dets[d] ? D.dets[d].group : ""})), DS.dets, true, rerender));
-  // protocol + sources
-  const srcs = D.sources.filter(s => s.setup === DS.setup);
-  el.insertAdjacentHTML("beforeend", `<div class="panel"><div class="protocol"><b>Protocol.</b> ${esc(S.protocol)}</div>
-    <div class="protocol"><b>Sources.</b> ${srcs.map(s => `<code>${esc(s.path)}</code>${s.note ? ` <span>(${esc(s.note)})</span>` : ""}`).join("; ") || "—"}</div>
-    ${S.models_n ? `<div class="protocol"><b>n.</b> ${Object.entries(S.models_n).map(([m, n]) => `${mlab(m)}: train ${n.n_train} (${n.n_pos_train} jailbroken); test ${Object.entries(n.n_test || {}).map(([s, v]) => `${setLab(s)} ${v[0]}/${v[1]}`).join(", ")}; C grid ${JSON.stringify(n.grid)}`).join(" · ")}</div>` : ""}
-    <div class="protocol">All AUCs are folded, max(a, 1−a). "—" = not saved for this cell (never filled from another protocol).</div></div>`);
-  if (S.pending) { el.insertAdjacentHTML("beforeend", `<div class="panel no-data">Pending: no Q1 output on disk yet.</div>`); return; }
-  if (!S.heat_only) {
-    if (S.readout_axis) renderReadoutPivot(el, S); else renderDetTable(el, S);
-    if (conds.length > 1) renderCondOverview(el, S, conds);
-    renderSweepChart(el, S);
-  }
-  if (S.heat) renderHeat(el, S);
-  if (DS.setup === "single") renderComplement(el);
+  fp.appendChild(chipRow("Model", Q.models.map(m => ({v: m, l: mlab(m)})), DS.models, true, rr));
+  fp.appendChild(chipRow("Training set", Object.entries(Q.trains).map(([k, v]) => ({v: k, l: v})), DS.train, false, v => { DS.train = v; rr(); }));
+  fp.appendChild(chipRow("Removal timing", Object.entries(TM).map(([k, v]) => ({v: k, l: v})), DS.tm, false, v => { DS.tm = v; rr(); }));
+  fp.appendChild(chipRow("Component", COND_ORDER.map(c => ({v: c, l: clab(c)})), DS.cond, false, v => { DS.cond = v; rr(); }));
+  if (DS.tm === "before") fp.appendChild(chipRow("Readout", Object.entries(RD).map(([k, v]) => ({v: k, l: v})), DS.readout, false, v => { DS.readout = v; rr(); }));
+  fp.appendChild(chipRow("Show", [{v: "auc", l: "Folded AUC"}, {v: "dfull", l: "Δ vs full"}], DS.show, false, v => { DS.show = v; rr(); }));
+  if (allDets.length) fp.appendChild(chipRow("Detector", allDets.map(d => ({v: d, l: dlab(d), g: D.dets[d] ? D.dets[d].group : ""})), DS.dets, true, rr));
+  el.insertAdjacentHTML("beforeend", `<div class="panel"><div class="protocol"><b>Protocol.</b> ${esc(Q.protocol)}</div><div class="protocol">"pending" = the result file for that model / training set / timing is not on disk yet; nothing is filled in from other runs.</div></div>`);
+  el.insertAdjacentHTML("beforeend", g);
+  const models = Q.models.filter(m => DS.models.has(m));
+  const ready = models.filter(m => (statusOf(m, DS.train, DS.tm) || {}).ready);
+  const pend = models.filter(m => !ready.includes(m));
+  if (pend.length) el.insertAdjacentHTML("beforeend", `<div class="banner warn">Pending for ${esc(D.detection.trains[DS.train])}, removal ${DS.tm} training: ${pend.map(m => esc(mlab(m))).join(", ")}.</div>`);
+  if (!ready.length) return;
+  const recs = qRecs({models: new Set(ready), dets: DS.dets});
+  const sets = SET_ORDER.filter(s => recs.some(r => r.auc && isNum(r.auc[s])));
+  if (models.length === 1) renderDetRows(el, recs, sets, "d", `${mlab(ready[0])}: detectors`);
+  else [...DS.dets].sort((a, b) => dOrd(a) - dOrd(b)).forEach(d => { const R = recs.filter(r => r.d === d); if (R.length || DS.cond === "full") renderDetRows(el, R, sets, "m", dlab(d), d); });
+  renderCondOverview(el, ready);
+  if (DS.tm === "before") renderHeat(el, ready);
 }
-function cellVal(r, set) { return set === "avg" ? r.avg : (r.auc ? r.auc[set] : undefined); }
-function renderDetTable(el, S) {
-  const recs = detRecords().sort((a, b) => byModel(a.m, b.m) || dOrd(a.d) - dOrd(b.d));
-  if (!recs.length) { el.insertAdjacentHTML("beforeend", `<div class="panel no-data">No saved results for this selection.</div>`); return; }
-  const cols = S.cols.filter(c => recs.some(r => r.auc && isNum(r.auc[c])));
-  const showVal = recs.some(r => isNum(r.val)), showSel = recs.some(r => r.sel);
-  const mode = DS.show;
-  const ref = r => mode === "dfull" ? findRec(r, {c: "full"}) : mode === "draw" ? findRec(r, {d: r.d.startsWith("pm_") ? "pm_LR_raw" : "raw"}) : null;
-  const refKey = mode === "dfull" ? "full" : "raw";
-  let h = `<div class="panel"><h3>${mode === "auc" ? "Folded AUC per transfer set" : mode === "dfull" ? `Δ = ${esc(clab(DS.cond))} − full (same detector, setup, readout)` : "Δ = detector − raw linear probe"}</h3><table><thead><tr><th class="l">Model</th><th class="l">Detector</th>`;
-  cols.forEach(c => h += `<th>${esc(setLab(c))}</th>`);
-  h += `<th>Avg transfer</th>${showVal ? "<th>Val</th>" : ""}${showSel ? `<th class="l">Selected / notes</th>` : ""}</tr></thead><tbody>`;
-  let lastM = null; const chartRows = [];
-  for (const r of recs) {
-    const rr = ref(r);
-    h += `<tr class="${r.m !== lastM ? "grp-start" : ""}"><td class="model">${r.m !== lastM ? esc(mlab(r.m)) : ""}</td><td class="l" data-tip="${esc(recTip(r))}">${esc(dlab(r.d))}${r.d === "nr_acts" && DS.cond !== "full" ? "" : ""}</td>`;
-    lastM = r.m;
-    for (const c of cols) {
-      let v = cellVal(r, c);
-      if (mode !== "auc") v = rr && isNum(v) && isNum(cellVal(rr, c)) ? v - cellVal(rr, c) : undefined;
-      h += isNum(v) ? `<td class="num ${mode !== "auc" ? (v > 0 ? "pos" : v < 0 ? "neg" : "") : ""}">${mode === "auc" ? f3(v) : sgn(v)}</td>` : `<td class="missing">—</td>`;
-    }
-    // avg
-    if (mode === "auc") {
-      h += isNum(r.avg) ? `<td class="num"><b>${f3(r.avg)}</b>${r.ci ? `<span class="ci">[${f3(r.ci[0])}, ${f3(r.ci[1])}]</span>` : ""}</td>` : `<td class="missing">—</td>`;
-      chartRows.push({label: `${mlab(r.m)} · ${dlab(r.d)}`, v: r.avg, lo: r.ci && r.ci[0], hi: r.ci && r.ci[1], color: PAL[MODEL_ORDER.indexOf(r.m) % PAL.length]});
-    } else {
-      const saved = r.dl && r.dl[refKey];
-      const dv = saved && isNum(saved.v) ? saved.v : (rr && isNum(r.avg) && isNum(rr.avg) ? r.avg - rr.avg : undefined);
-      const ci = saved && saved.ci;
-      const sig = ci && isNum(ci[0]) && (ci[0] > 0 || ci[1] < 0);
-      h += isNum(dv) ? `<td class="num ${dv > 0 ? "pos" : dv < 0 ? "neg" : ""} ${sig ? "sig" : ""}" data-tip="${esc(saved ? `saved paired Δ${saved.kind ? " (" + saved.kind + ")" : ""}` : "difference of saved point estimates; no paired CI saved")}">${sgn(dv)}${ci ? `<span class="ci">[${sgn(ci[0])}, ${sgn(ci[1])}]${saved.kind ? " " + esc(saved.kind[0]) : ""}</span>` : ""}</td>` : `<td class="missing">—</td>`;
-      if (isNum(dv)) chartRows.push({label: `${mlab(r.m)} · ${dlab(r.d)}`, v: dv, lo: ci && ci[0], hi: ci && ci[1], color: PAL[MODEL_ORDER.indexOf(r.m) % PAL.length]});
-    }
-    if (showVal) h += isNum(r.val) ? `<td class="num">${f3(r.val)}</td>` : `<td class="missing">—</td>`;
-    if (showSel) h += `<td class="l small">${esc(selText(r.sel))}${r.note ? ` <span class="tag">${esc(r.note)}</span>` : ""}${r.draws ? ` <span class="tag" data-tip="per-draw avg transfer: ${esc(r.draws.map(f3).join(", "))}">${r.draws.length} draws</span>` : ""}</td>`;
-    h += `</tr>`;
-  }
-  h += `</tbody></table><div class="note">Bold CI-excluding-zero Δ cells: the saved paired CI excludes 0. Δ cells without a CI are differences of saved point estimates. Hover a detector for its record (draws, notes).</div></div>`;
-  el.insertAdjacentHTML("beforeend", h);
-  if (chartRows.length > 1 && cols.length) el.insertAdjacentHTML("beforeend", dotChart(chartRows, {title: mode === "auc" ? "Average transfer AUC (folded)" : "Δ average transfer", ref: mode === "auc" ? null : 0}));
-  else if (chartRows.length > 1) el.insertAdjacentHTML("beforeend", dotChart(chartRows, {title: mode === "auc" ? "Average transfer AUC (folded)" : "Δ average transfer", ref: mode === "auc" ? null : 0}));
-}
-function renderReadoutPivot(el, S) {
-  const recs = detRecords({readout: null}); if (!recs.length) { el.insertAdjacentHTML("beforeend", `<div class="panel no-data">No saved results for this selection.</div>`); return; }
-  const rds = Object.keys(S.readouts || {}).filter(x => recs.some(r => r.r === x));
-  const rows = uniq(recs.map(r => r.m + "|" + r.d)).sort((a, b) => byModel(a.split("|")[0], b.split("|")[0]) || dOrd(a.split("|")[1]) - dOrd(b.split("|")[1]));
-  let h = `<div class="panel"><h3>Average transfer AUC (folded) by ${esc(DS.setup === "few" ? "number of directions k" : "layer")}</h3><table><thead><tr><th class="l">Model</th><th class="l">Detector</th>${rds.map(x => `<th>${esc(x)}</th>`).join("")}</tr></thead><tbody>`;
-  const series = [];
-  rows.forEach(k => {
-    const [m, d] = k.split("|"); const pts = [];
-    h += `<tr><td class="model">${esc(mlab(m))}</td><td class="l">${esc(dlab(d))}</td>`;
-    rds.forEach(x => { const r = recs.find(r => r.m === m && r.d === d && r.r === x); h += r && isNum(r.avg) ? `<td class="num" data-tip="${esc(recTip(r))}">${f3(r.avg)}</td>` : `<td class="missing">—</td>`; if (r) pts.push([+x.replace(/[^0-9.]/g, ""), r.avg]); });
-    h += `</tr>`; series.push({label: `${mlab(m)} · ${dlab(d)}`, pts});
+// rowKey "d": one model, detectors as rows; "m": one detector, models as rows
+function renderDetRows(el, recs, sets, rowKey, title, det) {
+  const delta = DS.show === "dfull" && DS.cond !== "full";
+  const rows = rowKey === "d" ? recs.slice().sort((a, b) => dOrd(a.d) - dOrd(b.d)) : D.detection.models.filter(m => DS.models.has(m)).map(m => recs.find(r => r.m === m) || {m, pending: !(statusOf(m, DS.train, DS.tm) || {}).ready, missing: true});
+  let h = `<div class="panel"><h3>${esc(title)} · ${esc(clab(DS.cond))}${delta ? " − full" : ""}</h3><table><thead><tr><th class="l">${rowKey === "d" ? "Detector" : "Model"}</th>${sets.map(s => `<th>${esc(setLab(s))}${s === "wjb" ? " (not averaged)" : ""}</th>`).join("")}<th>Avg (PAP/GCG/PAIR/GPTFuzz/PEZ)</th>${DS.tm === "before" ? "<th>Val</th>" : ""}<th class="l">Readout / notes</th></tr></thead><tbody>`;
+  const chart = [];
+  rows.forEach(r => {
+    const lab = rowKey === "d" ? dlab(r.d) : mlab(r.m);
+    if (r.missing) { h += `<tr><td class="l model">${esc(lab)}</td><td class="missing l" colspan="${sets.length + 3}">${r.pending ? "pending" : "— (not run for this detector / component)"}</td></tr>`; return; }
+    const F = delta ? fullOf(r) : null;
+    h += `<tr><td class="l ${rowKey === "m" ? "model" : ""}" data-tip="${esc(recTip(r))}">${esc(lab)}</td>`;
+    sets.forEach(s => { let v = r.auc ? r.auc[s] : undefined; if (delta) v = F && isNum(v) && F.auc && isNum(F.auc[s]) ? v - F.auc[s] : undefined;
+      h += isNum(v) ? `<td class="num ${delta ? (v > 0 ? "pos" : v < 0 ? "neg" : "") : ""}">${delta ? sgn(v) : f3(v)}</td>` : `<td class="missing">—</td>`; });
+    if (!delta) { h += isNum(r.avg) ? `<td class="num"><b>${f3(r.avg)}</b>${r.ci ? `<span class="ci">[${f3(r.ci[0])}, ${f3(r.ci[1])}]</span>` : ""}</td>` : `<td class="missing">—</td>`;
+      if (isNum(r.avg)) chart.push({label: lab, v: r.avg, lo: r.ci && r.ci[0], hi: r.ci && r.ci[1], color: PAL[(rowKey === "m" ? MODEL_ORDER.indexOf(r.m) : 0) % PAL.length]}); }
+    else { const sv = r.dl && r.dl.full; const dv = sv && isNum(sv.v) ? sv.v : (F && isNum(F.avg) && isNum(r.avg) ? r.avg - F.avg : undefined); const ci = sv && sv.ci; const sig = ci && (ci[0] > 0 || ci[1] < 0);
+      h += isNum(dv) ? `<td class="num ${dv > 0 ? "pos" : "neg"} ${sig ? "sig" : ""}" data-tip="${esc(ci ? "saved paired Δ, bootstrap 95% CI" : "difference of saved point estimates; no paired CI saved")}">${sgn(dv)}${ci ? `<span class="ci">[${sgn(ci[0])}, ${sgn(ci[1])}]</span>` : ""}</td>` : `<td class="missing">—</td>`;
+      if (isNum(dv)) chart.push({label: lab, v: dv, lo: ci && ci[0], hi: ci && ci[1], color: PAL[(rowKey === "m" ? MODEL_ORDER.indexOf(r.m) : 0) % PAL.length]}); }
+    if (DS.tm === "before") h += isNum(r.val) ? `<td class="num">${f3(r.val)}</td>` : `<td class="missing">—</td>`;
+    h += `<td class="l">${esc(selText(r.sel))}${r.draws ? ` <span class="tag">${r.draws.length} draws</span>` : ""}</td></tr>`;
   });
-  el.insertAdjacentHTML("beforeend", h + `</tbody></table></div>`);
-  el.insertAdjacentHTML("beforeend", lineChart(series, {title: "Average transfer AUC", logx: DS.setup === "few", xlab: DS.setup === "few" ? "k" : "layer"}));
+  el.insertAdjacentHTML("beforeend", h + `</tbody></table>${delta ? `<div class="note">Bold = saved paired CI excludes 0.</div>` : ""}</div>`);
+  if (chart.length > 1) el.insertAdjacentHTML("beforeend", dotChart(chart, {title: delta ? "Δ average transfer vs full" : "Average transfer AUC (folded)", ref: delta ? 0 : null}));
 }
-function renderCondOverview(el, S, conds) {
-  const recs = detRecords({cond: "*"}); if (!recs.length) return;
-  const rows = uniq(recs.map(r => r.m + "|" + r.d)).sort((a, b) => byModel(a.split("|")[0], b.split("|")[0]) || dOrd(a.split("|")[1]) - dOrd(b.split("|")[1]));
+function renderCondOverview(el, ready) {
+  const recs = qRecs({cond: "*", models: new Set(ready), dets: DS.dets}); if (!recs.length) return;
   const delta = DS.show === "dfull";
-  let h = `<div class="panel"><h3>All components: ${delta ? "Δ average transfer vs full" : "average transfer AUC"} (columns = component condition)</h3><table><thead><tr><th class="l">Model</th><th class="l">Detector</th>${conds.map(c => `<th class="${c === "no_nr" ? "" : ""}" data-tip="${esc(clab(c))}">${esc(clab(c))}</th>`).join("")}</tr></thead><tbody>`;
-  rows.forEach(k => {
-    const [m, d] = k.split("|"); const full = recs.find(r => r.m === m && r.d === d && r.c === "full");
-    h += `<tr><td class="model">${esc(mlab(m))}</td><td class="l">${esc(dlab(d))}</td>`;
-    conds.forEach(c => {
-      const r = recs.find(r => r.m === m && r.d === d && r.c === c);
+  const keys = uniq(recs.map(r => r.m + "|" + r.d)).sort((a, b) => byModel(a.split("|")[0], b.split("|")[0]) || dOrd(a.split("|")[1]) - dOrd(b.split("|")[1]));
+  let h = `<div class="panel"><h3>All components: ${delta ? "Δ average transfer vs full" : "average transfer AUC"} (columns = component)</h3><table><thead><tr><th class="l">Model</th><th class="l">Detector</th>${COND_ORDER.map(c => `<th>${esc(clab(c))}</th>`).join("")}</tr></thead><tbody>`;
+  let lastM = null;
+  keys.forEach(k => { const [m, d] = k.split("|");
+    h += `<tr class="${m !== lastM ? "grp-start" : ""}"><td class="model">${m !== lastM ? esc(mlab(m)) : ""}</td><td class="l">${esc(dlab(d))}</td>`; lastM = m;
+    COND_ORDER.forEach(c => { const r = recs.find(x => x.m === m && x.d === d && x.c === c);
       if (!r || !isNum(r.avg)) { h += `<td class="missing">—</td>`; return; }
-      if (!delta) { h += `<td class="num" data-tip="${esc(recTip(r))}">${f3(r.avg)}${r.ci ? `<span class="ci">[${f3(r.ci[0])}, ${f3(r.ci[1])}]</span>` : ""}</td>`; return; }
-      if (c === "full") { h += `<td class="num">${f3(r.avg)}</td>`; return; }
-      const sv = r.dl && r.dl.full; const dv = sv && isNum(sv.v) ? sv.v : (full && isNum(full.avg) ? r.avg - full.avg : undefined);
-      const sig = sv && sv.ci && (sv.ci[0] > 0 || sv.ci[1] < 0);
-      h += isNum(dv) ? `<td class="num ${dv > 0 ? "pos" : "neg"} ${sig ? "sig" : ""}" data-tip="${esc(sv ? "saved paired Δ, bootstrap CI" : "difference of saved point estimates; no paired CI saved")}">${sgn(dv)}${sv && sv.ci ? `<span class="ci">[${sgn(sv.ci[0])}, ${sgn(sv.ci[1])}]</span>` : ""}</td>` : `<td class="missing">—</td>`;
-    });
-    h += `</tr>`;
-  });
-  const nr = conds.includes("no_nr") ? `<div class="note">"No Robots span removed" is <b>not a valid non-persona control</b>: No Robots activations are persona-rich, so removing their span removes persona content too. Use the random or Wikipedia span removals as controls.</div>` : "";
-  el.insertAdjacentHTML("beforeend", h + `</tbody></table>${nr}</div>`);
+      if (!delta || c === "full") { h += `<td class="num" data-tip="${esc(recTip(r))}">${f3(r.avg)}${r.ci ? `<span class="ci">[${f3(r.ci[0])}, ${f3(r.ci[1])}]</span>` : ""}</td>`; return; }
+      const sv = r.dl && r.dl.full, F = fullOf(r); const dv = sv && isNum(sv.v) ? sv.v : (F && isNum(F.avg) ? r.avg - F.avg : undefined); const sig = sv && sv.ci && (sv.ci[0] > 0 || sv.ci[1] < 0);
+      h += isNum(dv) ? `<td class="num ${dv > 0 ? "pos" : "neg"} ${sig ? "sig" : ""}">${sgn(dv)}${sv && sv.ci ? `<span class="ci">[${sgn(sv.ci[0])}, ${sgn(sv.ci[1])}]</span>` : ""}</td>` : `<td class="missing">—</td>`; });
+    h += `</tr>`; });
+  el.insertAdjacentHTML("beforeend", h + `</tbody></table><div class="note">"—": not run (e.g. PersonaJB has no persona-removed variant before training: it is undefined there).</div></div>`);
 }
-function renderSweepChart(el, S) {
-  const recs = D.detection.records.filter(r => r.s === DS.setup && DS.models.has(r.m) && r.c === DS.cond && (DS.train === null || r.t === undefined || r.t === DS.train) && (DS.readout === null || r.r === undefined || r.r === DS.readout) && (DS.C === null || r.C === undefined || r.C === DS.C));
-  const fam = {};
-  recs.forEach(r => { const m = r.d.match(/^(.*?)_?(\d+)$/); if (!m || r.d.startsWith("gauss") || !isNum(r.avg)) return; const k = r.m + "|" + m[1]; (fam[k] = fam[k] || []).push([+m[2], r.avg, r.ci && r.ci[0], r.ci && r.ci[1], r.d]); });
-  const sel = [...DS.dets];
-  const series = Object.entries(fam).filter(([k, p]) => p.length >= 4 && p.some(x => sel.includes(x[4]))).map(([k, p]) => { const [m, f] = k.split("|"); return {label: `${mlab(m)} · ${f.replace(/_$/, "")}`, pts: p}; });
-  if (!series.length) return;
-  const refs = recs.filter(r => r.d === "PersonaJB" && isNum(r.avg)).map(r => ({v: r.avg, l: `PersonaJB ${mlab(r.m)}`}));
-  el.insertAdjacentHTML("beforeend", `<h3>k-sweep: average transfer vs k (families with ≥ 4 k values that contain a selected detector)</h3>` + lineChart(series, {title: "Average transfer AUC (folded)", logx: true, xlab: "k", refs}));
-}
-function renderHeat(el, S) {
-  const H = D.detection.heat.filter(h => h.s === DS.setup && DS.models.has(h.m)); if (!H.length) return;
+function renderHeat(el, ready) {
+  const H = D.detection.heat.filter(h => h.t === DS.train && ready.includes(h.m)); if (!H.length) return;
   const hs = DS.heat;
   const ms = uniq(H.map(h => h.m)).sort(byModel); if (!ms.includes(hs.m)) hs.m = ms[0];
   const H1 = H.filter(h => h.m === hs.m);
   const ds = uniq(H1.map(h => h.d)).sort((a, b) => dOrd(a) - dOrd(b)); if (!ds.includes(hs.d)) hs.d = ds.includes("PersonaJB") ? "PersonaJB" : ds[0];
-  const cs = uniq(H1.filter(h => h.d === hs.d).map(h => h.c)); if (!cs.includes(hs.c)) hs.c = cs.includes("full") ? "full" : cs[0];
+  const cs = COND_ORDER.filter(c => H1.some(h => h.d === hs.d && h.c === c)); if (!cs.includes(hs.c)) hs.c = cs[0];
   const h = H1.find(x => x.d === hs.d && x.c === hs.c);
   const mets = Object.keys(h.metrics); if (!mets.includes(hs.met)) hs.met = mets[0];
-  const ML = {val: "validation AUC", avg: "avg transfer AUC", hb_disjoint: "HB disjoint test AUC", hb_randomCV: "HB random-CV AUC"};
+  const ML = {val: "validation AUC (5-fold CV)", avg: "avg transfer AUC (PAP/GCG/PAIR/GPTFuzz/PEZ)"};
   const wrap = document.createElement("div"); wrap.className = "panel"; el.appendChild(wrap);
-  wrap.insertAdjacentHTML("beforeend", `<h3>Layer × position heatmap</h3>`);
+  wrap.insertAdjacentHTML("beforeend", `<h3>Layer × position heatmap (removal before training, ${esc(D.detection.trains[DS.train])})</h3>`);
   const fp = document.createElement("div"); fp.className = "filter-panel"; wrap.appendChild(fp);
-  const rr = () => { renderDetection(); };
-  fp.appendChild(chipRow("Model", ms.map(m => ({v: m, l: mlab(m)})), hs.m, false, v => { hs.m = v; rr(); }));
-  fp.appendChild(chipRow("Detector", ds.map(d => ({v: d, l: dlab(d)})), hs.d, false, v => { hs.d = v; rr(); }));
-  if (cs.length > 1) fp.appendChild(chipRow(DS.setup === "qwen_sweep" ? "Training pool" : "Component", cs.map(c => ({v: c, l: DS.setup === "qwen_sweep" ? (c === "hb" ? "HB only" : "HB + WJB") : clab(c)})), hs.c, false, v => { hs.c = v; rr(); }));
-  fp.appendChild(chipRow("Metric", mets.map(m => ({v: m, l: ML[m] || m})), hs.met, false, v => { hs.met = v; rr(); }));
+  fp.appendChild(chipRow("Model", ms.map(m => ({v: m, l: mlab(m)})), hs.m, false, v => { hs.m = v; renderDetection(); }));
+  fp.appendChild(chipRow("Detector", ds.map(d => ({v: d, l: dlab(d)})), hs.d, false, v => { hs.d = v; renderDetection(); }));
+  fp.appendChild(chipRow("Component", cs.map(c => ({v: c, l: clab(c)})), hs.c, false, v => { hs.c = v; renderDetection(); }));
+  fp.appendChild(chipRow("Metric", mets.map(m => ({v: m, l: ML[m] || m})), hs.met, false, v => { hs.met = v; renderDetection(); }));
   const M = h.metrics[hs.met]; const all = M.flat().filter(isNum); const lo = Math.min(...all), hi = Math.max(...all);
-  // the selected readout (records with sel.L / p)
-  const sr = D.detection.records.find(r => r.s === DS.setup && r.m === hs.m && r.d === hs.d && r.c === hs.c && (r.r === undefined || r.r === "reselect") && r.sel && r.sel.L !== undefined);
+  const sr = D.detection.records.find(r => r.tm === "before" && r.t === DS.train && r.m === hs.m && r.d === hs.d && r.c === hs.c && r.r === "reselect" && r.sel && r.sel.L !== undefined);
   let t = `<table class="heat"><thead><tr><th class="l">Layer</th>${h.toks.map((tk, i) => `<th>p${i}<br><span style="text-transform:none">${esc(JSON.stringify(tk))}</span></th>`).join("")}</tr></thead><tbody>`;
-  h.layers.forEach((L, li) => {
-    t += `<tr><td class="l"><b>L${L}</b></td>`;
+  h.layers.forEach((L, li) => { t += `<tr><td class="l"><b>L${L}</b></td>`;
     h.toks.forEach((tk, pi) => { const v = M[li][pi]; const isSel = sr && sr.sel.L === L && sr.sel.p === pi;
       t += `<td class="hc ${isSel ? "selcell" : ""}" style="${heatColor(v, lo, hi)}" data-tip="${esc(`L${L} p${pi} ${JSON.stringify(tk)}\n${ML[hs.met] || hs.met}: ${f3(v)}${isSel ? "\n← selected readout" : ""}`)}">${isNum(v) ? f3(v) : "—"}</td>`; });
-    t += `</tr>`;
-  });
-  t += `</tbody></table><div class="note">${esc(mlab(hs.m))} · ${esc(dlab(hs.d))} · ${esc(ML[hs.met] || hs.met)}; colour range ${f3(lo)}–${f3(hi)}. ${sr ? `Outlined = selected readout (L${sr.sel.L}, p${sr.sel.p}).` : ""} ${hs.d === "gauss" ? "Gaussian = mean of the 3 draws per cell." : ""} Per-cell avg transfer is the mean of the saved per-family folded AUCs at that cell's chosen C.</div>`;
-  wrap.insertAdjacentHTML("beforeend", t);
-}
-function renderComplement(el) {
-  const C = D.detection.complement; if (!C || !Object.keys(C).length) return;
-  const ms = Object.keys(C).filter(m => DS.models.has(m)).sort(byModel);
-  let h = `<div class="panel"><h3>Complementarity: does PersonaJB catch jailbreaks the raw probe misses? (single-set training scores)</h3>
-  <div class="protocol">complement.py on saved persona_four scores, no refits. Each detector flags a test prompt above the 90th percentile of the non-jailbroken prompts of that family (10% FPR; uses test labels, diagnostic only), pooled over all (train, test) pairs. Rescue recall = recall among jailbroken prompts the raw probe misses; Gaussian = mean of 3 draws. Score-average AUC: mean within-family percentile rank of two detectors (folded).</div>
-  <table><thead><tr><th class="l">Model</th><th>PersonaJB rescue recall</th><th>Gaussian rescue recall</th><th>PersonaJB extra-flag precision</th><th>Gaussian extra-flag precision</th><th>stable rescues PersonaJB</th><th>stable rescues Gaussian</th><th>jailbroken test n</th><th>raw AUC</th><th>raw+PersonaJB</th><th>raw+Gaussian</th></tr></thead><tbody>`;
-  ms.forEach(m => { const c = C[m], a = c.score_average_auc || {};
-    h += `<tr><td class="model">${esc(mlab(m))}</td><td class="num">${f3(c.PersonaJB_vs_raw.rescue_recall)}</td><td class="num">${f3(c.Gaussian_vs_raw.rescue_recall)}</td><td class="num">${f3(c.PersonaJB_vs_raw.extra_flag_precision)}</td><td class="num">${f3(c.Gaussian_vs_raw.extra_flag_precision)}</td><td class="num">${c.stable_rescues.PersonaJB}</td><td class="num">${(+c.stable_rescues.Gaussian_mean).toFixed(1)}</td><td class="num">${c.stable_rescues.n_jailbroken_test}</td><td class="num">${f3(a.raw)}</td><td class="num">${f3(a["raw+PersonaJB"])}</td><td class="num">${f3(a["raw+Gaussian"])}</td></tr>`; });
-  el.insertAdjacentHTML("beforeend", h + `</tbody></table></div>`);
+    t += `</tr>`; });
+  wrap.insertAdjacentHTML("beforeend", t + `</tbody></table><div class="note">Colour range ${f3(lo)}–${f3(hi)}. ${sr ? `Outlined = selected readout (L${sr.sel.L}, p${sr.sel.p}).` : ""} ${hs.d === "gauss" ? "Gaussian = mean of the 3 draws per cell." : ""}</div>`);
 }
 
 /* =================================================================== STEERING */
@@ -503,15 +389,17 @@ function renderSteering() {
 }
 
 /* =================================================================== SHARE */
-const SH = {models: new Set(["llama", "gemma"])};
+const SH = {models: new Set(["llama", "gemma", "olmo", "qwen"])};
 function renderShare() {
   const el = $("#share"); el.innerHTML = "";
   const fp = document.createElement("div"); fp.className = "filter-panel"; el.appendChild(fp);
-  fp.appendChild(chipRow("Model", ["llama", "gemma"].map(m => ({v: m, l: mlab(m)})), SH.models, true, () => { renderShare(); saveHash(); }));
+  fp.appendChild(chipRow("Model", ["llama", "olmo", "qwen", "gemma"].map(m => ({v: m, l: mlab(m)})), SH.models, true, () => { renderShare(); saveHash(); }));
   el.insertAdjacentHTML("beforeend", `<div class="protocol">Share = ||Q<sub>S</sub><sup>T</sup>v||² / ||v||² for an orthonormal basis Q<sub>S</sub> of span S (K = 229 Llama L16, K = 240 Gemma L30, last prompt token). A random K-dim span holds K/d of a random vector: 0.056 (Llama), ≈0.045 (Gemma).</div>`);
   // q1 info
   const Q = D.share.q1.filter(q => SH.models.has(q.model));
-  if (!D.share.q1.length) el.insertAdjacentHTML("beforeend", `<div class="panel"><h3>Q1 sweep: persona share of each detector's direction / basis</h3><div class="no-data">Pending: q1_detection/out/q1_gemma.json is not on disk yet.</div></div>`);
+  if (!D.share.q1.length) el.insertAdjacentHTML("beforeend", `<div class="panel"><h3>q1 sweep: persona share of each detector's direction / basis</h3><div class="no-data">Pending: no q1_{model}_{train}.json on disk yet.</div></div>`);
+  const WS = D.detection.w_share.filter(w => SH.models.has(w.m));
+  if (WS.length) el.insertAdjacentHTML("beforeend", `<div class="panel"><h3>Share of each trained detector's effective raw-space weight in the persona span (q1 post-hoc)</h3><div class="protocol">q1_posthoc.py: raw probe w/σ; feature detectors Vᵀ(w/σ); share of squared norm in span(K trait vectors) vs a random K-dim span (≈K/d).</div><table><thead><tr><th class="l">Model</th><th class="l">Training set</th><th class="l">Detector</th><th>persona span</th><th>random span</th></tr></thead><tbody>${WS.map(w => `<tr><td class="model">${esc(mlab(w.m))}</td><td class="l">${esc(D.detection.trains[w.t])}</td><td class="l">${esc(dlab(w.d))}</td><td class="num">${f3(w.persona)}</td><td class="num">${f3(w.random)}</td></tr>`).join("")}</tbody></table></div>`);
   Q.forEach(q => renderQ1Info(el, q));
   for (const p of D.share.panels) {
     const rows = p.rows.filter(r => SH.models.has(r.m)); if (!rows.length) continue;
@@ -541,7 +429,7 @@ function renderShare() {
 function renderQ1Info(el, q) {
   const keys = Object.keys(q.info).filter(k => k.endsWith("__full"));
   const dets = uniq(keys.flatMap(k => Object.keys(q.info[k].persona_share || {})));
-  let h = `<div class="panel"><h3>Q1 sweep (${esc(mlab(q.model))}): persona share of each detector's direction / basis, per layer × position${q.smoke ? ' <span class="tag bad">smoke</span>' : ""}</h3>
+  let h = `<div class="panel"><h3>q1 sweep (${esc(mlab(q.model))}, ${esc(D.detection.trains[q.train] || "")}): persona share of each detector's direction / basis, per layer × position${q.smoke ? ' <span class="tag bad">smoke</span>' : ""}</h3>
     <div class="protocol">q1_sweep.py "info": share of the detector's direction (or mean share of its 240-dim basis rows) inside span(240 trait vectors) of that layer; persona_share_train_acts = mean share of the training activations; random = same for a random 240-dim span. Source <code>${esc(q.file)}</code>.</div>
     <table><thead><tr><th class="l">Cell</th><th>train acts in persona span</th><th>train acts in random span</th>${dets.map(d => `<th>${esc(d)}</th>`).join("")}</tr></thead><tbody>`;
   keys.forEach(k => { const e = q.info[k]; h += `<tr><td class="l">${esc(k.replace("__full", ""))}</td><td class="num">${f3(e.persona_share_train_acts)}</td><td class="num">${f3(e.random_share_train_acts)}</td>${dets.map(d => `<td class="num">${f3((e.persona_share || {})[d])}</td>`).join("")}</tr>`; });
@@ -571,7 +459,7 @@ function renderSources() {
 /* =================================================================== shell */
 function saveHash() {
   const tab = $("#nav button.active").dataset.tab;
-  const p = new URLSearchParams({tab}); if (tab === "detection") p.set("setup", DS.setup);
+  const p = new URLSearchParams({tab}); if (tab === "detection") { p.set("train", DS.train); p.set("tm", DS.tm); }
   history.replaceState(null, "", "#" + p.toString());
 }
 function showTab(t) {
@@ -583,8 +471,8 @@ $("#nav").addEventListener("click", e => { const b = e.target.closest("button");
 fetch("data.json").then(r => r.json()).then(d => {
   D = d; $("#gen").textContent = "data generated " + d.generated_at;
   const p = new URLSearchParams(location.hash.slice(1));
-  const q1 = setupById("q1");
-  pickSetup(p.get("setup") && setupById(p.get("setup")) ? p.get("setup") : (q1 && !q1.pending ? "q1" : "hbsel_cv"));
+  if (D.detection.trains[p.get("train")]) DS.train = p.get("train");
+  if (TM[p.get("tm")]) DS.tm = p.get("tm");
   showTab(p.get("tab") || "detection");
 }).catch(e => { window.__errs.push("load: " + e); document.body.insertAdjacentHTML("beforeend", `<div class="banner bad">Could not load data.json: ${esc(e)}</div>`); console.error(e); });
 </script>

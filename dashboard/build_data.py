@@ -69,7 +69,7 @@ CONDS = {
     "full": "Full",
     "no_persona": "Persona component removed",
     "only_persona": "Only persona component",
-    "no_random": "Random 240-dim span removed (null)",
+    "no_random": "Random K-dim span removed (null)",
     "no_random_span": "Random Gaussian span removed (null)",
     "no_nr": "No Robots span removed (NOT a valid control)",
     "no_wiki": "Wikipedia span removed",
@@ -121,505 +121,104 @@ def rec(s, m, d, auc=None, avg=None, ci=None, cond="full", train=None, readout=N
     if draws: r["draws"] = [num(x) for x in draws]
     RECS.append(r); return r
 
-# ================================================================ DETECTION SOURCES
-def q1(smoke=None):
-    """Primary new source. Real outputs only (q1_{model}.json in q1_detection/out); a smoke file only with --smoke-q1."""
+# ================================================================ DETECTION (q1 protocol only)
+Q1_MODELS = ["llama", "olmo", "qwen", "gemma"]
+Q1_TRAINS = {"hb": "HB human jailbreaks", "hbwjb": "HB + WJB pooled"}
+Q1_PROTOCOL = ("q1 protocol. Each detector's readout (layer × tail position × C) is tuned by 5-fold cross-validation on the "
+               "training set (folds grouped by HB template; WJB rows by behaviour), the selected cell is refit on all training "
+               "rows and scored on the transfer sets. Folded AUC max(a, 1−a) per set. Avg = mean over PAP, GCG, PAIR, GPTFuzz, "
+               "PEZ (avg_sets); WJB is an extra column when it is a test set (HB-only training) and is not averaged. CI = "
+               "HarmBench-behaviour cluster bootstrap (B=1000); Δ CI = paired bootstrap. Components: persona span (K trait vectors "
+               "of that layer) projected out / random K-dim Gaussian span projected out / only the persona component kept. "
+               "Removal BEFORE training (q1_sweep.py): every activation the detector sees, including the Alpaca / Wikipedia / "
+               "refusal inputs it is built from, is projected, and the detector is retrained; readout 'same as full' keeps the "
+               "full detector's layer and position with C re-tuned, 're-selected' re-runs the whole selection. Removal AFTER "
+               "training (q1_posthoc.py): the detector trained on full activations scores persona-removed test activations; "
+               "its readout is the full detector's. Gaussian = mean of 3 draws.")
+Q1_STATUS = []
+
+def q1():
     outdir = FTO / "q1_detection/out"
-    files = sorted(p for p in outdir.glob("q1_*.json") if not p.stem.endswith("_smoke")) if outdir.exists() else []
-    is_smoke = False
-    if smoke:
-        files, is_smoke = [Path(smoke)], True
-    S = setup("q1", "Q1 sweep: component removal (HB+WJB train, 5-fold CV readout selection)",
-              "Train HB human-jailbreak + WJB pooled; readout (layer × tail position × C) chosen per detector by mean "
-              "out-of-fold validation folded AUC over 5 folds grouped by HB template (WJB rows by behaviour), refit on all "
-              "training rows; transfer = PAP/GCG/PAIR/GPTFuzz/PEZ; CI = HarmBench-behaviour cluster bootstrap (B=1000) of "
-              "the average; Δ CI = paired bootstrap. Conditions remove the persona span (240 trait vectors) / a random "
-              "240-dim span, or keep only the persona span, from every activation the detector sees. Readout facet: "
-              "'re-selected' = layer/position/C chosen again under the condition; 'fixed' = the full detector's "
-              "layer/position with C re-tuned.",
-              FAM5, facets=["readout"], readouts={"reselect": "re-selected readout", "fixed": "fixed at full detector's (layer, position)"},
-              pending=not files, expected=rel(outdir / "q1_gemma.json"), smoke=is_smoke, heat=True)
-    src(FTO / "q1_detection/q1_sweep.py", "Detection", "Q1 sweep (schema)", "q1", "writer of q1_{model}.json; docstring = protocol")
-    if not files:
-        src(outdir / "q1_{model}.json", "Detection", "Q1 sweep", "q1", "PENDING: not on disk at build time; tab shows 'pending'")
-        return
-    for f in files:
-        d = load(f); m = d["model"].replace("_smoke", "")
-        src(f, "Detection + Persona share", "Q1 sweep", "q1", "SMOKE (dev only)" if is_smoke else "")
-        S.setdefault("models_n", {})[m] = {"n_train": d.get("n_train"), "n_pos_train": d.get("n_pos_train"), "n_test": d.get("n_test"), "grid": d.get("grid")}
-        TAIL = d["tail_tokens"]; sel = d["selected"]; dl = d["delta"]
-        def selrec(det, cond, mode, entry, dkey):
+    src(FTO / "q1_detection/q1_sweep.py", "Detection", "q1 sweep (removal before training): writer", None, "docstring = protocol")
+    src(FTO / "q1_detection/q1_posthoc.py", "Detection", "q1 post-hoc (removal after training): writer", None, "docstring = protocol")
+    for m in Q1_MODELS:
+        for t in Q1_TRAINS:
+            for tm, fn in (("before", f"q1_{m}_{t}.json"), ("after", f"q1_posthoc_{m}_{t}.json")):
+                f = outdir / fn
+                Q1_STATUS.append({"m": m, "t": t, "tm": tm, "file": rel(f), "ready": f.exists()})
+                if not f.exists(): continue
+                src(f, "Detection" + (" + Persona share" if tm == "before" else ""), f"q1 {'sweep' if tm == 'before' else 'post-hoc'} {MODELS[m]} {Q1_TRAINS[t]}", None)
+                (q1_before if tm == "before" else q1_after)(load(f), m, t, f)
+
+def _gauss_mean(entries, key="test_auc"):
+    sets = set().union(*[e[key].keys() for e in entries])
+    return {s: mean([e[key].get(s) for e in entries]) for s in sets}
+
+def q1_before(d, m, t, f):
+    AVG = d.get("avg_sets") or [s for s in d["test"] if s != "wjb"]
+    TAIL = d["tail_tokens"]; sel = d["selected"]; dl = d["delta"]
+    st = next(x for x in Q1_STATUS if x["m"] == m and x["t"] == t and x["tm"] == "before")
+    st.update({"n_train": d.get("n_train"), "n_pos_train": d.get("n_pos_train"), "n_test": d.get("n_test"), "grid": d.get("grid"), "k": d.get("k"),
+               "test": d["test"], "avg_sets": AVG, "swept_layers": d.get("swept_layers")})
+    def one(det, cond, mode, e, dkey):
+        dd = None
+        if cond != "full" and dkey in dl:
+            x = dl[dkey]; dd = {"full": {"v": num(x["delta"]), "ci": ci2(x["ci95"])}}
+        return rec("q1", m, det, auc=e.get("test_auc"), avg=e.get("avg"), ci=e.get("avg_ci95"), cond=cond, train=t, readout=mode,
+                   val=e.get("val_auc"), sel={"L": e.get("layer"), "p": e.get("position"), "tok": e.get("token"), "C": e.get("C")} if "layer" in e else None, dl=dd)
+    dets = sorted({k.split("__")[0] for k in sel})
+    for det in [x for x in dets if not x.startswith("gauss_d")]:
+        for cond in ("full", "no_persona", "no_random", "only_persona"):
+            for mode in ("fixed", "reselect"):
+                k = f"{det}__{cond}__{'reselect' if cond == 'full' else mode}"
+                if k in sel: r = one(det, cond, mode, sel[k], f"{det}__{cond}__{mode}"); r["tm"] = "before"
+    draws = sorted(x for x in dets if x.startswith("gauss_d"))
+    for cond in ("full", "no_persona", "no_random", "only_persona"):
+        for mode in ("fixed", "reselect"):
+            es = [sel[k] for k in (f"{g}__{cond}__{'reselect' if cond == 'full' else mode}" for g in draws) if k in sel]
+            if not es: continue
+            if cond == "full":
+                sm = sel.get("gauss__full__summary", {}); avg, ci, dd = sm.get("avg"), sm.get("avg_ci95"), None
+            else:
+                x = dl.get(f"gauss__{cond}__{mode}"); avg = x["avg"] if x else mean([e["avg"] for e in es]); ci = None
+                dd = {"full": {"v": num(x["delta"]), "ci": ci2(x["ci95"])}} if x else None
+            r = rec("q1", m, "gauss", auc=_gauss_mean(es), avg=avg, ci=ci, cond=cond, train=t, readout=mode, val=mean([e["val_auc"] for e in es]),
+                    sel={"per_draw": [f"L{e['layer']} p{e['position']} C={e['C']}" for e in es]}, dl=dd, draws=[e["avg"] for e in es]); r["tm"] = "before"
+    groups = {}
+    for k, v in d["cells"].items():
+        det, cond, Ls, ps = k.split("__"); det = "gauss" if det.startswith("gauss_d") else det
+        groups.setdefault((det, cond), {}).setdefault((int(Ls[1:]), int(ps[1:])), []).append(v)
+    L = d.get("swept_layers") or d["layers"]; P = list(range(len(TAIL)))
+    for (det, cond), g in groups.items():
+        val = [[num(mean([c["val_auc"] for c in g[(l, p)]])) if (l, p) in g else None for p in P] for l in L]
+        avg = [[num(mean([mean([fold(c["test_auc"][s]) for s in AVG]) for c in g[(l, p)]])) if (l, p) in g else None for p in P] for l in L]
+        HEAT.append({"s": "q1", "m": m, "t": t, "d": det, "c": cond, "layers": L, "toks": TAIL, "metrics": {"val": val, "avg": avg}})
+    SHARE_Q1.append({"model": m, "train": t, "info": d["info"], "layers": L, "toks": TAIL, "smoke": False, "file": rel(f)})
+
+def q1_after(d, m, t, f):
+    st = next(x for x in Q1_STATUS if x["m"] == m and x["t"] == t and x["tm"] == "after"); st.update({"test": d["test"], "avg_sets": d.get("avg_sets")})
+    D_ = d["detectors"]
+    def put(det, es):
+        for cond in ("full", "no_persona", "no_random", "only_persona"):
+            xs = [e[cond] for e in es if cond in e]
+            if not xs: continue
+            one = len(xs) == 1
             dd = None
-            if cond != "full" and dkey in dl:
-                x = dl[dkey]; dd = {"full": {"v": num(x["delta"]), "ci": ci2(x["ci95"])}}
-            return rec("q1", m, det, auc=entry.get("test_auc"), avg=entry.get("avg"), ci=entry.get("avg_ci95"), cond=cond, readout=mode,
-                       val=entry.get("val_auc"), sel={"L": entry.get("layer"), "p": entry.get("position"), "tok": entry.get("token"), "C": entry.get("C")} if "layer" in entry else None, dl=dd)
-        dets = sorted({k.split("__")[0] for k in sel})
-        base = [x for x in dets if not x.startswith("gauss_d")]
-        for det in base:
-            for cond in ("full", "no_persona", "no_random", "only_persona"):
-                for mode in ("reselect", "fixed"):
-                    k = f"{det}__{cond}__{'reselect' if cond == 'full' else mode}"
-                    if k in sel: selrec(det, cond, mode, sel[k], f"{det}__{cond}__{mode}")
-        # Gaussian: mean of the 3 draws per set (re-aggregation); avg + CI from the saved summary / delta entries
-        draws = sorted(x for x in dets if x.startswith("gauss_d"))
-        if draws:
-            for cond in ("full", "no_persona", "no_random", "only_persona"):
-                for mode in ("reselect", "fixed"):
-                    ks = [f"{g}__{cond}__{'reselect' if cond == 'full' else mode}" for g in draws]
-                    es = [sel[k] for k in ks if k in sel]
-                    if not es: continue
-                    auc = {s: mean([e["test_auc"].get(s) for e in es]) for s in d["test"]}
-                    if cond == "full":
-                        sm = sel.get("gauss__full__summary", {}); avg, ci, dd = sm.get("avg"), sm.get("avg_ci95"), None
-                    else:
-                        x = dl.get(f"gauss__{cond}__{mode}")
-                        avg = x["avg"] if x else mean([e["avg"] for e in es]); ci = None
-                        dd = {"full": {"v": num(x["delta"]), "ci": ci2(x["ci95"])}} if x else None
-                    rec("q1", m, "gauss", auc=auc, avg=avg, ci=ci, cond=cond, readout=mode, val=mean([e["val_auc"] for e in es]),
-                        sel={"per_draw": [f"L{e['layer']} p{e['position']} C={e['C']}" for e in es]}, dl=dd, draws=[e["avg"] for e in es])
-        # heatmaps from cells
-        cells = d["cells"]; L, P = d["layers"], list(range(len(TAIL)))
-        groups = {}
-        for k, v in cells.items():
-            det, cond, Ls, ps = k.split("__"); det = "gauss" if det.startswith("gauss_d") else det
-            groups.setdefault((det, cond), {}).setdefault((int(Ls[1:]), int(ps[1:])), []).append(v)
-        for (det, cond), g in groups.items():
-            val = [[num(mean([c["val_auc"] for c in g[(l, p)]])) if (l, p) in g else None for p in P] for l in L]
-            avg = [[num(mean([mean([fold(c["test_auc"][s]) for s in d["test"]]) for c in g[(l, p)]])) if (l, p) in g else None for p in P] for l in L]
-            HEAT.append({"s": "q1", "m": m, "d": det, "c": cond, "layers": L, "toks": TAIL, "metrics": {"val": val, "avg": avg}})
-        # persona-share info -> share tab
-        SHARE_Q1.append({"model": m, "info": d["info"], "layers": L, "toks": TAIL, "smoke": is_smoke, "file": rel(f)})
+            if cond != "full":
+                dv = mean([x.get("delta") for x in xs])
+                dd = {"full": {"v": num(dv), "ci": ci2(xs[0].get("delta_ci95")) if one else None}}
+            sel = {"L": es[0]["layer"], "p": es[0]["position"], "C": es[0]["C"]} if one else {"per_draw": [f"L{e['layer']} p{e['position']} C={e['C']}" for e in es]}
+            sel.update({"w_share_persona": num(mean([e.get("w_share_persona") for e in es])), "w_share_random": num(mean([e.get("w_share_random") for e in es]))})
+            r = rec("q1", m, det, auc=_gauss_mean(xs) if not one else xs[0]["test_auc"], avg=mean([x["avg"] for x in xs]), ci=xs[0].get("avg_ci95") if one else None,
+                    cond=cond, train=t, readout="fixed", sel=sel, dl=dd, draws=[x["avg"] for x in xs] if not one else None)
+            r["tm"] = "after"
+            W_SHARE.append({"m": m, "t": t, "d": det, "persona": sel["w_share_persona"], "random": sel["w_share_random"]}) if cond == "full" else None
+    for det in [x for x in D_ if not x.startswith("gauss_d")]: put(det, [D_[det]])
+    g = [D_[x] for x in sorted(D_) if x.startswith("gauss_d")]
+    if g: put("gauss", g)
+W_SHARE = []
 
 SHARE_Q1 = []
-
-def hb_select():
-    for cv in (False, True):
-        suf = "_cv" if cv else ""
-        sid = "hbsel" + suf
-        S = setup(sid, "Readout selection " + ("(5-fold template-grouped CV)" if cv else "(single 80/20 val split)") + ": PersonaJB vs raw",
-                  "hb_select.py" + (" --cv" if cv else "") + ". Train: HB human-jailbreak templates (Gemma: HB + WJB pooled). Both "
-                  "detectors search every saved layer × tail position × C (1e-4..100); StandardScaler + LR. "
-                  + ("Validation = 5-fold CV grouped by HB template (WJB rows by behaviour), mean fold AUC. " if cv else
-                     "Validation = one behaviour-grouped 80/20 split (HB alone: also template-disjoint). ")
-                  + "Selected cell refit on all training data. Transfer = every other set (Llama/OLMo/Qwen include WJB). "
-                  "CI: HarmBench-behaviour cluster bootstrap B=1000; Δ = PersonaJB − raw (paired).",
-                  ["wjb"] + FAM5, heat=True)
-        for m in ("llama", "gemma", "olmo", "qwen"):
-            f = DET / f"hb_select_out/hb_select_{m}{suf}.json"
-            if not f.exists(): continue
-            d = load(f); src(f, "Detection", S["label"], sid)
-            dd = d["delta"]
-            for det, e in d["selected"].items():
-                x = {"raw": {"v": num(dd["delta"]), "ci": ci2(dd["ci95"])}} if det == "PersonaJB" else None
-                rec(sid, m, det, auc=e["test_auc"], avg=e["avg"], ci=e["avg_ci95"], val=e["val_auc"],
-                    sel={"L": e["layer"], "p": e["position"], "tok": e["token"], "C": e["C"]}, dl=x, train="hbwjb" if d["train"] == ["hb", "wjb"] else "hb")
-            L, TAIL = d["layers"], d["tail_tokens"]
-            for det in ("PersonaJB", "raw"):
-                val = [[num(d["grid"].get(f"{det}__L{l}__p{p}", {}).get("val_auc")) for p in range(len(TAIL))] for l in L]
-                avg = [[num(mean([fold(a) for a in d["grid"][f"{det}__L{l}__p{p}"]["test_auc"].values()])) if f"{det}__L{l}__p{p}" in d["grid"] else None
-                        for p in range(len(TAIL))] for l in L]
-                HEAT.append({"s": sid, "m": m, "d": det, "c": "full", "layers": L, "toks": TAIL, "metrics": {"val": val, "avg": avg}})
-        S["trains"] = {"hb": "HB human jailbreaks", "hbwjb": "HB + WJB pooled (Gemma)"}
-
-def single_set():
-    """persona_four.json (PersonaJB / raw / Gaussian, PersonaJB_filtered for OLMo) + persona_variants.json (variants).
-    Same protocol and identical raw / PersonaJB numbers (checked at build time)."""
-    P, V = load(DET / "persona_four.json"), load(DET / "persona_variants.json")
-    F = load(DET / "four_models.json")
-    S = setup("single", "Single-set training (paper readout, C on train-set val split)",
-              "Train on ONE set (HB human jailbreaks, WJB, or one attack family); StandardScaler + LR, C from 1e-4..100 chosen "
-              "on a behaviour-grouped validation split of the training set (HB also template-disjoint), refit on the whole "
-              "training set. Readout: Llama L16, Gemma L30, Qwen L48, OLMo L16; last prompt token. Transfer per training "
-              "set = mean folded AUC over the attack families GCG/PAIR/PAP/GPTFuzz/PEZ other than itself. CI: HarmBench-"
-              "behaviour cluster bootstrap B=1000; Δ CIs Bonferroni-corrected as saved. Gaussian = K unit random "
-              "directions, K = trait count, mean of 3 draws.",
-              ["hb", "wjb"] + FAM5, facets=["train"], trains={t: SETS[t] if t != "hb" else "HB human jailbreaks" for t in ["hb", "wjb"] + FAM5} | {"avg": "mean over the 7 training sets"})
-    src(DET / "persona_four.json", "Detection", S["label"], "single")
-    src(DET / "persona_variants.json", "Detection", S["label"], "single", "PCA_k / top_k / rand_k / concat variants")
-    src(DET / "four_models.json", "Detection", S["label"], "single", "raw/Gaussian: identical to persona_four (verified at build); only C values read")
-    mism = 0
-    for m in MODELS:
-        for t in ["hb", "wjb"] + FAM5 + ["avg"]:
-            c = P["cells"].get(f"{m}__{t}")
-            if not c: continue
-            for det, dk in (("PersonaJB", "PersonaJB"), ("raw", "raw"), ("gauss", "Gaussian"), ("PersonaJB_filtered", "PersonaJB_filtered")):
-                if dk not in c: continue
-                if det == "gauss":
-                    pf = [P["per_family"].get(f"{m}__Gaussian{i}__{t}") for i in range(3)]
-                    auc = {s: mean([x.get(s) for x in pf if x]) for s in FAM5} if t != "avg" and all(pf) else None
-                else:
-                    auc = P["per_family"].get(f"{m}__{dk}__{t}") if t != "avg" else None
-                dl = {}
-                if det in ("PersonaJB", "PersonaJB_filtered"):
-                    if f"{dk}-raw" in c: dl["raw"] = {"v": num(c[f"{dk}-raw"]), "ci": ci2(c[f"{dk}-raw_ci_bonf"]), "kind": "Bonferroni"}
-                    if f"{dk}-Gaussian" in c: dl["gauss"] = {"v": num(c[f"{dk}-Gaussian"]), "ci": ci2(c[f"{dk}-Gaussian_ci_bonf"]), "kind": "Bonferroni"}
-                Cs = None
-                if t != "avg":
-                    if det.startswith("PersonaJB"): Cs = (P["C"].get(m) or {}).get(f"{dk}__{t}") or (V["C"].get(m) or {}).get(f"{dk}__{t}")
-                    elif det == "raw": Cs = (F["C"].get(m) or {}).get(f"raw__{t}")
-                    elif det == "gauss": Cs = "/".join(str((F["C"].get(m) or {}).get(f"Gaussian{i}__{t}")) for i in range(3))
-                rec("single", m, det, auc=auc, avg=c[dk], ci=c.get(f"{dk}_ci95"), train=t, dl=dl or None, sel={"C": Cs} if Cs is not None else None)
-        # variants
-        for key, c in V["cells"].items():
-            mm, det, t = key.split("__")
-            if mm != m or det in ("raw", "PersonaJB"):
-                if mm == m and det in ("raw", "PersonaJB") and abs(c["auc"] - P["cells"][f"{m}__{t}"][det]) > 1e-9: mism += 1
-                continue
-            auc = V["per_family"].get(f"{m}__{det}__{t}") if t != "avg" else None
-            Cs = (V["C"].get(m) or {}).get(f"{det}__{t}") if t != "avg" else None
-            rec("single", m, det, auc=auc, avg=c["auc"], ci=c.get("ci95"), train=t,
-                dl={"raw": {"v": num(c["delta_vs_raw"]), "ci": ci2(c["delta_ci_bonf"]), "kind": "Bonferroni"}},
-                sel={"C": Cs} if Cs is not None else None)
-    if mism: print(f"WARNING single_set: {mism} raw/PersonaJB cells differ between persona_variants and persona_four", file=sys.stderr)
-    S["top_traits"] = V.get("top_traits")
-    S["default_dets"] = ["PersonaJB", "PersonaJB_filtered", "raw", "gauss", "concat", "PCA_229", "PCA_240", "top_10", "rand_10"]
-
-def dom_compare():
-    d = load(DET / "dom_compare/dom_olmo_compare.json")
-    S = setup("dom", "OLMo-3-7B on Dominic's activations (single-set training)",
-              "Same protocol as the single-set setup (C tuned on a behaviour-grouped val split of the training set, transfer "
-              "= mean folded AUC over the other families) but on Dominic's OLMo-3-7B activations (RCP *_activations_olmo3, "
-              "L16 last token). No GCG (his GCG run never finished). Δ CIs: paired behaviour-cluster bootstrap B=1000 (95%, "
-              "not Bonferroni).", ["hb", "wjb", "pair", "pap", "gptfuzz", "pez"], facets=["train"],
-              trains={t: SETS[t] for t in ["hb", "wjb", "pair", "pap", "gptfuzz", "pez"]} | {"avg": "mean over training sets"})
-    src(DET / "dom_compare/dom_olmo_compare.json", "Detection", S["label"], "dom")
-    for t, c in d["cells"].items():
-        for det, dk in (("PersonaJB", "PersonaJB"), ("raw", "raw"), ("gauss", "Gaussian")):
-            if det == "gauss":
-                pf = [d["per_family"].get(f"Gaussian{i}__{t}") for i in range(3)]
-                auc = {s: mean([x.get(s) for x in pf]) for s in pf[0]} if t != "avg" and all(pf) else None
-            else: auc = d["per_family"].get(f"{dk}__{t}") if t != "avg" else None
-            dl = None
-            if det == "PersonaJB":
-                dl = {"raw": {"v": num(c["PersonaJB-raw"]), "ci": ci2(c.get("PersonaJB-raw_ci95"))}, "gauss": {"v": num(c["PersonaJB-Gaussian"]), "ci": ci2(c.get("PersonaJB-Gaussian_ci95"))}}
-            Cs = d["C"].get(f"{dk}__train_{t}") if det != "gauss" else "/".join(str(d["C"].get(f"Gaussian{i}__train_{t}")) for i in range(3))
-            rec("dom", "olmo", det, auc=auc, avg=c[dk], train=t, dl=dl, sel={"C": Cs} if t != "avg" else None)
-
-def olmo_layer_sweep():
-    d = load(DET / "olmo_probe.json")
-    S = setup("olmo_layers", "OLMo-3-7B raw probe: layer sweep (single-set training)",
-              "olmo_probe.py: raw-activation LR, C chosen on a behaviour-grouped val split of the training set, last prompt "
-              "token, every saved layer; transfer = mean folded AUC over the other families (GCG/PAIR/PAP/GPTFuzz/PEZ). No "
-              "bootstrap for the layer sweep (CIs only at the main layer 16, which equals the single-set setup).",
-              [], facets=["train"], trains={t: SETS[t] for t in ["hb", "wjb"] + FAM5} | {"avg": "mean over training sets"}, readout_axis=True)
-    src(DET / "olmo_probe.json", "Detection", S["label"], "olmo_layers", "layer_sweep only; 'transfer' at L16 duplicates persona_four raw")
-    for L, row in d["layer_sweep"].items():
-        for t, v in row.items(): rec("olmo_layers", "olmo", "raw", avg=v, train=t, readout=f"L{L}")
-    S["readouts"] = {f"L{L}": f"layer {L}" for L in d["layer_sweep"]}
-
-def paper50():
-    """trait_pc_sweep summaries: the published PersonaJB-row protocol, 50 HB pool splits."""
-    S = setup("paper50", "Paper protocol: 50 HB pool splits (trait-PC sweep and subspace dictionaries)",
-              "trait_pc_sweep.py = the published PersonaJB row (run_all_traits_sweep_v2 logreg_l2_C10.0_raw): per seed 0..49 a "
-              "behaviour × template pool split (70/30) of HarmBench human jailbreaks; StandardScaler + LR(C fixed per file, "
-              "C=10 = paper) refit on the train pool. Gemma folds all WildJailbreak rows into the fit. Readout Llama L16 / "
-              "Gemma L30, last prompt token. Cell = mean over seeds of folded AUC; avg transfer = mean over GCG/PAIR/PAP/"
-              "GPTFuzz/PEZ; CI = 1.96·sd/√50 of per-seed averages. 'val' = inner 15% val split AUC. 'val-C' = C picked per "
-              "seed on that val split (aggregate.json). Draw-based dictionaries (Alpaca/Wikipedia/No Robots activations, "
-              "shuffled contrasts, Gaussian) are shown as the mean of 5 draws (per-draw avgs in the tooltip, no CI).",
-              ["hb_test"] + FAM5, facets=["C"])
-    Cs = {}
-    TPC = FTO / "trait_pc_sweep"
-    seen = set()
-    groups = {}   # (m, Cf, det) -> list of (cfgname, cfg)
-    for f in sorted(TPC.glob("summary_*.json")):
-        d = load(f); m = d["model"]; C = d.get("C") or 10.0
-        Cf = f"C={C:g}"; Cs[Cf] = f"fixed C={C:g}" + (" (paper)" if C == 10 else "")
-        src(f, "Detection", S["label"], "paper50", f"C={C:g}; signed fields dropped")
-        for n, c in d["configs"].items():
-            if (m, Cf, n) in seen: continue
-            seen.add((m, Cf, n))
-            b, k = c["basis"], c["k"]
-            mm = re.match(r"(acts|noise|gauss|wiki|nr)_d(\d)$", b)
-            if b == "traits": det = "PersonaJB"
-            elif b in ("pca", "svd", "pcamean"): det = f"tpc_{b}_{k}"
-            elif b.startswith("lda_"): det = f"lda_{b[4:].lstrip('a')}_{k}"
-            elif b == "alpaca_pca": det = "alpaca_pca"
-            elif b == "hb_pca": det = "hb_pca"
-            elif mm: det = {"acts": "alpaca_acts", "noise": "shuffled", "gauss": "gauss", "wiki": "wiki_acts", "nr": "nr_acts"}[mm[1]]
-            else: det = b
-            groups.setdefault((m, Cf, det), []).append(c)
-    for (m, Cf, det), cs in groups.items():
-        fam = {"hb_test": "human_test", "gcg": "GCG", "pair": "PAIR", "pap": "PAP", "gptfuzz": "GPTFuzz", "pez": "PEZ"}
-        if len(cs) == 1:
-            c = cs[0]; ci = c["avg_transfer_ci95"]
-            rec("paper50", m, det, auc={s: c["mean"][k] for s, k in fam.items()}, avg=c["avg_transfer"], ci=[c["avg_transfer"] - ci, c["avg_transfer"] + ci],
-                val=c["mean"].get("val"), Cf=Cf)
-        else:
-            rec("paper50", m, det, auc={s: mean([c["mean"][k] for c in cs]) for s, k in fam.items()}, avg=mean([c["avg_transfer"] for c in cs]),
-                val=mean([c["mean"].get("val") for c in cs]), Cf=Cf, draws=[c["avg_transfer"] for c in cs], note=f"mean of {len(cs)} draws")
-    A = load(TPC / "aggregate.json"); src(TPC / "aggregate.json", "Detection", S["label"], "paper50", "val-C rows (C chosen per seed on inner val)")
-    Cs["val-C"] = "C chosen per seed on the inner val split"
-    for m, O in A.items():
-        for b in ("pca", "svd", "traits"):
-            for r in O[b]:
-                v = r["valC"]; det = "PersonaJB" if b == "traits" else f"tpc_{b}_{r['k']}"
-                rec("paper50", m, det, auc={"hb_test": v["hb"], **{s.lower(): v["fam"][s] for s in v["fam"]}}, avg=v["xfer"], ci=[v["xfer"] - v["ci"], v["xfer"] + v["ci"]],
-                    Cf="val-C", sel={"C": f"modal {v['C_mode']}"})
-        for b in ("pca", "svd"):
-            j = O.get(b + "_valkC")
-            if j: rec("paper50", m, f"tpc_{b}_valk", auc={"hb_test": j["hb"]}, avg=j["xfer"], ci=[j["xfer"] - j["ci"], j["xfer"] + j["ci"]], Cf="val-C",
-                      sel={"k": f"median {j['k_median']:.0f}, range {j['k_range']}"})
-    DETS["tpc_pca_valk"] = ("Trait PCs (centered), k and C chosen on val", "persona")
-    DETS["tpc_svd_valk"] = ("Trait SVD, k and C chosen on val", "persona")
-    S["Cs"] = Cs; S["default_C"] = "C=10"
-    S["default_dets"] = ["PersonaJB", "tpc_pca_valk", "alpaca_pca", "hb_pca", "alpaca_acts", "wiki_acts", "nr_acts", "shuffled", "gauss", "tpc_pca_228", "tpc_pca_239", "tpc_svd_229", "tpc_svd_240"]
-
-def removal50():
-    S = setup("removal50", "Persona-removal controls (50 HB pool splits, C=10, dictionary detectors)",
-              "remove_persona_all_controls.py + remove_nonpersona_span.py: the PersonaJB recipe (StandardScaler + LR C=10, the "
-              "same 50 pool splits; Gemma: + all WJB rows in the fit) run on 'dictionaries' of K vectors (K=229 Llama / 240 "
-              "Gemma) instead of the trait vectors. Condition = a span projected out of every dictionary vector (then "
-              "renormalized). Folded AUC; HB test + mean of the 5 transfer families (per-family AUCs not saved). Draw-based "
-              "dictionaries = mean of 3 draws (per-draw values in the tooltip; no CI saved). Readout Llama L16 / Gemma L30 last "
-              "token. Not the same code path as the trait-PC sweep: numbers differ from it by up to ~0.003, so they are kept in "
-              "a separate setup.", ["hb_test"])
-    MAP = {"persona": "no_persona", "No Robots span": "no_nr", "random span": "no_random_span", "Wikipedia": "no_wiki",
-           "Wikipedia - P": "no_wiki_P", "No Robots - P": "no_nr_P", "Alpaca - P": "no_alpaca_P", "random": "no_random_span"}
-    DN = {"Wikipedia acts": "wiki_acts", "No Robots acts": "nr_acts", "Alpaca acts": "alpaca_acts", "Shuffled contrasts": "shuffled",
-          "Random Gaussian": "gauss", "Alpaca PCA-229": "alpaca_pca", "HarmBench PCA-229": "hb_pca", "Alpaca PCA-240": "alpaca_pca", "HarmBench PCA-240": "hb_pca"}
-    for m, base in (("llama", NSC), ("gemma", NSC / "gemma")):
-        A = load(base / "remove_persona_all_controls.json"); B = load(base / "remove_nonpersona_span.json")
-        src(base / "remove_persona_all_controls.json", "Detection", S["label"], "removal50", "conditions: persona / No Robots span / random span")
-        src(base / "remove_nonpersona_span.json", "Detection", S["label"], "removal50", "conditions: Wikipedia, Wikipedia−P, No Robots−P, Alpaca−P spans ('persona' and 'random' duplicate the file above, checked)")
-        merged = {}
-        for n, outs in A.items(): merged[n] = [dict(o) for o in outs]
-        for n, outs in B["dicts"].items():
-            for i, o in enumerate(outs):
-                for k, v in o.items():
-                    if k in ("whole", "persona", "random"):
-                        ref = merged[n][i]["whole" if k == "whole" else ("persona" if k == "persona" else "random span")]
-                        if [round(x, 9) for x in ref] != [round(x, 9) for x in v]: print(f"WARNING removal50 {m} {n} {k} differs between files", file=sys.stderr)
-                        continue
-                    merged[n][i][k] = v
-        for n, outs in merged.items():
-            det = DN[n]
-            w = [o["whole"] for o in outs]
-            rec("removal50", m, det, auc={"hb_test": mean([x[0] for x in w])}, avg=mean([x[1] for x in w]), draws=[x[1] for x in w] if len(w) > 1 else None)
-            for k, cond in MAP.items():
-                vs = [o[k] for o in outs if k in o]
-                if not vs: continue
-                rec("removal50", m, det, cond=cond, auc={"hb_test": mean([x[1] for x in vs])}, avg=mean([x[2] for x in vs]),
-                    draws=[x[2] for x in vs] if len(vs) > 1 else None, sel={"share_removed": num(mean([x[0] for x in vs]))})
-        for sn, st in B["spans"].items():
-            SHARE_SPANS.append({"model": m, "span": sn, **{k: num(v) for k, v in st.items()}, "file": rel(base / "remove_nonpersona_span.json")})
-    S["conds"] = ["full", "no_persona", "no_random_span", "no_wiki", "no_wiki_P", "no_nr_P", "no_alpaca_P", "no_nr"]
-SHARE_SPANS = []
-
-def removal10():
-    S = setup("removal10", "Persona-part tests (10 HB pool splits, C=10, Llama)",
-              "pcs_persona_component.py (Alpaca / HarmBench PCA-229 dictionaries) and persona_part_test.py (Wikipedia / No Robots "
-              "/ Alpaca activation dictionaries, draw 0): PersonaJB recipe (StandardScaler + LR C=10) on 10 pool splits only "
-              "(not the 50 of the paper protocol), Llama L16 last token, HB train only. Condition = the named span's component "
-              "removed from every dictionary vector. HB test + mean of 5 transfer families, folded. persona_part_test does not "
-              "save the unremoved ('full') detector, so those cells are missing.", ["hb_test"])
-    d = load(NSC / "pcs_persona_component.json"); src(NSC / "pcs_persona_component.json", "Detection", S["label"], "removal10")
-    for pn, det in (("alpaca_pca", "alpaca_pca"), ("hb_pca", "hb_pca")):
-        e = d[pn]; rec("removal10", "llama", det, auc={"hb_test": e["whole"][0]}, avg=e["whole"][1])
-        for k, cond in (("persona traits", "no_persona"), ("Wikipedia acts", "no_wiki"), ("No Robots acts", "no_nr"), ("random Gaussian", "no_random_span")):
-            vs = e[k]; rec("removal10", "llama", det, cond=cond, auc={"hb_test": mean([x[1] for x in vs])}, avg=mean([x[2] for x in vs]),
-                           draws=[x[2] for x in vs] if len(vs) > 1 else None, sel={"share_removed": num(mean([x[0] for x in vs]))})
-    p = load(NSC / "persona_part_test.json"); src(NSC / "persona_part_test.json", "Detection", S["label"], "removal10", "det_out_hb / det_out_xf only; single-vector AUCs go to Persona share")
-    DN = {"Wikipedia": "wiki_acts_d0", "No Robots": "nr_acts_d0", "Alpaca": "alpaca_acts_d0"}
-    CN = {"Persona traits": "no_persona", "Random Gaussian": "no_random_span", "HarmBench PCA-229": "no_hbpca", "Alpaca PCA-229": "no_alpacapca"}
-    for k, v in p.items():
-        dn, sn = k.split("|")
-        rec("removal10", "llama", DN[dn], cond=CN[sn], auc={"hb_test": v["det_out_hb"]}, avg=v["det_out_xf"], sel={"share_removed": num(v["share"])})
-    DETS.update({"wiki_acts_d0": ("Wikipedia activations (draw 0)", "subspace"), "nr_acts_d0": ("No Robots activations (draw 0)", "subspace"),
-                 "alpaca_acts_d0": ("Alpaca activations (draw 0)", "subspace")})
-    S["conds"] = ["full", "no_persona", "no_random_span", "no_wiki", "no_hbpca", "no_alpacapca", "no_nr"]
-
-def release():
-    S = setup("release", "Clean-repo release run (50 splits, config chosen on train-pool val)",
-              "~/persona-jailbreaks scripts/4_detect.py on the release data (~/pjb_release_staging): 50 behaviour × template "
-              "splits of HarmBench (70/30); a stratified 15% of each training pool selects one configuration per method (C × "
-              "class weight grid; highest val AUC averaged over splits), refit on the training pool; Gemma adds WJB to every "
-              "fitting set. Folded AUC per split. Transfer CI: prompt resampling within each family (1000 draws). Llama PAIR "
-              "here excludes the 400 unattacked direct requests that the paper's PAIR set included, so Llama PAIR / avg "
-              "differ from the paper. Only activation methods were run.", ["hb_test"] + FAM5)
-    N = {"PersonaJB": "PersonaJB", "Activation probe": "raw", "PCA": "PCA", "Jailbreak direction": "jb_dir", "Refusal direction": "refusal", "JBShield-style": "JBShield"}
-    for m in ("llama", "gemma"):
-        f = RELROOT / f"derived/{m}/detection.json"; d = load(f); src(f, "Detection", S["label"], "release")
-        for k, e in d.items():
-            rec("release", m, N.get(k, k), auc={"hb_test": e["harmbench"], **e["families"]}, avg=e["transfer"], ci=e.get("transfer_ci"), val=e.get("val_auc"),
-                sel={"C": e["config"].get("C"), "cw": e["config"].get("cw")} if e.get("config") else None)
-
-def qwen_sources():
-    Q = FTO / "qwen3_32b"
-    d = load(Q / "transfer/detect_transfer.json")
-    S = setup("qwen_pos", "Qwen3-32B L48 per tail position (49 pool splits, C=10, HB+WJB)",
-              "qwen3_32b/transfer/detect_transfer.py (protocol of stage2/qwen_detect.py): StandardScaler + LR C=10 on 240 "
-              "projections; HB human-jailbreak train pool + all WJB; 50 pool splits with both classes (49 used); folded AUC on HB "
-              "test and each of Qwen's own GCG/PAIR/PEZ/GPTFuzz test cases + PAP. Full probe: LR C=0.01 on 5120 dims, 10 splits. "
-              "Gaussian = mean of 3 draws. No CI saved.", ["hb_test"] + FAM5, facets=["readout"])
-    src(Q / "transfer/detect_transfer.json", "Detection", S["label"], "qwen_pos")
-    S["readouts"] = {}
-    for pos, e in d["positions"].items():
-        r = f"p{pos} {e['token']!r}"; S["readouts"][r] = f"position {pos} ({e['token']!r})"
-        for dk, det in (("PersonaJB", "PersonaJB"), ("Gaussian", "gauss"), ("full probe", "full_probe")):
-            x = e.get(dk)
-            if not x: continue
-            rec("qwen_pos", "qwen", det, auc={"hb_test": x["hb"], **{s: x[s] for s in FAM5 if s in x}}, avg=x.get("transfer_mean"), readout=r)
-    # layer x position sweep -> heatmaps only
-    sw = load(Q / "sweep/out/sweep.json"); src(Q / "sweep/out/sweep.json", "Detection", "Layer × position heatmap (Qwen sweep)", "qwen_sweep")
-    setup("qwen_sweep", "Qwen3-32B layer × position sweep (20 pool splits, C=10)",
-          "sweep/detect_sweep.py: StandardScaler + LR C=10 on 240 projections (PersonaJB / Gaussian draws), full probe LR C=0.01 "
-          "(5 splits). Training pool HB human-jailbreak only or HB + all WJB (condition facet). Metrics: HB template/behaviour-"
-          "disjoint test (20 splits), HB random 5-fold CV, mean transfer over Qwen's own GCG/PAIR/PAP/GPTFuzz/PEZ. Heatmap only.",
-          [], heat=True, heat_only=True)
-    L, TAIL = sw["layers"], sw["tail_tokens"]
-    for det, dk in (("PersonaJB", "PersonaJB"), ("gauss", "Gaussian"), ("full_probe", "fullprobe")):
-        for tr in ("hb", "hbwjb"):
-            mets = {}
-            for met, key in (("hb_disjoint", "hb_disjoint"), ("hb_randomCV", "hb_randomCV"), ("avg", "transfer_mean")):
-                mets[met] = [[num(sw["cells"].get(f"L{l}_p{p}", {}).get(f"{dk}__{tr}", {}).get(key)) for p in range(len(TAIL))] for l in L]
-            HEAT.append({"s": "qwen_sweep", "m": "qwen", "d": det, "c": tr, "layers": L, "toks": TAIL, "metrics": mets})
-    # probe_methods: single-set + LOFO method sweep
-    pm = load(Q / "probe_methods/out/probe_methods.json")
-    S = setup("probe_methods", "Probe-method sweep: single-set and leave-one-family-out (Llama L16, Qwen L48)",
-              "probe_methods.py: every hyperparameter tuned on a behaviour-grouped validation split of the TRAINING data (HB alone: "
-              "behaviour- and template-disjoint), refit on all training data. Regimes: single (train on one set, test on the "
-              "attack families other than itself) and LOFO (train on every set but one family, sets weighted equally, test on "
-              "the held-out family; columns = held-out family). CIs: behaviour-clustered bootstrap B=1000; Δ vs raw LR "
-              "Bonferroni (m=44). Last prompt token.", ["hb", "wjb"] + FAM5, facets=["train"],
-              trains={t: SETS[t] for t in ["hb", "wjb"] + FAM5} | {"avg": "single-set, mean over training sets", "lofo": "leave one family out"})
-    src(Q / "probe_methods/out/probe_methods.json", "Detection", S["label"], "probe_methods")
-    T, Cc = pm["table"], pm["cells"]
-    for key, e in T.items():
-        m, meth, reg = key.split("__")
-        if reg.startswith("lofo_") and reg != "lofo_avg": continue
-        det = "pm_" + meth
-        dl = {"raw": {"v": num(e.get("delta_vs_LR_raw")), "ci": ci2(e.get("delta_ci_bonf")), "kind": "Bonferroni"}} if meth != "LR_raw" else None
-        if reg == "lofo_avg":
-            auc = {f: (T.get(f"{m}__{meth}__lofo_{f}") or {}).get("auc") for f in FAM5}
-            rec("probe_methods", m, det, auc=auc, avg=e["auc"], ci=e.get("ci95"), train="lofo", dl=dl)
-        elif reg == "single_avg":
-            rec("probe_methods", m, det, avg=e["auc"], ci=e.get("ci95"), train="avg", dl=dl)
-        else:
-            t = reg[len("single_"):]
-            if meth == "LR_Gaussian":
-                cs = [Cc.get(f"{m}__single_{t}__LR_Gaussian{i}") for i in range(3)]
-                auc = {s: mean([c["per_test"].get(s) for c in cs if c]) for s in FAM5} if all(cs) else None
-                cfg = "/".join(str(c["cfg"]) for c in cs if c)
-            else:
-                c = Cc.get(f"{m}__single_{t}__{meth}"); auc = c["per_test"] if c else None; cfg = c["cfg"] if c else None
-            rec("probe_methods", m, det, auc=auc, avg=e["auc"], ci=e.get("ci95"), train=t, dl=dl, sel={"C": cfg} if cfg else None)
-
-def pca_k():
-    D = FTO / "pca_k_sweep"
-    for m, sid, lab, prot in (
-        ("llama", "pcak_llama", "Activation PCA(k) sweep, Llama protocol (50 seeds)",
-         "pca_k_sweep.py llama: per seed a behaviour × template pool split (70/30) → StandardScaler(train) → PCA(k) on the "
-         "standardized train pool → LR(C=1). Shown: auc_sym = folded AUC on the FULL test set for every cell (the paper's "
-         "mixed per-cell protocol with signed / undersampled cells is not shown). Mean over 50 seeds; avg CI = 1.96·sd/√50 of "
-         "per-seed averages (re-aggregated from the saved per-seed AUCs). k=0 = raw probe. Llama L16 last token, HB train only."),
-        ("gemma", "pcak_gemma", "Activation PCA(k) sweep, Gemma protocol (50 seeds)",
-         "pca_k_sweep.py gemma (run_all_traits_sweep_v2 --feature_type pca): PCA(k) fit ONCE on all HB human-jailbreak "
-         "activations (unstandardized); per seed pool split, train pool = HB train + all WJB; StandardScaler + LR(C=1, "
-         "class_weight=balanced). Folded AUC (auc_sym) on the full set; mean over 50 seeds; CI = 1.96·sd/√50. Gemma L30 last token.")):
-        S = setup(sid, lab, prot, ["hb_test"] + FAM5, facets=["C"], sweep_k=True)
-        Cs = {}
-        for f in sorted(D.glob(f"*{m}*.json")):
-            d = load(f)
-            C = d.get("C"); cw = d.get("class_weight")
-            Cf = "C=1 (paper row)" if C is None else f"C={C:g}" + ("" if cw else ", unbalanced") if m == "gemma" else ("C=1 (paper row)" if C is None else f"C={C:g}")
-            if m == "gemma" and C is not None: Cf = f"C={C:g}, " + ("balanced" if cw == "balanced" else "unbalanced")
-            Cs[Cf] = Cf; src(f, "Detection", lab, sid, "auc_sym only (signed auc / auc_paper dropped)")
-            for k, e in d["per_k"].items():
-                pf = e["per_family"]; n = len(pf["GCG"]["auc_sym"])
-                fam = {"hb_test": "human_test", "gcg": "GCG", "pair": "PAIR", "pap": "PAP", "gptfuzz": "GPTFuzz", "pez": "PEZ"}
-                per_seed = [mean([fold(pf[F]["auc_sym"][i]) for F in ("GCG", "PAIR", "PAP", "GPTFuzz", "PEZ")]) for i in range(n)]
-                mu = mean(per_seed); sd = (sum((x - mu) ** 2 for x in per_seed) / (n - 1)) ** .5; h = 1.96 * sd / n ** .5
-                rec(sid, m, f"pcak_{k}", auc={s: mean([fold(x) for x in pf[F]["auc_sym"]]) for s, F in fam.items()}, avg=mu, ci=[mu - h, mu + h], Cf=Cf,
-                    sel={"k": int(k), "expl_var": num(e.get("explained_var"))})
-        S["Cs"] = Cs; S["default_C"] = "C=1 (paper row)"
-
-def few_dirs():
-    f = NSC / "few_directions.json"
-    if not f.exists(): return
-    FEW.append(load(f)); src(f, "Detection", "Few directions (k best train-AUC directions per dictionary)", None, "see few_directions parser")
-FEW = []
-
-def complement():
-    d = load(DET / "complement/complement.json"); src(DET / "complement/complement.json", "Detection", "Complementarity: does PersonaJB catch what the raw probe misses?", None)
-    COMPLEMENT.update(d)
-COMPLEMENT = {}
-
-def dir50():
-    S = setup("dir50", "Single directions with persona component removed (50 HB pool splits)",
-              "appendix_controls_data.py auc block: score = h·v for a single direction v (no fitted classifier), Llama L16 / Gemma "
-              "L30 last token; Δμ re-estimated on each split's train rows. Folded AUC, HB test mean over 50 pool splits (CI = "
-              "1.96·sd/√50) + mean of the 5 transfer families (per-family not saved). Conditions: v itself, its persona-span "
-              "component only, persona component removed, a random K-dim Gaussian span removed (5 spans). Null directions: "
-              "stratified shuffles (the clean null), pooled shuffles (inflated, kept for completeness), random Gaussian.", ["hb_test"])
-    DN = {"refusal": "refusal", "dmu": "jb_dir", "shuf_refusal": "shuf_refusal", "shuf_dmu": "shuf_dmu", "strat_refusal": "strat_refusal",
-          "strat_dmu": "strat_dmu", "shuf_alpaca": "shuf_alpaca", "random_direction": "random_dir"}
-    DETS.update({"shuf_refusal": ("Shuffled refusal (pooled permutation; inflated null)", "null"), "shuf_dmu": ("Shuffled Δμ (pooled permutation; inflated null)", "null"),
-                 "strat_refusal": ("Stratified-shuffle refusal (clean null)", "null"), "strat_dmu": ("Stratified-shuffle Δμ (clean null)", "null"),
-                 "shuf_alpaca": ("Shuffled Alpaca contrast", "null"), "random_dir": ("Random Gaussian direction", "null")})
-    CM = {"full": "full", "persona_component": "only_persona", "persona_removed": "no_persona", "random_removed": "no_random_span"}
-    for m, base in (("llama", NSC), ("gemma", NSC / "gemma")):
-        f = base / "appendix_controls_data.json"; d = load(f); src(f, "Detection + Persona share", S["label"] + " / direction share", "dir50", "auc block → Detection; share blocks → Persona share")
-        for k, conds in d["auc"].items():
-            for ck, e in conds.items():
-                h = e.get("hb_ci")
-                rec("dir50", m, DN[k], cond=CM[ck], auc={"hb_test": e["hb"]}, avg=e["transfer"], sel={"hb_ci95": [num(e["hb"] - h), num(e["hb"] + h)]} if h is not None else None)
-    S["conds"] = ["full", "no_persona", "only_persona", "no_random_span"]
-
-def few_dirs():
-    f = NSC / "few_directions.json"; d = load(f)
-    S = setup("few", "Few directions: k best train-AUC directions per dictionary (Llama, 50 splits, C=10)",
-              "few_directions.py: from each K=229 dictionary pick the k directions with the best train-split AUC, fit the PersonaJB "
-              "recipe (StandardScaler + LR C=10) on them, 50 pool splits, Llama L16. Only the FOLDED transfer AUC (xf_folded, mean "
-              "of 5 families) is shown; the file's HB and xf_signed fields are signed AUCs and are dropped. Draw-based "
-              "dictionaries: mean of 5 draws.", [], facets=["readout"], readouts={}, readout_axis=True)
-    src(f, "Detection", S["label"], "few", "xf_folded only; hb and xf_signed are signed AUC → dropped")
-    groups = {}
-    for n, ks in d.items():
-        mm = re.match(r"(acts|noise|gauss)_d\d$", n)
-        det = {"persona": "PersonaJB", "alpaca_pca": "alpaca_pca", "hb_pca": "hb_pca"}.get(n) or {"acts": "alpaca_acts", "noise": "shuffled", "gauss": "gauss"}[mm[1]]
-        for k, e in ks.items(): groups.setdefault((det, k), []).append(mean([fold(x) for x in e["xf_folded"]]))
-    for (det, k), vs in groups.items():
-        S["readouts"][f"k={k}"] = f"k = {k} directions"
-        rec("few", "llama", det, avg=mean(vs), readout=f"k={k}", draws=vs if len(vs) > 1 else None)
-
-def single_vec():
-    f = NSC / "single_vector_auc.json"; d = load(f)
-    S = setup("single_vec", "Single ordinary vectors as detectors (h·v, in-sample, Llama)",
-              "single_vector_auc.py: every vector v of a dictionary used alone, score h·v, no fitting; folded AUC on all HB rows "
-              "(in-sample) and mean over the 5 transfer families. Shown: MEDIAN over the vectors (229 traits / 1145 per "
-              "activation set / 1145 Gaussian), re-aggregated from the saved per-vector AUCs. Llama L16 last token.", ["hb_test"])
-    src(f, "Detection", S["label"], "single_vec")
-    def med(xs):
-        xs = sorted(fold(x) for x in xs); n = len(xs); return xs[n // 2] if n % 2 else (xs[n // 2 - 1] + xs[n // 2]) / 2
-    DN = {"Persona traits": "sv_traits", "Wikipedia activations": "sv_wiki", "No Robots activations": "sv_nr", "Alpaca activations": "sv_alpaca", "Random Gaussian": "sv_gauss"}
-    for k, e in d.items():
-        DETS[DN[k]] = (f"{k} (median single vector)", "single")
-        rec("single_vec", "llama", DN[k], auc={"hb_test": med(e["hb"])}, avg=med(e["transfer"]), note=f"median of {len(e['hb'])}")
-
-def normality_det():
-    f = NSC / "normality_in_persona.json"; d = load(f)
-    S = setup("normality", "Benign-vs-harmful detector on plain prompts (normality test, Llama)",
-              "normality_in_persona.py T3: StandardScaler + LR C=10 trained to separate benign from harmful PLAIN prompts "
-              "(roleplay_check synthetic_v2; no jailbreak labels), no splits; folded HB AUC and mean folded transfer AUC on the "
-              "jailbreak sets. The file's signed HB AUC field is dropped. Draw-based bases: mean of 5 draws.", ["hb_test"])
-    src(f, "Detection + Persona share", S["label"] + " / normality direction share", "normality", "T3 → Detection (signed field dropped); T2.share → Persona share")
-    DN = {"Persona traits": "PersonaJB", "Wikipedia acts (5)": "wiki_acts", "No Robots acts (5)": "nr_acts", "Random Gaussian (5)": "gauss", "Full 4096 activation": "raw"}
-    for k, draws in d["T3"].items():
-        rec("normality", "llama", DN[k], auc={"hb_test": mean([x[0] for x in draws])}, avg=mean([x[2] for x in draws]), draws=[x[2] for x in draws] if len(draws) > 1 else None)
-
-def refdmu():
-    S = setup("refdmu", "Refusal / Δμ direction per family, intact vs persona removed (in-sample)",
-              "refdmu_tables.py A: score = h·v with Δμ fit on ALL rows (in-sample), folded AUC per family; HarmBench column copied "
-              "from the 50-split test value of appendix_controls_data. The *_reversed flags (signed AUC < 0.5) are not shown. "
-              "Avg = mean of the 5 families (mean5).", ["hb_test"] + FAM5)
-    for m, base in (("llama", NSC), ("gemma", NSC / "gemma")):
-        f = base / "refdmu_tables.json"; d = load(f); src(f, "Detection", S["label"], "refdmu", "A block only; B block (d′, within-group AUC) not shown")
-        for k, e in d["A"].items():
-            dn, cn = k.split("|")
-            rec("refdmu", m, "refusal" if dn == "refusal" else "jb_dir", cond="full" if cn == "intact" else "no_persona",
-                auc={"hb_test": e["HarmBench"], **{s: e[F] for s, F in (("gcg", "GCG"), ("pair", "PAIR"), ("pap", "PAP"), ("gptfuzz", "GPTFuzz"), ("pez", "PEZ"))}}, avg=e["mean5"])
 
 # ================================================================ STEERING
 ST = []        # steering records
@@ -968,20 +567,20 @@ def det_order(d):
 
 # ================================================================ main
 def main():
-    ap = argparse.ArgumentParser(); ap.add_argument("--smoke-q1"); ap.add_argument("--out", default=str(HERE / "data.json")); a = ap.parse_args()
-    q1(a.smoke_q1); hb_select(); single_set(); dom_compare(); olmo_layer_sweep(); paper50(); removal50(); removal10(); dir50(); few_dirs()
-    single_vec(); normality_det(); refdmu(); release(); qwen_sources(); pca_k(); complement(); steering(); share_tab()
+    ap = argparse.ArgumentParser(); ap.add_argument("--out", default=str(HERE / "data.json")); a = ap.parse_args()
+    q1(); steering(); share_tab()
     dets = sorted({r["d"] for r in RECS} | {h["d"] for h in HEAT})
     out = {"generated_at": time.strftime("%Y-%m-%d %H:%M:%S"), "models": MODELS, "sets": SETS,
            "dets": {d: {"label": det_label(d), "group": det_group(d), "o": i} for i, d in enumerate(sorted(dets, key=det_order))}, "conds": CONDS,
-           "detection": {"setups": SETUPS, "records": RECS, "heat": HEAT, "complement": COMPLEMENT},
+           "detection": {"protocol": Q1_PROTOCOL, "models": Q1_MODELS, "trains": Q1_TRAINS, "status": Q1_STATUS, "records": RECS, "heat": HEAT, "w_share": W_SHARE},
            "steering": {"records": ST, "sources": STSRC, "snaps": SNAP, "ablation": ABL},
            "share": {"panels": PANELS, "q1": SHARE_Q1, "pervec": PERVEC, "pccurves": PCCURVES},
            "sources": SOURCES}
     s = json.dumps(out, separators=(",", ":"), allow_nan=False)
     Path(a.out).write_text(s)
-    print(f"wrote {a.out}: {len(s)/1e6:.2f} MB, {len(RECS)} detection records, {len(HEAT)} heatmaps, {len(ST)} steering records, {len(PANELS)} share panels, {len(SOURCES)} sources")
-    if not SHARE_Q1: print("q1: PENDING (no q1_*.json in q1_detection/out)")
+    ready = sum(x["ready"] for x in Q1_STATUS)
+    print(f"wrote {a.out}: {len(s)/1e6:.2f} MB, q1 files ready {ready}/{len(Q1_STATUS)}, {len(RECS)} detection records, {len(HEAT)} heatmaps, "
+          f"{len(ST)} steering records, {len(PANELS)} share panels, {len(SOURCES)} sources")
 
 if __name__ == "__main__":
     main()
