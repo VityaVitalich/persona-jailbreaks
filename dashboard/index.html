@@ -255,19 +255,19 @@ function renderDetRows(el, recs, sets, rowKey, title, det) {
   });
   const notes = rowKey === "d" ? noteLines(uniq(rows.map(r => r.m))) : "";
   el.insertAdjacentHTML("beforeend", h + `</tbody></table>${delta ? `<div class="note">Bold = saved paired CI excludes 0.</div>` : ""}${notes}</div>`);
-  if (rowKey === "d") { el.insertAdjacentHTML("beforeend", condChart(rows.filter(r => !r.missing), title)); return; }
-  if (chart.length > 1) el.insertAdjacentHTML("beforeend", dotChart(chart, {title: delta ? "Δ average transfer vs full" : "Average transfer AUC (folded)", ref: delta ? 0 : null}));
+  if (chart.length > 1) el.insertAdjacentHTML("beforeend", dotChart(chart, {title: `${title.split(":")[0]}: ${delta ? "Δ average transfer vs full" : "average transfer AUC (folded)"} · ${clab(DS.cond)}`, ref: delta ? 0 : null}));
+  if (rowKey === "d") el.insertAdjacentHTML("beforeend", condChart(rows.filter(r => !r.missing), title));
 }
-// one model: avg transfer per detector, one dot per component (full / persona removed / random removed / only persona); Δ mode plots cond − full
+// one model, persona-removal experiment: one row per detector, dots = full / persona removed / random span removed (null); Δ mode plots cond − full
 function condChart(rows, title) {
-  const delta = DS.show === "dfull", cs = delta ? COND_ORDER.filter(c => c !== "full") : COND_ORDER;
+  const delta = DS.show === "dfull", cs = delta ? ["no_persona", "no_random"] : ["full", "no_persona", "no_random"];
   const pts = rows.map(r => ({label: r.lab || dlab(r.d), vals: cs.map(c => {
     const x = D.detection.records.find(y => y.m === r.m && y.d === r.d && y.t === r.t && y.tm === r.tm && y.r === r.r && y.c === c);
     if (!x || !isNum(x.avg)) return null;
     if (!delta) return {v: x.avg, lo: x.ci && x.ci[0], hi: x.ci && x.ci[1]};
     const sv = x.dl && x.dl.full, F = fullOf(x);
     return sv && isNum(sv.v) ? {v: sv.v, lo: sv.ci && sv.ci[0], hi: sv.ci && sv.ci[1]} : F && isNum(F.avg) ? {v: x.avg - F.avg} : null; })}));
-  return multiDot(pts, cs.map(clab), {title: `${title.split(":")[0]}: ${delta ? "Δ avg transfer vs full" : "avg transfer AUC"} by component (removal ${DS.tm} training)`, ref: delta ? 0 : null, zero: false, dodge: 6});
+  return multiDot(pts, cs.map(clab), {title: `${title.split(":")[0]}: persona removal ${DS.tm} training · ${delta ? "Δ avg transfer vs full" : "avg transfer AUC"}`, ref: delta ? 0 : null, zero: false, dodge: 6});
 }
 function renderCondOverview(el, ready) {
   const recs = qRecs({cond: "*", models: new Set(ready), dets: DS.dets}); if (!recs.length) return;
