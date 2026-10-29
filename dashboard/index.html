@@ -228,9 +228,7 @@ function renderDetection() {
   if (!ready.length) return;
   const recs = qRecs({models: new Set(ready), dets: DS.dets});
   const sets = SET_ORDER.filter(s => recs.some(r => r.auc && isNum(r.auc[s])));
-  if (models.length > 1) { const nl = noteLines(ready); if (nl) el.insertAdjacentHTML("beforeend", `<div class="panel">${nl}</div>`); }
-  if (models.length === 1) renderDetRows(el, recs, sets, "d", `${mlab(ready[0])}: detectors`);
-  else [...DS.dets].sort((a, b) => dOrd(a) - dOrd(b)).forEach(d => { const R = recs.filter(r => r.d === d); if (R.length || DS.cond === "full") renderDetRows(el, R, sets, "m", dlab(d), d); });
+  ready.forEach(m => renderDetRows(el, recs.filter(r => r.m === m), sets, "d", `${mlab(m)}: detectors`));
   renderCondOverview(el, ready);
   if (DS.tm === "before") renderHeat(el, ready);
 }
