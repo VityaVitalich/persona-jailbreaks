@@ -1,0 +1,36 @@
+{
+ "acts": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/qwen3_32b/sweep/acts/{set}_L{layer}.npy",
+ "meta": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/qwen3_32b/sweep/acts/{set}_meta.json",
+ "traits": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/hb_select/qwen_traits.npy",
+ "labels": {
+  "hb": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/qwen3_32b/sweep/in/classified_hb.jsonl",
+  "wjb": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/qwen3_32b/sweep/in/classified_wjb.jsonl",
+  "pap": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/qwen3_32b/sweep/in/classified_pap.jsonl",
+  "gcg": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/qwen3_32b/transfer/classified_gcg.jsonl",
+  "pair": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/qwen3_32b/transfer/classified_pair.jsonl",
+  "gptfuzz": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/qwen3_32b/transfer/classified_gptfuzz.jsonl",
+  "pez": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/qwen3_32b/transfer/classified_pez.jsonl"
+ },
+ "train": [
+  "hb"
+ ],
+ "test": [
+  "wjb",
+  "pap",
+  "gcg",
+  "pair",
+  "gptfuzz",
+  "pez"
+ ],
+ "ctrl_acts": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/persona_jb/q1_detection/ctrl_acts_qwen/{set}_L{layer}.npy",
+ "layers": [
+  8,
+  16,
+  24,
+  32,
+  40,
+  48,
+  56,
+  63
+ ]
+}

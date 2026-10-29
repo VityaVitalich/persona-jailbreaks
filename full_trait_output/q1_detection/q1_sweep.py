@@ -6,34 +6,38 @@ scores the transfer sets. Folded AUC max(a, 1-a) everywhere.
 Detectors, at every saved layer x tail position:
   LR on features (StandardScaler + LogisticRegression, C grid):
     raw          the activation itself (linear probe)
-    PersonaJB    projections onto the 240 unit trait vectors of the same layer
-    PCA          top-240 PCs of the training-fold activations
-    gauss_d{k}   projections onto 240 random Gaussian unit directions (3 draws)
-    alpaca_pca   top-240 PCs of 797 Alpaca instruction activations (same layer/position, chat template)
-    wiki_pca     top-240 PCs of 2000 Wikipedia passage activations (wrapped as a user turn, same layer/position)
+    PersonaJB    projections onto the K unit trait vectors (K = number of traits: Llama 229, others 240) of the same layer
+    PCA          top-K PCs of the training-fold activations
+    gauss_d{k}   projections onto K random Gaussian unit directions (3 draws)
+    alpaca_pca   top-K PCs of 797 Alpaca instruction activations (same layer/position, chat template)
+    wiki_pca     top-K PCs of 2000 Wikipedia passage activations (wrapped as a user turn, same layer/position)
   single direction, score = h . v (no fitted hyperparameter):
     jb_dir       mean(jailbroken) - mean(refused) on the training fold
-    refusal      Arditi harmful - harmless mean difference (gemma_refusal_dir, same layer/position)
+    refusal      Arditi-style harmful - harmless mean difference: 897 plain harmful requests (JBB + AdvBench + StrongREJECT,
+                 no HarmBench) minus the 797 Alpaca instructions, same layer/position, chat template
     alpaca_mean  mean Alpaca activation
     wiki_mean    mean Wikipedia activation
 Conditions: full; no_persona = every activation (detection sets AND the Alpaca/Wikipedia/refusal inputs the detectors
-are built from) has its component in span(240 trait vectors of that layer) projected out; no_random = same with a
-random 240-dim Gaussian span (null for "remove any 240 dims"); only_persona = keep only the component in the persona
+are built from) has its component in span(K trait vectors of that layer) projected out; no_random = same with a
+random K-dim Gaussian span (null for "remove any K dims"); only_persona = keep only the component in the persona
 span. PersonaJB is undefined under no_persona and identical to full under only_persona (not rerun).
 Saves: every cell's out-of-fold validation scores per C and transfer scores at the chosen C (scores_q1_{MODEL}.npz),
 per-cell validation AUCs, selections, bootstrap (HarmBench-behaviour cluster, B=1000) for avg transfer and the paired
 deltas {no_persona, no_random, only_persona} - full at (a) the full detector's (layer, position) with C re-tuned and (b) a
 fully re-selected readout (q1_{MODEL}.json).
 usage: python q1_sweep.py MODEL CONFIG_JSON OUTDIR NJOBS [--smoke]
-CONFIG_JSON = hb_select config + "ctrl_acts": "<dir>/{set}_L{layer}.npy" (sets alpaca, wiki), "refusal": npy [7, 5, d]"""
-import json, os, random, sys, numpy as np, warnings; warnings.filterwarnings("ignore")
+CONFIG_JSON = hb_select config + "ctrl_acts": "<dir>/{set}_L{layer}.npy" (sets alpaca, wiki, harmful) + optional "layers"
+(subset of the saved layers to sweep). K (projection size) = number of trait vectors. avg = mean over the transfer
+families shared by both training setups (TEST minus wjb); WJB stays a per-set column when it is a test set."""
+import json, os, random, scipy.linalg, sys, numpy as np, warnings; warnings.filterwarnings("ignore")
 from joblib import Parallel, delayed
 from sklearn.linear_model import LogisticRegression; from sklearn.preprocessing import StandardScaler; from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import GroupKFold
 M, CFG, OUT, NJ = sys.argv[1], json.load(open(sys.argv[2])), sys.argv[3], int(sys.argv[4]); os.makedirs(OUT, exist_ok=True)
 SMOKE = "--smoke" in sys.argv
 TRAIN, TEST, SETS = CFG["train"], CFG["test"], CFG["train"] + CFG["test"]
-GRID = [1e-2] if SMOKE else [1e-4, 1e-3, 1e-2, 1e-1, 1.0, 10.0, 100.0]; B = 200 if SMOKE else 1000; K = 240; NG = 3
+GRID = [1e-2] if SMOKE else [1e-4, 1e-3, 1e-2, 1e-1, 1.0, 10.0, 100.0]; B = 200 if SMOKE else 1000; NG = 3
+AVG = [s for s in TEST if s != "wjb"]
 CONDS = ("full", "no_persona", "no_random", "only_persona")
 LR_DETS = ["raw", "PersonaJB", "PCA"] + [f"gauss_d{k}" for k in range(NG)] + ["alpaca_pca", "wiki_pca"]
 DIR_DETS = ["jb_dir", "refusal", "alpaca_mean", "wiki_mean"]
@@ -49,11 +53,13 @@ grp = np.array([f"t{r['jailbreak_idx']}" if r["attack_type"] == "human_jailbreak
 FOLDS = list(GroupKFold(5).split(np.zeros(len(ytr)), ytr, grp))
 fold = lambda yy, s: max(roc_auc_score(yy, s), 1 - roc_auc_score(yy, s))
 TV = np.load(CFG["traits"], mmap_mode="r")   # [n_traits, n_layers, d]
-REF = np.load(CFG["refusal"], mmap_mode="r")  # [n_layers, n_pos, d]
+K = TV.shape[0]
 unit = lambda M: M / np.linalg.norm(M, axis=-1, keepdims=True)
 orth = lambda V: np.linalg.qr(np.asarray(V, np.float64).T)[0]   # [d, k] orthonormal basis of the row span
-def pcs(X, k=K):
-    X = X - X.mean(0); return np.linalg.svd(X, full_matrices=False)[2][:k]
+def pcs(X, k=K):   # gesdd can fail to converge on Qwen's massive-activation matrices -> fall back to gesvd
+    X = X - X.mean(0)
+    try: return np.linalg.svd(X, full_matrices=False)[2][:k]
+    except np.linalg.LinAlgError: return scipy.linalg.svd(X, full_matrices=False, lapack_driver="gesvd")[2][:k]
 def lr_det(make, Xtr, Xte):
     """make(Xfit) -> feature map. Out-of-fold validation per C (feature map fitted on the training fold), refit on all."""
     vs = {C: np.full(len(ytr), np.nan, np.float32) for C in GRID}; a = {C: [] for C in GRID}
@@ -75,8 +81,7 @@ Q_RAND = orth(np.random.default_rng(999).standard_normal((K, TV.shape[2])))
 def task(li, p, cond):
     L = LAYERS[li]; T = unit(np.asarray(TV[:, li], np.float64))
     X = {s: np.load(CFG["acts"].format(set=s, layer=L), mmap_mode="r")[keep[s], p].astype(np.float64) for s in SETS}
-    A = {c: np.load(CFG["ctrl_acts"].format(set=c, layer=L), mmap_mode="r")[:, p].astype(np.float64) for c in ("alpaca", "wiki")}
-    r = np.asarray(REF[li, p], np.float64)
+    A = {c: np.load(CFG["ctrl_acts"].format(set=c, layer=L), mmap_mode="r")[:, p].astype(np.float64) for c in ("alpaca", "wiki", "harmful")}
     Qp = orth(T); info = {}
     share = lambda V, Q: float(np.mean(np.sum((np.atleast_2d(V) @ Q) ** 2, 1) / np.sum(np.atleast_2d(V) ** 2, 1)))
     Xtr0 = np.vstack([X[s] for s in TRAIN])
@@ -84,7 +89,7 @@ def task(li, p, cond):
     if cond != "full":
         Q = Q_RAND if cond == "no_random" else Qp
         rm = (lambda M: (M @ Q) @ Q.T) if cond == "only_persona" else (lambda M: M - (M @ Q) @ Q.T)
-        X = {s: rm(M) for s, M in X.items()}; A = {c: rm(M) for c, M in A.items()}; r = rm(r)
+        X = {s: rm(M) for s, M in X.items()}; A = {c: rm(M) for c, M in A.items()}
     Xtr = np.vstack([X[s] for s in TRAIN]); Xte = {s: X[s] for s in TEST}; del X, Xtr0
     static = lambda V: (lambda _: (lambda Z: Z @ V.T))
     makers = {"raw": lambda _: (lambda Z: Z), "PCA": lambda Xf: (lambda V: lambda Z: Z @ V.T)(pcs(Xf)),
@@ -94,7 +99,7 @@ def task(li, p, cond):
     out = {}
     for det in LR_DETS:
         if det in makers: out[det] = lr_det(makers[det], Xtr, Xte)
-    vfix = {"refusal": unit(r), "alpaca_mean": unit(A["alpaca"].mean(0)), "wiki_mean": unit(A["wiki"].mean(0))}
+    vfix = {"refusal": unit(A["harmful"].mean(0) - A["alpaca"].mean(0)), "alpaca_mean": unit(A["alpaca"].mean(0)), "wiki_mean": unit(A["wiki"].mean(0))}
     out["jb_dir"] = dir_det(lambda idx: unit(Xtr[idx][ytr[idx] == 1].mean(0) - Xtr[idx][ytr[idx] == 0].mean(0)), Xtr, Xte)
     for det, v in vfix.items(): out[det] = dir_det(lambda idx, v=v: v, Xtr, Xte)
     if cond == "full":   # how much of each detector's direction / basis lies in the persona span
@@ -104,16 +109,16 @@ def task(li, p, cond):
                                  "gauss": float(np.mean([share(G, Qp) for G in GAUSS]))}
     print(f"done L{L} p{p} {cond}: " + " ".join(f"{d}:{max(v['val_auc'].values()):.3f}" for d, v in out.items()), flush=True)
     return (L, p, cond), out, info
-cells = [(li, p) for li in range(len(LAYERS)) for p in range(len(TAIL))]
+cells = [(li, p) for li in range(len(LAYERS)) if LAYERS[li] in CFG.get("layers", LAYERS) for p in range(len(TAIL))]
 if SMOKE: cells = [(LAYERS.index(30), 4)]
 R_ = Parallel(n_jobs=NJ, backend="loky", verbose=0)(delayed(task)(li, p, c) for li, p in cells for c in CONDS)
 behs = sorted({r["behavior_id"] for s in SETS for r in rows[s]}); bi = {b: i for i, b in enumerate(behs)}
 W = np.random.default_rng(12345).multinomial(len(behs), np.ones(len(behs)) / len(behs), size=B)
-BO = {s: np.array([bi[r["behavior_id"]] for r in rows[s]]) for s in TEST}
+BO = {s: np.array([bi[r["behavior_id"]] for r in rows[s]]) for s in AVG}
 def boot_avg(test):
-    """point avg folded transfer AUC + B bootstrap reps (sign fixed per set by the point estimate)."""
+    """point avg folded transfer AUC over AVG + B bootstrap reps (sign fixed per set by the point estimate)."""
     pts, reps = [], []
-    for s in TEST:
+    for s in AVG:
         yy, sc, bo = y[s], test[s], BO[s]; sg = 1 if roc_auc_score(yy, sc) >= 0.5 else -1; pts.append(roc_auc_score(yy, sg * sc))
         reps.append([roc_auc_score(yy, sg * sc, sample_weight=W[k][bo]) if (W[k][bo] * yy).sum() > 0 and (W[k][bo] * (1 - yy)).sum() > 0 else np.nan for k in range(B)])
     return pts, np.nanmean(np.array(reps), 0)
@@ -128,7 +133,7 @@ vbest = lambda v: max(v["val_auc"].values())
 def select(det, cond, L=None, p=None):
     c = [(k, v) for k, v in G_.items() if k[0] == det and k[1] == cond and (L is None or (k[2], k[3]) == (L, p))]
     return max(c, key=lambda kv: vbest(kv[1])) if c else None
-res = {"model": M, "train": TRAIN, "test": TEST, "layers": LAYERS, "tail_tokens": TAIL, "grid": GRID,
+res = {"model": M, "train": TRAIN, "test": TEST, "avg_sets": AVG, "k": int(K), "swept_layers": sorted({LAYERS[li] for li, _ in cells}), "layers": LAYERS, "tail_tokens": TAIL, "grid": GRID,
        "n_train": int(len(ytr)), "n_pos_train": int(ytr.sum()), "n_val": [int(len(v)) for _, v in FOLDS], "val_pos": [int(ytr[v].sum()) for _, v in FOLDS],
        "n_test": {s: [int(len(y[s])), int(y[s].sum())] for s in TEST}, "info": info,
        "cells": {f"{d}__{c}__L{L}__p{p}": {"val_auc": vbest(v), "C": v["C"], "test_auc": {s: float(fold(y[s], v["test"][s])) for s in TEST}} for (d, c, L, p), v in G_.items()},
@@ -144,7 +149,7 @@ for det in LR_DETS + DIR_DETS:
             if s is None: continue
             (_, _, L, p), v = s; pts, reps = boot_avg(v["test"]); BOOT[(det, cond, mode)] = (float(np.mean(pts)), reps)
             res["selected"][f"{det}__{cond}__{mode}"] = {"layer": L, "position": p, "token": TAIL[p], "C": v["C"], "val_auc": vbest(v),
-                "test_auc": dict(zip(TEST, map(float, pts))), "avg": float(np.mean(pts)), "avg_ci95": [float(np.nanpercentile(reps, 2.5)), float(np.nanpercentile(reps, 97.5))]}
+                "test_auc": {t: float(fold(y[t], v["test"][t])) for t in TEST}, "avg": float(np.mean(pts)), "avg_ci95": [float(np.nanpercentile(reps, 2.5)), float(np.nanpercentile(reps, 97.5))]}
             SC[f"boot__{det}__{cond}__{mode}"] = reps.astype(np.float32)
 def agg(det, cond, mode):   # Gaussian draws -> their mean
     ks = [f"gauss_d{k}" for k in range(NG)] if det == "gauss" else [det]
