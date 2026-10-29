@@ -258,16 +258,31 @@ function renderDetRows(el, recs, sets, rowKey, title, det) {
   if (chart.length > 1) el.insertAdjacentHTML("beforeend", dotChart(chart, {title: `${title.split(":")[0]}: ${delta ? "Δ average transfer vs full" : "average transfer AUC (folded)"} · ${clab(DS.cond)}`, ref: delta ? 0 : null}));
   if (rowKey === "d") el.insertAdjacentHTML("beforeend", condChart(rows.filter(r => !r.missing), title));
 }
-// one model, persona-removal experiment: one row per detector, dots = full / persona removed / random span removed (null); Δ mode plots cond − full
+// one model, persona-removal experiment: one bar per detector = Δ avg transfer AUC (persona removed − full) with paired CI;
+// grey tick = the same Δ for a random K-dim span (null). Solid bar = CI excludes 0.
 function condChart(rows, title) {
-  const delta = DS.show === "dfull", cs = delta ? ["no_persona", "no_random"] : ["full", "no_persona", "no_random"];
-  const pts = rows.map(r => ({label: r.lab || dlab(r.d), vals: cs.map(c => {
-    const x = D.detection.records.find(y => y.m === r.m && y.d === r.d && y.t === r.t && y.tm === r.tm && y.r === r.r && y.c === c);
-    if (!x || !isNum(x.avg)) return null;
-    if (!delta) return {v: x.avg, lo: x.ci && x.ci[0], hi: x.ci && x.ci[1]};
-    const sv = x.dl && x.dl.full, F = fullOf(x);
-    return sv && isNum(sv.v) ? {v: sv.v, lo: sv.ci && sv.ci[0], hi: sv.ci && sv.ci[1]} : F && isNum(F.avg) ? {v: x.avg - F.avg} : null; })}));
-  return multiDot(pts, cs.map(clab), {title: `${title.split(":")[0]}: persona removal ${DS.tm} training · ${delta ? "Δ avg transfer vs full" : "avg transfer AUC"}`, ref: delta ? 0 : null, zero: false, dodge: 6});
+  const dOf = (r, c) => { const x = D.detection.records.find(y => y.m === r.m && y.d === r.d && y.t === r.t && y.tm === r.tm && y.r === r.r && y.c === c);
+    if (!x || !isNum(x.avg)) return null; const sv = x.dl && x.dl.full, F = fullOf(x);
+    return sv && isNum(sv.v) ? {v: sv.v, ci: sv.ci} : F && isNum(F.avg) ? {v: x.avg - F.avg} : null; };
+  const R = rows.map(r => ({label: r.lab || dlab(r.d), p: dOf(r, "no_persona"), n: dOf(r, "no_random")})).filter(r => r.p || r.n);
+  if (!R.length) return "";
+  const all = R.flatMap(r => [r.p && r.p.v, ...(r.p && r.p.ci ? r.p.ci : []), r.n && r.n.v]).filter(isNum).concat(0);
+  let lo = Math.min(...all), hi = Math.max(...all); const pad = (hi - lo) * 0.1 || 0.01; lo -= pad; hi += pad;
+  const W = 760, LW = 260, rh = 22, H = R.length * rh + 44, X = v => LW + (v - lo) / (hi - lo) * (W - LW - 20);
+  let s = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img">`;
+  for (let k = 0; k <= 5; k++) { const v = lo + (hi - lo) * k / 5; s += `<line class="gr" x1="${X(v)}" x2="${X(v)}" y1="18" y2="${H - 22}"/><text x="${X(v)}" y="${H - 8}" text-anchor="middle">${sgn(v)}</text>`; }
+  s += `<line x1="${X(0)}" x2="${X(0)}" y1="16" y2="${H - 22}" stroke="var(--text)" stroke-width="1"/>`;
+  R.forEach((r, k) => { const y = 28 + k * rh;
+    s += `<text class="lab" x="${LW - 8}" y="${y + 4}" text-anchor="end">${esc(r.label)}</text>`;
+    if (r.p) { const v = r.p.v, ci = r.p.ci, sig = ci && (ci[0] > 0 || ci[1] < 0), c = v < 0 ? "var(--bad)" : "var(--good)";
+      s += `<rect x="${Math.min(X(0), X(v))}" y="${y - 7}" width="${Math.max(1, Math.abs(X(v) - X(0)))}" height="14" fill="${c}" opacity="${sig ? 0.85 : 0.3}" data-tip="${esc(`${r.label}\npersona removed − full: ${sgn(v)}${ci ? `  [${sgn(ci[0])}, ${sgn(ci[1])}]` : ""}${r.n ? `\nrandom span removed − full: ${sgn(r.n.v)}` : ""}`)}"/>`;
+      if (ci) s += `<line x1="${X(ci[0])}" x2="${X(ci[1])}" y1="${y}" y2="${y}" stroke="var(--text)" stroke-width="1.2" opacity=".6"/>`;
+      s += `<text x="${v < 0 ? X(Math.min(v, ci ? ci[0] : v)) - 4 : X(Math.max(v, ci ? ci[1] : v)) + 4}" y="${y + 4}" text-anchor="${v < 0 ? "end" : "start"}" style="fill:var(--text)">${sgn(v)}</text>`; }
+    if (!r.p) s += `<text x="${X(0) + 6}" y="${y + 4}">n/a (spans only the persona space)</text>`;
+    if (r.n) s += `<line x1="${X(r.n.v)}" x2="${X(r.n.v)}" y1="${y - 9}" y2="${y + 9}" stroke="var(--muted)" stroke-width="3" data-tip="${esc(`${r.label}\nrandom span removed − full: ${sgn(r.n.v)}`)}"/>`; });
+  s += `<text x="${LW}" y="11">${esc(`${title.split(":")[0]}: Δ avg transfer AUC when the persona span is removed ${DS.tm} training`)}</text></svg>`;
+  const leg = `<div class="legend"><span><i style="background:var(--bad)"></i>persona removed − full (solid = 95% CI excludes 0)</span><span><i style="background:var(--muted)"></i>random K-dim span removed − full (null)</span></div>`;
+  return `<div class="chart-card">${s}${leg}</div>`;
 }
 function renderCondOverview(el, ready) {
   const recs = qRecs({cond: "*", models: new Set(ready), dets: DS.dets}); if (!recs.length) return;
