@@ -142,10 +142,10 @@ function lineChart(series, {title = "", logx = false, xlab = "", ylab = "", refs
   return `<div class="chart-card">${s}${leg}</div>`;
 }
 // rows: [{label, vals:[{v, lo, hi}|null per series]}], series: [labels]
-function multiDot(rows, series, {title = "", fmt = f3, ref = null, zero = true} = {}) {
+function multiDot(rows, series, {title = "", fmt = f3, ref = null, zero = true, dodge = 0} = {}) {
   const all = rows.flatMap(r => r.vals.flatMap(x => x ? [x.v, x.lo, x.hi] : [])).filter(isNum);
   if (!all.length) return "";
-  const W = 760, LW = 330, rh = 20, H = rows.length * rh + 36;
+  const W = 760, LW = 330, rh = 20 + dodge * (series.length - 1), H = rows.length * rh + 36;
   let lo = Math.min(...(zero ? [0] : []), ...all), hi = Math.max(...all); if (ref !== null) { lo = Math.min(lo, ref); hi = Math.max(hi, ref); }
   const pad = (hi - lo) * 0.04 || 0.01; hi += pad; if (!zero) lo -= pad;
   const X = v => LW + (v - lo) / (hi - lo) * (W - LW - 14);
@@ -153,11 +153,11 @@ function multiDot(rows, series, {title = "", fmt = f3, ref = null, zero = true} 
   for (let i = 0; i <= 5; i++) { const v = lo + (hi - lo) * i / 5, x = X(v); s += `<line class="gr" x1="${x}" x2="${x}" y1="14" y2="${H - 20}"/><text x="${x}" y="${H - 6}" text-anchor="middle">${fmt(v)}</text>`; }
   if (ref !== null) s += `<line class="ref" x1="${X(ref)}" x2="${X(ref)}" y1="14" y2="${H - 20}"/>`;
   rows.forEach((r, i) => {
-    const y = 22 + i * rh;
-    s += `<line class="gr" x1="${LW}" x2="${W - 14}" y1="${y}" y2="${y}" opacity=".5"/><text class="lab" x="${LW - 8}" y="${y + 4}" text-anchor="end">${esc(r.label.length > 56 ? r.label.slice(0, 54) + "…" : r.label)}</text>`;
-    r.vals.forEach((x, j) => { if (!x || !isNum(x.v)) return; const c = PAL[j % PAL.length];
+    const y0 = 22 + i * rh + dodge * (series.length - 1) / 2;
+    s += `<line class="gr" x1="${LW}" x2="${W - 14}" y1="${y0}" y2="${y0}" opacity=".5"/><text class="lab" x="${LW - 8}" y="${y0 + 4}" text-anchor="end">${esc(r.label.length > 56 ? r.label.slice(0, 54) + "…" : r.label)}</text>`;
+    r.vals.forEach((x, j) => { if (!x || !isNum(x.v)) return; const c = PAL[j % PAL.length], y = y0 + dodge * (j - (series.length - 1) / 2);
       if (isNum(x.lo) && isNum(x.hi) && x.lo !== x.hi) s += `<line x1="${X(x.lo)}" x2="${X(x.hi)}" y1="${y}" y2="${y}" stroke="${c}" stroke-width="2.4" opacity=".5"/>`;
-      s += `<circle cx="${X(x.v)}" cy="${y}" r="4.4" fill="${c}" data-tip="${esc(`${r.label}\n${series[j]}: ${fmt(x.v)}${isNum(x.lo) && x.lo !== x.hi ? ` [${fmt(x.lo)}, ${fmt(x.hi)}]` : ""}`)}"/>`; });
+      s += `<circle cx="${X(x.v)}" cy="${y}" r="${dodge ? 3.2 : 4.4}" fill="${c}" data-tip="${esc(`${r.label}\n${series[j]}: ${fmt(x.v)}${isNum(x.lo) && x.lo !== x.hi ? ` [${fmt(x.lo)}, ${fmt(x.hi)}]` : ""}`)}"/>`; });
   });
   s += `<text x="${LW}" y="10">${esc(title)}</text></svg>`;
   return `<div class="chart-card">${s}<div class="legend">${series.map((l, j) => `<span><i style="background:${PAL[j % PAL.length]}"></i>${esc(l)}</span>`).join("")}</div></div>`;
@@ -267,7 +267,7 @@ function condChart(rows, title) {
     if (!delta) return {v: x.avg, lo: x.ci && x.ci[0], hi: x.ci && x.ci[1]};
     const sv = x.dl && x.dl.full, F = fullOf(x);
     return sv && isNum(sv.v) ? {v: sv.v, lo: sv.ci && sv.ci[0], hi: sv.ci && sv.ci[1]} : F && isNum(F.avg) ? {v: x.avg - F.avg} : null; })}));
-  return multiDot(pts, cs.map(clab), {title: `${title.split(":")[0]}: ${delta ? "Δ avg transfer vs full" : "avg transfer AUC"} by component (removal ${DS.tm} training)`, ref: delta ? 0 : null, zero: false});
+  return multiDot(pts, cs.map(clab), {title: `${title.split(":")[0]}: ${delta ? "Δ avg transfer vs full" : "avg transfer AUC"} by component (removal ${DS.tm} training)`, ref: delta ? 0 : null, zero: false, dodge: 6});
 }
 function renderCondOverview(el, ready) {
   const recs = qRecs({cond: "*", models: new Set(ready), dets: DS.dets}); if (!recs.length) return;
