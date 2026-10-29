@@ -100,3 +100,7 @@ svg .ref { stroke: var(--muted); stroke-dasharray: 3 3; }
   border: 1px solid var(--border-strong); border-radius: 6px; padding: 6px 9px; font-size: 12px; box-shadow: 0 6px 24px rgba(0,0,0,.18); white-space: pre-wrap; }
 code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; }
 @media (max-width: 700px) { body { padding: 12px 16px; } .filter-row .label { min-width: 100%; } }
+/* steering views */
+h2.model-h { font-size: 17px; margin: 22px 0 8px; padding-bottom: 4px; border-bottom: 2px solid var(--border-strong); }
+.chart-row { display: flex; flex-wrap: wrap; gap: 12px; }
+th.hl { color: var(--accent); }

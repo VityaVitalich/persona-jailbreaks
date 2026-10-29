@@ -117,14 +117,14 @@ function dotChart(rows, {title = "", ref = null, xlab = "", fmt = f3, domain = n
   return `<div class="chart-card">${s}</div>`;
 }
 // series: [{label, color, pts:[[x,y,lo,hi]]}], logx
-function lineChart(series, {title = "", logx = false, xlab = "", ylab = "", refs = [], fmt = f3, W = 620, H = 300} = {}) {
+function lineChart(series, {title = "", logx = false, xlab = "", ylab = "", refs = [], fmt = f3, W = 620, H = 300, zero = false} = {}) {
   series = series.filter(s => s.pts.some(p => isNum(p[1])));
   if (!series.length) return "";
   const L = 50, R = 12, T = 18, B = 36;
   const xs = series.flatMap(s => s.pts.map(p => p[0])), ys = series.flatMap(s => s.pts.flatMap(p => [p[1], p[2], p[3]])).filter(isNum).concat(refs.map(r => r.v));
   const tx = v => logx ? Math.log(Math.max(v, 0.5)) : v;
   const x0 = Math.min(...xs.map(tx)), x1 = Math.max(...xs.map(tx));
-  let y0 = Math.min(...ys), y1 = Math.max(...ys); const pd = (y1 - y0) * 0.08 || 0.01; const nn = y0 >= 0; y0 -= pd; y1 += pd; if (nn) y0 = Math.max(0, y0);
+  let y0 = Math.min(...ys), y1 = Math.max(...ys); const pd = (y1 - y0) * 0.08 || 0.01; const nn = y0 >= 0; y0 -= pd; y1 += pd; if (nn) y0 = zero ? 0 : Math.max(0, y0);
   const X = v => L + (tx(v) - x0) / ((x1 - x0) || 1) * (W - L - R), Y = v => T + (1 - (v - y0) / (y1 - y0)) * (H - T - B);
   let s = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">`;
   for (let i = 0; i <= 4; i++) { const v = y0 + (y1 - y0) * i / 4; s += `<line class="gr" x1="${L}" x2="${W - R}" y1="${Y(v)}" y2="${Y(v)}"/><text x="${L - 4}" y="${Y(v) + 3}" text-anchor="end">${fmt(v)}</text>`; }
@@ -134,11 +134,11 @@ function lineChart(series, {title = "", logx = false, xlab = "", ylab = "", refs
     const c = se.color || PAL[i % PAL.length], pts = se.pts.filter(p => isNum(p[1])).sort((a, b) => a[0] - b[0]);
     const band = pts.filter(p => isNum(p[2]));
     if (band.length > 1) s += `<path d="M${band.map(p => `${X(p[0])},${Y(p[2])}`).join("L")}L${band.slice().reverse().map(p => `${X(p[0])},${Y(p[3])}`).join("L")}Z" fill="${c}" opacity=".12"/>`;
-    s += `<path d="M${pts.map(p => `${X(p[0])},${Y(p[1])}`).join("L")}" fill="none" stroke="${c}" stroke-width="1.8"/>`;
+    s += `<path d="M${pts.map(p => `${X(p[0])},${Y(p[1])}`).join("L")}" fill="none" stroke="${c}" stroke-width="1.8"${se.dash ? ` stroke-dasharray="${se.dash}"` : ""}/>`;
     pts.forEach(p => { s += `<circle cx="${X(p[0])}" cy="${Y(p[1])}" r="3" fill="${c}" data-tip="${esc(`${se.label}\n${xlab || "x"} = ${p[0]}: ${fmt(p[1])}${isNum(p[2]) ? ` [${fmt(p[2])}, ${fmt(p[3])}]` : ""}`)}"/>`; });
   });
   s += `<text x="${L}" y="11">${esc(title)}</text><text x="${(L + W) / 2}" y="${H - 4}" text-anchor="middle">${esc(xlab)}${logx ? " (log)" : ""}</text></svg>`;
-  const leg = `<div class="legend">${series.map((se, i) => `<span><i style="background:${se.color || PAL[i % PAL.length]}"></i>${esc(se.label)}</span>`).join("")}</div>`;
+  const leg = `<div class="legend">${series.map((se, i) => `<span>${se.dash ? `<svg width="22" height="8"><line x1="0" x2="22" y1="4" y2="4" stroke="${se.color || PAL[i % PAL.length]}" stroke-width="2" stroke-dasharray="${se.dash}"/></svg>` : `<i style="background:${se.color || PAL[i % PAL.length]}"></i>`}${esc(se.label)}</span>`).join("")}</div>`;
   return `<div class="chart-card">${s}${leg}</div>`;
 }
 // rows: [{label, vals:[{v, lo, hi}|null per series]}], series: [labels]
@@ -256,33 +256,40 @@ function renderDetRows(el, recs, sets, rowKey, title, det) {
   const notes = rowKey === "d" ? noteLines(uniq(rows.map(r => r.m))) : "";
   el.insertAdjacentHTML("beforeend", h + `</tbody></table>${delta ? `<div class="note">Bold = saved paired CI excludes 0.</div>` : ""}${notes}</div>`);
   if (chart.length > 1) el.insertAdjacentHTML("beforeend", dotChart(chart, {title: `${title.split(":")[0]}: ${delta ? "Δ average transfer vs full" : "average transfer AUC (folded)"} · ${clab(DS.cond)}`, ref: delta ? 0 : null}));
-  if (rowKey === "d") el.insertAdjacentHTML("beforeend", condChart(rows.filter(r => !r.missing), title));
+  if (rowKey === "d") { const ok = rows.filter(r => !r.missing); el.insertAdjacentHTML("beforeend", condChart(ok, title, "no_persona") + condChart(ok, title, "only_persona")); }
 }
-// one model, persona-removal experiment: one bar per detector = Δ avg transfer AUC (persona removed − full) with paired CI;
-// grey tick = the same Δ for a random K-dim span (null). Solid bar = CI excludes 0.
-function condChart(rows, title) {
+// Δ bar chart: rows [{label, v, ci:[lo,hi]?, nul?, tip?}]; one bar per row (red = loss, green = gain; solid = CI excludes 0),
+// optional grey tick = null Δ. fmt formats the values.
+function deltaBars(R, {title = "", fmt = sgn, legend = "", nulLegend = ""} = {}) {
+  R = R.filter(r => isNum(r.v) || isNum(r.nul)); if (!R.length) return "";
+  const all = R.flatMap(r => [r.v, ...(r.ci || []), r.nul]).filter(isNum).concat(0);
+  let lo = Math.min(...all), hi = Math.max(...all); const pad = (hi - lo) * 0.1 || 0.01; lo -= pad; hi += pad;
+  const W = 760, LW = 280, rh = 22, H = R.length * rh + 44, X = v => LW + (v - lo) / (hi - lo) * (W - LW - 20);
+  let s = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img">`;
+  for (let k = 0; k <= 5; k++) { const v = lo + (hi - lo) * k / 5; s += `<line class="gr" x1="${X(v)}" x2="${X(v)}" y1="18" y2="${H - 22}"/><text x="${X(v)}" y="${H - 8}" text-anchor="middle">${fmt(v)}</text>`; }
+  s += `<line x1="${X(0)}" x2="${X(0)}" y1="16" y2="${H - 22}" stroke="var(--text)" stroke-width="1"/>`;
+  R.forEach((r, k) => { const y = 28 + k * rh;
+    s += `<text class="lab" x="${LW - 8}" y="${y + 4}" text-anchor="end">${esc(r.label.length > 46 ? r.label.slice(0, 44) + "…" : r.label)}</text>`;
+    if (isNum(r.v)) { const v = r.v, ci = r.ci, sig = ci && (ci[0] > 0 || ci[1] < 0), c = v < 0 ? "var(--bad)" : "var(--good)";
+      s += `<rect x="${Math.min(X(0), X(v))}" y="${y - 7}" width="${Math.max(1, Math.abs(X(v) - X(0)))}" height="14" fill="${c}" opacity="${sig ? 0.85 : 0.3}" data-tip="${esc(`${r.label}\n${fmt(v)}${ci ? `  [${fmt(ci[0])}, ${fmt(ci[1])}]` : ""}${isNum(r.nul) ? `\nnull: ${fmt(r.nul)}` : ""}${r.tip ? "\n" + r.tip : ""}`)}"/>`;
+      if (ci) s += `<line x1="${X(ci[0])}" x2="${X(ci[1])}" y1="${y}" y2="${y}" stroke="var(--text)" stroke-width="1.2" opacity=".6"/>`;
+      s += `<text x="${v < 0 ? X(Math.min(v, ci ? ci[0] : v)) - 4 : X(Math.max(v, ci ? ci[1] : v)) + 4}" y="${y + 4}" text-anchor="${v < 0 ? "end" : "start"}" style="fill:var(--text)">${fmt(v)}</text>`; }
+    else s += `<text x="${X(0) + 6}" y="${y + 4}">${esc(r.na || "n/a")}</text>`;
+    if (isNum(r.nul)) s += `<line x1="${X(r.nul)}" x2="${X(r.nul)}" y1="${y - 9}" y2="${y + 9}" stroke="var(--muted)" stroke-width="3"/>`; });
+  s += `<text x="${LW}" y="11">${esc(title)}</text></svg>`;
+  const leg = `<div class="legend"><span><i style="background:var(--bad)"></i><i style="background:var(--good)"></i>${esc(legend)}: loss / gain (solid = 95% CI excludes 0)</span>${nulLegend ? `<span><i style="background:var(--muted)"></i>${esc(nulLegend)}</span>` : ""}</div>`;
+  return `<div class="chart-card">${s}${leg}</div>`;
+}
+// one model, persona experiment: Δ avg transfer AUC (cond − full) per detector; removal also shows the random-span null
+function condChart(rows, title, cond) {
   const dOf = (r, c) => { const x = D.detection.records.find(y => y.m === r.m && y.d === r.d && y.t === r.t && y.tm === r.tm && y.r === r.r && y.c === c);
     if (!x || !isNum(x.avg)) return null; const sv = x.dl && x.dl.full, F = fullOf(x);
     return sv && isNum(sv.v) ? {v: sv.v, ci: sv.ci} : F && isNum(F.avg) ? {v: x.avg - F.avg} : null; };
-  const R = rows.map(r => ({label: r.lab || dlab(r.d), p: dOf(r, "no_persona"), n: dOf(r, "no_random")})).filter(r => r.p || r.n);
-  if (!R.length) return "";
-  const all = R.flatMap(r => [r.p && r.p.v, ...(r.p && r.p.ci ? r.p.ci : []), r.n && r.n.v]).filter(isNum).concat(0);
-  let lo = Math.min(...all), hi = Math.max(...all); const pad = (hi - lo) * 0.1 || 0.01; lo -= pad; hi += pad;
-  const W = 760, LW = 260, rh = 22, H = R.length * rh + 44, X = v => LW + (v - lo) / (hi - lo) * (W - LW - 20);
-  let s = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img">`;
-  for (let k = 0; k <= 5; k++) { const v = lo + (hi - lo) * k / 5; s += `<line class="gr" x1="${X(v)}" x2="${X(v)}" y1="18" y2="${H - 22}"/><text x="${X(v)}" y="${H - 8}" text-anchor="middle">${sgn(v)}</text>`; }
-  s += `<line x1="${X(0)}" x2="${X(0)}" y1="16" y2="${H - 22}" stroke="var(--text)" stroke-width="1"/>`;
-  R.forEach((r, k) => { const y = 28 + k * rh;
-    s += `<text class="lab" x="${LW - 8}" y="${y + 4}" text-anchor="end">${esc(r.label)}</text>`;
-    if (r.p) { const v = r.p.v, ci = r.p.ci, sig = ci && (ci[0] > 0 || ci[1] < 0), c = v < 0 ? "var(--bad)" : "var(--good)";
-      s += `<rect x="${Math.min(X(0), X(v))}" y="${y - 7}" width="${Math.max(1, Math.abs(X(v) - X(0)))}" height="14" fill="${c}" opacity="${sig ? 0.85 : 0.3}" data-tip="${esc(`${r.label}\npersona removed − full: ${sgn(v)}${ci ? `  [${sgn(ci[0])}, ${sgn(ci[1])}]` : ""}${r.n ? `\nrandom span removed − full: ${sgn(r.n.v)}` : ""}`)}"/>`;
-      if (ci) s += `<line x1="${X(ci[0])}" x2="${X(ci[1])}" y1="${y}" y2="${y}" stroke="var(--text)" stroke-width="1.2" opacity=".6"/>`;
-      s += `<text x="${v < 0 ? X(Math.min(v, ci ? ci[0] : v)) - 4 : X(Math.max(v, ci ? ci[1] : v)) + 4}" y="${y + 4}" text-anchor="${v < 0 ? "end" : "start"}" style="fill:var(--text)">${sgn(v)}</text>`; }
-    if (!r.p) s += `<text x="${X(0) + 6}" y="${y + 4}">n/a (spans only the persona space)</text>`;
-    if (r.n) s += `<line x1="${X(r.n.v)}" x2="${X(r.n.v)}" y1="${y - 9}" y2="${y + 9}" stroke="var(--muted)" stroke-width="3" data-tip="${esc(`${r.label}\nrandom span removed − full: ${sgn(r.n.v)}`)}"/>`; });
-  s += `<text x="${LW}" y="11">${esc(`${title.split(":")[0]}: Δ avg transfer AUC when the persona span is removed ${DS.tm} training`)}</text></svg>`;
-  const leg = `<div class="legend"><span><i style="background:var(--bad)"></i>persona removed − full (solid = 95% CI excludes 0)</span><span><i style="background:var(--muted)"></i>random K-dim span removed − full (null)</span></div>`;
-  return `<div class="chart-card">${s}${leg}</div>`;
+  const R = rows.map(r => { const p = dOf(r, cond), n = cond === "no_persona" ? dOf(r, "no_random") : null;
+    return {label: r.lab || dlab(r.d), v: p && p.v, ci: p && p.ci, nul: n && n.v, na: "n/a (spans only the persona space)"}; }).filter(r => isNum(r.v) || isNum(r.nul));
+  const what = cond === "no_persona" ? "persona span removed" : "only the persona component kept";
+  return deltaBars(R, {title: `${title.split(":")[0]}: Δ avg transfer AUC, ${what} (${DS.tm} training)`, legend: `${what} − full`,
+    nulLegend: cond === "no_persona" ? "random K-dim span removed − full (null)" : ""});
 }
 function renderCondOverview(el, ready) {
   const recs = qRecs({cond: "*", models: new Set(ready), dets: DS.dets}); if (!recs.length) return;
@@ -348,8 +355,60 @@ function stValue(r) {
   if (SS.metric === "coh") return isNum(r.coh) ? {v: r.coh, lo: r.clo, hi: r.chi} : null;
   if (SS.metric === "diff") return r.diff && isNum(r.diff.v) ? {v: r.diff.v, lo: r.diff.lo, hi: r.diff.hi, vs: r.diff.vs} : null;
 }
+/* steering views built from per-prompt labels (D.steering.arms / rem / runs) */
+const SV = {models: new Set(["llama", "gemma"]), bench: "harmbench", deg: "fail", groups: new Set(["main", "random / null"])};
+const SVDEG = {fail: "count as not jailbroken (ASR = clean jailbreaks / all prompts)", drop: "drop them (coherent ASR = clean jailbreaks / non-degenerate prompts)"};
+function svRate(a, k) { const den = SV.deg === "fail" ? a.n : a.n - a.deg; return den > 0 ? k / den : null; }
+function svLab(a) { return a.dir + (a.var !== "full" ? ` · ${a.var}` : ""); }
+const SVCOL = {"PersonaJB direction": "var(--s3)", "Refusal direction": "var(--s2)", "Jailbreak direction Δμ": "var(--s1)", "Raw-probe normal": "var(--s5)"};
+function svSeries(a, i, pts) { const c = SVCOL[a.dir] || (a.g === "random / null" ? "var(--s8)" : PAL[(i + 3) % PAL.length]);
+  return {label: svLab(a), color: c, dash: a.var === "persona removed" ? "6 4" : a.var === "persona component only" ? "1.5 3" : (a.g === "random / null" && !SVCOL[a.dir] && a.dir.includes("persona") ? "3 2" : ""), pts}; }
 function renderSteering() {
   const el = $("#steering"); el.innerHTML = "";
+  const S = D.steering, rr = () => { renderSteering(); saveHash(); };
+  const fp = document.createElement("div"); fp.className = "filter-panel"; el.appendChild(fp);
+  fp.appendChild(chipRow("Model", ["llama", "gemma"].map(m => ({v: m, l: mlab(m)})), SV.models, true, rr));
+  fp.appendChild(chipRow("Benchmark", ["harmbench", "jbb", "wildjb"].filter(b => S.arms.some(a => a.b === b)).map(b => ({v: b, l: BENCH[b]})), SV.bench, false, v => { SV.bench = v; rr(); }));
+  fp.appendChild(chipRow("Degenerate outputs", Object.entries(SVDEG).map(([k, l]) => ({v: k, l})), SV.deg, false, v => { SV.deg = v; rr(); }));
+  fp.appendChild(chipRow("Directions", uniq(S.arms.map(a => a.g)).map(g => ({v: g, l: g})), SV.groups, true, rr));
+  const fr = x => isNum(x) ? pct(x) : "—";
+  ["llama", "gemma"].filter(m => SV.models.has(m)).forEach(m => {
+    const runs = Object.entries(S.runs).filter(([k, r]) => r.m === m);
+    el.insertAdjacentHTML("beforeend", `<h2 class="model-h">${esc(mlab(m))}</h2><div class="panel"><h3>How it is evaluated</h3>${runs.map(([k, r]) => `<div class="protocol"><b>${esc(r.label)}.</b> ${esc(r.protocol)}</div>`).join("")}<div class="protocol"><b>Degenerate.</b> ${esc(runs[0][1].deg)} Currently: degenerate outputs are <b>${SV.deg === "fail" ? "counted as not jailbroken" : "dropped from the denominator"}</b>.</div></div>`);
+    // 1. strength: cumulative curves of the main cumulative run
+    const cumRun = m === "llama" ? "llama_off" : "gemma_main";
+    const cum = S.arms.filter(a => a.run === cumRun && a.b === SV.bench && SV.groups.has(a.g) && a.curve);
+    const lines = cum.map((a, i) => svSeries(a, i, a.curve.map(c => [c[0], svRate(a, c[1])])));
+    if (lines.length) el.insertAdjacentHTML("beforeend", `<div class="panel"><h3>Steering strength: ASR vs α, cumulative (each prompt stops at its first jailbreak) · ${esc(S.runs[cumRun].label)} · ${esc(BENCH[SV.bench])}</h3>${lineChart(lines.slice(0, 14), {xlab: "α (max steering strength, fraction of the residual norm)", fmt: pct, title: "ASR (%)", zero: true, W: 760, H: 320})}<div class="note">Solid = full direction · dashed = persona component removed · dotted = persona component only.</div>${lines.length > 14 ? `<div class="note">${lines.length - 14} more directions in the table; narrow "Directions" to plot them.</div>` : ""}</div>`);
+    // 1b. single-dose curves (HarmBench only)
+    const sRun = m === "llama" ? "llama_mir_single" : "gemma_single";
+    const sing = S.arms.filter(a => a.run === sRun && a.b === SV.bench && SV.groups.has(a.g));
+    if (sing.length) { const by = {}, dg = {}; sing.forEach((a, i) => { const k = svLab(a); by[k] = by[k] || svSeries(a, i, []); dg[k] = dg[k] || svSeries(a, i, []);
+        by[k].pts.push([a.a, svRate(a, a.jb), ...(SV.deg === "fail" ? a.ci : a.cci)]); dg[k].pts.push([a.a, a.deg / a.n]); });
+      el.insertAdjacentHTML("beforeend", `<div class="panel"><h3>Steering strength: single dose (one fixed α per run) · ${esc(S.runs[sRun].label)}</h3><div class="chart-row">${lineChart(Object.values(by), {xlab: "α", fmt: pct, title: "ASR (%) with 95% CI", zero: true, W: 590})}${lineChart(Object.values(dg), {xlab: "α", fmt: pct, title: "degenerate outputs (% of prompts)", zero: true, W: 590})}</div></div>`); }
+    // 2. table at α ≤ 0.5
+    const T = S.arms.filter(a => (a.run === cumRun || (m === "gemma" && a.run === "gemma_split") || (m === "llama" && a.run === "llama_mir_cum")) && a.b === SV.bench && SV.groups.has(a.g));
+    const order = ["main", "single trait", "control dictionary", "control single direction", "random / null"];
+    T.sort((x, y) => (x.run !== y.run ? (x.run === cumRun ? -1 : 1) : 0) || order.indexOf(x.g) - order.indexOf(y.g) || svRate(y, y.jb) - svRate(x, x.jb));
+    let h = `<div class="panel"><h3>Final rates at α ≤ 0.5 · ${esc(BENCH[SV.bench])}</h3><table><thead><tr><th class="l">Direction</th><th class="l">Component</th><th class="l">Run</th><th>n</th><th class="${SV.deg === "fail" ? "hl" : ""}">ASR</th><th>Degenerate n (%)</th><th class="${SV.deg === "drop" ? "hl" : ""}">Coherent ASR</th></tr></thead><tbody>`;
+    T.forEach(a => { h += `<tr><td class="l" data-tip="${esc(a.path)}">${esc(a.dir)}</td><td class="l">${esc(a.var)}</td><td class="l">${esc({llama_off: "official", llama_mir_cum: "mirror (nulls)", gemma_main: "main", gemma_split: "persona split (HB-300)"}[a.run] || a.run)}</td><td class="num">${a.n}</td>
+      <td class="num">${fr(a.jb / a.n)}<span class="ci">[${fr(a.ci[0])}, ${fr(a.ci[1])}]</span></td><td class="num">${a.deg} <span class="ci">(${fr(a.deg / a.n)})</span></td>
+      <td class="num">${fr(a.n > a.deg ? a.jb / (a.n - a.deg) : null)}<span class="ci">[${fr(a.cci[0])}, ${fr(a.cci[1])}]</span></td></tr>`; });
+    el.insertAdjacentHTML("beforeend", h + `</tbody></table>${T.length ? "" : `<div class="no-data">No per-prompt runs for this benchmark.</div>`}<div class="note">CI = 95% bootstrap over HarmBench behaviours (B = 1000), computed from the saved per-prompt labels. Hover a direction for its file.</div></div>`);
+    // 3. persona removal / persona only vs the same direction in full
+    const RM = S.rem.filter(r => r.m === m && r.b === SV.bench);
+    const k = SV.deg === "fail" ? "d" : "dc";
+    ["persona removed", "persona component only"].forEach(v => {
+      const R = RM.filter(r => r.var === v).map(r => ({label: r.dir, v: r[k][0], ci: [r[k][1], r[k][2]], tip: `${S.runs[r.run].label}, n = ${r.n}\nfull ${pct(r.full[SV.deg === "fail" ? 0 : 1])} → ${pct(r.v[SV.deg === "fail" ? 0 : 1])}`}));
+      if (R.length) el.insertAdjacentHTML("beforeend", `<div class="panel"><h3>${v === "persona removed" ? "What steering loses when the persona component is removed" : "What steering keeps with only the persona component"} · ${esc(BENCH[SV.bench])}</h3>${deltaBars(R, {fmt: x => sgn(x, pct), title: `Δ ASR (pp), ${v} − full direction, same run and prompts`, legend: `${v} − full`})}</div>`);
+    });
+    const missing = m === "llama" ? `<div class="note">Llama refusal / Δμ: the persona-removed and persona-only arms are on the official snapshot, but their full-direction runs are on the mirror snapshot, so no within-snapshot Δ exists for them (their rates are in the table and the raw cells below).</div>` : "";
+    if (RM.length || missing) el.insertAdjacentHTML("beforeend", missing);
+  });
+  const det = document.createElement("details"); det.className = "panel"; det.innerHTML = `<summary><b>All saved steering cells, as stored in the result files (click to expand)</b></summary>`; el.appendChild(det);
+  const inner = document.createElement("div"); det.appendChild(inner); renderSteeringCells(inner);
+}
+function renderSteeringCells(el) {
   const A = D.steering.records;
   if (!SS.groups) { SS.groups = new Set(["main", "random / null", "classic attack"]); SS.vars = new Set(uniq(A.map(r => r.var))); SS.snaps = new Set(uniq(A.map(r => r.snap))); SS.srcs = new Set(uniq(A.map(r => r.src)));
     SS.scs = new Set(uniq(A.map(r => r.sc))); }
