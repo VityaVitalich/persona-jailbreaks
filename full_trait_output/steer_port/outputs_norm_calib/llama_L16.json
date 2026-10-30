@@ -1,0 +1,64 @@
+{
+ "model": "llama",
+ "path": "/capstor/store/cscs/swissai/infra01/hf_models/models/meta-llama/Llama-3.1-8B-Instruct",
+ "layer": 16,
+ "first_token": "<|begin_of_text|>",
+ "last_prompt_token": "\u010a\u010a",
+ "hb_refused_pool_size": 1935,
+ "pools": {
+  "hb_refused300": {
+   "n_prompts": 300,
+   "n_tokens": 134224,
+   "mean_excl_first": 11.179604530334473,
+   "median_excl_first": 11.27155876159668,
+   "mean_incl_first": 12.349125862121582,
+   "median_incl_first": 11.2758207321167,
+   "first_token_mean": 534.4395141601562,
+   "last_token_mean": 9.652602195739746,
+   "per_prompt_mean_incl_first": 13.361949920654297
+  },
+  "jbb100": {
+   "n_prompts": 100,
+   "n_tokens": 5007,
+   "mean_excl_first": 10.027602195739746,
+   "median_excl_first": 9.300668716430664,
+   "mean_incl_first": 20.501178741455078,
+   "median_incl_first": 9.336491584777832,
+   "first_token_mean": 534.4395751953125,
+   "last_token_mean": 9.994836807250977,
+   "per_prompt_mean_incl_first": 20.56869888305664
+  },
+  "wildjb600": {
+   "n_prompts": 600,
+   "n_tokens": 103983,
+   "mean_excl_first": 11.448249816894531,
+   "median_excl_first": 11.77698802947998,
+   "mean_incl_first": 14.465999603271484,
+   "median_incl_first": 11.789264678955078,
+   "first_token_mean": 534.439453125,
+   "last_token_mean": 9.98875617980957,
+   "per_prompt_mean_incl_first": 14.840911865234375
+  },
+  "alpaca500": {
+   "n_prompts": 500,
+   "n_tokens": 23637,
+   "mean_excl_first": 9.702075958251953,
+   "median_excl_first": 9.087282180786133,
+   "mean_incl_first": 20.801992416381836,
+   "median_incl_first": 9.087282180786133,
+   "first_token_mean": 534.4395141601562,
+   "last_token_mean": 10.42298698425293,
+   "per_prompt_mean_incl_first": 20.889095306396484
+  },
+  "ALL": {
+   "n_prompts": 1500,
+   "n_tokens": 266851,
+   "mean_excl_first": 11.134134292602539,
+   "median_excl_first": 11.322720527648926,
+   "mean_incl_first": 14.07569408416748,
+   "median_incl_first": 11.331296920776367,
+   "first_token_mean": 534.4395141601562,
+   "last_token_mean": 10.06667423248291
+  }
+ }
+}

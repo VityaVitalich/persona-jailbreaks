@@ -1,0 +1,64 @@
+{
+ "model": "olmo",
+ "path": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/hf_cache/hub/models--allenai--Olmo-3-7B-Instruct/snapshots/6e5971d9eba42665f5bd5a0fcf047f299ce1dccc",
+ "layer": 16,
+ "first_token": "<|im_start|>",
+ "last_prompt_token": "\u010a",
+ "hb_refused_pool_size": 2389,
+ "pools": {
+  "hb_refused300": {
+   "n_prompts": 300,
+   "n_tokens": 131624,
+   "mean_excl_first": 16.69107437133789,
+   "median_excl_first": 16.960418701171875,
+   "mean_incl_first": 16.662200927734375,
+   "median_incl_first": 16.952178955078125,
+   "first_token_mean": 4.021831035614014,
+   "last_token_mean": 16.868648529052734,
+   "per_prompt_mean_incl_first": 16.316347122192383
+  },
+  "jbb100": {
+   "n_prompts": 100,
+   "n_tokens": 5107,
+   "mean_excl_first": 13.60532283782959,
+   "median_excl_first": 11.988764762878418,
+   "mean_incl_first": 13.417668342590332,
+   "median_incl_first": 11.988764762878418,
+   "first_token_mean": 4.021738529205322,
+   "last_token_mean": 17.764942169189453,
+   "per_prompt_mean_incl_first": 13.385367393493652
+  },
+  "wildjb600": {
+   "n_prompts": 600,
+   "n_tokens": 104595,
+   "mean_excl_first": 16.55095863342285,
+   "median_excl_first": 17.213247299194336,
+   "mean_incl_first": 16.47908592224121,
+   "median_incl_first": 17.193885803222656,
+   "first_token_mean": 4.021827220916748,
+   "last_token_mean": 17.398176193237305,
+   "per_prompt_mean_incl_first": 16.276403427124023
+  },
+  "alpaca500": {
+   "n_prompts": 500,
+   "n_tokens": 24137,
+   "mean_excl_first": 13.171632766723633,
+   "median_excl_first": 11.950732231140137,
+   "mean_incl_first": 12.982091903686523,
+   "median_incl_first": 11.783473014831543,
+   "first_token_mean": 4.0217390060424805,
+   "last_token_mean": 17.36440086364746,
+   "per_prompt_mean_incl_first": 12.948410034179688
+  },
+  "ALL": {
+   "n_prompts": 1500,
+   "n_tokens": 265463,
+   "mean_excl_first": 16.262184143066406,
+   "median_excl_first": 16.87783432006836,
+   "mean_incl_first": 16.193023681640625,
+   "median_incl_first": 16.859540939331055,
+   "first_token_mean": 4.021792888641357,
+   "last_token_mean": 17.305463790893555
+  }
+ }
+}

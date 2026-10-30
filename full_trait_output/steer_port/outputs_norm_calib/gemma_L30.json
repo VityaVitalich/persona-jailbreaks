@@ -1,0 +1,64 @@
+{
+ "model": "gemma",
+ "path": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/hf_cache/hub/models--google--gemma-4-31B-it/snapshots/842da3794eaa0b77d5f08bae87a17459d91ff475",
+ "layer": 30,
+ "first_token": "<bos>",
+ "last_prompt_token": "<channel|>",
+ "hb_refused_pool_size": 3117,
+ "pools": {
+  "hb_refused300": {
+   "n_prompts": 300,
+   "n_tokens": 124763,
+   "mean_excl_first": 285.85955810546875,
+   "median_excl_first": 288.37945556640625,
+   "mean_incl_first": 285.5498962402344,
+   "median_incl_first": 288.2856140136719,
+   "first_token_mean": 157.06593322753906,
+   "last_token_mean": 265.1042175292969,
+   "per_prompt_mean_incl_first": 286.02197265625
+  },
+  "jbb100": {
+   "n_prompts": 100,
+   "n_tokens": 2797,
+   "mean_excl_first": 281.20343017578125,
+   "median_excl_first": 287.28564453125,
+   "mean_incl_first": 276.7654724121094,
+   "median_incl_first": 287.28564453125,
+   "first_token_mean": 157.0733184814453,
+   "last_token_mean": 263.74755859375,
+   "per_prompt_mean_incl_first": 276.3970031738281
+  },
+  "wildjb600": {
+   "n_prompts": 600,
+   "n_tokens": 91670,
+   "mean_excl_first": 297.50030517578125,
+   "median_excl_first": 303.39013671875,
+   "mean_incl_first": 296.5810852050781,
+   "median_incl_first": 303.191162109375,
+   "first_token_mean": 157.06405639648438,
+   "last_token_mean": 270.9912109375,
+   "per_prompt_mean_incl_first": 294.9323425292969
+  },
+  "alpaca500": {
+   "n_prompts": 500,
+   "n_tokens": 12616,
+   "mean_excl_first": 270.63018798828125,
+   "median_excl_first": 277.49737548828125,
+   "mean_incl_first": 266.1296691894531,
+   "median_incl_first": 274.6609191894531,
+   "first_token_mean": 157.0733184814453,
+   "last_token_mean": 256.8667297363281,
+   "per_prompt_mean_incl_first": 265.6933898925781
+  },
+  "ALL": {
+   "n_prompts": 1500,
+   "n_tokens": 231846,
+   "mean_excl_first": 289.6062927246094,
+   "median_excl_first": 293.0113830566406,
+   "mean_incl_first": 288.748779296875,
+   "median_incl_first": 292.8143310546875,
+   "first_token_mean": 157.06814575195312,
+   "last_token_mean": 264.62274169921875
+  }
+ }
+}

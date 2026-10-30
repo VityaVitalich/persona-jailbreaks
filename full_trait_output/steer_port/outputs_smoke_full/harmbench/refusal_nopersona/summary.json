@@ -1,0 +1,33 @@
+{
+  "steering_vector": "refusal_nopersona",
+  "direction_meta": {
+    "description": "-(Arditi refusal direction), layer 16 pos -1",
+    "hb_auc_toward_jb": 0.8401749865848693,
+    "cos_persona": 0.18226936300230492,
+    "cos_refusal_neg": 1.0000000038995849,
+    "removed": "_nopersona",
+    "share_removed": 0.407475639451466,
+    "hb_auc_toward_jb_allrows": 0.7258470574805682,
+    "transfer_auc_folded": 0.6546119152050711
+  },
+  "directions_file": "inputs/steer_refdmu_layer16.pt",
+  "benchmark": "harmbench",
+  "alpha_schedule": [
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5
+  ],
+  "config": {
+    "model": "/capstor/store/cscs/swissai/infra01/hf_models/models/meta-llama/Llama-3.1-8B-Instruct",
+    "layer": 16,
+    "residual_norm": 22.0,
+    "max_new_tokens": 300,
+    "batch_size": 32,
+    "target": "HarmBench human_jailbreak baseline-refused group, n=300 (subsampled from 1935, seed 0)",
+    "judge_inloop": "gpt-4.1-mini binary YES/NO"
+  },
+  "asr_started_not_jailbroken": 0.59,
+  "n_started_rf": 300
+}

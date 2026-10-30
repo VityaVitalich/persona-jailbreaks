@@ -1,0 +1,100 @@
+{
+  "persona": {
+    "steering_vector": "persona",
+    "direction_meta": {
+      "description": "PersonaJB LR normal mapped to activation space (C=0.001, template-grouped 5-fold CV)",
+      "persona_share": 0.9999999999999994,
+      "hb_auc_folded": 0.9206434463901394,
+      "hb_auc_toward_jb": 0.9206434463901394,
+      "mean_gap_hb": 1.3749733422492671,
+      "cos_persona": 0.9999999999999994,
+      "cos_refusal": 0.228689685985527,
+      "cos_dmu": 0.26121382593854203,
+      "cv_auc_by_C": {
+        "0.0001": 0.8217283915912456,
+        "0.001": 0.8307095220952669,
+        "0.01": 0.8192010698606828,
+        "0.1": 0.8197427709070795,
+        "1.0": 0.8072021503838236,
+        "10.0": 0.7995068072776572,
+        "100.0": 0.7668667192518314
+      },
+      "C": 0.001
+    },
+    "directions_file": "inputs/olmo/steering_directions_olmo_layer16.pt",
+    "benchmark": "harmbench",
+    "alpha_schedule": [
+      0.4
+    ],
+    "config": {
+      "model": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/hf_cache/hub/models--allenai--Olmo-3-7B-Instruct/snapshots/6e5971d9eba42665f5bd5a0fcf047f299ce1dccc",
+      "layer": 16,
+      "residual_norm": 32.132543199623534,
+      "max_new_tokens": 300,
+      "batch_size": 32,
+      "target": "HarmBench human_jailbreak baseline-refused group, n=300 (subsampled from 2389, seed 0)",
+      "judge_inloop": "gpt-4.1-mini binary YES/NO"
+    },
+    "asr_started_not_jailbroken": 0.3,
+    "n_started_rf": 300
+  },
+  "refusal": {
+    "steering_vector": "refusal",
+    "direction_meta": {
+      "description": "-(mean(harmful 897) - mean(alpaca 797)), ctrl_acts_olmo, L16 last token",
+      "persona_share": 0.5319964519178811,
+      "hb_auc_folded": 0.8139079292522248,
+      "hb_auc_toward_jb": 0.8139079292522248,
+      "mean_gap_hb": 2.4744188654474435,
+      "cos_persona": 0.228689685985527,
+      "cos_refusal": 0.9999999999999999,
+      "cos_dmu": 0.4700836001377962,
+      "cos_earlier_arditi_refusal_dir": 0.9866219191491877
+    },
+    "directions_file": "inputs/olmo/steering_directions_olmo_layer16.pt",
+    "benchmark": "harmbench",
+    "alpha_schedule": [
+      0.4
+    ],
+    "config": {
+      "model": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/hf_cache/hub/models--allenai--Olmo-3-7B-Instruct/snapshots/6e5971d9eba42665f5bd5a0fcf047f299ce1dccc",
+      "layer": 16,
+      "residual_norm": 32.132543199623534,
+      "max_new_tokens": 300,
+      "batch_size": 32,
+      "target": "HarmBench human_jailbreak baseline-refused group, n=300 (subsampled from 2389, seed 0)",
+      "judge_inloop": "gpt-4.1-mini binary YES/NO"
+    },
+    "asr_started_not_jailbroken": 0.47,
+    "n_started_rf": 300
+  },
+  "dmu": {
+    "steering_vector": "dmu",
+    "direction_meta": {
+      "description": "mean(jailbroken) - mean(refused), HB human_jailbreak, L16 last token",
+      "persona_share": 0.3953402270564106,
+      "hb_auc_folded": 0.8981017611799552,
+      "hb_auc_toward_jb": 0.8981017611799552,
+      "mean_gap_hb": 5.263784707065114,
+      "cos_persona": 0.26121382593854203,
+      "cos_refusal": 0.4700836001377962,
+      "cos_dmu": 0.9999999999999994
+    },
+    "directions_file": "inputs/olmo/steering_directions_olmo_layer16.pt",
+    "benchmark": "harmbench",
+    "alpha_schedule": [
+      0.4
+    ],
+    "config": {
+      "model": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/hf_cache/hub/models--allenai--Olmo-3-7B-Instruct/snapshots/6e5971d9eba42665f5bd5a0fcf047f299ce1dccc",
+      "layer": 16,
+      "residual_norm": 32.132543199623534,
+      "max_new_tokens": 300,
+      "batch_size": 32,
+      "target": "HarmBench human_jailbreak baseline-refused group, n=300 (subsampled from 2389, seed 0)",
+      "judge_inloop": "gpt-4.1-mini binary YES/NO"
+    },
+    "asr_started_not_jailbroken": 0.49666666666666665,
+    "n_started_rf": 300
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "steering_vector": "refusal",
+  "direction_meta": {
+    "description": "-(mean(harmful 897) - mean(alpaca 797)), ctrl_acts_olmo, L16 last token",
+    "persona_share": 0.5319964519178811,
+    "hb_auc_folded": 0.8139079292522248,
+    "hb_auc_toward_jb": 0.8139079292522248,
+    "mean_gap_hb": 2.4744188654474435,
+    "cos_persona": 0.228689685985527,
+    "cos_refusal": 0.9999999999999999,
+    "cos_dmu": 0.4700836001377962,
+    "cos_earlier_arditi_refusal_dir": 0.9866219191491877
+  },
+  "directions_file": "inputs/olmo/steering_directions_olmo_layer16.pt",
+  "benchmark": "harmbench",
+  "alpha_schedule": [
+    0.05
+  ],
+  "config": {
+    "model": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/hf_cache/hub/models--allenai--Olmo-3-7B-Instruct/snapshots/6e5971d9eba42665f5bd5a0fcf047f299ce1dccc",
+    "layer": 16,
+    "residual_norm": 32.132543199623534,
+    "max_new_tokens": 300,
+    "batch_size": 32,
+    "target": "HarmBench human_jailbreak baseline-refused group, n=300 (subsampled from 2389, seed 0)",
+    "judge_inloop": "gpt-4.1-mini binary YES/NO"
+  },
+  "asr_started_not_jailbroken": 0.08333333333333333,
+  "n_started_rf": 300
+}

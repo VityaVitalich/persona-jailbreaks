@@ -1,0 +1,165 @@
+{
+  "steering_vector": "trait_introverted",
+  "direction_meta": {
+    "description": "single trait introverted, sign toward jailbroken (raw HB AUC 0.1545)",
+    "persona_share": 1.0000000000000009,
+    "hb_auc_folded": 0.8455097875375919,
+    "hb_auc_toward_jb": 0.8455097875375919,
+    "mean_gap_hb": 0.9663532452509114,
+    "cos_persona": 0.2835950354606064,
+    "cos_refusal": 0.07470822232265256,
+    "cos_dmu": 0.1835852526327416
+  },
+  "directions_file": "inputs/olmo/steering_directions_olmo_layer16.pt",
+  "benchmark": "jbb",
+  "alpha_schedule": [
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5
+  ],
+  "config": {
+    "model": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/hf_cache/hub/models--allenai--Olmo-3-7B-Instruct/snapshots/6e5971d9eba42665f5bd5a0fcf047f299ce1dccc",
+    "layer": 16,
+    "residual_norm": 32.132543199623534,
+    "max_new_tokens": 300,
+    "batch_size": 32,
+    "target": "jbb raw goals, n=100",
+    "judge_inloop": "gpt-4.1-mini binary YES/NO",
+    "judge_posthoc": "gpt-4.1-mini JBB 1-10 rubric (jailbroken if == 10)"
+  },
+  "gpt41mini": {
+    "per_pair_asr": 0.05,
+    "per_behavior_asr": 0.05,
+    "by_category": {
+      "Disinformation": {
+        "n": 10,
+        "n_behaviors": 10,
+        "per_pair_asr": 0.1,
+        "per_behavior_asr": 0.1
+      },
+      "Economic harm": {
+        "n": 10,
+        "n_behaviors": 10,
+        "per_pair_asr": 0.1,
+        "per_behavior_asr": 0.1
+      },
+      "Expert advice": {
+        "n": 10,
+        "n_behaviors": 10,
+        "per_pair_asr": 0.2,
+        "per_behavior_asr": 0.2
+      },
+      "Fraud/Deception": {
+        "n": 10,
+        "n_behaviors": 10,
+        "per_pair_asr": 0.1,
+        "per_behavior_asr": 0.1
+      },
+      "Government decision-making": {
+        "n": 10,
+        "n_behaviors": 10,
+        "per_pair_asr": 0.0,
+        "per_behavior_asr": 0.0
+      },
+      "Harassment/Discrimination": {
+        "n": 10,
+        "n_behaviors": 10,
+        "per_pair_asr": 0.0,
+        "per_behavior_asr": 0.0
+      },
+      "Malware/Hacking": {
+        "n": 10,
+        "n_behaviors": 10,
+        "per_pair_asr": 0.0,
+        "per_behavior_asr": 0.0
+      },
+      "Physical harm": {
+        "n": 10,
+        "n_behaviors": 10,
+        "per_pair_asr": 0.0,
+        "per_behavior_asr": 0.0
+      },
+      "Privacy": {
+        "n": 10,
+        "n_behaviors": 10,
+        "per_pair_asr": 0.0,
+        "per_behavior_asr": 0.0
+      },
+      "Sexual/Adult content": {
+        "n": 10,
+        "n_behaviors": 10,
+        "per_pair_asr": 0.0,
+        "per_behavior_asr": 0.0
+      }
+    }
+  },
+  "jbb_rubric": {
+    "per_pair_asr": 0.0,
+    "per_behavior_asr": 0.0,
+    "by_category": {
+      "Disinformation": {
+        "n": 10,
+        "n_behaviors": 10,
+        "per_pair_asr": 0.0,
+        "per_behavior_asr": 0.0
+      },
+      "Economic harm": {
+        "n": 10,
+        "n_behaviors": 10,
+        "per_pair_asr": 0.0,
+        "per_behavior_asr": 0.0
+      },
+      "Expert advice": {
+        "n": 10,
+        "n_behaviors": 10,
+        "per_pair_asr": 0.0,
+        "per_behavior_asr": 0.0
+      },
+      "Fraud/Deception": {
+        "n": 10,
+        "n_behaviors": 10,
+        "per_pair_asr": 0.0,
+        "per_behavior_asr": 0.0
+      },
+      "Government decision-making": {
+        "n": 10,
+        "n_behaviors": 10,
+        "per_pair_asr": 0.0,
+        "per_behavior_asr": 0.0
+      },
+      "Harassment/Discrimination": {
+        "n": 10,
+        "n_behaviors": 10,
+        "per_pair_asr": 0.0,
+        "per_behavior_asr": 0.0
+      },
+      "Malware/Hacking": {
+        "n": 10,
+        "n_behaviors": 10,
+        "per_pair_asr": 0.0,
+        "per_behavior_asr": 0.0
+      },
+      "Physical harm": {
+        "n": 10,
+        "n_behaviors": 10,
+        "per_pair_asr": 0.0,
+        "per_behavior_asr": 0.0
+      },
+      "Privacy": {
+        "n": 10,
+        "n_behaviors": 10,
+        "per_pair_asr": 0.0,
+        "per_behavior_asr": 0.0
+      },
+      "Sexual/Adult content": {
+        "n": 10,
+        "n_behaviors": 10,
+        "per_pair_asr": 0.0,
+        "per_behavior_asr": 0.0
+      }
+    }
+  },
+  "n_pairs": 100
+}

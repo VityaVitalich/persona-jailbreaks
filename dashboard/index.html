@@ -364,18 +364,21 @@ function panelFig(groups, panels, {fmt = x => (100 * x).toFixed(0), mode = "dot"
   let lo = mode === "bar" ? Math.min(0, ...all) : 0, hi = mode === "bar" ? Math.max(0, ...all) : Math.max(...all, 0.5);
   const pad = (hi - lo) * 0.12; hi += pad; if (mode === "bar") lo -= pad;
   const LW = 190, PW = Math.max(220, Math.floor((1180 - LW) / panels.length)), rh = 24, gap = 12, top = 30;
-  const H = top + rows.length * rh + (groups.length - 1) * gap + 40, W = LW + PW * panels.length;
+  const heads = mode === "bar" && groups.some(g => g.name);   // bar mode has no colour legend: name each group in a header row
+  const H = top + rows.length * rh + (groups.length - 1) * gap + (heads ? groups.length * rh : 0) + 40, W = LW + PW * panels.length;
   const X = (k, v) => LW + k * PW + 12 + (v - lo) / (hi - lo) * (PW - 36);
   let s = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img">`;
   panels.forEach((p, k) => {
     s += `<text x="${LW + k * PW + PW / 2}" y="16" text-anchor="middle" style="font-size:13px;fill:var(--text)">${esc(p)}</text>`;
     const step = mode === "bar" ? niceStep((hi - lo) / 4) : 0.2;
-    for (let v = Math.ceil(lo / step) * step; v <= hi + 1e-9; v += step) s += `<line class="gr" x1="${X(k, v)}" x2="${X(k, v)}" y1="${top - 6}" y2="${H - 34}"/><text x="${X(k, v)}" y="${H - 20}" text-anchor="middle">${mode === "bar" ? sgn(v, x => (100 * x).toFixed(0)) : (100 * v).toFixed(0)}</text>`;
+    for (let v0 = Math.ceil(lo / step) * step; v0 <= hi + 1e-9; v0 += step) { const v = Math.abs(v0) < 1e-9 ? 0 : v0;
+      s += `<line class="gr" x1="${X(k, v)}" x2="${X(k, v)}" y1="${top - 6}" y2="${H - 34}"/><text x="${X(k, v)}" y="${H - 20}" text-anchor="middle">${mode === "bar" ? sgn(v, x => (100 * x).toFixed(0)) : (100 * v).toFixed(0)}</text>`; }
     s += `<line x1="${X(k, mode === "bar" ? 0 : lo)}" x2="${X(k, mode === "bar" ? 0 : lo)}" y1="${top - 6}" y2="${H - 34}" stroke="var(--muted)" stroke-dasharray="${mode === "bar" ? "" : "3 3"}"/>`;
   });
   let y = top + rh / 2, lastG = null;
   rows.forEach(r => {
     if (lastG && r.g !== lastG) { s += `<line x1="0" x2="${W}" y1="${y - rh / 2 + gap / 2 - 6}" y2="${y - rh / 2 + gap / 2 - 6}" stroke="var(--border-strong)"/>`; y += gap; }
+    if (heads && r.g !== lastG) { s += `<text x="8" y="${y + 4}" style="font-size:12px;font-weight:700;fill:var(--text)">${esc(r.g.name)}</text>`; y += rh; }
     lastG = r.g; const c = r.g.color;
     s += `<text x="${LW - 10}" y="${y + 4}" text-anchor="end" style="font-size:12px;fill:${c};${r.bold ? "font-weight:700" : ""}">${esc(r.label)}</text>`;
     r.vals.forEach((x, k) => { if (!x || !isNum(x.v)) { s += `<text x="${X(k, mode === "bar" ? 0 : lo) + 6}" y="${y + 4}">—</text>`; return; }
@@ -397,10 +400,16 @@ function panelFig(groups, panels, {fmt = x => (100 * x).toFixed(0), mode = "dot"
 function niceStep(x) { const e = Math.pow(10, Math.floor(Math.log10(x))), f = x / e; return (f < 1.5 ? 1 : f < 3.5 ? 2 : f < 7.5 ? 5 : 10) * e; }
 
 /* steering, per model: (1) ASR figure as in the paper, (2) Δ from the persona component, (3) ASR vs α, (4) table */
-const SV = {models: new Set(["llama", "gemma"]), deg: "fail"};
+const SV = {models: new Set(["llama", "gemma", "olmo"]), deg: "fail"};
+const SVM = ["llama", "olmo", "gemma"];
 const SVDEG = {fail: "count as not jailbroken (ASR = clean jailbreaks / all prompts)", drop: "drop them (coherent ASR = jailbreaks / non-degenerate prompts)"};
 const SVB = {llama: [["HarmBench", "paper_llama", "harmbench"], ["JBB", "paper_llama", "jbb"], ["WildJB", "paper_llama_wjbref", "wildjb_refused"]],
-             gemma: [["HarmBench", "gemma_cells", "harmbench"], ["JBB", "gemma_cells", "jbb"], ["WildJB", "gemma_cells", "wildjb_refused"]]};
+             gemma: [["HarmBench", "gemma_cells", "harmbench"], ["JBB", "gemma_cells", "jbb"], ["WildJB", "gemma_cells", "wildjb_refused"]],
+             olmo: [["HarmBench", "arm:olmo_main", "harmbench"], ["JBB", "arm:olmo_main", "jbb"], ["WildJB", "arm:olmo_main", "wildjb"]]};
+const SVBENCH = [["harmbench", "HarmBench"], ["jbb", "JBB"], ["wildjb", "WildJB"]];
+function svArmRec(a) {   // per-prompt arm -> the record shape of a saved cell
+  return {dir: a.dir, g: a.g, var: a.var, n: a.n, pool: a.pool || `${a.n} prompts`, asr: a.jb / a.n, lo: a.ci[0], hi: a.ci[1], deg: a.deg / a.n,
+          coh: a.n > a.deg ? a.jb / (a.n - a.deg) : null, clo: a.cci[0], chi: a.cci[1]}; }
 const SVG_ = [["Safety-relevant directions", "var(--s1)"], ["Individual traits", "var(--s3)"], ["Standard attacks", "var(--s8)"], ["Null directions", "var(--s4)"]];
 function svShort(d) { return d.replace(/ \(seed \d\)$/, "").replace(/^Trait: /, "").replace(/^Attack: (\w+) \(no steering\)$/, "$1").replace(" direction Δμ", " (Δμ)").replace(/ direction$/, "")
   .replace(/^Alpaca-dictionary detector normal/, "Alpaca dictionary").replace(/ \(top single direction\)$/, "").replace(/^Random direction (in|\(full)/, "Random $1")
@@ -414,7 +423,8 @@ function svMethods(m) {   // -> groups for the paper figure
   const R = D.steering.records.filter(r => r.m === m && r.var === "full");
   const G = SVG_.map(([name, color]) => ({name, color, rows: []}));
   const cells = {};
-  SVB[m].forEach(([lab, src, b], k) => R.filter(r => r.src === src && r.b === b || (m === "gemma" && r.src === "gemma_classic" && b === "harmbench" && r.b === b)).forEach(r => {
+  SVB[m].forEach(([lab, src, b], k) => (src.startsWith("arm:") ? D.steering.arms.filter(a => a.run === src.slice(4) && a.b === b && a.var === "full").map(svArmRec) :
+    R.filter(r => r.src === src && r.b === b || (m === "gemma" && r.src === "gemma_classic" && b === "harmbench" && r.b === b))).forEach(r => {
     const gi = svGroup(r); if (gi < 0) return; const key = gi + "|" + svShort(r.dir); (cells[key] = cells[key] || {gi, label: svShort(r.dir), vals: [[], [], []]}).vals[k].push(r); }));
   if (m === "llama") R.filter(r => r.src === "ctrl_cum").forEach(r => { const key = "3|" + svShort(r.dir); (cells[key] = cells[key] || {gi: 3, label: svShort(r.dir), vals: [[], [], []], note: "HB 300 refused, mirror snapshot"}).vals[0].push(r); });
   Object.values(cells).forEach(c => {
@@ -432,29 +442,34 @@ function renderSteering() {
   const el = $("#steering"); el.innerHTML = "";
   const S = D.steering, rr = () => { renderSteering(); saveHash(); };
   const fp = document.createElement("div"); fp.className = "filter-panel"; el.appendChild(fp);
-  fp.appendChild(chipRow("Model", ["llama", "gemma"].map(m => ({v: m, l: mlab(m)})), SV.models, true, rr));
+  fp.appendChild(chipRow("Model", SVM.map(m => ({v: m, l: mlab(m)})), SV.models, true, rr));
   fp.appendChild(chipRow("Degenerate outputs", Object.entries(SVDEG).map(([k, l]) => ({v: k, l})), SV.deg, false, v => { SV.deg = v; rr(); }));
-  ["llama", "gemma"].filter(m => SV.models.has(m)).forEach(m => {
+  SVM.filter(m => SV.models.has(m)).forEach(m => {
     const runs = Object.entries(S.runs).filter(([k, r]) => r.m === m);
     el.insertAdjacentHTML("beforeend", `<h2 class="model-h">${esc(mlab(m))}</h2>`);
     // (1) paper figure
     const G = svMethods(m);
-    const src = m === "llama" ? "Paper cells (results/steering_cell_cis.json, wjb_refused_cells.json): HarmBench 1935 refused prompts (attacks: HarmBench test cases), JBB 100, WildJB 975 refused (traits: 200). Cumulative α 0.1→0.5 (PersonaJB recut from 0.7). Refusal / Δμ on the mirror snapshot, as in the paper. * Null directions: separate run, HarmBench 300 refused, mirror snapshot." :
+    const src = m === "olmo" ? "OLMo-3-7B-Instruct, recomputed from per-prompt labels (steer_port/outputs_olmo_steer): HarmBench 300 refused, JBB 100, WildJB 565 refused (of the first 600). Cumulative α 0.1→0.5, residual norm 32.13 (1.98× a typical OLMo token, as 22.0 is for Llama). Traits marked (−) are steered on their negative pole. Bars = 95% behaviour-clustered bootstrap CI." :
+      m === "llama" ? "Paper cells (results/steering_cell_cis.json, wjb_refused_cells.json): HarmBench 1935 refused prompts (attacks: HarmBench test cases), JBB 100, WildJB 975 refused (traits: 200). Cumulative α 0.1→0.5 (PersonaJB recut from 0.7). Refusal / Δμ on the mirror snapshot, as in the paper. * Null directions: separate run, HarmBench 300 refused, mirror snapshot." :
       "Gemma cells (results/gemma_steering_cell_cis.json): HarmBench 3117 refused, JBB 100, WildJB 1816 refused; cumulative α 0.1→0.5; attacks on HarmBench test cases only. Traits marked (−) are steered on their negative pole.";
     const degNote = SV.deg === "drop" && m === "llama" ? `<div class="banner warn">The Llama paper cells store only the final ASR (no degenerate labels), so "drop degenerate" cannot be applied to them: steering rows show —.</div>` : "";
-    el.insertAdjacentHTML("beforeend", `<div class="panel"><h3>Attack success rate on prompts the unsteered model refuses (unsteered = 0%)</h3>${degNote}${panelFig(G, SVB[m].map(x => x[0]), {axis: SV.deg === "fail" ? "Attack success rate (%)" : "Coherent attack success rate (%), degenerate outputs dropped"})}<div class="note">${esc(src)} Bars = 95% CI as saved.</div></div>`);
-    // (2) persona component Δ
-    const RM = S.rem.filter(r => r.m === m && r.b === "harmbench"), k = SV.deg === "fail" ? "d" : "dc", fi = SV.deg === "fail" ? 0 : 1;
-    const dirs = uniq(RM.map(r => r.dir));
+    el.insertAdjacentHTML("beforeend", `<div class="panel"><h3>Attack success rate on prompts the unsteered model refuses (unsteered = 0%)</h3>${degNote}${panelFig(G, SVB[m].map(x => x[0]), {axis: SV.deg === "fail" ? "Attack success rate (%)" : "Coherent attack success rate (%), degenerate outputs dropped"})}<div class="note">${esc(src)}${m === "olmo" ? "" : " Bars = 95% CI as saved."}</div></div>`);
+    // (2) persona component Δ, every benchmark: group = variant, row = direction, panel = benchmark
+    const RM = S.rem.filter(r => r.m === m), k = SV.deg === "fail" ? "d" : "dc", fi = SV.deg === "fail" ? 0 : 1;
+    const dirs = uniq(RM.map(r => r.dir)).sort((a, b) => (/^Refusal/.test(b) - /^Refusal/.test(a)) || (/Δμ/.test(b) - /Δμ/.test(a)) || a.localeCompare(b));
     if (dirs.length) {
-      const rowsP = dirs.map(d => ({label: svShort(d), vals: ["persona removed", "persona component only"].map(v => { const r = RM.find(x => x.dir === d && x.var === v); return r ? {v: r[k][0], lo: r[k][1], hi: r[k][2], tip: `full ${pct(r.full[fi])} → ${pct(r.v[fi])} · n = ${r.n} · ${S.runs[r.run].label}`} : null; })}));
-      el.insertAdjacentHTML("beforeend", `<div class="panel"><h3>How much steering loses or gains from the persona component (HarmBench refused, Δ ASR in pp vs the full direction)</h3>${panelFig([{name: "", color: "var(--text)", rows: rowsP}], ["Persona component removed", "Only the persona component"], {mode: "bar", axis: "Δ attack success rate (pp), same prompts and run as the full direction"})}<div class="note">${m === "llama" ? "Official snapshot, HarmBench 300 refused. Refusal / Δμ are missing: their persona-removed and persona-only runs are on the official snapshot but their full-direction runs are on the mirror snapshot, so there is no same-run Δ." : "One run with full / persona-only / persona-removed directions, HarmBench 300 refused."} CI = paired bootstrap over HarmBench behaviours. Hover a bar for the absolute rates.</div></div>`);
+      const VG = [["persona removed", "Persona component removed", "var(--s1)"], ["persona component only", "Only the persona component", "var(--s3)"]];
+      const GP = VG.map(([v, name, color]) => ({name, color, rows: dirs.filter(d => RM.some(x => x.dir === d && x.var === v)).map(d => ({label: svShort(d),
+        vals: SVBENCH.map(([b]) => { const r = RM.find(x => x.dir === d && x.var === v && x.b === b); return r ? {v: r[k][0], lo: r[k][1], hi: r[k][2], tip: `full ${pct(r.full[fi])} → ${pct(r.v[fi])} · n = ${r.n} · ${S.runs[r.run].label}`} : null; })}))}));
+      const remNote = {llama: "Official snapshot, refusal / Δμ: full direction and both variants on the same prompts (HarmBench 300 refused, JBB 100, WildJB 298 refused); some arms are earlier RCP runs of the same runner (see How it is evaluated). Alpaca rows: HarmBench only.",
+        olmo: "One run with full / persona-removed / persona-only directions on the same prompts.", gemma: "One run per benchmark with full / persona-removed / persona-only directions, norm 258.088 (0.89× a typical Gemma token, vs 1.98× for Llama and OLMo). Persona-removed Δμ on WildJB has 45% degenerate outputs: switch to “drop them” to see coherent ASR."}[m];
+      el.insertAdjacentHTML("beforeend", `<div class="panel"><h3>How much steering loses or gains from the persona component (Δ ASR in pp vs the full direction)</h3>${panelFig(GP, SVBENCH.map(x => x[1]), {mode: "bar", axis: "Δ attack success rate (pp), same prompts and run as the full direction"})}<div class="note">${remNote} CI = paired bootstrap over behaviours. Hover a bar for the absolute rates.</div></div>`);
     }
     // (3) strength: full directions only
-    const cumRun = m === "llama" ? "llama_off" : "gemma_main", sRun = m === "llama" ? "llama_mir_single" : "gemma_single";
+    const cumRuns = {llama: ["llama_off", "llama_gap"], gemma: ["gemma_main"], olmo: ["olmo_main"]}[m], cumRun = cumRuns[0], sRun = {llama: "llama_mir_single", gemma: "gemma_single", olmo: "olmo_single"}[m];
     const den = a => SV.deg === "fail" ? a.n : a.n - a.deg;
     const col = d => ({"PersonaJB direction": "var(--s3)", "Refusal direction": "var(--s2)", "Jailbreak direction Δμ": "var(--s1)"})[d] || "var(--s8)";
-    const cum = S.arms.filter(a => a.run === cumRun && a.b === "harmbench" && a.var === "full" && a.curve && (a.g === "main" || a.dir.startsWith("Random direction (full")));
+    const cum = S.arms.filter(a => cumRuns.includes(a.run) && a.b === "harmbench" && a.var === "full" && a.curve && (a.g === "main" || a.dir.startsWith("Random direction (full"))).filter((a, i, A) => A.findIndex(x => x.dir === a.dir) === i);
     const sing = S.arms.filter(a => a.run === sRun && a.b === "harmbench" && a.var === "full" && a.g === "main");
     const by = {}; sing.forEach(a => { (by[a.dir] = by[a.dir] || {label: svShort(a.dir), color: col(a.dir), pts: []}).pts.push([a.a, den(a) > 0 ? a.jb / den(a) : null, ...(SV.deg === "fail" ? a.ci : a.cci)]); });
     const dg = {}; sing.forEach(a => { (dg[a.dir] = dg[a.dir] || {label: svShort(a.dir), color: col(a.dir), pts: []}).pts.push([a.a, a.deg / a.n]); });
@@ -462,7 +477,7 @@ function renderSteering() {
       ${lineChart(cum.map(a => ({label: svShort(a.dir), color: col(a.dir), pts: a.curve.map(c => [c[0], den(a) > 0 ? c[1] / den(a) : null])})), {xlab: "α", fmt: pct, title: `cumulative: ASR at α ≤ x (${S.runs[cumRun].label.split(" · ").slice(1).join(" · ")})`, zero: true, W: 360, H: 260})}
       ${lineChart(Object.values(by), {xlab: "α", fmt: pct, title: `single dose: ASR at α = x (${S.runs[sRun].label.split(" · ").slice(1).join(" · ")})`, zero: true, W: 360, H: 260})}
       ${lineChart(Object.values(dg), {xlab: "α", fmt: pct, title: "single dose: degenerate outputs (% of prompts)", zero: true, W: 360, H: 260})}</div>
-      <div class="note">Cumulative: each prompt is steered at α = 0.1, 0.2, … and stops at its first jailbreak. Single dose: one fixed α per run. ${m === "llama" ? "Llama official-snapshot cumulative files have no full refusal / Δμ arms; the single-dose sweep is the mirror snapshot." : ""}</div></div>`);
+      <div class="note">Cumulative: each prompt is steered at α = 0.1, 0.2, … and stops at its first jailbreak. Single dose: one fixed α per run. ${m === "llama" ? "Llama cumulative: official snapshot (refusal / Δμ from the persona-removal run); the single-dose sweep is the mirror snapshot." : m === "olmo" ? "OLMo: norm 32.13 throughout." : ""}</div></div>`);
     // (4) how it is evaluated
     el.insertAdjacentHTML("beforeend", `<details class="panel"><summary><b>How it is evaluated (judge, pools, degenerate rule)</b></summary>${runs.map(([k, r]) => `<div class="protocol"><b>${esc(r.label)}.</b> ${esc(r.protocol)}</div>`).join("")}<div class="protocol"><b>Degenerate.</b> ${esc(runs[0][1].deg)}</div></details>`);
   });

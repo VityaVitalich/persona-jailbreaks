@@ -1,0 +1,33 @@
+{
+  "steering_vector": "refusal_personaonly",
+  "direction_meta": {
+    "description": "trait-span component of refusal, renormalised",
+    "persona_share": 1.0000000000000002,
+    "hb_auc_folded": 0.8265284577067565,
+    "hb_auc_toward_jb": 0.8265284577067565,
+    "mean_gap_hb": 2.1325923151336106,
+    "cos_persona": 0.31353946303842545,
+    "cos_refusal": 0.729380868900386,
+    "cos_dmu": 0.40514428948266434
+  },
+  "directions_file": "inputs/olmo/steering_directions_olmo_layer16.pt",
+  "benchmark": "harmbench",
+  "alpha_schedule": [
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5
+  ],
+  "config": {
+    "model": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/hf_cache/hub/models--allenai--Olmo-3-7B-Instruct/snapshots/6e5971d9eba42665f5bd5a0fcf047f299ce1dccc",
+    "layer": 16,
+    "residual_norm": 32.132543199623534,
+    "max_new_tokens": 300,
+    "batch_size": 32,
+    "target": "HarmBench human_jailbreak baseline-refused group, n=300 (subsampled from 2389, seed 0)",
+    "judge_inloop": "gpt-4.1-mini binary YES/NO"
+  },
+  "asr_started_not_jailbroken": 0.6966666666666667,
+  "n_started_rf": 300
+}

@@ -1,0 +1,53 @@
+{
+ "harmbench/dmu": {
+  "bench": "harmbench",
+  "arm": "dmu",
+  "n": 300,
+  "expected": 300,
+  "dup_ids": 0,
+  "jb": 71,
+  "asr": 0.23666666666666666,
+  "degenerate": 15,
+  "coherent_asr": 0.24912280701754386,
+  "jb_not_text": 0,
+  "jb_char_degenerate": 0,
+  "min_alpha_hist": {
+   "0.15": 71
+  },
+  "summary_json": true
+ },
+ "harmbench/persona": {
+  "bench": "harmbench",
+  "arm": "persona",
+  "n": 300,
+  "expected": 300,
+  "dup_ids": 0,
+  "jb": 49,
+  "asr": 0.16333333333333333,
+  "degenerate": 9,
+  "coherent_asr": 0.16838487972508592,
+  "jb_not_text": 0,
+  "jb_char_degenerate": 0,
+  "min_alpha_hist": {
+   "0.15": 49
+  },
+  "summary_json": true
+ },
+ "harmbench/refusal": {
+  "bench": "harmbench",
+  "arm": "refusal",
+  "n": 300,
+  "expected": 300,
+  "dup_ids": 0,
+  "jb": 54,
+  "asr": 0.18,
+  "degenerate": 35,
+  "coherent_asr": 0.2037735849056604,
+  "jb_not_text": 1,
+  "jb_char_degenerate": 0,
+  "min_alpha_hist": {
+   "0.15": 54
+  },
+  "summary_json": true
+ }
+}

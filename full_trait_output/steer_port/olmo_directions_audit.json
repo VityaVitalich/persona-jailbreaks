@@ -1,0 +1,159 @@
+{
+ "meta": {
+  "persona": {
+   "description": "PersonaJB LR normal mapped to activation space (C=0.001, template-grouped 5-fold CV)",
+   "persona_share": 0.9999999999999994,
+   "hb_auc_folded": 0.9206434463901394,
+   "hb_auc_toward_jb": 0.9206434463901394,
+   "mean_gap_hb": 1.3749733422492671,
+   "cos_persona": 0.9999999999999994,
+   "cos_refusal": 0.228689685985527,
+   "cos_dmu": 0.26121382593854203,
+   "cv_auc_by_C": {
+    "0.0001": 0.8217283915912456,
+    "0.001": 0.8307095220952669,
+    "0.01": 0.8192010698606828,
+    "0.1": 0.8197427709070795,
+    "1.0": 0.8072021503838236,
+    "10.0": 0.7995068072776572,
+    "100.0": 0.7668667192518314
+   },
+   "C": 0.001
+  },
+  "refusal": {
+   "description": "-(mean(harmful 897) - mean(alpaca 797)), ctrl_acts_olmo, L16 last token",
+   "persona_share": 0.5319964519178811,
+   "hb_auc_folded": 0.8139079292522248,
+   "hb_auc_toward_jb": 0.8139079292522248,
+   "mean_gap_hb": 2.4744188654474435,
+   "cos_persona": 0.228689685985527,
+   "cos_refusal": 0.9999999999999999,
+   "cos_dmu": 0.4700836001377962,
+   "cos_earlier_arditi_refusal_dir": 0.9866219191491877
+  },
+  "dmu": {
+   "description": "mean(jailbroken) - mean(refused), HB human_jailbreak, L16 last token",
+   "persona_share": 0.3953402270564106,
+   "hb_auc_folded": 0.8981017611799552,
+   "hb_auc_toward_jb": 0.8981017611799552,
+   "mean_gap_hb": 5.263784707065114,
+   "cos_persona": 0.26121382593854203,
+   "cos_refusal": 0.4700836001377962,
+   "cos_dmu": 0.9999999999999994
+  },
+  "trait_accommodating": {
+   "description": "single trait accommodating, sign toward jailbroken (raw HB AUC 0.8503)",
+   "persona_share": 1.0000000000000064,
+   "hb_auc_folded": 0.8502592211775527,
+   "hb_auc_toward_jb": 0.8502592211775527,
+   "mean_gap_hb": 1.0760895836288518,
+   "cos_persona": 0.23637017269393795,
+   "cos_refusal": 0.12013564662146739,
+   "cos_dmu": 0.20443267411459898
+  },
+  "trait_introverted": {
+   "description": "single trait introverted, sign toward jailbroken (raw HB AUC 0.1545)",
+   "persona_share": 1.0000000000000009,
+   "hb_auc_folded": 0.8455097875375919,
+   "hb_auc_toward_jb": 0.8455097875375919,
+   "mean_gap_hb": 0.9663532452509114,
+   "cos_persona": 0.2835950354606064,
+   "cos_refusal": 0.07470822232265256,
+   "cos_dmu": 0.1835852526327416
+  },
+  "trait_paranoid": {
+   "description": "single trait paranoid, sign toward jailbroken (raw HB AUC 0.1591)",
+   "persona_share": 0.9999999999999984,
+   "hb_auc_folded": 0.8409122299371488,
+   "hb_auc_toward_jb": 0.8409122299371488,
+   "mean_gap_hb": 0.5524361942362165,
+   "cos_persona": 0.4564077048937718,
+   "cos_refusal": 0.13933414722370716,
+   "cos_dmu": 0.10495037790864235
+  },
+  "random_full_s0": {
+   "description": "N(0, I_d), numpy default_rng(0)",
+   "persona_share": 0.056758384344374156,
+   "hb_auc_folded": 0.7148757553451635,
+   "hb_auc_toward_jb": 0.28512424465483655,
+   "mean_gap_hb": -0.1146673576240878,
+   "cos_persona": -0.036635021428724976,
+   "cos_refusal": 0.002171294928209596,
+   "cos_dmu": -0.021784203573178017
+  },
+  "random_persona_s0": {
+   "description": "Q g, g ~ N(0, I_240), numpy default_rng(0)",
+   "persona_share": 0.9999999999999997,
+   "hb_auc_folded": 0.6079275059149631,
+   "hb_auc_toward_jb": 0.6079275059149631,
+   "mean_gap_hb": 0.08520247132233207,
+   "cos_persona": 0.12386980513650717,
+   "cos_refusal": -0.004205212512242902,
+   "cos_dmu": 0.016186541825689092
+  },
+  "refusal_nopersona": {
+   "description": "refusal minus its trait-span component, renormalised",
+   "persona_share": 5.493805219070792e-30,
+   "hb_auc_folded": 0.7811640901540404,
+   "hb_auc_toward_jb": 0.7811640901540404,
+   "mean_gap_hb": 1.3432777184645475,
+   "cos_persona": -8.543513119185775e-17,
+   "cos_refusal": 0.6841078482827968,
+   "cos_dmu": 0.2551923745402397
+  },
+  "refusal_personaonly": {
+   "description": "trait-span component of refusal, renormalised",
+   "persona_share": 1.0000000000000002,
+   "hb_auc_folded": 0.8265284577067565,
+   "hb_auc_toward_jb": 0.8265284577067565,
+   "mean_gap_hb": 2.1325923151336106,
+   "cos_persona": 0.31353946303842545,
+   "cos_refusal": 0.729380868900386,
+   "cos_dmu": 0.40514428948266434
+  },
+  "dmu_nopersona": {
+   "description": "dmu minus its trait-span component, renormalised",
+   "persona_share": 4.594957914396644e-30,
+   "hb_auc_folded": 0.8889421013611162,
+   "hb_auc_toward_jb": 0.8889421013611162,
+   "mean_gap_hb": 4.093112262747178,
+   "cos_persona": 7.979727989493313e-17,
+   "cos_refusal": 0.22451053639272422,
+   "cos_dmu": 0.7775987223135014
+  },
+  "dmu_personaonly": {
+   "description": "trait-span component of dmu, renormalised",
+   "persona_share": 0.9999999999999991,
+   "hb_auc_folded": 0.882661736075428,
+   "hb_auc_toward_jb": 0.882661736075428,
+   "mean_gap_hb": 3.30966183270757,
+   "cos_persona": 0.4154422450841227,
+   "cos_refusal": 0.4699791442287424,
+   "cos_dmu": 0.6287608663525508
+  }
+ },
+ "bundle": {
+  "model": "allenai/Olmo-3-7B-Instruct",
+  "layer": 16,
+  "position": "last prompt token (tail '\\n' after 'assistant')",
+  "n_hb": 3180,
+  "n_hb_jb": 791,
+  "trait_rows_in_pt": 32,
+  "trait_span_rank": 240,
+  "top_trait_aucs": {
+   "accommodating": 0.8502592211775527,
+   "introverted": 0.15449021246240802,
+   "paranoid": 0.15908777006285127,
+   "practical": 0.8331310965397134,
+   "manipulative": 0.17022393513464312,
+   "extroverted": 0.8233940960967858,
+   "egalitarian": 0.8149932872907273,
+   "gregarious": 0.8135798346720826,
+   "contemporary": 0.8120933545501162,
+   "risk_taking": 0.8104835743681928
+  },
+  "random_span_share_expected": 0.05859375,
+  "earlier_refusal_dir_cos": 0.9866219191491877,
+  "builder": "steer_port/port_tools/build_olmo_directions.py"
+ }
+}
