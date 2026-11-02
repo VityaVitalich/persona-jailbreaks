@@ -24,13 +24,17 @@ Validity: persona R^2 after each control (a control that also erases persona coo
   leacerand_{g}     LEACE w.r.t. X R_g (the persona LEACE operator with random coordinates)
   orthrand_{g}      projection erasure with R_g in place of the persona basis (span + cross-covariance column space)
   diag: in-sample R^2 of the top-K Wikipedia / Alpaca PC coordinates from the persona vs the random coordinates
-usage: python q1_erase_ctl.py MODEL CONFIG_JSON Q1_JSON OUTDIR NJOBS [--smoke] [--cell=raw|PersonaJB] [--npleace|--randleace]"""
+--ksweep (output erase_ctl4_*; edits full / orth / leace again for paired CIs, plus, for k in KS = 1, 4, 16, 64):
+  leacepc_k{k}      LEACE w.r.t. X Pp[:, :k], Pp = top singular directions of the unit trait vectors (uncentred SVD of the
+                    K x d trait matrix; unsupervised, no jailbreak labels)
+  leacerk_k{k}_{g}  LEACE w.r.t. the coordinates on k isotropic random directions (3 draws, seeds 6000+g)
+usage: python q1_erase_ctl.py MODEL CONFIG_JSON Q1_JSON OUTDIR NJOBS [--smoke] [--cell=raw|PersonaJB] [--npleace|--randleace|--ksweep]"""
 import json, os, sys, time, numpy as np, warnings; warnings.filterwarnings("ignore")
 from joblib import Parallel, delayed
 from sklearn.linear_model import LogisticRegression; from sklearn.preprocessing import StandardScaler; from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import GroupKFold
 M, CFG, SW, OUT, NJ = sys.argv[1], json.load(open(sys.argv[2])), json.load(open(sys.argv[3])), sys.argv[4], int(sys.argv[5]); os.makedirs(OUT, exist_ok=True)
-SMOKE = "--smoke" in sys.argv; NPL = "--npleace" in sys.argv; RL = "--randleace" in sys.argv
+SMOKE = "--smoke" in sys.argv; NPL = "--npleace" in sys.argv; RL = "--randleace" in sys.argv; KSW = "--ksweep" in sys.argv; SPEC = "--spectrum" in sys.argv; KS = (1, 4, 16, 64)
 TRAIN, TEST, SETS = CFG["train"], CFG["test"], CFG["train"] + CFG["test"]
 GRID = [1e-2] if SMOKE else [1e-4, 1e-3, 1e-2, 1e-1, 1.0, 10.0, 100.0]; B = 1000; ND = 1 if SMOKE else 3
 CGRID = [1e-2] if SMOKE else [1e-3, 1e-2, 1e-1, 1.0]
@@ -239,6 +243,22 @@ def run_cell(L, p, tag):
         ED[key] = (proj_out(Xtr0, U), {s: proj_out(Xte0[s], U) for s in TEST}, int(U.shape[1])); FN[key] = (lambda X, U=U: proj_out(X, U))
         info[key] = {"dims": int(U.shape[1]), **extra}
     diag = {}
+    if SPEC:                                                                         # sanity check only: no probes, no output files
+        lam = np.linalg.eigvalsh(S)[::-1]; cs = np.cumsum(lam) / lam.sum()
+        print(f"[{tag}] spectrum: n_train {len(Xtr0)}, total var {totvar:.4g}, top-k PC share " + ", ".join(f"k{k} {cs[k - 1]:.3f}" for k in (1, 2, 4, 8, 16, 32, 64, 128, K, 512)), flush=True)
+        Pp = np.linalg.svd(unit(np.asarray(TV[:, li], np.float64)), full_matrices=False)[2].T
+        for k in (1, 4, 16, 64):
+            for nmR, R in [("persona_pc", Pp[:, :k])] + [(f"random_{g}", orth(np.random.default_rng(6000 + g).standard_normal((k, D)))) for g in range(3)]:
+                f, r = leace_fit(Xtr0, Xtr0 @ R); meas = cen(f(Xtr0)) / totvar
+                Ur = np.linalg.qr(S @ R)[0]; proj = float(np.einsum("ij,ij->", Ur, S @ Ur)) / totvar   # variance in span(S R)
+                print(f"[{tag}] k{k:3d} {nmR:10s} LEACE removed {meas:.3f} | var in span(S R) {proj:.3f} | var in span(R) {ev(R):.4f} | top-k PC bound {cs[k - 1]:.3f}", flush=True)
+        print("spectrum check done; exiting before any output is written", flush=True); sys.exit(0)
+    if KSW:
+        Pp = np.linalg.svd(unit(np.asarray(TV[:, li], np.float64)), full_matrices=False)[2].T      # [D, K] by singular value
+        for k in KS:
+            for key, R in [(f"leacepc_k{k}", Pp[:, :k])] + [(f"leacerk_k{k}_{g}", orth(np.random.default_rng(6000 + g).standard_normal((k, D)))) for g in range(ND)]:
+                f5, r5 = leace_fit(Xtr0, Xtr0 @ R); ED[key] = (f5(Xtr0), {s: f5(Xte0[s]) for s in TEST}, r5); FN[key] = f5
+                info[key] = {"dims": r5, "k": k}
     if RL:
         def r2fit(Zx, Zy):                                                           # variance-weighted in-sample OLS R^2
             Zx, Zy = Zx - Zx.mean(0), Zy - Zy.mean(0); res = Zy - Zx @ np.linalg.lstsq(Zx, Zy, rcond=None)[0]
@@ -256,7 +276,7 @@ def run_cell(L, p, tag):
             Zw = Xtr0 @ pcs(src, L, p)[:, :K]
             diag[src] = {"r2_from_persona": r2fit(Ztr, Zw), "r2_from_random": [r2fit(Xtr0 @ R, Zw) for R in RD]}
         print(f"[{tag}] diag " + json.dumps(diag), flush=True)
-    for src in (() if RL else CTL_SRC):
+    for src in (() if RL or KSW else CTL_SRC):
         P = pcs(src, L, p); nP = P.shape[1]
         if NPL:
             Qg = np.linalg.qr(proj_out(P[:, :K].T, Qp).T)[0]
@@ -324,7 +344,7 @@ res = {"model": M, "train": TRAIN, "test": TEST, "avg_sets": AVG, "k": int(K), "
        "B": B, "n_draws": ND, "n_train": int(len(ytr)), "n_test": {s: [int(len(y[s])), int(y[s].sum())] for s in TEST}, "cells": {}}
 SC = {"labels_train": ytr, "pair_ids_train": np.array([f"{s}:{r['pair_id']}" for s in TRAIN for r in rows[s]])}
 for s in TEST: SC[f"labels_{s}"] = y[s]; SC[f"pair_ids_{s}"] = np.array([str(r["pair_id"]) for r in rows[s]]); SC[f"category_{s}"] = cat_te[s]
-suf = ("_smoke" if SMOKE else "") + (f"_{ONLY}" if ONLY else ""); nm = "erase_ctl3" if RL else "erase_ctl2" if NPL else "erase_ctl"
+suf = ("_smoke" if SMOKE else "") + (f"_{ONLY}" if ONLY else ""); nm = "erase_ctl4" if KSW else "erase_ctl3" if RL else "erase_ctl2" if NPL else "erase_ctl"
 fj, fz = f"{OUT}/{nm}_{M}{suf}.json", f"{OUT}/scores_{nm}_{M}{suf}.npz"
 done = set()
 for tag, sel in cells.items():
