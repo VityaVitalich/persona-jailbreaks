@@ -17,12 +17,14 @@
 <nav id="nav">
   <button data-tab="detection" class="active">Detection</button>
   <button data-tab="steering">Steering</button>
+  <button data-tab="traits">Predictive vs steering</button>
   <button data-tab="erasure">Persona erasure</button>
   <button data-tab="share">Persona share of space</button>
   <button data-tab="sources">Sources</button>
 </nav>
 <section id="detection" class="active"></section>
 <section id="steering"></section>
+<section id="traits"></section>
 <section id="erasure"></section>
 <section id="share"></section>
 <section id="sources"></section>
@@ -497,13 +499,12 @@ function renderSteering() {
     const sing = S.arms.filter(a => a.run === sRun && a.b === "harmbench" && a.var === "full" && a.g === "main");
     const by = {}; sing.forEach(a => { (by[a.dir] = by[a.dir] || {label: svShort(a.dir), color: col(a.dir), pts: []}).pts.push([a.a, den(a) > 0 ? a.jb / den(a) : null, ...(SV.deg === "fail" ? a.ci : a.cci)]); });
     const dg = {}; sing.forEach(a => { (dg[a.dir] = dg[a.dir] || {label: svShort(a.dir), color: col(a.dir), pts: []}).pts.push([a.a, a.deg / a.n]); });
-    el.insertAdjacentHTML("beforeend", `<div class="panel"><h3>Steering strength (HarmBench refused, full directions)</h3><div class="chart-row">
+    el.insertAdjacentHTML("beforeend", `<details class="panel"><summary><b>Steering strength (HarmBench refused, full directions): ASR vs α, degenerate outputs</b></summary><div class="chart-row">
       ${lineChart(cum.map(a => ({label: svShort(a.dir), color: col(a.dir), pts: a.curve.map(c => [c[0], den(a) > 0 ? c[1] / den(a) : null])})), {xlab: "α", fmt: pct, title: `cumulative: ASR at α ≤ x (${S.runs[cumRun].label.split(" · ").slice(1).join(" · ")})`, zero: true, W: 360, H: 260})}
       ${lineChart(Object.values(by), {xlab: "α", fmt: pct, title: `single dose: ASR at α = x (${S.runs[sRun].label.split(" · ").slice(1).join(" · ")})`, zero: true, W: 360, H: 260})}
       ${lineChart(Object.values(dg), {xlab: "α", fmt: pct, title: "single dose: degenerate outputs (% of prompts)", zero: true, W: 360, H: 260})}</div>
-      <div class="note">Cumulative: each prompt is steered at α = 0.1, 0.2, … and stops at its first jailbreak. Single dose: one fixed α per run. ${m === "llama" ? "Llama cumulative: official snapshot (refusal / Δμ from the persona-removal run); the single-dose sweep is the mirror snapshot." : m === "olmo" ? "OLMo: norm 32.13 throughout." : SV.gnorm === "572" ? "Gemma: cumulative curves at norm 572 (same run as the figure); the single-dose sweep exists only at norm 258." : ""}</div></div>`);
+      <div class="note">Cumulative: each prompt is steered at α = 0.1, 0.2, … and stops at its first jailbreak. Single dose: one fixed α per run. ${m === "llama" ? "Llama cumulative: official snapshot (refusal / Δμ from the persona-removal run); the single-dose sweep is the mirror snapshot." : m === "olmo" ? "OLMo: norm 32.13 throughout." : SV.gnorm === "572" ? "Gemma: cumulative curves at norm 572 (same run as the figure); the single-dose sweep exists only at norm 258." : ""}</div></details>`);
     if (m === "gemma") renderGemmaExtra(el);
-    renderTraits(el, m);
     // (4) how it is evaluated
     el.insertAdjacentHTML("beforeend", `<details class="panel"><summary><b>How it is evaluated (judge, pools, degenerate rule)</b></summary>${runs.map(([k, r]) => `<div class="protocol"><b>${esc(r.label)}.</b> ${esc(r.protocol)}</div>`).join("")}<div class="protocol"><b>Degenerate.</b> ${esc(runs[0][1].deg)}</div></details>`);
   });
@@ -521,7 +522,15 @@ function renderGemmaExtra(el) {
               ["Null directions", "var(--s4)", [["random_full_s0", "Random (full space)"]]]];
   const G = AR.map(([name, color, ks]) => ({name, color, rows: ks.map(([k, label]) => ({label, bold: k === "persona", vals: LAY.map(([r]) => { const a = arm(r, k); if (!a) return null;
     const den = SV.deg === "fail" ? a.n : a.n - a.deg; return den > 0 ? {v: a.jb / den, lo: (SV.deg === "fail" ? a.ci : a.cci)[0], hi: (SV.deg === "fail" ? a.ci : a.cci)[1], tip: `n = ${a.n} · degenerate ${pct(a.deg / a.n)} · ${S.runs[r].label}`} : null; })}))}));
-  if (LAY.length > 1) el.insertAdjacentHTML("beforeend", `<div class="panel"><h3>Does a later layer make the persona direction causal? (HarmBench 300 refused, same prompts at every layer)</h3>${panelFig(G, LAY.map(x => x[1]), {axis: "Attack success rate (%)"})}<div class="note">Each layer uses its own directions and its own calibrated residual norm (L30 572.2; ${LAY.slice(1).map(([r]) => esc(S.runs[r].protocol.match(/norm ([\d.]+)/)?.[1] + " at " + S.runs[r].label.split(" · ")[1])).join(", ")}). Bars = 95% behaviour-clustered bootstrap CI.</div></div>`);
+  if (LAY.length > 1) el.insertAdjacentHTML("beforeend", `<details class="panel"><summary><b>Does a later layer make the persona direction causal? Layer sweep L30 / L35 / L40 / L45 (HarmBench 300 refused, same prompts at every layer)</b></summary>${panelFig(G, LAY.map(x => x[1]), {axis: "Attack success rate (%)"})}<div class="note">Each layer uses its own directions and its own calibrated residual norm (L30 572.2; ${LAY.slice(1).map(([r]) => esc(S.runs[r].protocol.match(/norm ([\d.]+)/)?.[1] + " at " + S.runs[r].label.split(" · ")[1])).join(", ")}). Bars = 95% behaviour-clustered bootstrap CI.</div></details>`);
+}
+const TS = {models: new Set(["llama", "olmo", "gemma"])};
+function renderTraitsTab() {
+  const el = $("#traits"); el.innerHTML = ""; const rr = () => { renderTraitsTab(); saveHash(); };
+  const fp = document.createElement("div"); fp.className = "filter-panel"; el.appendChild(fp);
+  fp.appendChild(chipRow("Model", ["llama", "olmo", "gemma"].map(m => ({v: m, l: mlab(m)})), TS.models, true, rr));
+  el.insertAdjacentHTML("beforeend", `<div class="panel"><h3>What is tested</h3><div class="protocol">Every trait steered alone (an all-trait sweep per model) against the same trait's power to predict jailbreaks on its own (folded AUC of its projection, averaged over the 5 transfer sets). Do the traits that predict jailbreaks best also jailbreak best when steered?</div></div>`);
+  ["llama", "olmo", "gemma"].filter(m => TS.models.has(m)).forEach(m => { el.insertAdjacentHTML("beforeend", `<h2 class="model-h">${esc(mlab(m))}</h2>`); renderTraits(el, m); });
 }
 function renderTraits(el, m) {
   const E = D.steering.traits[m]; if (!E) return;
@@ -758,7 +767,7 @@ function saveHash() {
 function showTab(t) {
   document.querySelectorAll("#nav button").forEach(b => b.classList.toggle("active", b.dataset.tab === t));
   document.querySelectorAll("section").forEach(s => s.classList.toggle("active", s.id === t));
-  ({detection: renderDetection, steering: renderSteering, erasure: renderErasure, share: renderShare, sources: renderSources})[t]();
+  ({detection: renderDetection, steering: renderSteering, traits: renderTraitsTab, erasure: renderErasure, share: renderShare, sources: renderSources})[t]();
 }
 $("#nav").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; showTab(b.dataset.tab); saveHash(); });
 fetch("data.json").then(r => r.json()).then(d => {
