@@ -1,0 +1,26 @@
+{
+  "steering_vector": "trait_agreeable",
+  "direction_meta": {
+    "description": "agreeable"
+  },
+  "directions_file": "inputs/olmo/steer_traits_olmo_layer16.pt",
+  "benchmark": "harmbench",
+  "alpha_schedule": [
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5
+  ],
+  "config": {
+    "model": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/hf_cache/hub/models--allenai--Olmo-3-7B-Instruct/snapshots/6e5971d9eba42665f5bd5a0fcf047f299ce1dccc",
+    "layer": 16,
+    "residual_norm": 32.132543199623534,
+    "max_new_tokens": 300,
+    "batch_size": 64,
+    "target": "HarmBench human_jailbreak baseline-refused group, n=300 (subsampled from 2389, seed 0)",
+    "judge_inloop": "gpt-4.1-mini binary YES/NO"
+  },
+  "asr_started_not_jailbroken": 0.13,
+  "n_started_rf": 300
+}

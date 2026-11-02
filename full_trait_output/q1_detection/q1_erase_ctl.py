@@ -12,13 +12,25 @@ src (centred on src):
   pcanp_{src}_var   the same, as many PCs as needed to match LEACE's removed variance, capped at 90% of the variance
                     outside the persona span (achieved share recorded)
 Validity: persona R^2 after each control (a control that also erases persona coordinates is not a control).
-usage: python q1_erase_ctl.py MODEL CONFIG_JSON Q1_JSON OUTDIR NJOBS [--smoke] [--cell=raw|PersonaJB]"""
+--npleace (output erase_ctl2_*; edits full / orth / leace again for paired CIs, plus):
+  leacegeo_{src}    LEACE w.r.t. X Q', Q' = the pcanp_{src}_k basis (geometrically orthogonal to the persona span; the
+                    coordinates can still correlate with the persona coordinates, so LEACE can still erase some of them)
+  leacenp_{src}     LEACE w.r.t. Z_src minus its least-squares fit on the persona coordinates (fitted on the training set):
+                    the concept is exactly uncorrelated with the persona coordinates, so LEACE leaves them unchanged
+  leacenp_{src}_var the same with the top m PCs instead of K, m = the smallest count whose eraser removes as much variance
+                    as the persona LEACE (all PCs when that is not reachable; m and the achieved share recorded)
+--randleace (output erase_ctl3_*; edits full / orth / leace again for paired CIs, plus, for 3 draws g of K isotropic
+  Gaussian directions R_g, seeds 5000+g):
+  leacerand_{g}     LEACE w.r.t. X R_g (the persona LEACE operator with random coordinates)
+  orthrand_{g}      projection erasure with R_g in place of the persona basis (span + cross-covariance column space)
+  diag: in-sample R^2 of the top-K Wikipedia / Alpaca PC coordinates from the persona vs the random coordinates
+usage: python q1_erase_ctl.py MODEL CONFIG_JSON Q1_JSON OUTDIR NJOBS [--smoke] [--cell=raw|PersonaJB] [--npleace|--randleace]"""
 import json, os, sys, time, numpy as np, warnings; warnings.filterwarnings("ignore")
 from joblib import Parallel, delayed
 from sklearn.linear_model import LogisticRegression; from sklearn.preprocessing import StandardScaler; from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import GroupKFold
 M, CFG, SW, OUT, NJ = sys.argv[1], json.load(open(sys.argv[2])), json.load(open(sys.argv[3])), sys.argv[4], int(sys.argv[5]); os.makedirs(OUT, exist_ok=True)
-SMOKE = "--smoke" in sys.argv
+SMOKE = "--smoke" in sys.argv; NPL = "--npleace" in sys.argv; RL = "--randleace" in sys.argv
 TRAIN, TEST, SETS = CFG["train"], CFG["test"], CFG["train"] + CFG["test"]
 GRID = [1e-2] if SMOKE else [1e-4, 1e-3, 1e-2, 1e-1, 1.0, 10.0, 100.0]; B = 1000; ND = 1 if SMOKE else 3
 CGRID = [1e-2] if SMOKE else [1e-3, 1e-2, 1e-1, 1.0]
@@ -226,8 +238,47 @@ def run_cell(L, p, tag):
     def add(key, U, extra):
         ED[key] = (proj_out(Xtr0, U), {s: proj_out(Xte0[s], U) for s in TEST}, int(U.shape[1])); FN[key] = (lambda X, U=U: proj_out(X, U))
         info[key] = {"dims": int(U.shape[1]), **extra}
-    for src in CTL_SRC:
+    diag = {}
+    if RL:
+        def r2fit(Zx, Zy):                                                           # variance-weighted in-sample OLS R^2
+            Zx, Zy = Zx - Zx.mean(0), Zy - Zy.mean(0); res = Zy - Zx @ np.linalg.lstsq(Zx, Zy, rcond=None)[0]
+            return float(1 - (res ** 2).sum() / (Zy ** 2).sum())
+        RD = [orth(np.random.default_rng(5000 + g).standard_normal((K, D))) for g in range(ND)]
+        for g, R in enumerate(RD):
+            Zr = Xtr0 @ R
+            f3, r3 = leace_fit(Xtr0, Zr); ED[f"leacerand_{g}"] = (f3(Xtr0), {s: f3(Xte0[s]) for s in TEST}, r3); FN[f"leacerand_{g}"] = f3
+            info[f"leacerand_{g}"] = {"dims": r3, "draw": g}
+            Xs_ = proj_out(Xtr0, R); C_ = (Xs_ - Xs_.mean(0)).T @ (Zr - Zr.mean(0)) / len(Xs_); u_, sv_, _ = np.linalg.svd(C_, full_matrices=False)
+            Ur = u_[:, sv_ > sv_.max() * 1e-8]
+            ED[f"orthrand_{g}"] = (proj_out(Xs_, Ur), {s: proj_out(proj_out(Xte0[s], R), Ur) for s in TEST}, int(K + Ur.shape[1]))
+            FN[f"orthrand_{g}"] = (lambda X, R=R, Ur=Ur: proj_out(proj_out(X, R), Ur)); info[f"orthrand_{g}"] = {"dims": int(K + Ur.shape[1]), "draw": g}
+        for src in CTL_SRC:
+            Zw = Xtr0 @ pcs(src, L, p)[:, :K]
+            diag[src] = {"r2_from_persona": r2fit(Ztr, Zw), "r2_from_random": [r2fit(Xtr0 @ R, Zw) for R in RD]}
+        print(f"[{tag}] diag " + json.dumps(diag), flush=True)
+    for src in (() if RL else CTL_SRC):
         P = pcs(src, L, p); nP = P.shape[1]
+        if NPL:
+            Qg = np.linalg.qr(proj_out(P[:, :K].T, Qp).T)[0]
+            Zw = Xtr0 @ P[:, :K]; Zpc = Ztr - Ztr.mean(0)
+            Zr = Zw - Zpc @ np.linalg.lstsq(Zpc, Zw - Zw.mean(0), rcond=None)[0]        # uncorrelated with persona coords
+            for key, Z in ((f"leacegeo_{src}", Xtr0 @ Qg), (f"leacenp_{src}", Zr)):
+                f3, r3 = leace_fit(Xtr0, Z); ED[key] = (f3(Xtr0), {s: f3(Xte0[s]) for s in TEST}, r3); FN[key] = f3
+                info[key] = {"dims": r3, "src": src}
+            Bp = np.linalg.lstsq(Zpc, Xtr0 - mu, rcond=None)[0]                      # persona-coordinate fit of X
+            def npl(m):                                                              # decorrelated LEACE on the top m PCs
+                Zm = Xtr0 @ P[:, :m]; return leace_fit(Xtr0, Zm - Zpc @ (Bp @ P[:, :m]))
+            lo, hi, best = K, nP, None
+            while lo < hi:                                                           # smallest m reaching the target
+                mid = (lo + hi) // 2; f4, r4 = npl(mid)
+                if cen(f4(Xtr0)) / totvar >= target: hi = mid; best = (mid, f4, r4)
+                else: lo = mid + 1
+            if best is None or best[0] != lo: best = (lo, *npl(lo))
+            m4, f4, r4 = best; key = f"leacenp_{src}_var"
+            ED[key] = (f4(Xtr0), {s: f4(Xte0[s]) for s in TEST}, r4); FN[key] = f4
+            info[key] = {"dims": r4, "src": src, "n_pcs": int(m4), "target_frac": target}
+            print(f"[{tag}] {key}: m={m4} rank {r4} E{cen(f4(Xtr0)) / totvar:.3f} (target {target:.3f})", flush=True)
+            continue
         add(f"pca_{src}_k", P[:, :K], {"src": src})
         cum = np.cumsum(np.einsum("ij,ij->j", P, S @ P)) / totvar; m = int(min(np.searchsorted(cum, target) + 1, nP))
         add(f"pca_{src}_var", P[:, :m], {"src": src, "n_pcs": m, "target_frac": target})
@@ -249,7 +300,7 @@ def run_cell(L, p, tag):
     cat = cat_probes({k: (v[0][:nhb], v[1]) for k, v in ED.items()})
     gen = gen_probes({k: {t: FN[k](np.asarray(GX[L][t][:, p], np.float64)) for t in GSETS} for k in ED})
     out = {"layer": L, "position": p, "token": TAIL[p], "k": int(K), "d": int(D), "total_var": totvar,
-           "persona_span_var_frac": ev(Qp), "edits": {}}
+           "persona_span_var_frac": ev(Qp), "diag": diag, "edits": {}}
     SC = {}
     for k, (A, T, dims) in ED.items():
         rr = ridge(A, Ztr, T, Zte) if k != "full" else {"cv_r2_mean": 1.0, "transfer_r2_avg": 1.0}
@@ -273,7 +324,8 @@ res = {"model": M, "train": TRAIN, "test": TEST, "avg_sets": AVG, "k": int(K), "
        "B": B, "n_draws": ND, "n_train": int(len(ytr)), "n_test": {s: [int(len(y[s])), int(y[s].sum())] for s in TEST}, "cells": {}}
 SC = {"labels_train": ytr, "pair_ids_train": np.array([f"{s}:{r['pair_id']}" for s in TRAIN for r in rows[s]])}
 for s in TEST: SC[f"labels_{s}"] = y[s]; SC[f"pair_ids_{s}"] = np.array([str(r["pair_id"]) for r in rows[s]]); SC[f"category_{s}"] = cat_te[s]
-suf = ("_smoke" if SMOKE else "") + (f"_{ONLY}" if ONLY else ""); fj, fz = f"{OUT}/erase_ctl_{M}{suf}.json", f"{OUT}/scores_erase_ctl_{M}{suf}.npz"
+suf = ("_smoke" if SMOKE else "") + (f"_{ONLY}" if ONLY else ""); nm = "erase_ctl3" if RL else "erase_ctl2" if NPL else "erase_ctl"
+fj, fz = f"{OUT}/{nm}_{M}{suf}.json", f"{OUT}/scores_{nm}_{M}{suf}.npz"
 done = set()
 for tag, sel in cells.items():
     L, p = sel["layer"], sel["position"]
