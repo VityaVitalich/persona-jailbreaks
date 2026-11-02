@@ -888,6 +888,8 @@ for _src, _S in (("wiki", "Wikipedia"), ("alpaca", "Alpaca")):
                         f"leacegeo_{_src}": f"LEACE on {_S} PCs minus persona span (geometric clean)",
                         f"leacenp_{_src}": f"LEACE on {_S} PC coordinates decorrelated from persona (k dims)",
                         f"leacenp_{_src}_var": f"LEACE on {_S} PC coordinates decorrelated from persona (all PCs)"})
+ERASE_EDITS.update({f"leacepc_k{_k}": f"LEACE on the top {_k} persona PC coordinate{'s' if _k > 1 else ''}" for _k in (1, 4, 16, 64)})
+ERASE_EDITS.update({f"leacerk_k{_k}": f"LEACE on {_k} random coordinate{'s' if _k > 1 else ''}" for _k in (1, 4, 16, 64)})
 ERASE_EDITS.update({"leacerand": "LEACE on random coordinates (same operator, isotropic directions)",
                     "orthrand": "Projection erasure with random directions (same operator)"})
 ERASE_TASKS = {"sst2": "SST-2", "agnews": "AG News", "cities": "Cities", "cola": "CoLA", "mnli": "MNLI", "mmlu": "MMLU answer",
@@ -955,14 +957,15 @@ def erasure():
                      "vs_leace": ci2(v["jb"]["minus_leace_ci95"]), "vs_orth": ci2(v["jb"]["minus_orth_ci95"]), "n_pcs": v.get("n_pcs")}
                 ERASE["records"].append(r)
         for cell in ("raw", "PersonaJB"):
-            for nm, note in (("erase_ctl3", "same-operator random controls (--randleace)"), ("erase_ctl2", "persona-free LEACE (--npleace)")):
+            for nm, note in (("erase_ctl3", "same-operator random controls (--randleace)"), ("erase_ctl2", "persona-free LEACE (--npleace)"),
+                             ("erase_ctl4", "LEACE rank sweep, persona PCs vs random (--ksweep)")):
                 pc = O / f"{nm}_{m}_{cell}.json"
                 if not pc.exists(): continue
                 dc = load(pc); src(pc, "Persona erasure", f"{MODELS[m]} · {cell} · {note}")
                 (_, cc), = dc["cells"].items(); groups = {}
                 for e, v in cc["edits"].items():
                     if e in ("full", "orth", "leace"): continue
-                    groups.setdefault(re.sub(r"_\d+$", "", e) if nm == "erase_ctl3" else e, []).append(v)
+                    groups.setdefault(re.sub(r"_\d+$", "", e) if nm != "erase_ctl2" else e, []).append(v)
                 for e, vs in groups.items():
                     agg = lambda f: [num(sum(f(v) for v in vs) / len(vs)), num(min(f(v) for v in vs)), num(max(f(v) for v in vs))]
                     v0 = vs[0]
@@ -973,6 +976,8 @@ def erasure():
                     ref = "orth" if e == "orthrand" else "leace"
                     cis = [ci2(v["jb"]["minus_orth_ci95" if ref == "orth" else "minus_leace_ci95"]) for v in vs]
                     r["vs_ref"] = {"ref": ref, "cis": cis}
+                    if nm == "erase_ctl4": r["k"] = v0["k"]
+                    if nm != "erase_ctl2": r["pts"] = [[num(v["edit_energy_frac"]), num(v["jb"]["delta_vs_full"])] for v in vs]
                     if len(vs) == 1: r["jb_ci"] = ci2(v0["jb"]["avg_ci95"]); r["dj_ci"] = ci2(v0["jb"]["delta_vs_full_ci95"])
                     ERASE["records"].append(r)
                     if e in ("leacerand", "orthrand"):              # attach the same-operator comparison to the persona edit

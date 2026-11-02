@@ -725,6 +725,24 @@ function renderErasure() {
       v(r.cat[0], F.cat[0], r.draws > 1 ? r.cat[1] - F.cat[0] : null, r.draws > 1 ? r.cat[2] - F.cat[0] : null),
       v(genMean(r), genMean(F), null, null)]}; })}));
   el.insertAdjacentHTML("beforeend", `<div class="panel"><h3>Change after each edit (Δ AUC vs the unedited activations, probes retrained)</h3>${panelFig(G, P, {mode: "bar", axis: "Δ AUC (pp)"})}<div class="note">Jailbreak whiskers: 95% paired cluster-bootstrap CI over HB behaviours (single edits) or min–max over the 3 random draws (controls). Hover a bar for the absolute values.<br><b>Reading:</b> the same operators applied to the coordinates on isotropic random directions remove about as much variance (86–96%) and drop jailbreak AUC and harm-category AUC by the same amount as the persona edits (persona − random mean between −0.027 and +0.022 on every readout; 32 of 36 per-draw paired CIs include 0, and the 4 that do not point both ways). General tasks stay flat under all of them. The persona LEACE / projection-erasure drop is therefore not persona-specific: any 229/240 coordinates correlate with the dominant structure of these activations, and erasing that structure is what removes the jailbreak signal. The orthogonal random projection removes only ~5% of the variance and is not a matched control for these two edits.</div></div>`);
+  if (E.records.some(r => r.ctl === "erase_ctl4")) {
+    const W = 300, H = 210, L = 44, B = 32, T = 22, Rm = 10, X = v => L + v * (W - L - Rm), Y = v => T + (0.1 - v) / 0.4 * (H - T - B);
+    const sv = cells.map(c => {
+      const rs = E.records.filter(r => r.m === c.m && r.cell === c.cell);
+      const per = [...rs.filter(r => r.e.startsWith("leacepc_k")).sort((a, b) => a.k - b.k).map(r => ({k: r.k, x: r.energy[0], y: r.dj[0]})),
+                   ...rs.filter(r => r.e === "leace" && !r.ctl).map(r => ({k: c.k, x: r.energy[0], y: r.dj[0]}))];
+      const rnd = rs.filter(r => r.e.startsWith("leacerk_k") || r.e === "leacerand").flatMap(r => (r.pts || []).map(p => ({k: r.k || c.k, x: p[0], y: p[1]})));
+      let g = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${esc(mlab(c.m))} ${c.cell}"><text x="${L}" y="14" font-size="11" font-weight="600" fill="var(--text)">${esc(mlab(c.m).split("-")[0])} · ${esc(c.cell)}</text>`;
+      [0, 0.25, 0.5, 0.75, 1].forEach(v => g += `<line x1="${X(v)}" x2="${X(v)}" y1="${T}" y2="${H - B}" stroke="var(--border)"/><text x="${X(v)}" y="${H - B + 13}" font-size="9" text-anchor="middle" fill="var(--muted)">${v * 100}%</text>`);
+      [0.1, 0, -0.1, -0.2, -0.3].forEach(v => g += `<line x1="${L}" x2="${W - Rm}" y1="${Y(v)}" y2="${Y(v)}" stroke="${v === 0 ? "var(--muted)" : "var(--border)"}"/><text x="${L - 4}" y="${Y(v) + 3}" font-size="9" text-anchor="end" fill="var(--muted)">${v > 0 ? "+" : ""}${Math.round(v * 100)}</text>`);
+      g += `<text x="${(L + W - Rm) / 2}" y="${H - 4}" font-size="9" text-anchor="middle" fill="var(--muted)">variance removed</text>`;
+      rnd.forEach(p => g += `<circle cx="${X(p.x)}" cy="${Y(p.y)}" r="4" fill="var(--s4)" stroke="var(--panel)" stroke-width="2"><title>random, k = ${p.k}: variance removed ${pct(p.x)}%, Δ jailbreak AUC ${sgn(p.y)}</title></circle>`);
+      g += `<polyline fill="none" stroke="var(--s3)" stroke-width="2" points="${per.map(p => `${X(p.x)},${Y(p.y)}`).join(" ")}"/>`;
+      per.forEach(p => g += `<circle cx="${X(p.x)}" cy="${Y(p.y)}" r="4.5" fill="var(--s3)" stroke="var(--panel)" stroke-width="2"><title>persona, k = ${p.k}: variance removed ${pct(p.x)}%, Δ jailbreak AUC ${sgn(p.y)}</title></circle><text x="${X(p.x) + 6}" y="${Y(p.y) - 6}" font-size="9" fill="var(--muted)">${p.k}</text>`);
+      return g + "</svg>";
+    }).join("");
+    el.insertAdjacentHTML("beforeend", `<div class="panel"><h3>LEACE rank sweep: Δ jailbreak AUC (pp) against the share of variance removed</h3><div class="legend"><span><i style="background:var(--s3)"></i>persona: top-k persona PCs (k labelled; last point = full persona LEACE)</span><span><i style="background:var(--s4)"></i>random: k isotropic random coordinates, 3 draws per k (k = 1, 4, 16, 64, full rank)</span></div><div style="display:flex;flex-wrap:wrap;gap:8px">${sv}</div><div class="note">Same operator (LEACE) on k coordinates, k = 1, 4, 16, 64 and the full persona rank. Each point = one edit, probes retrained; hover for values. <b>Reading:</b> the jailbreak drop is set by how much variance the eraser removes, not by whose coordinates it erases: little change up to ~30% removed, a sharp fall between ~30% and ~55%, then a plateau near −0.15 to −0.23. At matched variance removed, persona minus random averages +0.3 pp over the 30 persona points (6 readouts × 5 k), with mixed signs and gaps mostly inside the scatter of the random draws (SD ≈ 2–3 pp). Persona PCs remove more variance than random at the same k (they sit on the top principal components), which is why the persona curve sits to the right at small k. Persona R² is not plotted: at small k the ridge estimate is unstable (cross-validated values far below 0, non-monotone in k), so it is not a usable axis.</div></div>`);
+  }
   if (E.records.some(r => r.ctl)) {
     const sl = ES.src === "wiki" ? "Wikipedia" : "Alpaca";
     const CG = [["leace", "Persona LEACE (reference)", "var(--s3)"], [`leace_${ES.src}`, `LEACE on ${sl} PC coordinates (same operator)`, "var(--s6)"],
@@ -741,7 +759,7 @@ function renderErasure() {
   // (2) one table per model / readout
   cells.forEach(c => {
     const rows = ["full", "span", "orth", "leace", "orthrand", "leacerand", "iso_span", "iso_orth", "iso_leace", ...["leace", "pca", "pcanp"].flatMap(k => ["wiki", "alpaca"].flatMap(sr => k === "leace" ? [`leace_${sr}`] : [`${k}_${sr}_k`, `${k}_${sr}_var`])),
-                  ...["wiki", "alpaca"].flatMap(sr => [`leacegeo_${sr}`, `leacenp_${sr}`, `leacenp_${sr}_var`])].map(e => R(c, e)).filter(Boolean);
+                  ...["wiki", "alpaca"].flatMap(sr => [`leacegeo_${sr}`, `leacenp_${sr}`, `leacenp_${sr}_var`]), ...[1, 4, 16, 64].flatMap(k => [`leacepc_k${k}`, `leacerk_k${k}`])].map(e => R(c, e)).filter(Boolean);
     const dcis = cs => `<br><span class="muted">${cs.map(x => `[${sgn(x[0])}, ${sgn(x[1])}]`).join(" ")}</span>`;
     const rng = (x, f = f3) => x[1] !== x[2] ? `${f(x[0])}<br><span class="muted">${f(x[1])}–${f(x[2])}</span>` : f(x[0]);
     let h = `<div class="panel"><h3>${esc(mlab(c.m))} · ${esc(ECELL[c.cell])} (layer ${c.layer}, tail position ${c.pos}; persona span k = ${c.k} of d = ${c.d})</h3>
