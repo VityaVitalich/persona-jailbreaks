@@ -10,9 +10,10 @@ and differences of two saved point estimates. Every AUC is the folded AUC max(a,
 ## Run and deploy
 
 ```bash
-python3 dashboard/build_data.py          # reads this repo's result files, writes dashboard/data.json
+PJB_ROOT=~/persona-vector-jbing python3 dashboard/build_data.py   # the research checkout: this repo withholds chem/bio response
+                                         # text, which the Gemma looks_like_text rule would count as garbage
 python3 -m http.server 8811 -d dashboard # then open http://127.0.0.1:8811/
-bash dashboard/deploy.sh                 # rebuild, refuse secrets / response fields, force-push gh-pages
+PJB_ROOT=~/persona-vector-jbing bash dashboard/deploy.sh   # rebuild, refuse secrets / response fields, force-push gh-pages
 ```
 
 `PJB_ROOT=<dir>` points the build at another checkout. For example, `PJB_ROOT=~/persona-vector-jbing` reads new q1 files
@@ -38,17 +39,29 @@ read from `~/pjb_release_staging`.
      CI. WJB is an extra column when it is a test set (HB-only training) and is not averaged. Also validation AUC, and
      the selected layer / position / C. Post-hoc rows add the share of the detector's weight in the persona span.
    - **Below the tables:** an all-components table and a layer × position heatmap of validation and transfer AUC.
-2. **Steering.** Llama and Gemma steering ASR, degenerate rate and coherent ASR with saved CIs.
+2. **Steering.** Llama, OLMo and Gemma steering ASR, degenerate rate and coherent ASR with saved CIs.
+   - **Gemma setting:** norm 572 (default; 1.98× a typical token, as for Llama and OLMo) or the earlier norm-258 paper cells. At norm
+     572 every steered row uses the same prompts (HB refused-300, JBB 100, WildJB 543 refused): PersonaJB, refusal and Δμ in full /
+     persona removed / persona only, the 10 most predictive traits, the 10 most steering-effective traits of the 240-trait sweep,
+     random and unsteered. Also at norm 572: the layer sweep (L30 / L35 / L40 / L45, same prompts) and the 240-trait sweep
+     (predictive AUC vs clean ASR; its own pool of 400 HarmBench behaviours without templates).
    - **Facets:** benchmark, cumulative vs single dose, α, scoring, direction, component, snapshot and run.
    - **Snapshots:** Llama rows carry their snapshot (official `0e9e39f2` vs mirror `247cb7c3`, not comparable).
    - **Gemma:** only the looks_like_text-corrected cells.
    - **Also:** directional ablation.
-3. **Persona share of space.**
+3. **Persona erasure.** Is persona information needed to detect jailbreaks, and does removing it break unrelated tasks?
+   - **Edits** of the q1 readout activations (raw-probe and PersonaJB cells, HB + WJB training), probes retrained afterwards: persona
+     span projected out; projection erasure (span + cross-covariance, so no linear readout recovers the persona coordinates); LEACE.
+   - **Controls:** rank-matched uniform random subspaces (3 draws each, not fitted to data).
+   - **Read-outs:** persona R², jailbreak transfer AUC (Δ and paired CI vs no edit and vs the matched control), HarmBench
+     semantic-category AUC, 9 general tasks (SST-2, AG News, cities, CoLA, MNLI, MMLU answer correctness, negated cities, common
+     claims, arithmetic).
+4. **Persona share of space.**
    - **Spans:** how much of the refusal, Δμ, w_in / w_out, normality and PC directions lies in the persona span vs
      Alpaca / Wikipedia / No Robots / Gaussian / PCA spans.
    - **Also:** the q1 per-cell persona shares and the post-hoc detector-weight shares.
    - **Caveat:** Gemma panels carry the massive-dimension caveat.
-4. **Sources.** Every file `build_data.py` read.
+5. **Sources.** Every file `build_data.py` read.
 
 No Robots span removal is labelled "NOT a valid control" wherever it appears. No Robots activations are persona-rich,
 so removing their span removes persona content too.
@@ -90,6 +103,10 @@ so removing their span removes persona content too.
 | `results/gemma_steering_cell_cis_classic.json` | Steering | Gemma classic attacks (no steering) |
 | `full_trait_output/norm_share_controls/gemma/steer/steer_split_gemma.json` | Steering | Gemma persona-component steering (HB refused-300) |
 | `results/ablation_cells.json` | Steering | Directional ablation (Llama) |
+| `full_trait_output/steer_port/outputs_gemma_norm572`, `outputs_gemma_norm572_traits` | Steering | Gemma norm 572: figure, persona-component Δ, cumulative curves |
+| `full_trait_output/steer_port/outputs_gemma_layers` | Steering | Gemma layer sweep (L35 / L40 / L45) |
+| `full_trait_output/steer_port/outputs_gemma_alltraits` + `persona_individual_auc_gemma_evalmerge/results.json` | Steering | Gemma 240-trait sweep vs predictive AUC |
+| `full_trait_output/q1_detection/out/erase_{model}_{cell}.json` | Persona erasure | edits, controls and read-outs (`q1_erase.py`) |
 | `data/release/derived/llama/analysis/persona_span.json` | Persona share | Clean-repo release persona span |
 | `data/release/derived/gemma/analysis/persona_span.json` | Persona share | Clean-repo release persona span |
 | `full_trait_output/norm_share_controls/results.json` | Persona share | results |

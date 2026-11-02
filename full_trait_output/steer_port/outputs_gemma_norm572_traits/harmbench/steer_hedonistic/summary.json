@@ -1,0 +1,30 @@
+{
+  "steering_vector": "steer_hedonistic",
+  "direction_meta": {
+    "description": "trait hedonistic, sign +1 (sweep top-10, positive pole)"
+  },
+  "directions_file": "inputs/gemma/steer_traits572_gemma_layer30.pt",
+  "benchmark": "harmbench",
+  "alpha_schedule": [
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5
+  ],
+  "config": {
+    "model": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/hf_cache/hub/models--google--gemma-4-31B-it/snapshots/842da3794eaa0b77d5f08bae87a17459d91ff475",
+    "layer": 30,
+    "residual_norm": 572.2347398103947,
+    "max_new_tokens": 300,
+    "batch_size": 128,
+    "token_budget": 24000,
+    "attn_implementation": "sdpa",
+    "target": "HarmBench human_jailbreak Gemma-refused group, n=300 (subsampled from 3117, seed 0)",
+    "judge_inloop": "gpt-4.1-mini binary YES/NO",
+    "gpu": "NVIDIA GH200 120GB"
+  },
+  "asr_started_not_jailbroken": 0.6133333333333333,
+  "n_started_rf": 300,
+  "n_degenerate": 1
+}

@@ -1,0 +1,43 @@
+{
+  "steering_vector": "refusal_vin",
+  "direction_meta": {
+    "source": "refusal",
+    "part": "vin",
+    "persona_share_of_source": 0.30669481416143285,
+    "cos_source": 0.5538003378126747,
+    "sign_flipped": false,
+    "persona_share": 1.0000000000000007,
+    "mean_gap_hbwjb": 31.705059001225735,
+    "hb_auc_folded": 0.9138060100524008,
+    "hb_auc_toward_jb": 0.9138060100524008,
+    "hbwjb_auc_folded": 0.9079601887970875,
+    "cos_L30_published": 0.11905063995271414,
+    "cos_persona": 0.10934409329172906,
+    "cos_refusal": 0.5538003378126747,
+    "cos_dmu": 0.44404892186295186
+  },
+  "directions_file": "inputs/gemma/layers/steer_gemma_layer40.pt",
+  "benchmark": "harmbench",
+  "alpha_schedule": [
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5
+  ],
+  "config": {
+    "model": "/capstor/store/cscs/swissai/infra01/users/vvmoskvoretskii/hf_cache/hub/models--google--gemma-4-31B-it/snapshots/842da3794eaa0b77d5f08bae87a17459d91ff475",
+    "layer": 40,
+    "residual_norm": 354.074526170738,
+    "max_new_tokens": 300,
+    "batch_size": 128,
+    "token_budget": 24000,
+    "attn_implementation": "sdpa",
+    "target": "HarmBench human_jailbreak Gemma-refused group, n=300 (subsampled from 3117, seed 0)",
+    "judge_inloop": "gpt-4.1-mini binary YES/NO",
+    "gpu": "NVIDIA GH200 120GB"
+  },
+  "asr_started_not_jailbroken": 0.3333333333333333,
+  "n_started_rf": 300,
+  "n_degenerate": 120
+}

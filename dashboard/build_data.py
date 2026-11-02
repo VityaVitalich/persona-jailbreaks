@@ -260,6 +260,9 @@ def arm_info(a, model):
         t = re.sub(r"^trait_+", "", a)
         neg = model == "gemma" and t in NEG_POLE_GEMMA or model == "olmo" and t in NEG_POLE_OLMO
         return f"Trait: {t}" + (" (−)" if neg else ""), "single trait", var
+    if a.startswith("steer_"): return f"Trait: {a[6:]}", "steer trait", var   # top-10 of the 240-trait sweep, positive pole
+    if a.startswith("pred_"):   # top-10 predictive traits, steered toward the side that predicts jailbreak
+        t = a[5:]; return f"Trait: {t}" + (" (−)" if t in NEG_POLE_GEMMA else ""), "single trait", var
     if a.startswith("paper:"): a = a[6:]
     return {"persona": ("PersonaJB direction", "main", var), "w_persona": ("PersonaJB direction", "main", var), "refusal": ("Refusal direction", "main", var),
             "refusal_pos1_neg": ("Refusal direction", "main", var), "dmu": ("Jailbreak direction Δμ", "main", var), "w_raw": ("Raw-probe normal", "main", var),
@@ -488,7 +491,30 @@ def sp_runs(SP, arms):
                         "deg": "same rule as Llama."}})
     SRUNS["gemma_split"]["protocol"] += (" JBB 100 and WildJB (first 600, restricted to the 543 the unsteered model refuses): clariden GH200 run, same direction bundle, "
                                           "norm 258.088. Files: steer_port/outputs_gemma_split.")
+    GN = {}
+    for L in ("L35", "L40", "L45"):
+        sm = SP / f"outputs_gemma_layers/{L}/harmbench/persona/summary.json"
+        GN[L] = load(sm)["config"]["residual_norm"] if sm.exists() else None
+    SRUNS["gemma_572"] = {"m": "gemma", "label": "Gemma-4-31B · norm 572 · cumulative α", "dose": "cum",
+                          "protocol": f"Gemma-4-31B-it L30, residual norm 572.23 (= 289.606 × 22.0 / 11.134: the same 1.98× push relative to a typical token as Llama "
+                                      f"and OLMo), cumulative α 0.1→0.5; {GJ}. Pools: HB 300 refused (seed 0 of the 3117), JBB 100, WildJB first 600 restricted to the 543 "
+                                      "the unsteered model refuses. Arms: PersonaJB, refusal and Δμ in full / persona removed / persona only, random (full space), unsteered; "
+                                      "the 10 most predictive single traits (steered toward the side that predicts jailbreak, (−) = negative pole) and the 10 most "
+                                      "steering-effective traits of the 240-trait sweep (positive pole), all on the same prompts. "
+                                      "Files: steer_port/outputs_gemma_norm572, outputs_gemma_norm572_traits.",
+                          "deg": "degenerate = runner flag (word 5-gram repetition) OR a judged jailbreak that does not look like text (whitespace < 8%, < 8 words, or < 2 common English words)."}
+    for L in ("L35", "L40", "L45"):
+        SRUNS[f"gemma_{L}"] = {"m": "gemma", "label": f"Gemma-4-31B · layer {L[1:]} · cumulative α", "dose": "cum",
+                               "protocol": f"Gemma-4-31B-it layer {L[1:]}, residual norm {GN[L]:.1f} (calibrated at that layer as for L30), cumulative α 0.1→0.5; {GJ}. "
+                                           "HB 300 refused (seed 0), same prompts as the norm-572 run. Directions rebuilt at that layer. Files: steer_port/outputs_gemma_layers." if GN[L] else "",
+                               "deg": "same rule as the Gemma norm-572 run."}
     ren = lambda n: n.replace("_vin", "_personaonly").replace("_vout", "_nopersona")
+    for o in ("outputs_gemma_norm572", "outputs_gemma_norm572_traits"):
+        for dd in sorted((SP / o).glob("*/*")):
+            if dd.is_dir() and exists_any(dd / "results.jsonl"): arms.append(("gemma_572", dd.parent.name, ren(dd.name), dd / "results.jsonl", 0.5))
+    for L in ("L35", "L40", "L45"):
+        for dd in sorted((SP / f"outputs_gemma_layers/{L}/harmbench").glob("*")):
+            if dd.is_dir() and exists_any(dd / "results.jsonl"): arms.append((f"gemma_{L}", "harmbench", ren(dd.name), dd / "results.jsonl", 0.5))
     for dd in sorted((SP / "outputs_llama_gap").glob("*/*")):
         if exists_any(dd / "results.jsonl"): arms.append(("llama_gap", dd.parent.name, dd.name, dd / "results.jsonl", 0.5))
     for dd in sorted((SP / "outputs_smoke_full/harmbench").glob("*_nopersona")): arms.append(("llama_gap", "harmbench", dd.name, dd / "results.jsonl", 0.5))
@@ -560,11 +586,13 @@ def steer_runs():
     POOL = {("llama_gap", "harmbench"): "HB 300 refused", ("llama_gap", "jbb"): "JBB 100", ("llama_gap", "wildjb"): "WildJB 298 refused (of the first 600)",
             ("olmo_main", "harmbench"): "HB 300 refused", ("olmo_main", "jbb"): "JBB 100", ("olmo_main", "wildjb"): "WildJB 565 refused (of the first 600)",
             ("olmo_single", "harmbench"): "HB 300 refused", ("gemma_split", "jbb"): "JBB 100", ("gemma_split", "wildjb"): "WildJB 543 refused (of the first 600)",
-            ("gemma_split", "harmbench"): "HB 300 refused"}
+            ("gemma_split", "harmbench"): "HB 300 refused", ("gemma_572", "harmbench"): "HB 300 refused", ("gemma_572", "jbb"): "JBB 100",
+            ("gemma_572", "wildjb"): "WildJB 543 refused (of the first 600)", **{(f"gemma_{L}", "harmbench"): "HB 300 refused" for L in ("L35", "L40", "L45")}}
     # WildJB: only prompts the unsteered model refuses (unsteered labels of the same first-600 prompts)
     KEEP = {("llama_gap", "wildjb"): {str(r["behavior_id"]) for r in jl(SP / "wjb_classified_responses.jsonl") if not tb(r["jailbroken"])},
             ("olmo_main", "wildjb"): {str(r["behavior_id"]) for r in jl(FTO / "olmo3_7b/transfer/classified_wjb.jsonl") if not tb(r["jailbroken"])},
-            ("gemma_split", "wildjb"): {str(r["pair_id"]) for r in jl(SP / "outputs_gemma_split/wildjb/dmu/results.jsonl") if not tb(r["baseline_jailbroken"])}}
+            ("gemma_split", "wildjb"): {str(r["pair_id"]) for r in jl(SP / "outputs_gemma_split/wildjb/dmu/results.jsonl") if not tb(r["baseline_jailbroken"])},
+            ("gemma_572", "wildjb"): {str(r["pair_id"]) for r in jl(SP / "outputs_gemma_norm572/wildjb/dmu/results.jsonl") if not tb(r["baseline_jailbroken"])}}
     LAB = {}
     for run, b, k, path, a in arms:
         if k.endswith("_nonr"): continue   # No Robots span removal also removes personas: not a control
@@ -584,7 +612,7 @@ def steer_runs():
     chk = {("llama_off", "harmbench", "persona"): 0.75333, ("gemma_main", "harmbench", "w_persona__full"): 0.1893, ("gemma_main", "harmbench", "refusal_pos1_neg__full"): 0.8219,
            # steer_port SUMMARY.md tables (judge labels; these arms have no garbage jailbreaks)
            ("llama_gap", "wildjb", "dmu"): 233 / 298, ("olmo_main", "harmbench", "persona"): 0.55, ("olmo_main", "wildjb", "refusal_nopersona"): 97 / 565,
-           ("gemma_split", "wildjb", "dmu_personaonly"): 52 / 543}
+           ("gemma_split", "wildjb", "dmu_personaonly"): 52 / 543, ("gemma_572", "wildjb", "refusal"): 0.626}
     for (run, b, k), want in chk.items():
         r = next(x for x in SA if (x["run"], x["b"], x["arm"]) == (run, b, k))
         assert abs(r["jb"] / r["n"] - want) < 6e-4, (run, b, k, r["jb"] / r["n"], want)
@@ -750,16 +778,83 @@ def det_order(d):
     if m: return (1, 0, m[1], int(m[2]))
     return (2, 0, d, 0)
 
+# ================================================================ GEMMA 240-TRAIT STEERING SWEEP
+ALLT = {"traits": [], "none": None, "protocol": None}
+def alltraits():
+    O = FTO / "steer_port/outputs_gemma_alltraits"; PR = FTO / "persona_individual_auc_gemma_evalmerge/results.json"
+    if not O.is_dir() or not PR.exists(): return
+    P = {r["trait"]: r for r in load(PR)["ranked"]}
+    ALLT["protocol"] = ("Every one of Gemma's 240 trait vectors steered alone, replicating the Llama all-229 sweep: layer 30, positive pole, unit norm, residual "
+                        "norm 572.23, cumulative α 0.1→0.5, greedy 300 tokens, gpt-4.1-mini in-loop judge (+ JBB 1-10 rubric post hoc, jailbroken iff 10). Pool: all 400 "
+                        "HarmBench text behaviours without templates (contextual ones with their context), not restricted to refused prompts, so the unsteered "
+                        "rate is not 0. Clean ASR = jailbroken and looks like text. Predictive AUC = folded single-trait AUC on HarmBench "
+                        "(persona_individual_auc_gemma_evalmerge, 101 seeds); sign + = a high trait score predicts jailbreak. Files: steer_port/outputs_gemma_alltraits/.")
+    for f in sorted(O.glob("*/single_trait/summary.json")):
+        d = load(f); t = d["trait"]
+        row = {"t": t, "asr": num(d["gpt41mini"]["per_pair_asr"]), "clean": num(d["clean_asr"]), "jbb": num(d["jbb_rubric"]["per_pair_asr"]), "deg": d["n_degenerate"], "n": d["config"]["n_pairs"]}
+        if t == "none": ALLT["none"] = row; continue
+        if t in P: row.update({"auc": num(P[t]["mean_auc"]), "sign": 1 if P[t]["raw_auc_mean"] > 0.5 else -1})
+        ALLT["traits"].append(row)
+    src(O, "Steering", "Gemma 240-trait steering sweep (summary.json per trait)", None, "clean / raw / JBB-rubric ASR as saved")
+    src(PR, "Steering", "Gemma single-trait predictive AUC (folded)", None, "")
+
+# ================================================================ PERSONA ERASURE (q1_erase.py)
+ERASE = {"records": [], "cells": [], "protocol": None, "tasks": None}
+ERASE_EDITS = {"full": "No edit", "span": "Persona span projected out", "orth": "Persona erased: projection (span + cross-covariance)",
+               "leace": "Persona erased: LEACE", "iso_span": "Random control, rank of span", "iso_orth": "Random control, rank of projection erasure",
+               "iso_leace": "Random control, rank of LEACE"}
+ERASE_TASKS = {"sst2": "SST-2", "agnews": "AG News", "cities": "Cities", "cola": "CoLA", "mnli": "MNLI", "mmlu": "MMLU answer",
+               "negcities": "Negated cities", "claims": "Common claims", "arith": "Arithmetic"}
+def erasure():
+    O = FTO / "q1_detection/out"
+    ERASE["tasks"] = ERASE_TASKS
+    ERASE["protocol"] = (
+        "Each model's q1 readout (HB + WJB training, layer and tail position as selected for the raw-activation probe and for PersonaJB) is edited, "
+        "then every probe is retrained from scratch on the edited activations (C tuned on the training set's validation folds, same grid as q1) "
+        "and scored on the transfer sets (folded AUC, average of PAP / GCG / PAIR / GPTFuzz / PEZ, cluster-bootstrap CI over HB behaviours, B = 1000). "
+        "Edits: (1) persona span projected out: x − QQᵀx with Q = orthonormal basis of the trait vectors (229 Llama, 240 OLMo / Gemma); "
+        "persona coordinates stay linearly recoverable from what is left. (2) Projection erasure: also project out the directions that still "
+        "covary with the persona coordinates (span + column space of the cross-covariance), so no linear readout recovers them. (3) LEACE "
+        "(Belrose et al. 2023): the minimal-change linear eraser x' = x − S^½UUᵀS^−½(x − μ), U = orth(S^½Q). "
+        "Controls: rank-matched uniform random subspaces (isotropic, not fitted to any data) with as many dimensions as each edit removes, 3 draws each. "
+        "Read-outs: persona R² (ridge from the edited activations to the persona coordinates, transfer average), the jailbreak probe, a "
+        "HarmBench semantic-category probe (macro one-vs-rest AUC), and 9 general tasks (5-fold stratified CV AUC on the same layer and token). "
+        "Files: q1_detection/out/erase_{model}_{cell}.json, per-prompt scores in scores_erase_{model}_{cell}.npz, script q1_erase.py, "
+        "general-task prompts in q1_detection/gen_tasks/.")
+    for m in ("llama", "olmo", "gemma"):
+        for cell in ("raw", "PersonaJB"):
+            p = O / f"erase_{m}_{cell}.json"
+            if not p.exists(): continue
+            d = load(p); src(p, "Persona erasure", f"{MODELS[m]} · {cell} probe readout")
+            (ck, c), = d["cells"].items()
+            ERASE["cells"].append({"m": m, "cell": cell, "layer": c["layer"], "pos": c["position"], "k": c["k"], "d": c["d"], "n_draws": d["n_draws"]})
+            groups = {}
+            for e, v in c["edits"].items():
+                groups.setdefault(re.sub(r"_\d+$", "", e), []).append(v)
+            for e, vs in groups.items():
+                def agg(f):
+                    xs = [f(v) for v in vs]
+                    return [num(sum(xs) / len(xs)), num(min(xs)), num(max(xs))]
+                v0 = vs[0]
+                r = {"m": m, "cell": cell, "e": e, "label": ERASE_EDITS.get(e, e), "draws": len(vs), "dims": v0["dims"],
+                     "energy": agg(lambda v: v["edit_energy_frac"]), "r2": agg(lambda v: v["persona_r2"]["transfer_r2_avg"]),
+                     "jb": agg(lambda v: v["jb"]["avg"]), "dj": agg(lambda v: v["jb"]["delta_vs_full"]), "cat": agg(lambda v: v["category"]["avg"]),
+                     "gen": {t: agg(lambda v, t=t: v["general"][t]) for t in ERASE_TASKS if t in v0["general"]}}
+                if len(vs) == 1:
+                    r["jb_ci"] = ci2(v0["jb"].get("avg_ci95")); r["dj_ci"] = ci2(v0["jb"].get("delta_vs_full_ci95"))
+                    if "minus_iso_ctl_ci95" in v0["jb"]: r["vs_ctl"] = [num(v0["jb"]["minus_iso_ctl"]), *ci2(v0["jb"]["minus_iso_ctl_ci95"])]
+                ERASE["records"].append(r)
+
 # ================================================================ main
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--out", default=str(HERE / "data.json")); a = ap.parse_args()
-    q1(); steering(); steer_runs(); share_tab()
+    q1(); steering(); steer_runs(); alltraits(); share_tab(); erasure()
     dets = sorted({r["d"] for r in RECS} | {h["d"] for h in HEAT})
     out = {"generated_at": time.strftime("%Y-%m-%d %H:%M:%S"), "models": MODELS, "sets": SETS,
            "dets": {d: {"label": det_label(d), "group": det_group(d), "o": i} for i, d in enumerate(sorted(dets, key=det_order))}, "conds": CONDS,
            "detection": {"protocol": Q1_PROTOCOL, "models": Q1_MODELS, "trains": Q1_TRAINS, "status": Q1_STATUS, "records": RECS, "heat": HEAT, "w_share": W_SHARE},
-           "steering": {"records": ST, "sources": STSRC, "snaps": SNAP, "ablation": ABL, "runs": SRUNS, "arms": SA, "rem": SREM},
-           "share": {"panels": PANELS, "q1": SHARE_Q1, "pervec": PERVEC, "pccurves": PCCURVES},
+           "steering": {"records": ST, "sources": STSRC, "snaps": SNAP, "ablation": ABL, "runs": SRUNS, "arms": SA, "rem": SREM, "alltraits": ALLT},
+           "share": {"panels": PANELS, "q1": SHARE_Q1, "pervec": PERVEC, "pccurves": PCCURVES}, "erasure": ERASE,
            "sources": SOURCES}
     s = json.dumps(out, separators=(",", ":"), allow_nan=False)
     Path(a.out).write_text(s)
