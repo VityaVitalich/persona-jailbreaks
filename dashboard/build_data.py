@@ -884,7 +884,12 @@ ERASE_EDITS = {"full": "No edit", "span": "Persona span projected out", "orth": 
 for _src, _S in (("wiki", "Wikipedia"), ("alpaca", "Alpaca")):
     ERASE_EDITS.update({f"pca_{_src}_k": f"{_S} PCA: top k PCs projected out", f"pca_{_src}_var": f"{_S} PCA: variance-matched (as many PCs as needed / available)",
                         f"leace_{_src}": f"LEACE on {_S} PC coordinates (same operator, unrelated concept)",
-                        f"pcanp_{_src}_k": f"{_S} PCA minus persona span: k dims", f"pcanp_{_src}_var": f"{_S} PCA minus persona span: variance-matched"})
+                        f"pcanp_{_src}_k": f"{_S} PCA minus persona span: k dims", f"pcanp_{_src}_var": f"{_S} PCA minus persona span: variance-matched",
+                        f"leacegeo_{_src}": f"LEACE on {_S} PCs minus persona span (geometric clean)",
+                        f"leacenp_{_src}": f"LEACE on {_S} PC coordinates decorrelated from persona (k dims)",
+                        f"leacenp_{_src}_var": f"LEACE on {_S} PC coordinates decorrelated from persona (all PCs)"})
+ERASE_EDITS.update({"leacerand": "LEACE on random coordinates (same operator, isotropic directions)",
+                    "orthrand": "Projection erasure with random directions (same operator)"})
 ERASE_TASKS = {"sst2": "SST-2", "agnews": "AG News", "cities": "Cities", "cola": "CoLA", "mnli": "MNLI", "mmlu": "MMLU answer",
                "negcities": "Negated cities", "claims": "Common claims", "arith": "Arithmetic"}
 def erasure():
@@ -906,7 +911,12 @@ def erasure():
         "applied to the coordinates on the top k PCs (the persona LEACE operator with an unrelated concept); and the same PCs with the persona "
         "span projected out of them first (orthogonal to the persona span by construction; variance-matched version capped at 90% of the "
         "variance outside the persona span). A control is valid only if persona R² stays high after it. "
-        "Files: q1_detection/out/erase_{model}_{cell}.json and erase_ctl_{model}_{cell}.json, per-prompt scores in scores_erase*_{model}_{cell}.npz, "
+        "Same-operator random controls (q1_erase_ctl.py --randleace): LEACE and projection erasure exactly as for the persona edits, with the "
+        "coordinates on k isotropic random directions in place of the persona coordinates (3 draws, seeds 5000+g); paired CIs against the persona edit. "
+        "Persona-free LEACE (q1_erase_ctl.py --npleace): LEACE on the Wikipedia / Alpaca PC coordinates after removing what the persona coordinates "
+        "linearly predict (least squares on the training set), so the erased concept is exactly uncorrelated with the persona coordinates and LEACE leaves "
+        "them unchanged; k PCs and all PCs; plus a geometric version (PCs minus the persona span, coordinates still correlated). "
+        "Files: q1_detection/out/erase_{model}_{cell}.json and erase_ctl{,2,3}_{model}_{cell}.json, per-prompt scores in scores_erase*_{model}_{cell}.npz, "
         "scripts q1_erase.py and q1_erase_ctl.py, general-task prompts in q1_detection/gen_tasks/.")
     for m in ("llama", "olmo", "gemma"):
         for cell in ("raw", "PersonaJB"):
@@ -944,6 +954,30 @@ def erasure():
                      "jb_ci": ci2(v["jb"]["avg_ci95"]), "dj_ci": ci2(v["jb"]["delta_vs_full_ci95"]),
                      "vs_leace": ci2(v["jb"]["minus_leace_ci95"]), "vs_orth": ci2(v["jb"]["minus_orth_ci95"]), "n_pcs": v.get("n_pcs")}
                 ERASE["records"].append(r)
+        for cell in ("raw", "PersonaJB"):
+            for nm, note in (("erase_ctl3", "same-operator random controls (--randleace)"), ("erase_ctl2", "persona-free LEACE (--npleace)")):
+                pc = O / f"{nm}_{m}_{cell}.json"
+                if not pc.exists(): continue
+                dc = load(pc); src(pc, "Persona erasure", f"{MODELS[m]} · {cell} · {note}")
+                (_, cc), = dc["cells"].items(); groups = {}
+                for e, v in cc["edits"].items():
+                    if e in ("full", "orth", "leace"): continue
+                    groups.setdefault(re.sub(r"_\d+$", "", e) if nm == "erase_ctl3" else e, []).append(v)
+                for e, vs in groups.items():
+                    agg = lambda f: [num(sum(f(v) for v in vs) / len(vs)), num(min(f(v) for v in vs)), num(max(f(v) for v in vs))]
+                    v0 = vs[0]
+                    r = {"m": m, "cell": cell, "e": e, "label": ERASE_EDITS.get(e, e), "draws": len(vs), "dims": v0["dims"], "ctl": nm,
+                         "energy": agg(lambda v: v["edit_energy_frac"]), "r2": agg(lambda v: v["persona_r2"]["transfer_r2_avg"]),
+                         "jb": agg(lambda v: v["jb"]["avg"]), "dj": agg(lambda v: v["jb"]["delta_vs_full"]), "cat": agg(lambda v: v["category"]["avg"]),
+                         "gen": {t: agg(lambda v, t=t: v["general"][t]) for t in ERASE_TASKS if t in v0["general"]}, "n_pcs": v0.get("n_pcs")}
+                    ref = "orth" if e == "orthrand" else "leace"
+                    cis = [ci2(v["jb"]["minus_orth_ci95" if ref == "orth" else "minus_leace_ci95"]) for v in vs]
+                    r["vs_ref"] = {"ref": ref, "cis": cis}
+                    if len(vs) == 1: r["jb_ci"] = ci2(v0["jb"]["avg_ci95"]); r["dj_ci"] = ci2(v0["jb"]["delta_vs_full_ci95"])
+                    ERASE["records"].append(r)
+                    if e in ("leacerand", "orthrand"):              # attach the same-operator comparison to the persona edit
+                        pr = next(x for x in ERASE["records"] if x["m"] == m and x["cell"] == cell and x["e"] == ref and not x.get("ctl"))
+                        pr["vs_same"] = {"diff": num(pr["jb"][0] - r["jb"][0]), "cis": [[-c[1], -c[0]] for c in cis]}
 
 # ================================================================ main
 def main():

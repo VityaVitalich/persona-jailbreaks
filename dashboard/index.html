@@ -702,8 +702,9 @@ function renderPervec(el) {
 const ES = {models: new Set(["llama", "olmo", "gemma"]), src: "wiki"};
 const ESRC = {wiki: "Wikipedia (2000 prompts)", alpaca: "Alpaca (797 prompts)"};
 const ECELL = {raw: "raw-activation probe readout", PersonaJB: "PersonaJB readout"};
-const EGRP = [["span", "Persona span projected out", "var(--s1)"], ["orth", "Persona erased: projection", "var(--s2)"], ["leace", "Persona erased: LEACE", "var(--s3)"],
-              ["iso_orth", "Random control (rank of projection erasure)", "var(--s4)"]];
+const EGRP = [["span", "Persona span projected out", "var(--s1)"], ["orth", "Persona erased: projection", "var(--s2)"],
+              ["orthrand", "Random directions: projection erasure (same operator, 3 draws)", "var(--s5)"], ["leace", "Persona erased: LEACE", "var(--s3)"],
+              ["leacerand", "Random coordinates: LEACE (same operator, 3 draws)", "var(--s6)"], ["iso_leace", "Random directions projected out (orthogonal, rank of LEACE)", "var(--s4)"]];
 function renderErasure() {
   const el = $("#erasure"); el.innerHTML = "";
   const E = D.erasure, rr = () => { renderErasure(); saveHash(); };
@@ -723,12 +724,14 @@ function renderErasure() {
       r.draws > 1 ? v(r.jb[0], F.jb[0], r.jb[1] - F.jb[0], r.jb[2] - F.jb[0]) : v(r.jb[0], F.jb[0], ...(r.dj_ci || [null, null])),
       v(r.cat[0], F.cat[0], r.draws > 1 ? r.cat[1] - F.cat[0] : null, r.draws > 1 ? r.cat[2] - F.cat[0] : null),
       v(genMean(r), genMean(F), null, null)]}; })}));
-  el.insertAdjacentHTML("beforeend", `<div class="panel"><h3>Change after each edit (Δ AUC vs the unedited activations, probes retrained)</h3>${panelFig(G, P, {mode: "bar", axis: "Δ AUC (pp)"})}<div class="note">Jailbreak whiskers: 95% paired cluster-bootstrap CI over HB behaviours (single edits) or min–max over the 3 random draws (control). Hover a bar for the absolute values.</div></div>`);
+  el.insertAdjacentHTML("beforeend", `<div class="panel"><h3>Change after each edit (Δ AUC vs the unedited activations, probes retrained)</h3>${panelFig(G, P, {mode: "bar", axis: "Δ AUC (pp)"})}<div class="note">Jailbreak whiskers: 95% paired cluster-bootstrap CI over HB behaviours (single edits) or min–max over the 3 random draws (controls). Hover a bar for the absolute values.<br><b>Reading:</b> the same operators applied to the coordinates on isotropic random directions remove about as much variance (86–96%) and drop jailbreak AUC and harm-category AUC by the same amount as the persona edits (persona − random mean between −0.027 and +0.022 on every readout; 32 of 36 per-draw paired CIs include 0, and the 4 that do not point both ways). General tasks stay flat under all of them. The persona LEACE / projection-erasure drop is therefore not persona-specific: any 229/240 coordinates correlate with the dominant structure of these activations, and erasing that structure is what removes the jailbreak signal. The orthogonal random projection removes only ~5% of the variance and is not a matched control for these two edits.</div></div>`);
   if (E.records.some(r => r.ctl)) {
     const sl = ES.src === "wiki" ? "Wikipedia" : "Alpaca";
     const CG = [["leace", "Persona LEACE (reference)", "var(--s3)"], [`leace_${ES.src}`, `LEACE on ${sl} PC coordinates (same operator)`, "var(--s6)"],
                 [`pca_${ES.src}_k`, `${sl} PCA, top k PCs`, "var(--s5)"], [`pca_${ES.src}_var`, `${sl} PCA, variance-matched`, "var(--s5)"],
-                [`pcanp_${ES.src}_k`, `${sl} PCA minus persona span, k dims`, "var(--s7)"], [`pcanp_${ES.src}_var`, `${sl} PCA minus persona span, variance-matched`, "var(--s7)"]];
+                [`pcanp_${ES.src}_k`, `${sl} PCA minus persona span, k dims`, "var(--s7)"], [`pcanp_${ES.src}_var`, `${sl} PCA minus persona span, variance-matched`, "var(--s7)"],
+                [`leacegeo_${ES.src}`, `LEACE on ${sl} PCs minus persona span (geometric)`, "var(--s6)"],
+                [`leacenp_${ES.src}`, `LEACE on ${sl} coordinates decorrelated from persona, k dims`, "var(--s8)"], [`leacenp_${ES.src}_var`, `LEACE on ${sl} coordinates decorrelated from persona, all PCs`, "var(--s8)"]];
     const G2 = CG.map(([e, name, color]) => ({name, color, rows: cells.filter(c => R(c, e)).map(c => { const r = R(c, e), F = R(c, "full");
       const t = `no edit ${f3(F.jb[0])} → ${f3(r.jb[0])} · persona R² ${f3(r.r2[0])} · variance removed ${pct(r.energy[0])}% · ${r.dims} dims${r.n_pcs ? ` (${r.n_pcs} PCs)` : ""}`;
       return {label: `${mlab(c.m).split("-")[0]} · ${c.cell}`, vals: [{v: r.jb[0] - F.jb[0], lo: r.dj_ci ? r.dj_ci[0] : null, hi: r.dj_ci ? r.dj_ci[1] : null, tip: t},
@@ -737,10 +740,12 @@ function renderErasure() {
   }
   // (2) one table per model / readout
   cells.forEach(c => {
-    const rows = ["full", "span", "orth", "leace", "iso_span", "iso_orth", "iso_leace", ...["leace", "pca", "pcanp"].flatMap(k => ["wiki", "alpaca"].flatMap(sr => k === "leace" ? [`leace_${sr}`] : [`${k}_${sr}_k`, `${k}_${sr}_var`]))].map(e => R(c, e)).filter(Boolean);
+    const rows = ["full", "span", "orth", "leace", "orthrand", "leacerand", "iso_span", "iso_orth", "iso_leace", ...["leace", "pca", "pcanp"].flatMap(k => ["wiki", "alpaca"].flatMap(sr => k === "leace" ? [`leace_${sr}`] : [`${k}_${sr}_k`, `${k}_${sr}_var`])),
+                  ...["wiki", "alpaca"].flatMap(sr => [`leacegeo_${sr}`, `leacenp_${sr}`, `leacenp_${sr}_var`])].map(e => R(c, e)).filter(Boolean);
+    const dcis = cs => `<br><span class="muted">${cs.map(x => `[${sgn(x[0])}, ${sgn(x[1])}]`).join(" ")}</span>`;
     const rng = (x, f = f3) => x[1] !== x[2] ? `${f(x[0])}<br><span class="muted">${f(x[1])}–${f(x[2])}</span>` : f(x[0]);
     let h = `<div class="panel"><h3>${esc(mlab(c.m))} · ${esc(ECELL[c.cell])} (layer ${c.layer}, tail position ${c.pos}; persona span k = ${c.k} of d = ${c.d})</h3>
-      <table><thead><tr><th class="l">Edit</th><th>Dims removed</th><th>Variance removed</th><th>Persona R²</th><th>Jailbreak AUC [95% CI]</th><th>Δ vs no edit [95% CI]</th><th>Edit − matched random control [95% CI]</th><th>Control − persona LEACE [95% CI]</th><th>Harm category</th>${tasks.map(([t, l]) => `<th>${esc(l)}</th>`).join("")}</tr></thead><tbody>`;
+      <table><thead><tr><th class="l">Edit</th><th>Dims removed</th><th>Variance removed</th><th>Persona R²</th><th>Jailbreak AUC [95% CI]</th><th>Δ vs no edit [95% CI]</th><th>Edit − rank-matched orthogonal random [95% CI]</th><th>Persona edit − same-operator random [95% CI per draw]</th><th>Control − persona edit [95% CI]</th><th>Harm category</th>${tasks.map(([t, l]) => `<th>${esc(l)}</th>`).join("")}</tr></thead><tbody>`;
     rows.forEach(r => {
       const ci = r.jb_ci ? `<br><span class="muted">[${f3(r.jb_ci[0])}, ${f3(r.jb_ci[1])}]</span>` : "";
       const dci = r.dj_ci ? `<br><span class="muted">[${sgn(r.dj_ci[0])}, ${sgn(r.dj_ci[1])}]</span>` : "";
@@ -748,10 +753,10 @@ function renderErasure() {
       const vl = r.vs_leace ? `<br><span class="muted">[${sgn(r.vs_leace[0])}, ${sgn(r.vs_leace[1])}]</span>` : "—";
       const vc = r.vs_ctl ? `${sgn(r.vs_ctl[0])}<br><span class="muted">[${sgn(r.vs_ctl[1])}, ${sgn(r.vs_ctl[2])}]</span>` : "—";
       h += `<tr><td class="l">${esc(r.label)}${r.n_pcs ? ` <span class="muted">(${r.n_pcs} PCs)</span>` : ""}${r.draws > 1 ? ` <span class="muted">(${r.draws} draws: mean, min–max)</span>` : ""}</td><td class="num">${r.dims}</td><td class="num">${rng(r.energy, x => pct(x) + "%")}</td><td class="num">${rng(r.r2)}</td>
-        <td class="num">${rng(r.jb)}${ci}</td><td class="num"${sig ? ' style="font-weight:700"' : ""}>${r.e === "full" ? "—" : (r.draws > 1 ? rng(r.dj, sgn) : sgn(r.dj[0]) + dci)}</td><td class="num">${vc}</td><td class="num">${r.vs_leace ? sgn(r.jb[0] - R(c, "leace").jb[0]) + vl : "—"}</td><td class="num">${rng(r.cat)}</td>
+        <td class="num">${rng(r.jb)}${ci}</td><td class="num"${sig ? ' style="font-weight:700"' : ""}>${r.e === "full" ? "—" : (r.draws > 1 ? rng(r.dj, sgn) : sgn(r.dj[0]) + dci)}</td><td class="num">${vc}</td><td class="num">${r.vs_same ? sgn(r.vs_same.diff) + dcis(r.vs_same.cis) : "—"}</td><td class="num">${r.vs_leace ? sgn(r.jb[0] - R(c, "leace").jb[0]) + vl : r.vs_ref ? `${sgn(r.jb[0] - R(c, r.vs_ref.ref).jb[0])} <span class="muted">vs ${r.vs_ref.ref === "orth" ? "projection" : "LEACE"}</span>` + dcis(r.vs_ref.cis) : "—"}</td><td class="num">${rng(r.cat)}</td>
         ${tasks.map(([t]) => `<td class="num">${r.gen[t] ? rng(r.gen[t]) : "—"}</td>`).join("")}</tr>`;
     });
-    el.insertAdjacentHTML("beforeend", h + `</tbody></table><div class="note">Persona R² = ridge from the edited activations to the ${c.k} persona coordinates (transfer-set average; ≤ 0 = not linearly recoverable). Variance removed = share of the centred activation variance the edit takes out. Bold Δ = CI excludes 0. "Edit − matched random control": paired difference against the mean of the 3 rank-matched random draws.</div></div>`);
+    el.insertAdjacentHTML("beforeend", h + `</tbody></table><div class="note">Persona R² = ridge from the edited activations to the ${c.k} persona coordinates (transfer-set average; ≤ 0 = not linearly recoverable). Variance removed = share of the centred activation variance the edit takes out. Bold Δ = CI excludes 0. "Edit − rank-matched orthogonal random": paired difference against the mean of the 3 random projections with the same number of directions (removes far less variance than LEACE / projection erasure). "Persona edit − same-operator random": persona LEACE / projection erasure minus the same operator on random coordinates (mean over 3 draws; one paired CI per draw).</div></div>`);
   });
 }
 
