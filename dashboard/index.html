@@ -404,7 +404,8 @@ function panelFig(groups, panels, {fmt = x => (100 * x).toFixed(0), mode = "dot"
 function niceStep(x) { const e = Math.pow(10, Math.floor(Math.log10(x))), f = x / e; return (f < 1.5 ? 1 : f < 3.5 ? 2 : f < 7.5 ? 5 : 10) * e; }
 
 /* steering, per model: (1) ASR figure as in the paper, (2) Δ from the persona component, (3) ASR vs α, (4) table */
-const SV = {models: new Set(["llama", "gemma", "olmo"]), deg: "fail", gnorm: "572"};
+const SV = {models: new Set(["llama", "gemma", "olmo"]), deg: "fail", gnorm: "572", lset: "same"};
+const SVLS = {same: "official snapshot, every row on the same prompts (HB 300 refused, JBB 100, WildJB 298 refused)", paper: "paper cells (HB 1935 refused, WildJB 975 refused)"};
 const SVGN = {"572": "norm 572 (1.98× a typical token, as Llama / OLMo): every row on the same prompts", "258": "norm 258 (earlier paper cells)"};
 const SVM = ["llama", "olmo", "gemma"];
 const SVDEG = {fail: "count as not jailbroken (ASR = clean jailbreaks / all prompts)", drop: "drop them (coherent ASR = jailbreaks / non-degenerate prompts)"};
@@ -420,7 +421,8 @@ function svShort(d) { return d.replace(/ \(seed \d\)$/, "").replace(/^Trait: /, 
   .replace(/^Alpaca-dictionary detector normal/, "Alpaca dictionary").replace(/ \(top single direction\)$/, "").replace(/^Random direction (in|\(full)/, "Random $1")
   .replace(/^./, c => c.toUpperCase()).replace(/_/g, " "); }
 function svGroup(r) { return r.g === "main" ? 0 : r.g === "single trait" ? 1 : r.g === "steer trait" ? 2 : r.g === "classic attack" ? 3 : r.g === "random / null" ? 4 : -1; }
-function svBench(m) { return m === "gemma" && SV.gnorm === "572" ? SVBENCH.map(([b, l]) => [l, "arm:gemma_572", b]) : SVB[m]; }
+const llamaSame = () => SV.lset === "same" && D.steering.arms.some(a => a.run === "llama_traits");
+function svBench(m) { return m === "gemma" && SV.gnorm === "572" ? SVBENCH.map(([b, l]) => [l, "arm:gemma_572", b]) : m === "llama" && llamaSame() ? SVBENCH.map(([b, l]) => [l, "arm:llama_traits+llama_gap", b]) : SVB[m]; }
 function svVal(r) {   // point + CI under the degenerate convention; null when the convention cannot be applied
   if (SV.deg === "fail" || r.g === "classic attack") return {v: r.asr, lo: r.lo, hi: r.hi};
   return isNum(r.coh) ? {v: r.coh, lo: r.clo, hi: r.chi} : null;
@@ -430,7 +432,7 @@ function svMethods(m) {   // -> groups for the paper figure
   const G = SVG_.map(([name, color]) => ({name, color, rows: []}));
   const cells = {};
   const TR = D.steering.traits[m], olmoSweep = m === "olmo" && D.steering.arms.some(a => a.run === "olmo_traits");
-  const byTransfer = TR && (m === "gemma" && SV.gnorm === "572" || olmoSweep);   // trait rows = transfer top-10 + sweep top-10
+  const byTransfer = TR && (m === "gemma" && SV.gnorm === "572" || olmoSweep || m === "llama" && llamaSame());   // trait rows = transfer top-10 + sweep top-10
   const tname = r => r.dir.replace(/^Trait: /, "").replace(/ \(−\)$/, ""), tneg = r => / \(−\)$/.test(r.dir);
   const groupsOf = r => {
     if (!byTransfer || !["single trait", "steer trait", "trait sweep"].includes(r.g)) return [svGroup(r)];
@@ -438,11 +440,11 @@ function svMethods(m) {   // -> groups for the paper figure
     if (r.g !== "steer trait" && TR.pred_top.some(p => p.t === n && (p.sign < 0) === tneg(r))) out.push(1);
     if ((r.g === "steer trait" || r.g === "trait sweep" && !tneg(r)) && (TR.steer_top || []).includes(n)) out.push(2);
     return out; };
-  svBench(m).forEach(([lab, src, b], k) => (src.startsWith("arm:") ? D.steering.arms.filter(a => (a.run === src.slice(4) || olmoSweep && a.run === "olmo_traits") && a.b === b && a.var === "full").map(svArmRec)
-      .concat(m === "gemma" && b === "harmbench" ? R.filter(r => r.src === "gemma_classic") : []) :
+  svBench(m).forEach(([lab, src, b], k) => (src.startsWith("arm:") ? D.steering.arms.filter(a => (src.slice(4).split("+").includes(a.run) || olmoSweep && a.run === "olmo_traits") && a.b === b && a.var === "full").map(svArmRec)
+      .concat(m === "gemma" && b === "harmbench" ? R.filter(r => r.src === "gemma_classic") : m === "llama" && b === "harmbench" ? R.filter(r => r.src === "paper_llama" && r.g === "classic attack" && r.b === b) : []) :
     R.filter(r => r.src === src && r.b === b || (m === "gemma" && r.src === "gemma_classic" && b === "harmbench" && r.b === b))).forEach(r => {
     groupsOf(r).forEach(gi => { if (gi < 0) return; const key = gi + "|" + svShort(r.dir); (cells[key] = cells[key] || {gi, label: svShort(r.dir), vals: [[], [], []]}).vals[k].push(r); }); }));
-  if (m === "llama") R.filter(r => r.src === "ctrl_cum").forEach(r => { const key = "4|" + svShort(r.dir); (cells[key] = cells[key] || {gi: 4, label: svShort(r.dir), vals: [[], [], []], note: "HB 300 refused, mirror snapshot"}).vals[0].push(r); });
+  if (m === "llama" && !llamaSame()) R.filter(r => r.src === "ctrl_cum").forEach(r => { const key = "4|" + svShort(r.dir); (cells[key] = cells[key] || {gi: 4, label: svShort(r.dir), vals: [[], [], []], note: "HB 300 refused, mirror snapshot"}).vals[0].push(r); });
   Object.values(cells).forEach(c => {
     const vals = c.vals.map(rs => { const xs = rs.map(svVal).filter(x => x && isNum(x.v)); if (!xs.length) return null;
       if (xs.length === 1) return {...xs[0], tip: `n = ${rs[0].n} · ${rs[0].pool}${isNum(rs[0].deg) ? ` · degenerate ${pct(rs[0].deg)}` : ""}`};
@@ -457,7 +459,7 @@ function svMethods(m) {   // -> groups for the paper figure
 }
 function pendingNote(m) {   // transfer-top-10 traits whose arms are not in yet
   const TR = D.steering.traits[m]; if (!TR || (m === "gemma" && SV.gnorm !== "572")) return "";
-  const run = m === "gemma" ? "gemma_572" : "olmo_traits"; if (!D.steering.arms.some(a => a.run === run)) return "";
+  const run = m === "gemma" ? "gemma_572" : m === "llama" ? "llama_traits" : "olmo_traits"; if (!D.steering.arms.some(a => a.run === run)) return "";
   const have = new Set(D.steering.arms.filter(a => a.run === run).map(a => a.dir.replace(/^Trait: /, "").replace(/ \(−\)$/, "")));
   const miss = TR.pred_top.map(p => p.t).filter(t => !have.has(t));
   return miss.length ? ` Still running (not shown yet): ${miss.join(", ")}.` : "";
@@ -468,6 +470,7 @@ function renderSteering() {
   const fp = document.createElement("div"); fp.className = "filter-panel"; el.appendChild(fp);
   fp.appendChild(chipRow("Model", SVM.map(m => ({v: m, l: mlab(m)})), SV.models, true, rr));
   fp.appendChild(chipRow("Degenerate outputs", Object.entries(SVDEG).map(([k, l]) => ({v: k, l})), SV.deg, false, v => { SV.deg = v; rr(); }));
+  if (SV.models.has("llama") && D.steering.arms.some(a => a.run === "llama_traits")) fp.appendChild(chipRow("Llama setting", Object.entries(SVLS).map(([k, l]) => ({v: k, l})), SV.lset, false, v => { SV.lset = v; rr(); }));
   if (SV.models.has("gemma")) fp.appendChild(chipRow("Gemma setting", Object.entries(SVGN).map(([k, l]) => ({v: k, l})), SV.gnorm, false, v => { SV.gnorm = v; rr(); }));
   SVM.filter(m => SV.models.has(m)).forEach(m => {
     const runs = Object.entries(S.runs).filter(([k, r]) => r.m === m);
@@ -475,11 +478,12 @@ function renderSteering() {
     // (1) paper figure
     const G = svMethods(m);
     const src = m === "olmo" ? `OLMo-3-7B-Instruct, recomputed from per-prompt labels (steer_port/outputs_olmo_steer): HarmBench 300 refused, JBB 100, WildJB 565 refused (of the first 600). Cumulative α 0.1→0.5, residual norm 32.13 (1.98× a typical OLMo token, as 22.0 is for Llama). Traits marked (−) are steered on their negative pole.${D.steering.arms.some(a => a.run === "olmo_traits") ? " Trait rows: the 10 most predictive traits by transfer AUC and the 10 most steering-effective traits of the 240-trait sweep (HarmBench clean ASR), all on the same prompts (steer_port/outputs_olmo_alltraits)." : ""} Bars = 95% behaviour-clustered bootstrap CI.` :
+      m === "llama" && llamaSame() ? "Llama-3.1-8B-Instruct, official snapshot, L16, norm 22.0, recomputed from per-prompt labels (steer_port/outputs_llama_traits + outputs_llama_gap): every steered row on the same prompts, HarmBench 300 refused (seed 0), JBB 100, WildJB 298 refused (of the first 600). Predictive traits = the 10 with the highest transfer AUC, steered toward the side that predicts jailbreak ((−) = negative pole); steering-effective traits = the top 10 of Dominic's all-229 sweep, positive pole. Attacks: HarmBench test cases (no steering, not the same prompts). Bars = 95% behaviour-clustered bootstrap CI." :
       m === "llama" ? "Paper cells (results/steering_cell_cis.json, wjb_refused_cells.json): HarmBench 1935 refused prompts (attacks: HarmBench test cases), JBB 100, WildJB 975 refused (traits: 200). Cumulative α 0.1→0.5 (PersonaJB recut from 0.7). Refusal / Δμ on the mirror snapshot, as in the paper. * Null directions: separate run, HarmBench 300 refused, mirror snapshot." :
       SV.gnorm === "572" ? "Gemma-4-31B-it L30, norm 572.23, recomputed from per-prompt labels (steer_port/outputs_gemma_norm572 + outputs_gemma_norm572_traits): every steered row on the same prompts, HarmBench 300 refused (seed 0), JBB 100, WildJB 543 refused (of the first 600). Predictive traits = the 10 with the highest transfer AUC (panel below), steered toward the side that predicts jailbreak ((−) = negative pole); steering-effective traits = the top 10 of the 240-trait sweep (clean ASR), positive pole. Attacks: HarmBench test cases (no steering, not the same prompts). Bars = 95% behaviour-clustered bootstrap CI." :
       "Gemma cells (results/gemma_steering_cell_cis.json): HarmBench 3117 refused, JBB 100, WildJB 1816 refused; cumulative α 0.1→0.5, norm 258.09; attacks on HarmBench test cases only. Traits marked (−) are steered on their negative pole.";
     const degNote = SV.deg === "drop" && m === "llama" ? `<div class="banner warn">The Llama paper cells store only the final ASR (no degenerate labels), so "drop degenerate" cannot be applied to them: steering rows show —.</div>` : "";
-    el.insertAdjacentHTML("beforeend", `<div class="panel"><h3>Attack success rate on prompts the unsteered model refuses (unsteered = 0%)</h3>${degNote}${panelFig(G, svBench(m).map(x => x[0]), {axis: SV.deg === "fail" ? "Attack success rate (%)" : "Coherent attack success rate (%), degenerate outputs dropped"})}<div class="note">${esc(src)}${m === "olmo" || (m === "gemma" && SV.gnorm === "572") ? "" : " Bars = 95% CI as saved."}${pendingNote(m)}</div></div>`);
+    el.insertAdjacentHTML("beforeend", `<div class="panel"><h3>Attack success rate on prompts the unsteered model refuses (unsteered = 0%)</h3>${degNote}${panelFig(G, svBench(m).map(x => x[0]), {axis: SV.deg === "fail" ? "Attack success rate (%)" : "Coherent attack success rate (%), degenerate outputs dropped"})}<div class="note">${esc(src)}${m === "olmo" || (m === "gemma" && SV.gnorm === "572") || (m === "llama" && llamaSame()) ? "" : " Bars = 95% CI as saved."}${pendingNote(m)}</div></div>`);
     // (2) persona component Δ, every benchmark: group = variant, row = direction, panel = benchmark
     const RM = S.rem.filter(r => r.m === m && (m !== "gemma" || r.run === (SV.gnorm === "572" ? "gemma_572" : "gemma_split"))), k = SV.deg === "fail" ? "d" : "dc", fi = SV.deg === "fail" ? 0 : 1;
     const dirs = uniq(RM.map(r => r.dir)).sort((a, b) => (/^Refusal/.test(b) - /^Refusal/.test(a)) || (/Δμ/.test(b) - /Δμ/.test(a)) || a.localeCompare(b));
@@ -729,7 +733,7 @@ function renderErasure() {
       const t = `no edit ${f3(F.jb[0])} → ${f3(r.jb[0])} · persona R² ${f3(r.r2[0])} · variance removed ${pct(r.energy[0])}% · ${r.dims} dims${r.n_pcs ? ` (${r.n_pcs} PCs)` : ""}`;
       return {label: `${mlab(c.m).split("-")[0]} · ${c.cell}`, vals: [{v: r.jb[0] - F.jb[0], lo: r.dj_ci ? r.dj_ci[0] : null, hi: r.dj_ci ? r.dj_ci[1] : null, tip: t},
         {v: r.cat[0] - F.cat[0], tip: t}, {v: genMean(r) - genMean(F), tip: t}]}; })}));
-    el.insertAdjacentHTML("beforeend", `<div class="panel"><h3>Structured controls: remove an unrelated, high-variance subspace instead (Δ AUC vs no edit)</h3>${panelFig(G2, P, {mode: "bar", axis: "Δ AUC (pp)"})}<div class="note">A control is valid only if the persona coordinates stay recoverable after it: hover for persona R² and the share of variance removed (also in the tables below). "Minus persona span" removes the persona span from the PCs first, so it cannot touch persona information. Jailbreak whiskers: 95% paired cluster-bootstrap CI.</div></div>`);
+    el.insertAdjacentHTML("beforeend", `<div class="panel"><h3>Structured controls: remove an unrelated, high-variance subspace instead (Δ AUC vs no edit)</h3>${panelFig(G2, P, {mode: "bar", axis: "Δ AUC (pp)"})}<div class="note">A control is valid only if the persona coordinates stay recoverable after it: hover for persona R² and the share of variance removed (also in the tables below). "Minus persona span" removes the persona span from the PCs first, so it cannot touch persona information. Jailbreak whiskers: 95% paired cluster-bootstrap CI.<br><b>Reading:</b> LEACE on the coordinates of an unrelated 229/240-dim concept (Wikipedia or Alpaca PCs) drops jailbreak AUC as much as persona LEACE, and it also destroys persona R², so LEACE at this rank is not persona-specific. Orthogonal removals that leave persona R² high (top PCs, up to ~75% of variance; persona-free PCs) move jailbreak AUC by at most a few pp in either direction.</div></div>`);
   }
   // (2) one table per model / readout
   cells.forEach(c => {
